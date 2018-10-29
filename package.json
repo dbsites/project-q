@@ -2,7 +2,7 @@
   "name": "project-q",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.tsx",
   "scripts": {
     "build": "webpack --mode production",
     "dev-server": "webpack-dev-server --mode development --open --hot",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gkma/project-q.git"
+    "url": "git+https://github.com/master/project-q.git"
   },
   "keywords": [],
   "author": "Team Quail",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/gkma/project-q/issues"
+    "url": "https://github.com/master/project-q/issues"
   },
-  "homepage": "https://github.com/gkma/project-q#readme",
+  "homepage": "https://github.com/master/project-q#readme",
   "dependencies": {
     "express": "^4.16.4",
     "react": "^16.6.0",
@@ -29,6 +29,7 @@
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
     "@types/jest": "^23.3.8",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
