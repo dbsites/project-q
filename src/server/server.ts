@@ -1,3 +1,14 @@
+/**
+ * ************************************
+ *
+ * @module  Server.ts
+ * @author Team Quail
+ * @date
+ * @description 
+ *
+ * ************************************
+ */
+
 const express = require('express');
 const path = require('path');
 
