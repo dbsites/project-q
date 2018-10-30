@@ -35,7 +35,7 @@ const mapDispatchToProps: any = (dispatch: any) => {
     submitLogin: () => dispatch(actions.submitLogin()),
     updateRegisterCheck: (event: any) => dispatch(actions.updateRegisterCheck({field: event.target.name, value: event.target.checked})),
     updateRegisterField: (event: any) => dispatch(actions.updateRegisterField({field: event.target.name, value: event.target.value})),
-    submitRegister: () => dispatch(actions.submitLogin()),
+    submitRegister: () => dispatch(actions.submitRegister()),
   }
 }
 
