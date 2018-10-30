@@ -23,7 +23,9 @@
   "dependencies": {
     "express": "^4.16.4",
     "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -34,6 +36,9 @@
     "@types/jest": "^23.3.8",
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
+    "@types/react-redux": "^6.0.9",
+    "@types/redux": "^3.6.0",
+    "@types/redux-devtools-extension": "^2.13.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",
@@ -43,6 +48,7 @@
     "html-webpack-plugin": "^3.2.0",
     "jest": "^23.6.0",
     "nodemon": "^1.18.5",
+    "redux-devtools-extension": "^2.13.5",
     "source-map-loader": "^0.2.4",
     "style-loader": "^0.23.1",
     "ts-jest": "^23.10.4",

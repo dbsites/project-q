@@ -3,8 +3,7 @@
  *
  * @module  webpack.config.js
  * @author Team Quail
- * @date 
- * @description  
+ * @description Webpack Configuration
  *
  * ************************************
  */
@@ -12,11 +11,10 @@
 const HTMLWebpack = require('html-webpack-plugin');
 const path = require('path');
 
-const HTMLWebPackPlugin =
-  new HTMLWebpack({
-    template: './src/index.html',
-    filename: './index.html',
-  });
+const HTMLWebPackPlugin = new HTMLWebpack({
+  template: './src/index.html',
+  filename: './index.html',
+});
 
 module.exports = {
   entry: './src/index.tsx',
@@ -25,9 +23,9 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -42,22 +40,22 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'source-map-loader'
-        }
+          loader: 'source-map-loader',
+        },
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader"]
-      }
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   plugins: [HTMLWebPackPlugin],
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
-  }
-}
+    'react-dom': 'ReactDOM',
+  },
+};
