@@ -1,20 +1,24 @@
 /**
  * ************************************
  *
- * @module  Index.js
+ * @module  index.tsx
  * @author Team Quail
  * @date
- * @description 
+ * @description Application Entry Point. Hang React App off #App in index.html
  *
  * ************************************
  */
 
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { render } from "react-dom";
+import { Provider } from 'react-redux';
 
-import { Hello } from "./components/Hello";
+import App from "./client/App";
+import store from './client/store'
 
-ReactDOM.render(
-  <Hello compiler="TypeScript" framework="React" />,
-  document.getElementById("App")
+// Wrap App in Provider (passing in store)
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>, document.getElementById('App'),
 );
