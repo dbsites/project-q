@@ -1,8 +1,19 @@
+/**
+ * ************************************
+ *
+ * @module  webpack.config.js
+ * @author Team Quail
+ * @date 
+ * @description  
+ *
+ * ************************************
+ */
+
+const HTMLWebpack = require('html-webpack-plugin');
 const path = require('path');
-const Webpack = require('html-webpack-plugin');
 
 const HTMLWebPackPlugin =
-  new Webpack({
+  new HTMLWebpack({
     template: './src/index.html',
     filename: './index.html',
   });
@@ -20,7 +31,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
         use: {
           loader: 'awesome-typescript-loader',
@@ -42,7 +53,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
   },
   plugins: [HTMLWebPackPlugin],
   externals: {
