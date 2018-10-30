@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/master/project-q.git"
+    "url": "git+https://github.com/Quail-CS/project-q.git"
   },
   "keywords": [],
   "author": "Team Quail",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/master/project-q/issues"
+    "url": "https://github.com/Quail-CS/project-q/issues"
   },
-  "homepage": "https://github.com/master/project-q#readme",
+  "homepage": "https://github.com/Quail-CS/project-q#readme",
   "dependencies": {
     "express": "^4.16.4",
     "react": "^16.6.0",
