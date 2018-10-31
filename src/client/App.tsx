@@ -4,7 +4,7 @@
  */
 
 
- import * as React from 'react';
+import * as React from 'react';
 import FormContainer from './containers/FormContainer';
 
 class App extends React.Component {
