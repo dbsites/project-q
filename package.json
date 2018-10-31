@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/Quail-CS/project-q#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "pg-promise": "^8.5.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
