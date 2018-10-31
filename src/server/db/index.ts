@@ -12,8 +12,8 @@
 // Native TS typing for pg-promise, no @types needed 
 import {IMain, IDatabase, IOptions} from 'pg-promise';
 import {IExtensions, UsersRepository} from './repos';
-import uri from './dbConfig';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 // pg-promise initialization options
 
 const initOptions: IOptions<IExtensions> = {
@@ -26,7 +26,7 @@ const initOptions: IOptions<IExtensions> = {
 }
 
 // database connection uri, currently links to elephantsql db
-const config: string = uri;
+const config: string = <string>process.env.POSTGRES_URI;
 
 // load and initialize pg-promise
 import * as pgPromise from 'pg-promise';
