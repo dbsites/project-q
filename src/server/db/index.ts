@@ -4,7 +4,7 @@
  * @module  /db/index.ts
  * @author Team Quail
  * @date 
- * @description Modular storage for database credentials
+ * @description Module which sets the initialization options for pg-promise and instantiates the connection to the db uri
  *
  * ************************************
  */
@@ -12,6 +12,7 @@
 // Native TS typing for pg-promise, no @types needed 
 import {IMain, IDatabase, IOptions} from 'pg-promise';
 import {IExtensions, UsersRepository} from './repos';
+import uri from './dbConfig';
 
 // pg-promise initialization options
 
@@ -19,13 +20,13 @@ const initOptions: IOptions<IExtensions> = {
   // extending the db protocol to incorporate a custom repo for user functions
   //  this is where the functions for modifying user data within the database will be hosted
   extend(obj: IExtensions) {
-    obj.users = new UsersRepository(obj, pgp);
+    obj.users = new UsersRepository(obj);
   }
 
 }
 
 // database connection uri, currently links to elephantsql db
-const config: string = 'postgres://opftgwkw:fjvQmMKLmr7W01ETUBvu8I1QuOJskqfU@nutty-custard-apple.db.elephantsql.com:5432/opftgwkw';
+const config: string = uri;
 
 // load and initialize pg-promise
 import * as pgPromise from 'pg-promise';

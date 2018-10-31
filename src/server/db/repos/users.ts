@@ -4,7 +4,7 @@
  * @module  repos/users.ts
  * @author Team Quail
  * @date 
- * @description functions to modify/create/access user data within the database
+ * @description methods to modify/create/access user data within the database
  *
  * ************************************
  */
@@ -26,7 +26,6 @@
     // add a new user to the database
     // userData Interface imported on line 16
     add (userData: userData) {
-      console.log('in users: ', userData);
       return this.db.none('INSERT INTO users (email, password) VALUES ($1, $2)', [userData.email, userData.password]);
     }
 

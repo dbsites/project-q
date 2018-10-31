@@ -4,7 +4,7 @@
  * @module  /repos/index.ts
  * @author Team Quail
  * @date 
- * @description holds interfaces for repos holding functionality for querying database
+ * @description interfaces for repos holding functionality for querying database and general interfaces for server object typing
  *
  * ************************************
  */

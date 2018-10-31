@@ -4,7 +4,7 @@
  * @module  Server.ts
  * @author Team Quail
  * @date 
- * @description Node Server to interface between database and website in order to login and register users. 
+ * @description Node Express Server to route fetch requests from the front end to appropriate end points 
  *
  * ************************************
  */
