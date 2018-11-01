@@ -6,38 +6,58 @@
 // import actionType constants
 import * as actions from './actionTypes';
 
-// Login Form Actions
+const HOST: string = 'http://localhost:3000';
+
 // TODO: Explicit type for event parameter and return value
-export const updateLoginField: any = (event: any) => ({
+
+// Form Actions
+export const nextFormPage = (): any => ({
+  type: actions.NEXT_FORM_PAGE,
+})
+
+// Login Form Actions
+export const updateLoginField = (event: any): any => ({
   type: actions.UPDATE_LOGIN_FIELD,
   payload: event,
 });
 
-// TODO: Explicit type for event parameter and return value
-export const updateLoginCheck: any = (event: any) => ({
-  type: actions.UPDATE_LOGIN_CHECK,
-  payload: event,
-})
-
-// TODO: Explicit type for return value
-export const submitLogin: any = () => ({
-  type: actions.SUBMIT_LOGIN,
-});
+// THUNK - Fetch Login Request
+export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
+  fetch(`${HOST}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(loginFields),
+  })
+  .then((response: any) => {
+      dispatch({
+        type: 'FETCH_LOGIN_SUCCESS',
+        response,
+      });
+    })
+    .catch((err: any) => console.error(err));
 
 // Register Form Actions
-// TODO: Explicit type for event parameter and return value
-export const updateRegisterField: any = (event: any) => ({
+export const updateRegisterField= (event: any): any => ({
   type: actions.UPDATE_REGISTER_FIELD,
   payload: event,
 });
 
-// TODO: Explicit type for event parameter and return value
-export const updateRegisterCheck: any = (event: any) => ({
-  type: actions.UPDATE_REGISTER_CHECK,
-  payload: event,
-})
+// THUNK - Fetch Register Request
+export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>
+  fetch(`${HOST}/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(registerFields),
+  })
+  .then((response: any) => {
+      dispatch({
+        type: 'FETCH_REGISTER_SUCCESS',
+        response,
+      });
+    })
+    .catch((err: any) => console.error(err));
 
-// TODO: Explicit type for return value
-export const submitRegister: any = () => ({
-  type: actions.SUBMIT_REGISTER,
-});
