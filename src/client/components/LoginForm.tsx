@@ -17,7 +17,7 @@ const LoginForm: any = (props: any) => {
     updateLoginCheck,
     updateLoginField
   } = props;
-  
+
   return (
     <div>
       <label htmlFor="loginEmail">Email: </label>
@@ -29,7 +29,7 @@ const LoginForm: any = (props: any) => {
       <input id="rememberMe" name="rememberMe" onChange={updateLoginCheck} type="checkbox" checked={rememberMe} />
       <label htmlFor="rememberMe">Remember Me </label>
       <br />
-      <input onClick={submitLogin} type="submit"/>
+      <input onClick={submitLogin} type="submit" />
     </div>
   )
 }
