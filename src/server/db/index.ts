@@ -10,8 +10,8 @@
  */
 
 // Native TS typing for pg-promise, no @types needed 
-import {IMain, IDatabase, IOptions} from 'pg-promise';
-import {IExtensions, UsersRepository} from './repos';
+import { IMain, IDatabase, IOptions } from 'pg-promise';
+import { IExtensions, UsersRepository } from './controllers';
 import * as dotenv from 'dotenv';
 dotenv.config();
 // pg-promise initialization options
@@ -20,9 +20,9 @@ const initOptions: IOptions<IExtensions> = {
   // extending the db protocol to incorporate a custom repo for user functions
   //  this is where the functions for modifying user data within the database will be hosted
   extend(obj: IExtensions) {
+    // user methods
     obj.users = new UsersRepository(obj);
   }
-
 }
 
 // database connection uri, currently links to elephantsql db

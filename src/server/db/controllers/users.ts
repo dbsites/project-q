@@ -10,10 +10,12 @@
  */
 
 // import pg-promise types and sql statements 
- import {IDatabase} from 'pg-promise';
- import {IResult} from 'pg-promise/typescript/pg-subset';
- import {userData} from './index';
-
+ import { IDatabase } from 'pg-promise';
+ import { IResult } from 'pg-promise/typescript/pg-subset';
+ import { userData } from './index';
+ // import unique user id creation library
+ import { v4 } from 'uuid';
+ 
  export class UsersRepository {
    
     constructor (db: any) {
@@ -26,7 +28,7 @@
     // add a new user to the database
     // userData Interface imported on line 16
     add (userData: userData) {
-      return this.db.none('INSERT INTO users (email, password) VALUES ($1, $2)', [userData.email, userData.password]);
+      return this.db.none('INSERT INTO users (id, email, password) VALUES ($1, $2, $3)', [v4(), userData.email, userData.password]);
     }
 
     //delete a user from the database and returns the number of records deleted
