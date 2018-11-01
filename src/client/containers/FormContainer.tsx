@@ -30,17 +30,18 @@ const mapStateToProps: any = (store: any) => ({
 // Extract form update and submit actions from store to pass as props
 const mapDispatchToProps: any = (dispatch: any) => {
   return {
-    updateLoginCheck: (event: any) => dispatch(actions.updateLoginCheck({field: event.target.name, value: event.target.checked})),
-    updateLoginField: (event: any) => dispatch(actions.updateLoginField({field: event.target.name, value: event.target.value})),
+    updateLoginCheck: (event: any) => dispatch(actions.updateLoginCheck({ field: event.target.name, value: event.target.checked })),
+    updateLoginField: (event: any) => dispatch(actions.updateLoginField({ field: event.target.name, value: event.target.value })),
     submitLogin: () => dispatch(actions.submitLogin()),
-    updateRegisterCheck: (event: any) => dispatch(actions.updateRegisterCheck({field: event.target.name, value: event.target.checked})),
-    updateRegisterField: (event: any) => dispatch(actions.updateRegisterField({field: event.target.name, value: event.target.value})),
+    updateRegisterCheck: (event: any) => dispatch(actions.updateRegisterCheck({ field: event.target.name, value: event.target.checked })),
+    updateRegisterField: (event: any) => dispatch(actions.updateRegisterField({ field: event.target.name, value: event.target.value })),
     submitRegister: () => dispatch(actions.submitRegister()),
   }
 }
 
-const FormContainer: any = (props: any) => {
-  // Destructure form values and actions from props
+const FormContainer: any = ({ match }: any, props: any) => {
+
+  //Destructure form values and actions from props
   const {
     loginEmail,
     loginPassword,
@@ -62,27 +63,39 @@ const FormContainer: any = (props: any) => {
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
     <div>
-      <h1>Login Form</h1>
-      <LoginForm
-        loginEmail={loginEmail}
-        loginPassword={loginPassword}
-        rememberMe={rememberMe}
-        submitLogin={submitLogin}
-        updateLoginCheck={updateLoginCheck}
-        updateLoginField={updateLoginField}
-      />
-      <h1>Register Form</h1>
-      <RegisterForm
-        firstName={firstName}
-        lastName={lastName}
-        registerEmail={registerEmail}
-        registerPassword={registerPassword}
-        confirmPassword={confirmPassword}
-        agreeTerms={agreeTerms}
-        submitRegister={submitRegister}
-        updateRegisterCheck={updateRegisterCheck}
-        updateRegisterField={updateRegisterField}
-      />
+      {/* {!props.isAuthenticated } */}
+      {match.params.id === 'login' ?
+        (
+          <div>
+            <h1>Login Form</h1>
+            <LoginForm
+              loginEmail={loginEmail}
+              loginPassword={loginPassword}
+              rememberMe={rememberMe}
+              submitLogin={submitLogin}
+              updateLoginCheck={updateLoginCheck}
+              updateLoginField={updateLoginField}
+            />
+          </div>
+        )
+        :
+        (
+          <div>
+            <h1>Register Form</h1>
+            <RegisterForm
+              firstName={firstName}
+              lastName={lastName}
+              registerEmail={registerEmail}
+              registerPassword={registerPassword}
+              confirmPassword={confirmPassword}
+              agreeTerms={agreeTerms}
+              submitRegister={submitRegister}
+              updateRegisterCheck={updateRegisterCheck}
+              updateRegisterField={updateRegisterField}
+            />
+          </div>
+        )
+      }
     </div>
   )
 }
