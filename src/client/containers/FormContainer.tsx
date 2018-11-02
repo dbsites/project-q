@@ -49,8 +49,9 @@ const mapDispatchToProps: any = (dispatch: any) => {
   }
 }
 
-const FormContainer: any = (props: any) => {
-  // Destructure form values and actions from props
+const FormContainer: any = ({ match }: any, props: any) => {
+
+  //Destructure form values and actions from props
   const {
     loginFields,
     fetchLoginRequest,
@@ -64,19 +65,31 @@ const FormContainer: any = (props: any) => {
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
     <div>
-      <h1>Login Form</h1>
-      <LoginForm
-        loginFields={loginFields}
-        fetchLoginRequest={fetchLoginRequest}
-        updateLoginField={updateLoginField}
-      />
-      <h1>Register Form</h1>
-      <RegisterForm
-        registerFields={registerFields}
-        fetchRegisterRequest={fetchRegisterRequest}
-        updateRegisterCheck={updateRegisterCheck}
-        updateRegisterField={updateRegisterField}
-      />
+      {/* {!props.isAuthenticated } */}
+      {match.params.id === 'login' ?
+        (
+          <div>
+            <h1>Login Form</h1>
+            <LoginForm
+              loginFields={loginFields}
+              fetchLoginRequest={fetchLoginRequest}
+              updateLoginField={updateLoginField}
+            />
+          </div>
+        )
+        :
+        (
+          <div>
+            <h1>Register Form</h1>
+            <RegisterForm
+              registerFields={registerFields}
+              fetchRegisterRequest={fetchRegisterRequest}
+              updateRegisterCheck={updateRegisterCheck}
+              updateRegisterField={updateRegisterField}
+            />
+          </div>
+        )
+      }
     </div>
   )
 }
