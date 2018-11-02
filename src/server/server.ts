@@ -21,7 +21,6 @@ import * as bodyParser from 'body-parser';
 import Authenticate from './db/controllers/authenticate'
 // import companyDb middleware
 import CompanyDatabase from './db/controllers/addCompanyDataToDb';
-import db from './db';
 
 // activate the express server
 const app: Application = express();
