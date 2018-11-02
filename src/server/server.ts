@@ -17,6 +17,8 @@ import { Application, Request, Response } from 'express';
 import * as path from 'path';
 // import body-parser for getting req.body from front end posts
 import * as bodyParser from 'body-parser';
+// import cors to enable cross-origin sharing between dev server and server
+import * as cors from 'cors';
 // import authentication middleware
 import Authenticate from './db/controllers/authenticate'
 
@@ -28,8 +30,15 @@ const PORT = 3000;
 
 // server static files from dist directory
 app.use(express.static(path.resolve(__dirname, '../../dist')));
+
+// Allow CORS
+app.use(cors());
+
 // tell express to use bodyparser to parse json files in req.body
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 // login end point
 app.post('/login', 

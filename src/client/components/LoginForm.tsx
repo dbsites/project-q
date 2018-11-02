@@ -4,32 +4,33 @@
  */
 
 import * as React from 'react';
+import FormField from './FormField';
+// import FormError from './FormError';
 
 // TODO: Assign explicit type to props
 // TODO: Look into update form / htmlForm?
 const LoginForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
+    loginFields,
+    fetchLoginRequest,
+    updateLoginField
+  } = props;
+  const {
     loginEmail,
     loginPassword,
     rememberMe,
-    submitLogin,
-    updateLoginCheck,
-    updateLoginField
-  } = props;
+  } = loginFields;
 
   return (
     <div>
-      <label htmlFor="loginEmail">Email: </label>
-      <input id="loginEmail" name="loginEmail" onChange={updateLoginField} type="text" value={loginEmail} />
+      <FormField field={loginEmail} name="loginEmail" type="text" updateField={updateLoginField} >Email: </FormField>
       <br />
-      <label htmlFor="loginPassword">Password: </label>
-      <input id="loginPassword" name="loginPassword" onChange={updateLoginField} type="password" value={loginPassword} />
+      <FormField field={loginPassword} name="loginPassword" type="password" updateField={updateLoginField} >Password: </FormField>
       <br />
-      <input id="rememberMe" name="rememberMe" onChange={updateLoginCheck} type="checkbox" checked={rememberMe} />
-      <label htmlFor="rememberMe">Remember Me </label>
+      <FormField field={rememberMe} name="rememberMe" type="checkbox" updateField={updateLoginField} >Remember Me: </FormField>
       <br />
-      <input onClick={submitLogin} type="submit" />
+      <input onClick={() => fetchLoginRequest(loginFields)} type="submit"/>
     </div>
   )
 }
