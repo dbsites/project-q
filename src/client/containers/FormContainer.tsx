@@ -5,6 +5,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'; // Access route params
 
 import * as actions from '../actions/actionCreators'
 
@@ -31,6 +32,7 @@ const mapStateToProps: any = (store: any) => ({
 
 // TODO: Assign explicit type to dispatch
 // TODO: Explicit type to event
+
 // Extract form update and submit actions from store to pass as props
 const mapDispatchToProps: any = (dispatch: any) => {
   return {
@@ -49,10 +51,11 @@ const mapDispatchToProps: any = (dispatch: any) => {
   }
 }
 
-const FormContainer: any = ({ match }: any, props: any) => {
+let FormContainer: any = (props: any) => {
 
   //Destructure form values and actions from props
   const {
+    match, 
     loginFields,
     fetchLoginRequest,
     updateLoginField,
@@ -65,7 +68,6 @@ const FormContainer: any = ({ match }: any, props: any) => {
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
     <div>
-      {/* {!props.isAuthenticated } */}
       {match.params.id === 'login' ?
         (
           <div>
@@ -95,4 +97,6 @@ const FormContainer: any = ({ match }: any, props: any) => {
 }
 
 // Connect FormContainer to Store
-export default connect(mapStateToProps, mapDispatchToProps)(FormContainer);
+FormContainer = connect(mapStateToProps, mapDispatchToProps)(FormContainer);
+FormContainer = withRouter(FormContainer);
+export default FormContainer;
