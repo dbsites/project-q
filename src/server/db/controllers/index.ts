@@ -11,10 +11,12 @@
 
 // get the users repo which hold all the user data methods
 import {UsersRepository} from './users';
+import { CompanyRepository } from './company';
 
 //interface for calling users in db/index.ts
 interface IExtensions {
   users: UsersRepository,
+  companies: CompanyRepository,
 }
 // interface for userdata object which holds email/pass and is used to login/register
 interface userData {
@@ -22,9 +24,29 @@ interface userData {
   password: string,
 }
 
+interface CompanyDataInterface {
+  ticker: string,
+  companyName: string,
+  blurb: string,
+  link: string,
+  
+}
+
+interface Issues {
+  economyScore: number,
+  environmentScore: number,
+  civilRightsScore: number,
+  salaryGapScore: number,
+  philanthropyScore: number,
+  immigrationScore: number,
+}
+
 export {
   IExtensions,
   UsersRepository,
   userData,
+  CompanyDataInterface,
+  CompanyRepository,
+  Issues,
 };
  

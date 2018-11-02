@@ -48,7 +48,7 @@ Authenticate.compareHash = (req: Request, res: Response, next: NextFunction) => 
   // db.users accesses methods defined in the users repo
   db.users.findByEmail(req.body.email)
   .then((data: userData) => {
-    bcrypt.compare(req.body.password, data.password, (error, match) => {
+    bcrypt.compare(req.body.password, JSON.parse(JSON.stringify(data.password)), (error: Error, match: boolean) => {
       if (match) {
         next();
       }

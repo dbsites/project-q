@@ -19,6 +19,9 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 // import authentication middleware
 import Authenticate from './db/controllers/authenticate'
+// import companyDb middleware
+import CompanyDatabase from './db/controllers/addCompanyDataToDb';
+import db from './db';
 
 // activate the express server
 const app: Application = express();
@@ -29,7 +32,10 @@ const PORT = 3000;
 // server static files from dist directory
 app.use(express.static(path.resolve(__dirname, '../../dist')));
 // tell express to use bodyparser to parse json files in req.body
-app.use(bodyParser.json());
+// limit 10mb increases the amount of data which can be parsed by the server at once, this could have side effects 
+// RESEARCH THIS*********************************************************************
+// but was needed to submit all the company data, maybe remove if it substantially changes the way that bodyParser functions
+app.use(bodyParser.json({limit: '10mb'}));
 
 // login end point
 app.post('/login', 
@@ -47,6 +53,14 @@ app.post('/register',
     res.send('USER REGISTRATION SUCCESS');
   }
 );
+
+// end point for company data submission
+// CompanyDatabase middleware handles the insertion of the data and calls the query statements
+app.post('/companyData', 
+  CompanyDatabase.insertData,
+  (__dirname: Request, res: Response) => {
+    res.sendStatus(200);
+})
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
