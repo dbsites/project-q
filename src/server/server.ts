@@ -50,7 +50,7 @@ app.post('/login',
 
 // registration end point
 app.post('/register', 
-  // Authenticate.hashPassword,
+  Authenticate.hashPassword,
   (_: Request, res: Response) => {
     console.log('USER REGRISTRATION SUCCESS');
     res.send('USER REGISTRATION SUCCESS');
