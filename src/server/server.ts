@@ -17,6 +17,8 @@ import { Application, Request, Response } from 'express';
 import * as path from 'path';
 // import body-parser for getting req.body from front end posts
 import * as bodyParser from 'body-parser';
+// import cors to enable cross-origin sharing between dev server and server
+import * as cors from 'cors';
 // import authentication middleware
 import Authenticate from './db/controllers/authenticate'
 // import companyDb middleware
@@ -30,11 +32,18 @@ const PORT = 3000;
 
 // server static files from dist directory
 app.use(express.static(path.resolve(__dirname, '../../dist')));
+
+// Allow CORS
+app.use(cors());
+
 // tell express to use bodyparser to parse json files in req.body
 // limit 10mb increases the amount of data which can be parsed by the server at once, this could have side effects 
 // RESEARCH THIS*********************************************************************
 // but was needed to submit all the company data, maybe remove if it substantially changes the way that bodyParser functions
 app.use(bodyParser.json({limit: '10mb'}));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 // login end point
 app.post('/login', 

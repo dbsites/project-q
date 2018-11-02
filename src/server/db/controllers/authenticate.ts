@@ -20,7 +20,7 @@ import { userData } from '../controllers/index';
 const Authenticate: any =  {};
 
 // registration route, new account are directed here and password is hashed then user is added to the db
-Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) => {
+Authenticate.hashPassword = (req: Request, _: Response, next: NextFunction) => {
   return bcrypt.hash(req.body.password, 10, (error: Error, encrypted: string) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
@@ -32,12 +32,11 @@ Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) =>
       db.users.add(req.body)
       .then(() => {
         console.log('USER REGISTRATION SUCCESS', req.body);
-        res.end();
+        next();
       })
       .catch((error: any) => {
         console.log('ERROR AT REGISTRATION IN SERVER.ts', error);
       });
-      next();
     }
   })
 }

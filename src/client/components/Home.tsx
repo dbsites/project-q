@@ -1,13 +1,12 @@
 /**
- * @module App.tsx
- * @description App Container
+ * @module Home.tsx
+ * @description Home Page Component
  */
-
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-const App = (): any => (
+const Home: any = () => (
   <div>
     <h1>Welcome to EthiQ</h1>
     <ul>
@@ -21,4 +20,4 @@ const App = (): any => (
   </div>
 );
 
-export default App;
+export default Home;

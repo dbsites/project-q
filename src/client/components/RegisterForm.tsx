@@ -5,10 +5,18 @@
 
 import * as React from 'react';
 
+import FormField from './FormField';
+// import FormError from './FormError';
+
 // TODO: Assign explicit type to props
 // TODO: Look into update form / htmlForm?
 const RegisterForm: any = (props: any) => {
   // Destructure form values and actions from props
+  const {
+    registerFields,
+    fetchRegisterRequest,
+    updateRegisterField
+  } = props;
   const {
     firstName,
     lastName,
@@ -16,32 +24,23 @@ const RegisterForm: any = (props: any) => {
     registerPassword,
     confirmPassword,
     agreeTerms,
-    submitRegister,
-    updateRegisterCheck,
-    updateRegisterField
-  } = props;
+  } = registerFields;
 
   return (
     <div>
-      <label htmlFor="firstName">First Name: </label>
-      <input id="firstName" name="firstName" onChange={updateRegisterField} type="text" value={firstName} />
+      <FormField field={firstName} name="firstName" type="text" updateField={updateRegisterField} >First Name: </FormField>
       <br />
-      <label htmlFor="lastName">Last Name: </label>
-      <input id="lastName" name="lastName" onChange={updateRegisterField} type="text" value={lastName} />
+      <FormField field={lastName} name="lastName" type="text" updateField={updateRegisterField} >Last Name: </FormField>
       <br />
-      <label htmlFor="registerEmail">Email: </label>
-      <input id="registerEmail" name="registerEmail" onChange={updateRegisterField} type="text" value={registerEmail} />
+      <FormField field={registerEmail} name="registerEmail" type="text" updateField={updateRegisterField} >Email: </FormField>
       <br />
-      <label htmlFor="registerPassword">Password: </label>
-      <input id="registerPassword" name="registerPassword" onChange={updateRegisterField} type="password" value={registerPassword} />
+      <FormField field={registerPassword} name="registerPassword" type="password" updateField={updateRegisterField} >Password: </FormField>
       <br />
-      <label htmlFor="confirmPassword">Confirm Password: </label>
-      <input id="confirmPassword" name="confirmPassword" onChange={updateRegisterField} type="password" value={confirmPassword} />
+      <FormField field={confirmPassword} name="confirmPassword" type="password" updateField={updateRegisterField} >Confirm Password: </FormField>
       <br />
-      <input id="agreeTerms" name="agreeTerms" onChange={updateRegisterCheck} type="checkbox" checked={agreeTerms} />
-      <label htmlFor="agreeTerms">Agree Terms </label>
+      <FormField field={agreeTerms} name="agreeTerms" type="checkbox" updateField={updateRegisterField} >Agree Terms: </FormField>
       <br />
-      <input onClick={submitRegister} type="submit"/>
+      <input onClick={() => fetchRegisterRequest(registerFields)} type="submit"/>
     </div>
   )
 }

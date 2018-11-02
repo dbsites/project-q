@@ -9,6 +9,7 @@ import * as actions from '../actions/actionTypes';
 // TODO: Interface for initialLoginState
 const initialLoginState: any = {
   loginEmail: '',
+  emailValid: false,
   loginPassword: '',
   rememberMe: true,
 };
@@ -18,15 +19,20 @@ const loginReducer: any = (state: any = initialLoginState, action: any) => {
   switch (action.type) {
 
     // UPDATE_LOGIN_CHECK/FIELD - update input field (or checkbox) to value
-    case actions.UPDATE_LOGIN_CHECK:
     case actions.UPDATE_LOGIN_FIELD:
+    // Email Validation
+    let emailValid = state.emailValid;
+    if (action.payload.field === 'loginEmail') {
+      emailValid = action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+    }
       return {
         ...state,
+        emailValid,
         [action.payload.field]: action.payload.value,
       };
 
-    // SUBMIT_LOGIN - Reset to initial State
-    case actions.SUBMIT_LOGIN:
+    //  FETCH_LOGIN_SUCCESS - Reset to initial State
+    case actions.FETCH_LOGIN_SUCCESS:
       return {
         ...initialLoginState
       };

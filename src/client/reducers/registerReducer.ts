@@ -11,6 +11,7 @@ const initialRegisterState: any = {
   firstName: '',
   lastName: '',
   registerEmail: '',
+  emailValid: false,
   registerPassword: '',
   confirmPassword: '',
   agreeTerms: false,
@@ -21,15 +22,14 @@ const registerReducer: any = (state: any = initialRegisterState, action: any) =>
   switch (action.type) {
 
     // UPDATE_REGISTER_CHECK/FIELD - update input field (or checkbox) to value
-    case actions.UPDATE_REGISTER_CHECK:
     case actions.UPDATE_REGISTER_FIELD:
       return {
         ...state,
         [action.payload.field]: action.payload.value,
       };
 
-    // SUBMIT_REGISTER - Reset to initial State
-    case actions.SUBMIT_REGISTER:
+    // FETCH_REGISTER_SUCCESS - Reset to initial State
+    case actions.FETCH_REGISTER_SUCCESS:
       return {
         ...initialRegisterState
       };
