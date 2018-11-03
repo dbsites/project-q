@@ -12,7 +12,7 @@
 import * as bcrypt from 'bcrypt';
 import { Request, Response, NextFunction } from 'express';
 // import db and db functionality from modular files to access db methods
-import db from '../../db';
+import db from '../index';
 // import userData interface for ts
 import { userData } from '../controllers/index';
 
