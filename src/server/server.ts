@@ -20,7 +20,9 @@ import * as bodyParser from 'body-parser';
 // import cors to enable cross-origin sharing between dev server and server
 import * as cors from 'cors';
 // import authentication middleware
-import Authenticate from './db/controllers/authenticate'
+import Authenticate from './middleware/authenticate'
+// import companyDb middleware
+import CompanyDatabase from './middleware/companyDataMethods';
 
 // activate the express server
 const app: Application = express();
@@ -35,7 +37,10 @@ app.use(express.static(path.resolve(__dirname, '../../dist')));
 app.use(cors());
 
 // tell express to use bodyparser to parse json files in req.body
-app.use(bodyParser.json());
+// limit 10mb increases the amount of data which can be parsed by the server at once, this could have side effects 
+// RESEARCH THIS*********************************************************************
+// but was needed to submit all the company data, maybe remove if it substantially changes the way that bodyParser functions
+app.use(bodyParser.json({limit: '10mb'}));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -44,16 +49,34 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/login', 
   Authenticate.compareHash,
   (_: Request, res: Response) => {
-  console.log('LOGIN SUCCESS');
-  res.end();
-});
+    res.sendStatus(200);
+  }
+);
 
 // registration end point
 app.post('/register', 
   Authenticate.hashPassword,
   (_: Request, res: Response) => {
-    console.log('USER REGRISTRATION SUCCESS');
-    res.send('USER REGISTRATION SUCCESS');
+    res.sendStatus(200);
+  }
+);
+
+// TODO UPDATE END POINT TO GET USER ISSUES
+
+// end point for deliverying a list of companies on dashboard render
+app.get('/companyList', 
+  CompanyDatabase.getCompanyList,
+  (_: Request, res: Response) => {
+    res.send(res.locals.companyDataArray);
+  }
+);
+
+// end point for company data submission
+// CompanyDatabase middleware handles the insertion of the data and calls the query statements
+app.post('/companyData', 
+  CompanyDatabase.insertData,
+  (__dirname: Request, res: Response) => {
+    res.sendStatus(200);
   }
 );
 
