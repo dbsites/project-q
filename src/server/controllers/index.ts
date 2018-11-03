@@ -4,13 +4,13 @@
  * @module  /repos/index.ts
  * @author Team Quail
  * @date 
- * @description interfaces for repos holding functionality for querying database and general interfaces for server object typing
+ * @description interfaces for controllersS holding functionality for querying database and general interfaces for server object typing
  *
  * ************************************
  */
 
 // get the users repo which hold all the user data methods
-import {UsersRepository} from './users';
+import { UsersRepository } from './users';
 import { CompanyRepository } from './company';
 
 //interface for calling users in db/index.ts
@@ -24,12 +24,12 @@ interface userData {
   password: string,
 }
 
+// interface for each item in the array of company objects, not currently in use
 interface CompanyDataInterface {
   ticker: string,
   companyName: string,
   blurb: string,
-  link: string,
-  
+  link: string,  
 }
 
 interface Issues {

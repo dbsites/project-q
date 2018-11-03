@@ -11,7 +11,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 // import db and db functionality from modular files to access db methods
-import db from '../../db';
+import db from '../index';
 
 // create object which holds the authentication methods
 const CompanyDatabase: any =  {};
@@ -25,8 +25,20 @@ CompanyDatabase.insertData = (req: Request, _: Response, next: NextFunction) => 
   })
   .catch((error: any) => {
     console.log('ERROR AT INSERT DATA IN addCompanyToDb', error);
+  }); 
+}
+
+// deliver company list to the front end
+CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction) => {
+  db.companies.getList()
+  .then((data: any[]) => {
+    res.locals.companyDataArray = data;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getCompanyList IN companyDataMethods.ts', error);
+    res.sendStatus(500);
   });
-  
 }
 
 export default CompanyDatabase;
