@@ -20,8 +20,12 @@ interface IExtensions {
 }
 // interface for userdata object which holds email/pass and is used to login/register
 interface userData {
-  email: string,
-  password: string,
+  firstName: string,
+  lastName: string,
+  registerEmail: string,
+  registerPassword: string,
+  confirmPassword: string,
+  agreeTerms: boolean,
 }
 
 // interface for each item in the array of company objects, not currently in use
