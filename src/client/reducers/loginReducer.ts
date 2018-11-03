@@ -15,7 +15,7 @@ const initialLoginState: any = {
 };
 
 // TODO: Explicit state and action types, return value
-const loginReducer: any = (state: any = initialLoginState, action: any) => {
+const loginReducer = (state: any = initialLoginState, action: any): any => {
   switch (action.type) {
 
     // UPDATE_LOGIN_CHECK/FIELD - update input field (or checkbox) to value

@@ -20,11 +20,11 @@ import * as bodyParser from 'body-parser';
 // import cors to enable cross-origin sharing between dev server and server
 import * as cors from 'cors';
 // import authentication middleware
-import Authenticate from './db/controllers/authenticate'
+import Authenticate from './middleware/authenticate'
 // import companyDb middleware
-import CompanyDatabase from './db/controllers/addCompanyDataToDb';
 // import questionDb middleware
 import QuestionDatabase from './db/controllers/addQuestionDataToDb';
+import CompanyDatabase from './middleware/companyDataMethods';
 
 // activate the express server
 const app: Application = express();
@@ -51,16 +51,25 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/login', 
   Authenticate.compareHash,
   (_: Request, res: Response) => {
-  console.log('LOGIN SUCCESS');
-  res.end();
-});
+    res.sendStatus(200);
+  }
+);
 
 // registration end point
 app.post('/register', 
   Authenticate.hashPassword,
   (_: Request, res: Response) => {
-    console.log('USER REGRISTRATION SUCCESS');
-    res.send('USER REGISTRATION SUCCESS');
+    res.sendStatus(200);
+  }
+);
+
+// TODO UPDATE END POINT TO GET USER ISSUES
+
+// end point for deliverying a list of companies on dashboard render
+app.get('/companyList', 
+  CompanyDatabase.getCompanyList,
+  (_: Request, res: Response) => {
+    res.send(res.locals.companyDataArray);
   }
 );
 
@@ -70,7 +79,8 @@ app.post('/companyData',
   CompanyDatabase.insertData,
   (__: Request, res: Response) => {
     res.sendStatus(200);
-})
+  }
+);
 
 app.post('/questionData', 
 QuestionDatabase.insertData,

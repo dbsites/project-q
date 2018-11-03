@@ -1,0 +1,342 @@
+body {
+  background: #212121;
+  font-family: 'Mundo Sans', sans-serif;
+  margin: 0;
+}
+
+/* Wrapper for Header/Body/Footer */
+.screen {
+  display: grid;
+  grid-template-rows: 4vh 90vh 3vh 3vh; 
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Header/Footer Style */
+.header, .footer {
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.header {
+  background: #000000;
+  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
+  color: #ffcc33;
+  font-size: 1rem;
+}
+
+.footer {
+  background: #000000;
+  color: #FFFFFF;
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: center;
+}
+
+.header-left {
+  float: left;
+}
+
+.header-right {
+  float: right;
+}
+
+.header li a, .footer li a {
+  color: inherit;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.header li a, .footer li a {
+  padding: 16px 16px;
+}
+
+.header li a, .footer li a {
+  padding: 6px 16px;
+}
+
+.header a:hover, .footer a:hover {
+  background-color: #111111;
+}
+
+.disclaimer {
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disclaimer-text {
+  color: #FFFFFF;
+  font-size: 7px;
+  text-align: center;
+}
+
+/* Login/Register Style */
+.form-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 0 10%;
+}
+
+.login-register-form {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-sizing: content-box;
+  padding: 24px;
+  width: 600px;
+}
+
+.login-register-form .change-form-link {
+  margin-bottom: 6px;
+}
+
+.login-register-form .change-form-link a {
+  color: #64a271;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.login-register-form .change-form-link a:hover {
+  color: #64a271;
+  text-decoration: underline;
+}
+
+/* Login/Register Style - Input Form Fields */
+.login-register-form .input-field-label {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 12px 2px 8px 2px;
+}
+
+.login-register-form .input-field {
+  background-color: #FAFAFA;
+  border: 1px solid #CDCFD4;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+}
+
+.login-register-form .input-field-name-wrapper {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 50%;
+}
+
+.login-register-form .input-field-name-wrapper:nth-of-type(2) {
+  padding-right: 24px;
+}
+
+/* Login/Register Style - Input Form Check Box */
+.login-register-form .input-check-label {
+  display: inline-block;
+  font-weight: bold;
+  position: relative;
+  padding: 0 0 10px 25px;
+  margin: 12px 2px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.login-register-form .input-check {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.login-register-form .checkmark {
+  background-color: #FAFAFA;
+  border: 1px solid #CDCFD4;
+  border-radius: 2px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 16px;
+  width: 16px;
+}
+
+.login-register-form .input-check-label input:checked ~ .checkmark {
+  background-color: #2e7d32;
+  border: 1px solid #2e7d32;
+}
+
+/* Create checkmark - hidden when not checked */
+.login-register-form .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show checkmark when checked */
+.login-register-form .input-check-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.login-register-form .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.login-register-form .submit-button {
+  background: #2e7d32;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: bold;
+  outline: none;
+  padding: 12px 24px;
+  width: 100%;
+}
+
+.login-register-form .submit-button:hover {
+  background: #005005;
+}
+
+/* Issue Selection Style */
+.issue-dashboard {
+  background: #e2e1e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 6vh 72vh 8vh;
+  margin: 2vh 2.5vw;
+  padding: 0 2.5vw;
+  width: 95vw;
+  height: 95%;
+}
+
+.issue-dashboard-header {
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.issue-dashboard-container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+.issue-card {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 22vh;
+  padding: 1vh 0;
+  margin: 1vh auto;
+  width: 22%;
+  
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.issue-card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.issue-card-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  height: 4vh;
+  padding: 1vh 0;
+  text-align: center;
+}
+
+.issue-card-blurb {
+  font-size: .9rem;
+  height: 4vh;
+  padding: 1vh 1vw;
+  text-align: center;
+}
+
+.issue-card-button {
+  background: #2e7d32;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 5vh;
+  margin: 1vh 1vw;
+  outline: none;
+  padding: 1vh 0;
+  width: 90%;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.issue-card-button:hover {
+  background: #005005;
+  cursor: pointer;
+}
+
+.issue-card-selected {
+  background: #fbfffc;
+  border: 3px solid #2e7d32;
+}
+
+.issue-card-selected .issue-card-button {
+  background: #c8e6c9;
+  color: #000000
+}
+
+.issue-card-selected .issue-card-button:hover {
+  background: #97b498;
+  color: #000000;
+  cursor: pointer;
+}
+
+.issue-dashboard-footer {
+  height: 100%;
+  padding: 0 15%;
+}
+
+.issue-dashboard-footer-button {
+  background: #2e7d32;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 5vh;
+  margin: 1vh 5%;
+  outline: none;
+  padding: 1vh 0;
+  width: 40%;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.issue-dashboard-footer-button:hover {
+  background: #005005;
+  cursor: pointer;
+}
+
+.issue-dashboard-footer > .invalid {
+  background: #cacbcd;
+  color: #424242;
+  cursor: not-allowed;
+}

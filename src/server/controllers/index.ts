@@ -4,13 +4,13 @@
  * @module  /repos/index.ts
  * @author Team Quail
  * @date 
- * @description interfaces for repos holding functionality for querying database and general interfaces for server object typing
+ * @description interfaces for controllersS holding functionality for querying database and general interfaces for server object typing
  *
  * ************************************
  */
 
 // get the users repo which hold all the user data methods
-import {UsersRepository} from './users';
+import { UsersRepository } from './users';
 import { CompanyRepository } from './company';
 import { QuestionRepository } from './questionStore';
 
@@ -22,16 +22,32 @@ interface IExtensions {
 }
 // interface for userdata object which holds email/pass and is used to login/register
 interface userData {
-  email: string,
-  password: string,
+  firstName: string,
+  lastName: string,
+  registerEmail: string,
+  registerPassword: string,
+  confirmPassword: string,
+  agreeTerms: boolean,
 }
 
+// interface for userData object as it comes frm the db
+interface userDataFromDb {
+  id: string,
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  agreeTerms: boolean,
+  issues: any,
+  remember: any,
+}
+
+// interface for each item in the array of company objects, not currently in use
 interface CompanyDataInterface {
   ticker: string,
   companyName: string,
   blurb: string,
-  link: string,
-  
+  link: string,  
 }
 
 interface Issues {
@@ -47,6 +63,7 @@ export {
   IExtensions,
   UsersRepository,
   userData,
+  userDataFromDb,
   CompanyDataInterface,
   CompanyRepository,
   Issues,
