@@ -23,6 +23,8 @@ import * as cors from 'cors';
 import Authenticate from './db/controllers/authenticate'
 // import companyDb middleware
 import CompanyDatabase from './db/controllers/addCompanyDataToDb';
+// import questionDb middleware
+import QuestionDatabase from './db/controllers/addQuestionDataToDb';
 
 // activate the express server
 const app: Application = express();
@@ -66,8 +68,14 @@ app.post('/register',
 // CompanyDatabase middleware handles the insertion of the data and calls the query statements
 app.post('/companyData', 
   CompanyDatabase.insertData,
-  (__dirname: Request, res: Response) => {
+  (__: Request, res: Response) => {
     res.sendStatus(200);
+})
+
+app.post('/questionData', 
+QuestionDatabase.insertData,
+(__: Request, res: Response) => {
+  res.sendStatus(200);
 })
 
 // wake up the server
