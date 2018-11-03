@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'; // Access route params
+import { Redirect, withRouter } from 'react-router-dom'; // Access route params
 
 import * as actions from '../actions/actionCreators'
 
@@ -48,6 +48,7 @@ const mapDispatchToProps: any = (dispatch: any) => {
       return dispatch(actions.updateRegisterField({field: event.target.name, value: value}));
     },
     fetchRegisterRequest: (registerFields: any) => dispatch(actions.fetchRegisterRequest(registerFields)),
+    logoutUser: () => dispatch(actions.logoutUser()),
   }
 }
 
@@ -56,34 +57,41 @@ let FormContainer: any = (props: any) => {
   //Destructure form values and actions from props
   const {
     match, 
-    loginFields,
-    fetchLoginRequest,
-    updateLoginField,
-    registerFields,
-    fetchRegisterRequest,
-    updateRegisterField,
+    loginFields, registerFields,
+    fetchLoginRequest, fetchRegisterRequest,
+    updateLoginField, updateRegisterField,
+    logoutUser,
   } = props;
+
+  const loginForm = <LoginForm
+      loginFields={loginFields}
+      fetchLoginRequest={fetchLoginRequest}
+      updateLoginField={updateLoginField}
+    />;
+
+  const registerForm = <RegisterForm
+      registerFields={registerFields}
+      fetchRegisterRequest={fetchRegisterRequest}
+      updateRegisterField={updateRegisterField}
+    />
+
+  let displayForm;
+  
+  if (match.params.id === 'logout') {
+    logoutUser();
+    return <Redirect to='/account/login' />
+  }
+  
+  if (match.params.id === 'login') {
+    displayForm = loginForm;
+  } else if (match.params.id === 'register') {
+    displayForm = registerForm;
+  }
 
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
     <div className="form-container">
-      {match.params.id === 'login' ?
-        (
-          <LoginForm
-            loginFields={loginFields}
-            fetchLoginRequest={fetchLoginRequest}
-            updateLoginField={updateLoginField}
-          />
-        )
-        :
-        (
-          <RegisterForm
-            registerFields={registerFields}
-            fetchRegisterRequest={fetchRegisterRequest}
-            updateRegisterField={updateRegisterField}
-          />
-        )
-      }
+      {displayForm}
     </div>
   )
 }
