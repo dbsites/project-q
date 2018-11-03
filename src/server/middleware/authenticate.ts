@@ -19,9 +19,10 @@ import { userData } from '../controllers/index';
 // create object which holds the authentication methods
 const Authenticate: any =  {};
 
-// registration route, new account are directed here and password is hashed then user is added to the db
+// registration route, new accounts are directed here and password is hashed then user is added to the db
 Authenticate.hashPassword = (req: Request, _: Response, next: NextFunction) => {
-  return bcrypt.hash(req.body.password, 10, (error: Error, encrypted: string) => {
+  console.log(req.body);
+  return bcrypt.hash(req.body.confirmPassword, 10, (error, encrypted) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
     }
@@ -35,7 +36,7 @@ Authenticate.hashPassword = (req: Request, _: Response, next: NextFunction) => {
         next();
       })
       .catch((error: any) => {
-        console.log('ERROR AT REGISTRATION IN SERVER.ts', error);
+        console.log('ERROR AT REGISTRATION IN AUTHENTICATE.ts', error);
       });
     }
   })
@@ -47,7 +48,7 @@ Authenticate.compareHash = (req: Request, res: Response, next: NextFunction) => 
   // db.users accesses methods defined in the users repo
   db.users.findByEmail(req.body.email)
   .then((data: userData) => {
-    bcrypt.compare(req.body.password, JSON.parse(JSON.stringify(data.password)), (error: Error, match: boolean) => {
+    bcrypt.compare(req.body.password, JSON.parse(JSON.stringify(data.confirmPassword)), (error: Error, match: boolean) => {
       if (match) {
         next();
       }
