@@ -1,7 +1,7 @@
 /**
  * ************************************
  *
- * @module  repos/users.ts
+ * @module  controllers/users.ts
  * @author Team Quail
  * @date 
  * @description methods to modify/create/access user data within the database
@@ -28,7 +28,8 @@
     // add a new user to the database
     // userData Interface imported on line 16
     add (userData: userData) {
-      return this.db.none('INSERT INTO users (id, email, password) VALUES ($1, $2, $3)', [v4(), userData.email, userData.password]);
+      return this.db.none('INSERT INTO users (id, email, password, "firstName", "lastName", "agreeTerms") VALUES ($1, $2, $3, $4, $5, $6)', 
+        [v4(), userData.registerEmail, userData.confirmPassword, userData.firstName, userData.lastName, userData.agreeTerms]);
     }
 
     //delete a user from the database and returns the number of records deleted
