@@ -1,5 +1,5 @@
 body {
-  background: #4f545b;
+  background: #212121;
   font-family: 'Mundo Sans', sans-serif;
   margin: 0;
 }
@@ -7,7 +7,7 @@ body {
 /* Wrapper for Header/Body/Footer */
 .screen {
   display: grid;
-  grid-template-rows: 50px 1fr 30px 24px; 
+  grid-template-rows: 4vh 90vh 3vh 3vh; 
   height: 100vh;
   width: 100vw;
 }
@@ -21,12 +21,17 @@ body {
 }
 
 .header {
+  background: #000000;
+  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
   color: #ffcc33;
+  font-size: 1rem;
 }
 
 .footer {
+  background: #000000;
   color: #FFFFFF;
   display: flex;
+  font-size: 0.8rem;
   justify-content: center;
 }
 
@@ -58,16 +63,24 @@ body {
 }
 
 .disclaimer {
-  color: white;
-  font-size: 8px;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disclaimer-text {
+  color: #FFFFFF;
+  font-size: 7px;
   text-align: center;
 }
 
 /* Login/Register Style */
 .form-container {
-  display: flex;
   align-items: center;
+  display: flex;
   justify-content: center;
+  padding: 0 10%;
 }
 
 .login-register-form {
@@ -155,8 +168,8 @@ body {
 }
 
 .login-register-form .input-check-label input:checked ~ .checkmark {
-  background-color: #64a271;
-  border: 1px solid #64a271;
+  background-color: #2e7d32;
+  border: 1px solid #2e7d32;
 }
 
 /* Create checkmark - hidden when not checked */
@@ -182,9 +195,8 @@ body {
   transform: rotate(45deg);
 }
 
-
 .login-register-form .submit-button {
-  background: #64a271;
+  background: #2e7d32;
   border-radius: 4px;
   box-sizing: border-box;
   color: #FFFFFF;
@@ -193,4 +205,138 @@ body {
   outline: none;
   padding: 12px 24px;
   width: 100%;
+}
+
+.login-register-form .submit-button:hover {
+  background: #005005;
+}
+
+/* Issue Selection Style */
+.issue-dashboard {
+  background: #e2e1e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 6vh 72vh 8vh;
+  margin: 2vh 2.5vw;
+  padding: 0 2.5vw;
+  width: 95vw;
+  height: 95%;
+}
+
+.issue-dashboard-header {
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.issue-dashboard-container {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+.issue-card {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-sizing: border-box;
+  height: 22vh;
+  padding: 1vh 0;
+  margin: 1vh auto;
+  width: 22%;
+  
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.issue-card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.issue-card-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  height: 4vh;
+  padding: 1vh 0;
+  text-align: center;
+}
+
+.issue-card-blurb {
+  font-size: .9rem;
+  height: 4vh;
+  padding: 1vh 1vw;
+  text-align: center;
+}
+
+.issue-card-button {
+  background: #2e7d32;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 5vh;
+  margin: 1vh 1vw;
+  outline: none;
+  padding: 1vh 0;
+  width: 90%;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.issue-card-button:hover {
+  background: #005005;
+  cursor: pointer;
+}
+
+.issue-card-selected {
+  background: #fbfffc;
+  border: 3px solid #2e7d32;
+}
+
+.issue-card-selected .issue-card-button {
+  background: #c8e6c9;
+  color: #000000
+}
+
+.issue-card-selected .issue-card-button:hover {
+  background: #97b498;
+  color: #000000;
+  cursor: pointer;
+}
+
+.issue-dashboard-footer {
+  height: 100%;
+  padding: 0 15%;
+}
+
+.issue-dashboard-footer-button {
+  background: #2e7d32;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 5vh;
+  margin: 1vh 5%;
+  outline: none;
+  padding: 1vh 0;
+  width: 40%;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.issue-dashboard-footer-button:hover {
+  background: #005005;
+  cursor: pointer;
+}
+
+.issue-dashboard-footer > .invalid {
+  background: #cacbcd;
+  color: #424242;
+  cursor: not-allowed;
 }

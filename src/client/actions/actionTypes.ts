@@ -21,3 +21,9 @@ export const FETCH_REGISTER_FAILURE: string = 'FETCH_REGISTER_FAILURE';
 // User Actions
 export const AUTH_USER: string = 'AUTH_USER';
 export const LOGOUT_USER: string = 'LOGOUT_USER';
+export const SUBMIT_ISSUES: string = 'SUBMIT_ISSUES';
+
+// Issue Ranking Actions
+export const CLEAR_ISSUES: string = 'CLEAR_ISSUES';
+export const TOGGLE_ISSUE: string = 'TOGGLE_ISSUE';
+export const TOGGLE_ISSUE_SUCCESS: string = 'TOGGLE_ISSUE_SUCCESS';

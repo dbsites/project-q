@@ -25,6 +25,12 @@ const userReducer = (state: any = initialUserState, action: any) => {
         ...state,
         isAuth: false,
       }
+    
+    case actions.SUBMIT_ISSUES:
+      return {
+        ... state,
+        issuesComplete: true,
+      }
 
     default:
       return state;

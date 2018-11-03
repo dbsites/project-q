@@ -12,7 +12,9 @@ import DashContainer from './containers/DashContainer'
 
 // TODO: Find more appropriate home for interface
 interface Props {
-  isAuth: boolean;
+  isAuth: boolean,
+  issuesComplete: boolean,
+  surveyComplete: boolean,
 }
 
 class App extends React.Component<Props> {
@@ -22,19 +24,20 @@ class App extends React.Component<Props> {
 
   render() {
     // Destructure auth status from props
-    console.log(this.props);
     const { isAuth } = this.props;
     if (isAuth) {
-      return <DashContainer />
+      return <DashContainer userState={this.props} />
     }
     return <Redirect to='/account/login' />
   }
 };
 
 // mapStatetoProps to access user auth status
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: any): Props => {
   return {
     isAuth: state.user.isAuth,
+    issuesComplete: state.user.issuesComplete,
+    surveyComplete: state.user.surveyComplete,
   }
 }
 

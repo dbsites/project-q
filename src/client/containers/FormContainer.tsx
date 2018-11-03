@@ -14,7 +14,7 @@ import RegisterForm from '../components/RegisterForm';
 
 // TODO: Assign explicit type to store
 // Extract form values from store to pass as props
-const mapStateToProps: any = (store: any) => ({
+const mapStateToProps = (store: any): any => ({
   loginFields: {
     loginEmail: store.login.loginEmail,
     loginPassword: store.login.loginPassword,

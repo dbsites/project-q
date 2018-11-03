@@ -66,7 +66,21 @@ export const authUser = () => ({
   type: actions.AUTH_USER,
 });
 
-// User Object Actions TODO: Add functionality
 export const logoutUser = () => ({
   type: actions.LOGOUT_USER,
+});
+
+// TODO: Actually save issues!
+export const submitIssues = () => ({
+  type: actions.SUBMIT_ISSUES,
+})
+
+// Issue Ranking Actions TODO: Add functionality
+export const clearIssues = () => ({
+  type: actions.CLEAR_ISSUES
+});
+
+export const toggleIssue = (issueName: string) => ({
+  type: actions.TOGGLE_ISSUE,
+  payload: issueName,
 });
