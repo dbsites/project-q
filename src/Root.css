@@ -1,0 +1,196 @@
+body {
+  background: #4f545b;
+  font-family: 'Mundo Sans', sans-serif;
+  margin: 0;
+}
+
+/* Wrapper for Header/Body/Footer */
+.screen {
+  display: grid;
+  grid-template-rows: 50px 1fr 30px 24px; 
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Header/Footer Style */
+.header, .footer {
+  list-style-type: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.header {
+  color: #ffcc33;
+}
+
+.footer {
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+}
+
+.header-left {
+  float: left;
+}
+
+.header-right {
+  float: right;
+}
+
+.header li a, .footer li a {
+  color: inherit;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.header li a, .footer li a {
+  padding: 16px 16px;
+}
+
+.header li a, .footer li a {
+  padding: 6px 16px;
+}
+
+.header a:hover, .footer a:hover {
+  background-color: #111111;
+}
+
+.disclaimer {
+  color: white;
+  font-size: 8px;
+  text-align: center;
+}
+
+/* Login/Register Style */
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-register-form {
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-sizing: content-box;
+  padding: 24px;
+  width: 600px;
+}
+
+.login-register-form .change-form-link {
+  margin-bottom: 6px;
+}
+
+.login-register-form .change-form-link a {
+  color: #64a271;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.login-register-form .change-form-link a:hover {
+  color: #64a271;
+  text-decoration: underline;
+}
+
+/* Login/Register Style - Input Form Fields */
+.login-register-form .input-field-label {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 12px 2px 8px 2px;
+}
+
+.login-register-form .input-field {
+  background-color: #FAFAFA;
+  border: 1px solid #CDCFD4;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+}
+
+.login-register-form .input-field-name-wrapper {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 50%;
+}
+
+.login-register-form .input-field-name-wrapper:nth-of-type(2) {
+  padding-right: 24px;
+}
+
+/* Login/Register Style - Input Form Check Box */
+.login-register-form .input-check-label {
+  display: inline-block;
+  font-weight: bold;
+  position: relative;
+  padding: 0 0 10px 25px;
+  margin: 12px 2px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.login-register-form .input-check {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.login-register-form .checkmark {
+  background-color: #FAFAFA;
+  border: 1px solid #CDCFD4;
+  border-radius: 2px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  height: 16px;
+  width: 16px;
+}
+
+.login-register-form .input-check-label input:checked ~ .checkmark {
+  background-color: #64a271;
+  border: 1px solid #64a271;
+}
+
+/* Create checkmark - hidden when not checked */
+.login-register-form .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show checkmark when checked */
+.login-register-form .input-check-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.login-register-form .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+
+.login-register-form .submit-button {
+  background: #64a271;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: bold;
+  outline: none;
+  padding: 12px 24px;
+  width: 100%;
+}
