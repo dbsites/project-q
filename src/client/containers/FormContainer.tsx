@@ -61,35 +61,27 @@ let FormContainer: any = (props: any) => {
     updateLoginField,
     registerFields,
     fetchRegisterRequest,
-    updateRegisterCheck,
     updateRegisterField,
   } = props;
 
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
-    <div>
+    <div className="form-container">
       {match.params.id === 'login' ?
         (
-          <div>
-            <h1>Login Form</h1>
-            <LoginForm
-              loginFields={loginFields}
-              fetchLoginRequest={fetchLoginRequest}
-              updateLoginField={updateLoginField}
-            />
-          </div>
+          <LoginForm
+            loginFields={loginFields}
+            fetchLoginRequest={fetchLoginRequest}
+            updateLoginField={updateLoginField}
+          />
         )
         :
         (
-          <div>
-            <h1>Register Form</h1>
-            <RegisterForm
-              registerFields={registerFields}
-              fetchRegisterRequest={fetchRegisterRequest}
-              updateRegisterCheck={updateRegisterCheck}
-              updateRegisterField={updateRegisterField}
-            />
-          </div>
+          <RegisterForm
+            registerFields={registerFields}
+            fetchRegisterRequest={fetchRegisterRequest}
+            updateRegisterField={updateRegisterField}
+          />
         )
       }
     </div>
