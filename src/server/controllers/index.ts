@@ -20,8 +20,24 @@ interface IExtensions {
 }
 // interface for userdata object which holds email/pass and is used to login/register
 interface userData {
+  firstName: string,
+  lastName: string,
+  registerEmail: string,
+  registerPassword: string,
+  confirmPassword: string,
+  agreeTerms: boolean,
+}
+
+// interface for userData object as it comes frm the db
+interface userDataFromDb {
+  id: string,
   email: string,
   password: string,
+  firstName: string,
+  lastName: string,
+  agreeTerms: boolean,
+  issues: any,
+  remember: any,
 }
 
 // interface for each item in the array of company objects, not currently in use
@@ -45,6 +61,7 @@ export {
   IExtensions,
   UsersRepository,
   userData,
+  userDataFromDb,
   CompanyDataInterface,
   CompanyRepository,
   Issues,
