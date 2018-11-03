@@ -28,6 +28,18 @@ interface userData {
   agreeTerms: boolean,
 }
 
+// interface for userData object as it comes frm the db
+interface userDataFromDb {
+  id: string,
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  agreeTerms: boolean,
+  issues: any,
+  remember: any,
+}
+
 // interface for each item in the array of company objects, not currently in use
 interface CompanyDataInterface {
   ticker: string,
@@ -49,6 +61,7 @@ export {
   IExtensions,
   UsersRepository,
   userData,
+  userDataFromDb,
   CompanyDataInterface,
   CompanyRepository,
   Issues,
