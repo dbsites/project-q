@@ -22,6 +22,8 @@ import * as cors from 'cors';
 // import authentication middleware
 import Authenticate from './middleware/authenticate'
 // import companyDb middleware
+// import questionDb middleware
+import QuestionDatabase from './middleware/addQuestionDataToDb';
 import CompanyDatabase from './middleware/companyDataMethods';
 
 // activate the express server
@@ -75,10 +77,16 @@ app.get('/companyList',
 // CompanyDatabase middleware handles the insertion of the data and calls the query statements
 app.post('/companyData', 
   CompanyDatabase.insertData,
-  (__dirname: Request, res: Response) => {
+  (__: Request, res: Response) => {
     res.sendStatus(200);
   }
 );
+
+app.post('/questionData', 
+QuestionDatabase.insertData,
+(__: Request, res: Response) => {
+  res.sendStatus(200);
+})
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
