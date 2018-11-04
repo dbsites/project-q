@@ -23,7 +23,7 @@ import * as cors from 'cors';
 import Authenticate from './middleware/authenticate'
 // import companyDb middleware
 // import questionDb middleware
-import QuestionDatabase from './db/controllers/addQuestionDataToDb';
+import QuestionDatabase from './middleware/addQuestionDataToDb';
 import CompanyDatabase from './middleware/companyDataMethods';
 
 // activate the express server

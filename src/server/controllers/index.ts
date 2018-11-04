@@ -4,7 +4,7 @@
  * @module  /repos/index.ts
  * @author Team Quail
  * @date 
- * @description interfaces for controllersS holding functionality for querying database and general interfaces for server object typing
+ * @description interfaces for controllers holding functionality for querying database and general interfaces for server object typing
  *
  * ************************************
  */
