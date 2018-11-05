@@ -4,8 +4,9 @@
  */
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import FormField from './FormField';
+
 // import FormError from './FormError';
 
 // TODO: Assign explicit type to props
@@ -22,6 +23,17 @@ const LoginForm: any = (props: any) => {
     loginPassword,
     rememberMe,
   } = loginFields;
+
+  // Check for cookie - if present, log user in
+  if (document.cookie) {
+    const cookieArray = document.cookie.split(';');
+    for (let item of cookieArray) {
+      let itemString = item.trim();
+      if(itemString.startsWith('key=')) {
+        return <Redirect to='/' />;
+      }
+    }
+  }
 
   return (
     <div className="login-register-form">

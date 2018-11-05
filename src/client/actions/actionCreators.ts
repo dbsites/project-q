@@ -76,8 +76,9 @@ export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>
   .catch((err: any) => console.error(err));
 
 // User Object Actions TODO: Add functionality
-export const authUser = () => ({
+export const authUser = (userId: string) => ({
   type: actions.AUTH_USER,
+  payload: userId,
 });
 
 export const logoutUser = () => ({
