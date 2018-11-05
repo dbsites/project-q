@@ -340,3 +340,30 @@ body {
   color: #424242;
   cursor: not-allowed;
 }
+
+/* Survey Question Style */
+.survey-dashboard {
+  background: #e2e1e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: 6vh 80vh;
+  margin: 2vh 2.5vw;
+  padding: 0 2.5vw;
+  width: 95vw;
+  height: 95%;
+}
+
+.survey-dashboard-header {
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  padding: 10px 0;
+  width: 100%;
+}
+
+.survey-dashboard-container {
+  display: grid;
+  grid-template-rows: 25vh 25vh 25vh;
+  width: 100%;
+}

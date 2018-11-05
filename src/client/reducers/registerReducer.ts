@@ -3,7 +3,7 @@
  * @description Reducer for Registration Form
  */
 
-import * as actions from '../actions/actionTypes';
+import actions from '../actions/actionTypes';
 
 // Define initial state
 // TODO: Interface for initialRegisterState

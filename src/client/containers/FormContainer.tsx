@@ -34,7 +34,7 @@ const mapStateToProps = (store: any): any => ({
 // TODO: Explicit type to event
 
 // Extract form update and submit actions from store to pass as props
-const mapDispatchToProps: any = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     updateLoginField: (event: any) => {
       // If input is a checkbox, payload is checked status, otherwise payload is value
