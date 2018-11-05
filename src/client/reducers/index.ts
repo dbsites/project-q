@@ -10,6 +10,7 @@ import loginReducer from './loginReducer';
 import registerReducer from './registerReducer';
 import userReducer from './userReducer';
 import issuesReducer from './issuesReducer';
+import surveyReducer from './surveyReducer';
 
 // Combine reducers
 const reducers: Reducer = combineReducers({
@@ -17,6 +18,7 @@ const reducers: Reducer = combineReducers({
   register: registerReducer,
   user: userReducer,
   issues: issuesReducer,
+  survey: surveyReducer,
 });
 
 export default reducers;

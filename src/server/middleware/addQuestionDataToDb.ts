@@ -11,7 +11,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 // import db and db functionality from modular files to access db methods
-import db from '../index'
+import db from '../index';
 
 const QuestionDatabase: any = {};
 

@@ -18,7 +18,7 @@ import { userDataFromDb } from '../controllers/index';
 const Cookie: any = {}
 
 Cookie.give = (_: Request, res: Response, next: NextFunction) => {
-  const sevenDays = 7* 24 * 60 * 1000;
+  const sevenDays = 7 * 24 * 60 * 1000;
   const twoHours = 2 * 60 * 1000;
   const cookieLength: number = (res.locals.remember) ? sevenDays : twoHours;
   res.cookie('user', res.locals.loginEmail, { maxAge: cookieLength });
