@@ -27,4 +27,16 @@ QuestionDatabase.insertData = (req: Request, _: Response, next: NextFunction) =>
   
 }
 
+QuestionDatabase.getQuestionList = (_: Request, res: Response, next: NextFunction) => {
+  db.questions.getQuestions()
+    .then((data: any[]) => {
+      res.locals.questionDataArray = data;
+      next();
+    })
+    .catch((error: any) => {
+      console.log('ERROR AT getQuestionList IN addQuestionsDataToDb.ts', error);
+      res.sendStatus(500);
+    })
+}
+
 export default QuestionDatabase;

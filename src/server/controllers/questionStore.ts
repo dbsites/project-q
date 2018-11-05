@@ -35,6 +35,9 @@ export class QuestionRepository {
         console.log('ERROR AT ADD FUNCTION IN QUESTIONSTORE.TS', error);
       })
     }
-  }
+  };
 
+  getQuestions(){
+    return this.db.any('SELECT * FROM questions;')
+  }
 }
