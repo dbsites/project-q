@@ -94,6 +94,14 @@ app.get('/companyList',
   }
 );
 
+// route to grab data from the database;
+app.get('/questionList', 
+  QuestionDatabase.getQuestionList, 
+  (_: Request, res: Response) => {
+    res.send(res.locals.questionDataArray);
+    res.end();
+});
+
 // end point for company data submission
 // CompanyDatabase middleware handles the insertion of the data and calls the query statements
 app.post('/companyData', 
@@ -109,6 +117,7 @@ QuestionDatabase.insertData,
 (_: Request, res: Response) => {
   res.sendStatus(200);
 })
+
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
