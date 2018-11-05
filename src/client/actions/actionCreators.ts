@@ -28,6 +28,7 @@ export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(loginFields),
   })
   .then((response: any) => {
@@ -51,6 +52,7 @@ export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>
     headers: {
       'Content-Type': 'application/json',
     },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(registerFields),
   })
   .then((response: any) => {
