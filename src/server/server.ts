@@ -26,6 +26,8 @@ import * as helmet from 'helmet';
 // import authentication middleware
 import Authenticate from './middleware/authenticate'
 // import companyDb middleware
+// import questionDb middleware
+import QuestionDatabase from './middleware/addQuestionDataToDb';
 import CompanyDatabase from './middleware/companyDataMethods';
 // import companyDb middleware
 import Cookie from './middleware/cookies';
@@ -101,6 +103,12 @@ app.post('/companyData',
     res.end();
   }
 );
+
+app.post('/questionData', 
+QuestionDatabase.insertData,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
+})
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
