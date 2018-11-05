@@ -3,12 +3,12 @@
  * @description Reducer for User Object
  */
 
-import * as actions from '../actions/actionTypes';
+import actions from '../actions/actionTypes';
 
 // Define initial state
 const initialUserState: any = {
   isAuth: true,
-  issuesComplete: false,
+  issues: {},
   surveyComplete: false,
 };
 
@@ -27,9 +27,13 @@ const userReducer = (state: any = initialUserState, action: any) => {
       }
     
     case actions.SUBMIT_ISSUES:
+      const issueState: any = {};
+      action.payload.forEach((issue: string) => {
+        issueState[issue] = null;
+      })
       return {
         ... state,
-        issuesComplete: true,
+        issues: issueState,
       }
 
     default:

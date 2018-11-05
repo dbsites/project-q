@@ -9,9 +9,9 @@ import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
 
 const DashContainer = (props: any): any => {
-  const { issuesComplete, surveyComplete } = props.userState;
+  const { issues, surveyComplete } = props.userState;
 
-  if (!issuesComplete) return <IssuesContainer />
+  if (!Object.keys(issues).length) return <IssuesContainer />
 
   if (!surveyComplete) return <SurveyContainer />
 

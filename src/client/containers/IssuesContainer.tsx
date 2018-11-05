@@ -7,7 +7,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actionCreators';
 
-import { getSelectedIssueCount } from '../reducers/issuesReducer';
+import { getSelectedIssueCount, getSelectedIssues } from '../reducers/issuesReducer';
 
 import Issue from '../components/Issue';
 
@@ -24,6 +24,7 @@ const IssuesContainer = (props: any): any => {
     issuesArray.push(<Issue issue={issues[issueName]} toggleIssue={toggleIssue} />);
   });
 
+  const selectedIssues = getSelectedIssues(issues);
   const issueCount = getSelectedIssueCount(issues);
   const issuesRemaining = 6 - issueCount;
   const additional = issueCount === 0 ? '' : 'Additional ';
@@ -33,7 +34,7 @@ const IssuesContainer = (props: any): any => {
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
-    <React.Fragment><input className="issue-dashboard-footer-button" onClick={clearIssues} type="submit" value="Clear All"/><input className="issue-dashboard-footer-button" onClick={submitIssues} type="submit" value="Submit"/></React.Fragment> :
+    <React.Fragment><input className="issue-dashboard-footer-button" onClick={clearIssues} type="submit" value="Clear All"/><input className="issue-dashboard-footer-button" onClick={() => submitIssues(selectedIssues)} type="submit" value="Submit"/></React.Fragment> :
     <React.Fragment><input className="issue-dashboard-footer-button invalid" type="submit" value="Clear All"/><input className="issue-dashboard-footer-button invalid" type="submit" value="Submit"/></React.Fragment> ;
 
   return (
@@ -56,8 +57,7 @@ const mapStateToProps = (store: any): any => ({
 const mapDispatchToProps = (dispatch: any): any => ({
   clearIssues: () => dispatch(actions.clearIssues()),
   toggleIssue: (issue: string) => dispatch(actions.toggleIssue(issue)),
-  
-  submitIssues: () => dispatch(actions.submitIssues()),
+  submitIssues: (issues: string[]) => dispatch(actions.submitIssues(issues)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);

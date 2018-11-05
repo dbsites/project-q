@@ -3,7 +3,7 @@
  * @description Reducer for Issues Object
  */
 
-import * as actions from '../actions/actionTypes';
+import actions from '../actions/actionTypes';
 
 // Define initial state
 const initialIssueState: any = {
@@ -102,5 +102,6 @@ const issuesReducer = (state: any = initialIssueState, action: any) => {
 export default issuesReducer;
 
 // -- SELECTOR FUNCTIONS -- //
-// Returns count of selected issues
+// Returns array and count of selected issues
+export const getSelectedIssues = (state: any) => Object.keys(state).filter(issue => state[issue].selected);
 export const getSelectedIssueCount = (state: any) => Object.keys(state).filter(issue => state[issue].selected).length;

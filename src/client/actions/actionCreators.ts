@@ -4,7 +4,9 @@
  */
 
 // import actionType constants
-import * as actions from './actionTypes';
+import actions from './actionTypes';
+
+import { Action } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
 
@@ -16,7 +18,12 @@ const HOST: string = 'http://localhost:3000';
 // })
 
 // Login Form Actions
-export const updateLoginField = (event: any): any => ({
+export interface updateLoginFieldAction extends Action {
+  type: string,
+  payload: any,
+}
+
+export const updateLoginField = (event: any): updateLoginFieldAction => ({
   type: actions.UPDATE_LOGIN_FIELD,
   payload: event,
 });
@@ -39,7 +46,12 @@ export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
   .catch((err: any) => console.error(err));
 
 // Register Form Actions
-export const updateRegisterField= (event: any): any => ({
+export interface updateRegisterFieldAction extends Action {
+  type: string,
+  payload: any,
+}
+
+export const updateRegisterField= (event: any): updateRegisterFieldAction => ({
   type: actions.UPDATE_REGISTER_FIELD,
   payload: event,
 });
@@ -71,8 +83,9 @@ export const logoutUser = () => ({
 });
 
 // TODO: Actually save issues!
-export const submitIssues = () => ({
+export const submitIssues = (issues: string[]) => ({
   type: actions.SUBMIT_ISSUES,
+  payload: issues,
 })
 
 // Issue Ranking Actions TODO: Add functionality
