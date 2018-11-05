@@ -13,10 +13,24 @@ const initialUserState: any = {
   surveyComplete: false,
 };
 
+const issueReducer = (state: any, action: any) => {
+  switch (action.type) {
+    case actions.UPDATE_ISSUE:
+      const nextState: any = {};
+      nextState[action.payload.issue] = action.payload.answer;
+      return {
+        ...state,
+        ...nextState
+      }
+    default:
+      return state;
+
+  }
+}
+
 const userReducer = (state: any = initialUserState, action: any) => {
   switch (action.type) {
     case actions.AUTH_USER:
-      console.log(action);
       if (action.payload === 'cookie not found') {
         return {
           ...state,
@@ -49,8 +63,19 @@ const userReducer = (state: any = initialUserState, action: any) => {
       })
       return {
         ... state,
-        userId: null,
         issues: issueState,
+      }
+
+    case actions.UPDATE_ISSUE:
+      return {
+        ... state,
+        issues: issueReducer(state.issues, action),
+      }
+
+    case actions.COMPLETE_SURVEY:
+      return {
+        ... state,
+        surveyComplete: true,
       }
 
     default:
@@ -59,3 +84,7 @@ const userReducer = (state: any = initialUserState, action: any) => {
 }
 
 export default userReducer;
+
+// -- SELECTOR FUNCTIONS -- //
+// Returns an object of outstanding issues
+export const getOutstandingIssues = (issues: any) => Object.keys(issues).filter(issue => issues[issue] === null);

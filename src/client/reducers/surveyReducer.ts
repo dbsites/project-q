@@ -11,204 +11,204 @@ const initialSurveyState: any = {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueTwo: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueThree: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueFour: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueFive: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueSix: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueSeven: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueEight: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueNine: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueTen: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueEleven: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
   issueTwelve: {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
-      agree: null,
+      answer: null,
     },
     q2: {
       qid: 'q2',
       question: 'How would you answer this second survey question?',
-      agree: null,
+      answer: null,
     },
     q3: {
       qid: 'q3',
       question: 'How would you answer this third survey question?',
-      agree: null,
+      answer: null,
     },
   },
 };
@@ -217,10 +217,10 @@ const initialSurveyState: any = {
 const questionReducer = (state: any, action: any) => {
   switch(action.type) {
     case actions.ANSWER_QUESTION:
-      if (state.qid === action.payload.qid) {
+      if (state.qid === action.payload.target.id) {
         return {
           ...state,
-          agree: action.payload.agree,
+          answer: action.payload.target.value.toLowerCase(),
         }
       }
 
@@ -233,12 +233,12 @@ const questionReducer = (state: any, action: any) => {
 const questionsReducer = (state: any, action: any) => {
   switch(action.type) {
     case actions.ANSWER_QUESTION:
-      const question: string = action.payload.qid;
+      const question: string = action.payload.target.id;
       const nextState: any = {};
       nextState[question] = questionReducer(state[question], action);
       return {
         ...state,
-        nextState,
+        ...nextState,
       }
 
     default: 
@@ -250,12 +250,12 @@ const questionsReducer = (state: any, action: any) => {
 const surveyReducer = (state: any = initialSurveyState, action: any) => {
   switch(action.type) {
     case actions.ANSWER_QUESTION:
-      const issue: string = action.payload.issue;
+      const issue: string = action.payload.target.title;
       const nextState: any = {};
       nextState[issue] = questionsReducer(state[issue], action)
       return {
         ...state,
-        nextState
+        ...nextState
       }
 
     default: 

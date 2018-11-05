@@ -367,3 +367,54 @@ body {
   grid-template-rows: 25vh 25vh 25vh;
   width: 100%;
 }
+
+.survey-question {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+  margin: 3vh 0;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+.survey-question-text {
+  margin: 2vh;
+}
+
+.survey-button {
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size: 1rem;
+  font-weight: bold;
+  height: 5vh;
+  margin: 2vh 5%;
+  outline: none;
+  padding: 1vh 0;
+  width: 90%;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.survey-agree-button {
+  background: #2e7d32;
+}
+
+.survey-agree-button:hover {
+  background: #005005;
+  cursor: pointer;
+}
+
+.survey-disagree-button {
+  background: #c62828;
+}
+
+.survey-disagree-button:hover {
+  background: #8e0000;
+  cursor: pointer;
+}
+
+.survey-deselected-button {
+  background: #cacbcd;
+  color: #424242;
+}

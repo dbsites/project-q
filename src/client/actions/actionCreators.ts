@@ -91,6 +91,11 @@ export const submitIssues = (issues: string[]) => ({
   payload: issues,
 })
 
+export const updateIssue = (issue: any) => ({
+  type: actions.UPDATE_ISSUE,
+  payload: issue,
+})
+
 // Issue Ranking Actions TODO: Add functionality
 export const clearIssues = () => ({
   type: actions.CLEAR_ISSUES
@@ -100,3 +105,13 @@ export const toggleIssue = (issueName: string) => ({
   type: actions.TOGGLE_ISSUE,
   payload: issueName,
 });
+
+export const completeSurvey = () => ({
+  type: actions.COMPLETE_SURVEY,
+});
+
+// Survey Question Actions
+export const answerQuestion = (event: any) => ({
+  type: actions.ANSWER_QUESTION,
+  payload: event,
+})
