@@ -50,6 +50,12 @@ interface CompanyDataInterface {
   link: string,  
 }
 
+// interface for userCookie
+interface UserCookie {
+  name: string,
+  loggedIn: boolean,
+}
+
 interface Issues {
   economyScore: number,
   environmentScore: number,
@@ -64,6 +70,7 @@ export {
   UsersRepository,
   userData,
   userDataFromDb,
+  UserCookie,
   CompanyDataInterface,
   CompanyRepository,
   Issues,
