@@ -46,4 +46,9 @@
     findByEmail (email: string) {
       return this.db.oneOrNone('SELECT * FROM users WHERE email = $1', email);
     }
+
+    // update user to remembered or not
+    rememberUser (email: string, remember: boolean) {
+      return this.db.none('UPDATE users SET remember = $1 WHERE email = $2', [remember, email]);
+    }
  }

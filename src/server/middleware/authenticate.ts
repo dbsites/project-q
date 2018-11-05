@@ -1,7 +1,7 @@
 /**
  * ************************************
  *
- * @module  controllers/authenticate.ts
+ * @module  middleware/authenticate.ts
  * @author Team Quail
  * @date 
  * @description middleware to authenticate user logins and create cookies
@@ -15,6 +15,8 @@ import { Request, Response, NextFunction } from 'express';
 import db from '../index';
 // import userData interface for ts
 import { userDataFromDb } from '../controllers/index';
+
+
 
 // create object which holds the authentication methods
 const Authenticate: any =  {};
@@ -45,11 +47,21 @@ Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) =>
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
 Authenticate.compareHash = (req: Request, res: Response, next: NextFunction) => {
-  // db.users accesses methods defined in the users repo
+  // update the users remember me option
+  if (req.body.rememberMe !== undefined) {
+    db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
+    .catch((error: any) => {
+      console.log('ERROR AT rememberUser IN authenticate.ts', error);
+    })
+  }
+  // db.users accesses methods defined in the users controller
   db.users.findByEmail(req.body.loginEmail)
   .then((data: userDataFromDb) => {
     bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
       if (match) {
+        res.locals.userId = data.id;
+        res.locals.loginEmail = data.email;
+        res.locals.rememberMe = data.remember;
         next();
       }
       else if (!match) {
