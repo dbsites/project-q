@@ -45,6 +45,7 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
   db.companies.getList()
   .then((list: any[]) => {
     let companyData: any = {}
+    // loop through the list of objects and create an more digestable data object for the front end
     list.forEach((item:any) => {
       if (companyData[item.name]) {
         companyData[item.name][item.issue] = {};
