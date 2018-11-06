@@ -28,11 +28,7 @@
     // add a new user to the database
     // userData Interface imported on line 16
     add (userData: userData) {
-<<<<<<< HEAD
-      return this.db.none('INSERT INTO users (id, email, password, firstname, lastname, agreeterms, remember) VALUES ($1, $2, $3, $4, $5, $6, $7)', 
-=======
       return this.db.none('INSERT INTO users (id, email, password, firstname, lastname, agreeterms, remember) VALUES ($1, $2, $3, $4, $5, $6, $7)',
->>>>>>> master
         [v4(), userData.registerEmail, userData.confirmPassword, userData.firstName, userData.lastName, userData.agreeTerms, false]);
     }
 
