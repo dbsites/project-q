@@ -13,11 +13,12 @@ import { Request, Response, NextFunction } from 'express';
 // import db and db functionality from modular files to access db methods
 import db from '../index';
 
-const QuestionDatabase: any = {};
+const DatabaseMethods: any = {};
 
-QuestionDatabase.insertData = (req: Request, _: Response, next: NextFunction) => {
+// adds questions data to the questions table
+DatabaseMethods.insertQuestions = (req: Request, _: Response, next: NextFunction) => {
   // db.users accesses methods defined in company controller
-  db.questions.add(req.body)
+  db.data.addQuestions(req.body)
   .then(() => {
     next();
   })
@@ -27,8 +28,9 @@ QuestionDatabase.insertData = (req: Request, _: Response, next: NextFunction) =>
   
 }
 
-QuestionDatabase.getQuestionList = (_: Request, res: Response, next: NextFunction) => {
-  db.questions.getQuestions()
+// delivers the questions data to the front end
+DatabaseMethods.getQuestionList = (_: Request, res: Response, next: NextFunction) => {
+  db.data.getQuestions()
     .then((data: any[]) => {
       res.locals.questionDataArray = data;
       next();
@@ -39,4 +41,15 @@ QuestionDatabase.getQuestionList = (_: Request, res: Response, next: NextFunctio
     })
 }
 
-export default QuestionDatabase;
+// inserts issue data
+DatabaseMethods.insertIssues = (req: Request, _: Response, next: NextFunction) => {
+  db.data.addIssues(req.body)
+  .then(() => {
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT insertIssues IN addQuestionToDb', error);
+  });
+}
+
+export default DatabaseMethods;

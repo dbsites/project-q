@@ -12,7 +12,7 @@
 // import pg-promise types and sql statements 
 import { IDatabase } from 'pg-promise';
 // import issues interface
-import { Issues } from './index';
+// import { Issues } from './index';
 // import unique user id creation library
 import { v4 } from 'uuid';
 
@@ -32,29 +32,31 @@ export class CompanyRepository {
    // this async wrapper here makes sure all the data gets put into the database before we move on with the middleware
   async add (companyData: any[]) {
     for (let i = 0; i < companyData.length; i += 1) {
-
-      // define the issue object which get added to the company object
-      // issues interface comes from line 14
-      let issues: Issues = {
-        economyScore: companyData[i].economyScore,
-        environmentScore: companyData[i].environmentScore,
-        civilRightsScore: companyData[i].civilRightsScore,
-        salaryGapScore: companyData[i].salaryGapScore,
-        philanthropyScore: companyData[i].philanthropyScore,
-        immigrationScore: companyData[i].immigrationScore,
-      }
-
       // after each issues object is created, submit the issues object and the rest of the company data 
-      this.db.none('INSERT INTO company (id, ticker, name, blurb, logo, issues) VALUES ($1, $2, $3, $4, $5, $6);', 
-      [v4(), companyData[i].ticker, companyData[i].companyName, companyData[i].blurb, companyData[i].link, JSON.stringify(issues)])
+      this.db.none('INSERT INTO companies (id, ticker, name, logo, description) VALUES ($1, $2, $3, $4, $5);', 
+      [v4(), companyData[i].ticker, companyData[i].companyName, companyData[i].blurb, companyData[i].link])
+      // .then(() => {
+      //   this.db.none('INSERT INTO companyissues (id, compan) ')
+      // })
       .catch((error: any) => {
         console.log('ERROR AT ADD FUNCTION IN COMPANY.TS', error);
       })
     }
   };
 
+  async insertIssues(issueData: any[]) {
+    for (let i = 0; i < issueData.length; i += 1) {
+
+      this.db.none('INSERT INTO "companyIssues" (id, "companyId", company, "issueId", issue, "agreeScore", "disagreeScore") VALUES ($1, $2, $3, $4, $5, $6, $7);', 
+      [v4(), issueData[i].id, issueData[i].name, issueData[i].issueId, issueData[i].issue, issueData[i].agreeScore, issueData[i].disagreeScore])
+      .catch((error: any) => {
+        console.log('ERROR AT insertIssuse IN companyDataMethods.ts', error);
+      });
+    }
+  }
+
   // query to get all companies out of the db
   getList() {
-    return this.db.any('SELECT * FROM company;')
+    return this.db.any('SELECT * FROM companies INNER JOIN "companyIssues" ON companies.id = "companyIssues"."companyId";');
   }
 }
