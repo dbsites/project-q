@@ -82,7 +82,7 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
 
 // method for storing user issues in the db
 UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
-  db.users.addIssues(req.body.user, req.body.issues)
+  db.users.addIssues(req.body.userId, req.body.issues)
   .then(() => {
     next();
   })

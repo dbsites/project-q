@@ -64,18 +64,18 @@ export const logoutUser = (): logoutUserAction => ({
 export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {
   // Create issues object
   const issues: UserIssues = {};
+  console.log('IssuesArr: ', issuesArr);
   issuesArr.forEach((issue: string) => issues[issue] = null );
+  const bodyObj = {userId, issues};
+  console.log(bodyObj);
   // Issue fetch request
-  fetch('/userIssues', {
+  fetch(`${HOST}/userIssues`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify({
-      userId,
-      issues,
-    }),
+    body: JSON.stringify(bodyObj),
   })
   .then((response: any) => {
       dispatch({
