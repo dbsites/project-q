@@ -13,7 +13,7 @@ import Issue from '../components/Issue';
 
 const IssuesContainer = (props: any): any => {
   const {
-    issues,
+    issues, userId,
     clearIssues, toggleIssue,
     submitIssues,
   } = props;
@@ -34,12 +34,16 @@ const IssuesContainer = (props: any): any => {
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
-    <React.Fragment><input className="issue-dashboard-footer-button" onClick={clearIssues} type="submit" value="Clear All"/><input className="issue-dashboard-footer-button" onClick={() => submitIssues(selectedIssues)} type="submit" value="Submit"/></React.Fragment> :
+    <React.Fragment><input className="issue-dashboard-footer-button" onClick={clearIssues} type="submit" value="Clear All"/><input className="issue-dashboard-footer-button" onClick={() => submitIssues(userId, selectedIssues)} type="submit" value="Submit"/></React.Fragment> :
     <React.Fragment><input className="issue-dashboard-footer-button invalid" type="submit" value="Clear All"/><input className="issue-dashboard-footer-button invalid" type="submit" value="Submit"/></React.Fragment> ;
 
   return (
-    <div className="issue-dashboard">
-      <div className="issue-dashboard-header">{headerText}</div>
+    <div className="main-dashboard">
+      <div className="issue-dashboard-header">
+        <span>
+          {headerText}
+        </span>
+      </div>
       <div className="issue-dashboard-container">
         {issuesArray}
       </div>
@@ -51,13 +55,14 @@ const IssuesContainer = (props: any): any => {
 };
 
 const mapStateToProps = (store: any): any => ({
-  issues: store.issues
+  userId: store.user.userId,
+  issues: store.issues,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
   clearIssues: () => dispatch(actions.clearIssues()),
   toggleIssue: (issue: string) => dispatch(actions.toggleIssue(issue)),
-  submitIssues: (issues: string[]) => dispatch(actions.submitIssues(issues)),
+  submitIssues: (userId: string, issuesArr: string[]) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesArr)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);

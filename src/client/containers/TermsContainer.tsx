@@ -4,16 +4,24 @@
  */
 
 import * as React from 'react';
+import TermsOfService from '../components/TermsOfService';
+import PrivacyPolicy from '../components/PrivacyPolicy';
 
 const TermsContainer = ({ match }: any) => (
-  <div>
+  <div className="main-container">
     {match.params.id === 'service' ?
       (
-        <h1>Terms of Service</h1>
+        <div>
+          <h1>Terms of Service</h1>
+          <TermsOfService />
+        </div>
       )
       :
       (
-        <h1>Privacy Policy</h1>
+        <div>
+          <h1>Privacy Policy</h1>
+          <PrivacyPolicy />
+        </div>
       )
     }
   </div>

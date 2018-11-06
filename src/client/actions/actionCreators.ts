@@ -7,12 +7,10 @@
 import actions from './actionTypes';
 
 import { formFieldObject, updateFieldAction, logoutUserAction } from './types';
-import { LoginState, RegisterState } from '../reducers/types';
+import { LoginState, RegisterState, UserIssues } from '../reducers/types';
 import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
-
-// TODO: Explicit type for event parameter and return value
 
 // Form Actions
 // export const nextFormPage = (): any => ({
@@ -62,11 +60,31 @@ export const logoutUser = (): logoutUserAction => ({
   type: actions.LOGOUT_USER,
 });
 
-// TODO: Actually save issues!
-export const submitIssues = (issues: string[]) => ({
-  type: actions.SUBMIT_ISSUES,
-  payload: issues,
-})
+// THUNK - Fetch Submit User Issues
+export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {
+  // Create issues object
+  const issues: UserIssues = {};
+  console.log('IssuesArr: ', issuesArr);
+  issuesArr.forEach((issue: string) => issues[issue] = null );
+  const bodyObj = {userId, issues};
+  console.log(bodyObj);
+  // Issue fetch request
+  fetch(`${HOST}/userIssues`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify(bodyObj),
+  })
+  .then((response: any) => {
+      dispatch({
+        type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
+        response,
+      });
+    })
+  .catch((err: any) => console.error(err));
+};
 
 export const updateIssue = (issue: any) => ({
   type: actions.UPDATE_ISSUE,

@@ -57,7 +57,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
         isAuth: false,
       }
     
-    case actions.SUBMIT_ISSUES:
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
       const issueState: UserIssues = {};
       action.payload.forEach((issue: string): void => {
         issueState[issue] = null;
