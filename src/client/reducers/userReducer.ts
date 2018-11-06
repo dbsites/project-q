@@ -4,19 +4,34 @@
  */
 
 import actions from '../actions/actionTypes';
+import { UserState, UserIssues } from './types';
 
 // Define initial state
-const initialUserState: any = {
+const initialUserState: UserState = {
   userId: null,
   isAuth: null,
   issues: {},
   surveyComplete: false,
 };
 
-const userReducer = (state: any = initialUserState, action: any) => {
+const issueReducer = (state: UserIssues, action: any): UserIssues => {
+  switch (action.type) {
+    case actions.UPDATE_ISSUE:
+      const nextState: UserIssues = {};
+      nextState[action.payload.issue] = action.payload.answer;
+      return {
+        ...state,
+        ...nextState
+      }
+    default:
+      return state;
+
+  }
+}
+
+const userReducer = (state: UserState = initialUserState, action: any): UserState => {
   switch (action.type) {
     case actions.AUTH_USER:
-      console.log(action);
       if (action.payload === 'cookie not found') {
         return {
           ...state,
@@ -30,11 +45,11 @@ const userReducer = (state: any = initialUserState, action: any) => {
       }
 
     case actions.LOGOUT_USER:
-      const cookies = document.cookie.split(';');
+      const cookies: string[] = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i += 1) {
-        const cookie = cookies[i];
-        const eqPos = cookie.indexOf('=');
-        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        const cookie: string = cookies[i];
+        const eqPos: number = cookie.indexOf('=');
+        const name: string = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
         document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
       }
       return {
@@ -43,14 +58,25 @@ const userReducer = (state: any = initialUserState, action: any) => {
       }
     
     case actions.SUBMIT_ISSUES:
-      const issueState: any = {};
-      action.payload.forEach((issue: string) => {
+      const issueState: UserIssues = {};
+      action.payload.forEach((issue: string): void => {
         issueState[issue] = null;
       })
       return {
         ... state,
-        userId: null,
         issues: issueState,
+      }
+
+    case actions.UPDATE_ISSUE:
+      return {
+        ... state,
+        issues: issueReducer(state.issues, action),
+      }
+
+    case actions.COMPLETE_SURVEY:
+      return {
+        ... state,
+        surveyComplete: true,
       }
 
     default:
@@ -59,3 +85,7 @@ const userReducer = (state: any = initialUserState, action: any) => {
 }
 
 export default userReducer;
+
+// -- SELECTOR FUNCTIONS -- //
+// Returns an object of outstanding issues
+export const getOutstandingIssues = (issues: UserIssues): string[] => Object.keys(issues).filter(issue => issues[issue] === null);
