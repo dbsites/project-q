@@ -43,8 +43,8 @@ CompanyDatabase.insertIssueScores = (req: Request, _: Response, next: NextFuncti
 // deliver company list to the front end
 CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction) => {
   db.companies.getList()
-  .then((data: any[]) => {
-    res.locals.companyDataArray = data;
+  .then((list: any[]) => {
+    res.locals.companyDataArray = list;
     next();
   })
   .catch((error: any) => {

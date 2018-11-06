@@ -32,18 +32,6 @@ export class CompanyRepository {
    // this async wrapper here makes sure all the data gets put into the database before we move on with the middleware
   async add (companyData: any[]) {
     for (let i = 0; i < companyData.length; i += 1) {
-
-      // define the issue object which get added to the company object
-      // issues interface comes from line 14
-      // let issues: Issues = {
-      //   economyScore: companyData[i].economyScore,
-      //   environmentScore: companyData[i].environmentScore,
-      //   civilRightsScore: companyData[i].civilRightsScore,
-      //   salaryGapScore: companyData[i].salaryGapScore,
-      //   philanthropyScore: companyData[i].philanthropyScore,
-      //   immigrationScore: companyData[i].immigrationScore,
-      // }
-
       // after each issues object is created, submit the issues object and the rest of the company data 
       this.db.none('INSERT INTO companies (id, ticker, name, logo, description) VALUES ($1, $2, $3, $4, $5);', 
       [v4(), companyData[i].ticker, companyData[i].companyName, companyData[i].blurb, companyData[i].link])
@@ -69,6 +57,6 @@ export class CompanyRepository {
 
   // query to get all companies out of the db
   getList() {
-    return this.db.any('SELECT id, name FROM companies;')
+    return this.db.any('SELECT * FROM companies INNER JOIN "companyIssues" ON companies.id = "companyIssues"."companyId";');
   }
 }

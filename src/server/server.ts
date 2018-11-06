@@ -83,13 +83,15 @@ app.post('/register',
   }
 );
 
-// TODO UPDATE END POINT TO GET USER ISSUES
+// route for storing user issues
+
+// route for storing user answers to questions
 
 // end point for deliverying a list of companies on dashboard render
 app.get('/companyList', 
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.send(res.locals.companyDataArray);
+    res.send(res.locals);
     res.end();
   }
 );
@@ -102,15 +104,6 @@ DatabaseMethods.getQuestionList,
     res.end();
 });
 
-// end point for company data submission
-// CompanyDatabase middleware handles the insertion of the data and calls the query statements
-// app.post('/companyData', 
-//   CompanyDatabase.insertData,
-//   (_: Request, res: Response) => {
-//     res.sendStatus(200);
-//     res.end();
-//   }
-// );
 
 // route to submit question data
 app.post('/questionData', 
@@ -119,19 +112,39 @@ DatabaseMethods.insertQuestions,
   res.sendStatus(200);
 });
 
-// route to submit issue data
-app.post('/issueData', 
-DatabaseMethods.insertIssues,
-(_: Request, res: Response) => {
-  res.sendStatus(200);
-});
 
-// insert comapny scores
-app.post('/insertCompanyScores', 
-CompanyDatabase.insertIssueScores,
-(_: Request, res: Response) => {
-  res.sendStatus(200);
-});
+
+
+
+/* APPLICATION DATA SUBMISSION ROUTES
+***********************************************************
+  // end point for company data submission
+  // CompanyDatabase middleware handles the insertion of the data and calls the query statements
+  app.post('/companyData', 
+  CompanyDatabase.insertData,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+    res.end();
+    }
+  );
+***********************************************************
+  // insert company issue scores
+  app.post('/insertCompanyScores', 
+  CompanyDatabase.insertIssueScores,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+    }
+  );
+***********************************************************
+  // route to submit issue data
+  app.post('/issueData', 
+  DatabaseMethods.insertIssues,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  });
+***********************************************************
+*/
+
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));

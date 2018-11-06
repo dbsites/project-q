@@ -15,6 +15,7 @@ import db from '../index';
 
 const DatabaseMethods: any = {};
 
+// adds questions data to the questions table
 DatabaseMethods.insertQuestions = (req: Request, _: Response, next: NextFunction) => {
   // db.users accesses methods defined in company controller
   db.data.addQuestions(req.body)
@@ -27,6 +28,7 @@ DatabaseMethods.insertQuestions = (req: Request, _: Response, next: NextFunction
   
 }
 
+// delivers the questions data to the front end
 DatabaseMethods.getQuestionList = (_: Request, res: Response, next: NextFunction) => {
   db.data.getQuestions()
     .then((data: any[]) => {
@@ -39,6 +41,7 @@ DatabaseMethods.getQuestionList = (_: Request, res: Response, next: NextFunction
     })
 }
 
+// inserts issue data
 DatabaseMethods.insertIssues = (req: Request, _: Response, next: NextFunction) => {
   db.data.addIssues(req.body)
   .then(() => {
