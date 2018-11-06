@@ -6,7 +6,8 @@
 // import actionType constants
 import actions from './actionTypes';
 
-import { Action } from 'redux';
+import { formFieldObject, updateFieldAction } from './types';
+import { LoginState } from '../reducers/types';
 
 const HOST: string = 'http://localhost:3000';
 
@@ -17,19 +18,14 @@ const HOST: string = 'http://localhost:3000';
 //   type: actions.NEXT_FORM_PAGE,
 // })
 
-// Login Form Actions
-export interface updateLoginFieldAction extends Action {
-  type: string,
-  payload: any,
-}
-
-export const updateLoginField = (event: any): updateLoginFieldAction => ({
-  type: actions.UPDATE_LOGIN_FIELD,
-  payload: event,
+// Login and Registration Form Actions
+export const updateField = (fieldObject: formFieldObject): updateFieldAction => ({
+  type: actions.UPDATE_FIELD,
+  payload: fieldObject,
 });
 
 // THUNK - Fetch Login Request
-export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
+export const fetchLoginRequest = (loginFields: LoginState) => (dispatch: any) =>
   fetch(`${HOST}/login`, {
     method: 'POST',
     headers: {
@@ -45,17 +41,6 @@ export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
       });
     })
   .catch((err: any) => console.error(err));
-
-// Register Form Actions
-export interface updateRegisterFieldAction extends Action {
-  type: string,
-  payload: any,
-}
-
-export const updateRegisterField= (event: any): updateRegisterFieldAction => ({
-  type: actions.UPDATE_REGISTER_FIELD,
-  payload: event,
-});
 
 // THUNK - Fetch Register Request
 export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>

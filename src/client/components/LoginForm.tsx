@@ -16,8 +16,9 @@ const LoginForm: any = (props: any) => {
   const {
     loginFields,
     fetchLoginRequest,
-    updateLoginField
+    updateField
   } = props;
+
   const {
     loginEmail,
     loginPassword,
@@ -39,11 +40,11 @@ const LoginForm: any = (props: any) => {
     <div className="login-register-form">
       <h2>Sign in to your account</h2> 
       <div className="change-form-link">Don't have an account? <Link to='/account/register'>Sign up</Link></div>
-      <FormField field={loginEmail} name="loginEmail" type="text" updateField={updateLoginField} >Email </FormField>
+      <FormField field={loginEmail} form="login" name="loginEmail" type="text" updateField={updateField} >Email </FormField>
       <br />
-      <FormField field={loginPassword} name="loginPassword" type="password" updateField={updateLoginField} >Password </FormField>
+      <FormField field={loginPassword} form="login" name="loginPassword" type="password" updateField={updateField} >Password </FormField>
       <br />
-      <FormField field={rememberMe} name="rememberMe" type="checkbox" updateField={updateLoginField} >Remember Me </FormField>
+      <FormField field={rememberMe} form="login" name="rememberMe" type="checkbox" updateField={updateField} >Remember Me </FormField>
       <br />
       <input className="submit-button" onClick={() => fetchLoginRequest(loginFields)} type="submit"/>
     </div>

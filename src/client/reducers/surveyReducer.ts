@@ -4,9 +4,10 @@
  */
 
 import actions from '../actions/actionTypes';
+import { SurveyState, QuestionState, IssueQuestionsState } from './types';
 
 // Define initial state
-const initialSurveyState: any = {
+const initialSurveyState: SurveyState = {
   issueOne: {
     q1: {
       qid: 'q1',
@@ -214,7 +215,7 @@ const initialSurveyState: any = {
 };
 
 // Reducer for single question
-const questionReducer = (state: any, action: any) => {
+const questionReducer = (state: QuestionState, action: any): QuestionState => {
   switch(action.type) {
     case actions.ANSWER_QUESTION:
       if (state.qid === action.payload.target.id) {
@@ -230,11 +231,11 @@ const questionReducer = (state: any, action: any) => {
 }
 
 // Reducer for all questions
-const questionsReducer = (state: any, action: any) => {
+const questionsReducer = (state: IssueQuestionsState, action: any): IssueQuestionsState => {
   switch(action.type) {
     case actions.ANSWER_QUESTION:
       const question: string = action.payload.target.id;
-      const nextState: any = {};
+      const nextState: IssueQuestionsState = {};
       nextState[question] = questionReducer(state[question], action);
       return {
         ...state,
@@ -247,11 +248,11 @@ const questionsReducer = (state: any, action: any) => {
 }
 
 // Reducer for whole survey
-const surveyReducer = (state: any = initialSurveyState, action: any) => {
+const surveyReducer = (state: SurveyState = initialSurveyState, action: any): SurveyState => {
   switch(action.type) {
     case actions.ANSWER_QUESTION:
       const issue: string = action.payload.target.title;
-      const nextState: any = {};
+      const nextState: SurveyState = {};
       nextState[issue] = questionsReducer(state[issue], action)
       return {
         ...state,
@@ -267,5 +268,5 @@ export default surveyReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns survey questions
-export const getQuestionsList = (state: any, issue: string): any => Object.keys(state[issue]);
-export const getQuestionsObject = (state: any, issue: string): any => state[issue];
+export const getQuestionsList = (state: SurveyState, issue: string): string[] => Object.keys(state[issue]);
+export const getQuestionsObject = (state: SurveyState, issue: string): IssueQuestionsState => state[issue];
