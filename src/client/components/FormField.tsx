@@ -1,6 +1,6 @@
 /**
  * @module FormField.tsx
- * @description Form Field Presentation Component
+ * @description Login/Registration Form Field Presentation Component
  */
 
 import * as React from 'react';

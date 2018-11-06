@@ -1,6 +1,6 @@
 /**
  * @module Header.tsx
- * @description Application Header
+ * @description Application Header Container
  */
 
 import * as React from 'react';

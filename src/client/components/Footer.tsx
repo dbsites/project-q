@@ -1,6 +1,6 @@
 /**
  * @module Footer.tsx
- * @description Application Footer
+ * @description Application Footer Presentation Component
  */
 
 import * as React from 'react';

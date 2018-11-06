@@ -59,7 +59,6 @@ export interface UserState {
   readonly surveyComplete: boolean,
 };
 
-
 export interface ApplicationState {
   readonly issues: IssuesState,
   // readonly login: LoginState,

@@ -1,6 +1,6 @@
 /**
  * @module LoginForm.tsx
- * @description User Login Form Component
+ * @description User Login Form Presentation Component
  */
 
 import * as React from 'react';
@@ -15,7 +15,7 @@ const LoginForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     loginFields,
-    fetchLoginRequest,
+    fetchFormRequest,
     updateField
   } = props;
 
@@ -46,7 +46,7 @@ const LoginForm: any = (props: any) => {
       <br />
       <FormField field={rememberMe} form="login" name="rememberMe" type="checkbox" updateField={updateField} >Remember Me </FormField>
       <br />
-      <input className="submit-button" onClick={() => fetchLoginRequest(loginFields)} type="submit"/>
+      <input className="submit-button" onClick={() => fetchFormRequest('login', loginFields)} type="submit"/>
     </div>
   )
 }

@@ -1,4 +1,9 @@
-import * as React from 'react';
+/**
+ * @module RegisterForm.tsx
+ * @description User Survey Presentation Component
+ */
+
+ import * as React from 'react';
 
 const SurveyQuestion = (props: any) => {
 
@@ -20,9 +25,16 @@ const SurveyQuestion = (props: any) => {
 
   return (
     <div className='survey-question'>
-      <span className="survey-question-text">Question {questionNumber}: {questionText}</span>
-      {agreeButton}
-      {disagreeButton}
+      <div className="survey-question-header">
+        <span>
+          Question {questionNumber}
+        </span>
+      </div>
+      <div className="survey-question-box">
+        <span className="survey-question-text">{questionText}</span>
+        {agreeButton}
+        {disagreeButton}
+      </div>
     </div>
   );
 };

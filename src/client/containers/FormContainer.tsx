@@ -12,6 +12,7 @@ import * as actions from '../actions/actionCreators'
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import { formFieldObject } from '../actions/types';
+import { LoginState, RegisterState } from '../reducers/types';
 
 // TODO: Assign explicit type to store
 // Extract form values from store to pass as props
@@ -38,8 +39,7 @@ const mapStateToProps = (store: any): any => ({
 const mapDispatchToProps = (dispatch: any) => {
   return {
     updateField: (fieldObject: formFieldObject) => dispatch(actions.updateField(fieldObject)),
-    fetchLoginRequest: (loginFields: any) => dispatch(actions.fetchLoginRequest(loginFields)),
-    fetchRegisterRequest: (registerFields: any) => dispatch(actions.fetchRegisterRequest(registerFields)),
+    fetchFormRequest: (form: string, formFields: LoginState | RegisterState) => dispatch(actions.fetchFormRequest(form, formFields)),
     logoutUser: () => dispatch(actions.logoutUser()),
   }
 }
@@ -50,20 +50,20 @@ let FormContainer: any = (props: any) => {
   const {
     match, 
     loginFields, registerFields,
-    fetchLoginRequest, fetchRegisterRequest,
+    fetchFormRequest,
     updateField,
     logoutUser,
   } = props;
 
   const loginForm = <LoginForm
       loginFields={loginFields}
-      fetchLoginRequest={fetchLoginRequest}
+      fetchFormRequest={fetchFormRequest}
       updateField={updateField}
     />;
 
   const registerForm = <RegisterForm
       registerFields={registerFields}
-      fetchRegisterRequest={fetchRegisterRequest}
+      fetchFormRequest={fetchFormRequest}
       updateField={updateField}
     />
 

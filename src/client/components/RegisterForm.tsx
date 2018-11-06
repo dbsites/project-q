@@ -1,6 +1,6 @@
 /**
  * @module RegisterForm.tsx
- * @description User Registration Form Component
+ * @description User Registration Form Presentation Component
  */
 
 import * as React from 'react';
@@ -15,7 +15,7 @@ const RegisterForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     registerFields,
-    fetchRegisterRequest,
+    fetchFormRequest,
     updateField
   } = props;
   const {
@@ -53,7 +53,7 @@ const RegisterForm: any = (props: any) => {
       <br />
       <FormField field={agreeTerms} form="register" name="agreeTerms" type="checkbox" updateField={updateField} >Agree Terms </FormField>
       <br />
-      <input className="submit-button" onClick={() => fetchRegisterRequest(registerFields)} type="submit"/>
+      <input className="submit-button" onClick={() => fetchFormRequest('register', registerFields)} type="submit"/>
     </div>
   )
 }

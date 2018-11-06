@@ -1,6 +1,6 @@
 /**
  * @module Disclaimer.tsx
- * @description Application Disclaimer
+ * @description Application Disclaimer Presentation Component
  */
 
 import * as React from 'react';

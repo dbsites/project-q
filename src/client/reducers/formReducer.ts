@@ -96,19 +96,13 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
       }
     }
 
-    //  FETCH_LOGIN_SUCCESS - Reset Login State to Initial Login State
-    case actions.FETCH_LOGIN_SUCCESS:
+    //  FETCH_FORM_SUCCESS - Reset Login State to Initial Login State
+    case actions.FETCH_FORM_SUCCESS:
       return {
         ...state,
         login: initialLoginState,
+        register: initialRegisterState,
       };
-
-    //  FETCH_LOGIN_SUCCESS - Reset Login State to Initial Login State
-    case actions.FETCH_REGISTER_SUCCESS:
-    return {
-      ...state,
-      register: initialRegisterState,
-    };
 
     default:
       return state;
