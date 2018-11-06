@@ -28,11 +28,7 @@
     // add a new user to the database
     // userData Interface imported on line 16
     add (userData: userData) {
-<<<<<<< HEAD
       return this.db.none('INSERT INTO users (id, email, password, firstname, lastname, agreeterms, remember) VALUES ($1, $2, $3, $4, $5, $6, $7)', 
-=======
-      return this.db.none('INSERT INTO users (id, email, password, firstname, lastname, agreeterms, remember) VALUES ($1, $2, $3, $4, $5, $6, $7)',
->>>>>>> master
         [v4(), userData.registerEmail, userData.confirmPassword, userData.firstName, userData.lastName, userData.agreeTerms, false]);
     }
 
@@ -54,5 +50,22 @@
     // update user to remembered or not
     rememberUser (email: string, remember: boolean) {
       return this.db.none('UPDATE users SET remember = $1 WHERE email = $2', [remember, email]);
+    }
+
+    // add users selected issues
+    async addIssues (user: string, issues: any) {
+
+      const arrayOfIssues = Object.keys(issues);
+
+      arrayOfIssues.forEach((issue: any) => {
+        this.db.any('SELECT id FROM issues WHERE issue = $1;', [issue])
+        .then((issueId: any) => {
+          this.db.none('INSTER INTO "userIssues" (id, user, issue, bias) VALUES ($1, $2, $3, $4);', 
+          [v4(), user, issueId, undefined])
+          .catch((error: any) => {
+            console.log('ERROR ADDING ISSUE TO userIssues IN users.ts', error);
+          })
+        })
+      })
     }
  }

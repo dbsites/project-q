@@ -24,7 +24,7 @@ import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
 // import authentication middleware
-import Authenticate from './middleware/authenticate'
+import UserMethods from './middleware/userMethods'
 // import companyDb middleware
 // import questionDb middleware
 import DatabaseMethods from './middleware/additionalDataMethods';
@@ -60,7 +60,7 @@ app.use(cookieParser());
 // login end point
 app.post('/login', 
   Cookie.check,
-  Authenticate.compareHash,
+  UserMethods.compareHash,
   Cookie.give,
   (_: Request, res: Response) => {
     res.sendStatus(200);
@@ -76,7 +76,7 @@ app.post('/login/cookie', (_: Request, res: Response) => {
 
 // registration end point
 app.post('/register', 
-  Authenticate.hashPassword,
+  UserMethods.hashPassword,
   (_: Request, res: Response) => {
     res.sendStatus(200);
     res.end();
@@ -84,6 +84,13 @@ app.post('/register',
 );
 
 // route for storing user issues
+app.post('/userIssues', 
+  UserMethods.addIssues,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+    res.end();
+  }
+);
 
 // route for storing user answers to questions
 
@@ -104,22 +111,10 @@ DatabaseMethods.getQuestionList,
     res.end();
 });
 
-
-// route to submit question data
-app.post('/questionData', 
-DatabaseMethods.insertQuestions,
-(_: Request, res: Response) => {
-  res.sendStatus(200);
-});
-
-
-
-
-
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
   // end point for company data submission
-  // CompanyDatabase middleware handles the insertion of the data and calls the query statements
+  
   app.post('/companyData', 
   CompanyDatabase.insertData,
   (_: Request, res: Response) => {
@@ -129,6 +124,7 @@ DatabaseMethods.insertQuestions,
   );
 ***********************************************************
   // insert company issue scores
+
   app.post('/insertCompanyScores', 
   CompanyDatabase.insertIssueScores,
   (_: Request, res: Response) => {
@@ -137,8 +133,17 @@ DatabaseMethods.insertQuestions,
   );
 ***********************************************************
   // route to submit issue data
+  
   app.post('/issueData', 
   DatabaseMethods.insertIssues,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  });
+***********************************************************
+  // route to submit question data
+
+  app.post('/questionData', 
+  DatabaseMethods.insertQuestions,
   (_: Request, res: Response) => {
     res.sendStatus(200);
   });
