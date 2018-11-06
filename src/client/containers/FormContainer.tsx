@@ -82,8 +82,10 @@ let FormContainer: any = (props: any) => {
 
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
-    <div className="form-container">
-      {displayForm}
+    <div className="main-dashboard">
+      <div className="form-container">
+        {displayForm}
+      </div>
     </div>
   )
 }
