@@ -16,19 +16,18 @@ import { IDatabase } from 'pg-promise';
 // import unique user id creation library
 import { v4 } from 'uuid';
 
-export class DatabaseRepository {
+export class QuestionRepository {
   constructor (db: any) {
     this.db = db;
   }
 
   private db: IDatabase<any>; 
   
-  // add questions
-  async addQuestions(questionData: any[]) {
+  async add(questionData: any[]) {
     for(let i=0; i < questionData.length-1; i++) {
 
-      this.db.none('INSERT INTO questions (id, "issueId", issue, question) VALUES ($1, $2, $3, $4);', 
-      [v4(), questionData[i].issueId, questionData[i].issue, questionData[i].question])
+      this.db.none('INSERT INTO questions (id, issue, question) VALUES ($1, $2, $3);', 
+      [v4(), questionData[i].issue, questionData[i].question])
       .then(() => {
         console.log('DATA ENTERED');
       })
@@ -38,22 +37,7 @@ export class DatabaseRepository {
     }
   };
 
-  // deliver questions
   getQuestions(){
     return this.db.any('SELECT * FROM questions;')
   }
-
-  // insert issue data 
-  async addIssues(issueData: any[]) {
-      for (let i = 0; i < issueData.length; i += 1) {
-        this.db.none('INSERT INTO issues (id, issue, description) VALUES ($1, $2, $3)', [v4(), issueData[i].issue, issueData[i].description])
-        .then(() => {
-          console.log('ISSUES ADDED');
-        })
-        .catch((error: any) => {
-          console.log('ERROR AT addIssues IN additionalDataMethods.ts', error);
-        })
-      }
-  }
-
 }

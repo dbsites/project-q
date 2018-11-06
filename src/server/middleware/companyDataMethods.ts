@@ -28,41 +28,11 @@ CompanyDatabase.insertData = (req: Request, _: Response, next: NextFunction) => 
   }); 
 }
 
-// insert issues score data
-CompanyDatabase.insertIssueScores = (req: Request, _: Response, next: NextFunction) => {
-  db.companies.insertIssues(req.body)
-  .then(() => {
-    console.log('ISSUE SCORES INSERTED');
-    next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT insertIssues IN companyDataMethods.ts', error);
-  })
-}
-
 // deliver company list to the front end
 CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction) => {
   db.companies.getList()
-  .then((list: any[]) => {
-    let companyData: any = {}
-    // loop through the list of objects and create an more digestable data object for the front end
-    list.forEach((item:any) => {
-      if (companyData[item.name]) {
-        companyData[item.name][item.issue] = {};
-        companyData[item.name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
-      }
-      else {
-        companyData[item.name] = {};
-        companyData[item.name].ticker = item.ticker;
-        companyData[item.name].description = item.description;
-        companyData[item.name].logo = item.logo;
-        companyData[item.name][item.issue] = {};
-        companyData[item.name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
-      }
-    })
-    res.locals.companyDataArray = companyData;
+  .then((data: any[]) => {
+    res.locals.companyDataArray = data;
     next();
   })
   .catch((error: any) => {

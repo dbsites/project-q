@@ -19,11 +19,10 @@ import { userDataFromDb } from '../controllers/index';
 
 
 // create object which holds the authentication methods
-const UserMethods: any =  {};
+const Authenticate: any =  {};
 
 // registration route, new accounts are directed here and password is hashed then user is added to the db
-UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body.confirmPassword);
+Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) => {
   return bcrypt.hash(req.body.confirmPassword, 10, (error, encrypted) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
@@ -47,7 +46,7 @@ UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => 
 
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
-UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
+Authenticate.compareHash = (req: Request, res: Response, next: NextFunction) => {
   // update the users remember me option
   if (req.body.rememberMe !== undefined) {
     db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
@@ -80,14 +79,4 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
   });
 }
 
-UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
-  db.users.addIssues(req.body.user, req.body.issues)
-  .then(() => {
-    next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT addIssues IN userMethods.ts', error);
-  });
-}
-
-export default UserMethods;
+export default Authenticate;

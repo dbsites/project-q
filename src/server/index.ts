@@ -11,7 +11,7 @@
 
 // Native TS typing for pg-promise, no @types needed 
 import { IMain, IDatabase, IOptions } from 'pg-promise';
-import { IExtensions, UsersRepository, CompanyRepository, DatabaseRepository } from './controllers';
+import { IExtensions, UsersRepository, CompanyRepository, QuestionRepository } from './controllers';
 import * as dotenv from 'dotenv';
 dotenv.config();
 // pg-promise initialization options
@@ -23,7 +23,7 @@ const initOptions: IOptions<IExtensions> = {
     // user methods
     obj.users = new UsersRepository(obj);
     obj.companies = new CompanyRepository(obj);
-    obj.data  = new DatabaseRepository(obj);
+    obj.questions  = new QuestionRepository(obj);
   }
 }
 
