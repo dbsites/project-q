@@ -1,20 +1,20 @@
 /**
  * ************************************
  *
- * @module  Index.js
- * @author Team Quail
- * @date
- * @description 
+ * @module  index.tsx
+ * @description Application Entry Point. Hang Root App off #root in index.html
  *
  * ************************************
  */
 
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import { render } from "react-dom";
 
-import { Hello } from "./components/Hello";
+import Root from "./Root";
+import store from './client/store'
 
-ReactDOM.render(
-  <Hello compiler="TypeScript" framework="React" />,
-  document.getElementById("App")
+// Wrap App in Provider (passing in store)
+render(
+  <Root store={store} />,
+  document.getElementById('root'),
 );

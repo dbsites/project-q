@@ -1,26 +1,37 @@
-const path = require('path');
-const Webpack = require('html-webpack-plugin');
+/**
+ * ************************************
+ *
+ * @module  webpack.config.js
+ * @author Team Quail
+ * @description Webpack Configuration
+ *
+ * ************************************
+ */
 
-const HTMLWebPackPlugin =
-  new Webpack({
-    template: './src/index.html',
-    filename: './index.html',
-  });
+const HTMLWebpack = require('html-webpack-plugin');
+const path = require('path');
+
+const HTMLWebPackPlugin = new HTMLWebpack({
+  template: './src/index.html',
+  filename: './index.html',
+});
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.join(`${__dirname}/dist`),
     filename: 'bundle.js',
+    publicPath: '/',
   },
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    historyApiFallback: true,
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,
         use: {
           loader: 'awesome-typescript-loader',
@@ -31,22 +42,22 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'source-map-loader'
-        }
+          loader: 'source-map-loader',
+        },
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
-        use: ["style-loader", "css-loader"]
-      }
+        use: ['style-loader', 'css-loader'],
+      },
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   plugins: [HTMLWebPackPlugin],
   externals: {
     'react': 'React',
-    'react-dom': 'ReactDOM'
-  }
-}
+    'react-dom': 'ReactDOM',
+  },
+};
