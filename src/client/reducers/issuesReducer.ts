@@ -4,9 +4,10 @@
  */
 
 import actions from '../actions/actionTypes';
+import { IssuesState, IssueState } from './types';
 
 // Define initial state
-const initialIssueState: any = {
+const initialIssuesState: IssuesState = {
   issueOne: {
     name: 'issueOne',
     blurb: `Do you support or oppose this particular issue?`,
@@ -70,7 +71,8 @@ const initialIssueState: any = {
 };
 
 // Reducer for single issue
-const issueReducer = (state: any, action: any) => {
+// TODO: Explicit Action Type
+const issueReducer = (state: IssueState, action: any): IssueState => {
   switch(action.type) {
     case actions.TOGGLE_ISSUE:
       if (state.name === action.payload) {
@@ -86,14 +88,15 @@ const issueReducer = (state: any, action: any) => {
 }
 
 // Reducer for all issues object
-const issuesReducer = (state: any = initialIssueState, action: any) => {
+// TODO: Explicit Action Type
+const issuesReducer = (state: IssuesState = initialIssuesState, action: any): IssuesState => {
   switch (action.type) {
     case actions.TOGGLE_ISSUE:
-      const newState = {...state};
+      const newState: IssuesState = {...state};
       newState[action.payload] = issueReducer(state[action.payload], action);
       return newState;
     case actions.CLEAR_ISSUES:
-      return initialIssueState;
+      return initialIssuesState;
     default:
       return state;
   }
@@ -103,5 +106,5 @@ export default issuesReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns array and count of selected issues
-export const getSelectedIssues = (state: any) => Object.keys(state).filter(issue => state[issue].selected);
-export const getSelectedIssueCount = (state: any) => Object.keys(state).filter(issue => state[issue].selected).length;
+export const getSelectedIssues = (state: IssuesState): string[] => Object.keys(state).filter(issue => state[issue].selected);
+export const getSelectedIssueCount = (state: IssuesState): number => Object.keys(state).filter(issue => state[issue].selected).length;

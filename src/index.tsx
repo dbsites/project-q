@@ -2,9 +2,7 @@
  * ************************************
  *
  * @module  index.tsx
- * @author Team Quail
- * @date
- * @description Application Entry Point. Hang React App off #App in index.html
+ * @description Application Entry Point. Hang Root App off #root in index.html
  *
  * ************************************
  */

@@ -18,16 +18,16 @@ const IssuesContainer = (props: any): any => {
     submitIssues,
   } = props;
 
-  const issuesArray: any[] = [];
-
-  Object.keys(issues).forEach((issueName) => {
-    issuesArray.push(<Issue issue={issues[issueName]} toggleIssue={toggleIssue} />);
-  });
-
   const selectedIssues = getSelectedIssues(issues);
   const issueCount = getSelectedIssueCount(issues);
   const issuesRemaining = 6 - issueCount;
   const additional = issueCount === 0 ? '' : 'Additional ';
+  
+  const issuesArray: any[] = [];
+
+  Object.keys(issues).forEach((issueName) => {
+    issuesArray.push(<Issue issue={issues[issueName]} remaining={issuesRemaining} toggleIssue={toggleIssue} />);
+  });
 
   const headerText = issuesRemaining ?
     `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Issues Important To You` :
