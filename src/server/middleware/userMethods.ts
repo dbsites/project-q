@@ -80,6 +80,7 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
   });
 }
 
+// method for storing user issues in the db
 UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
   db.users.addIssues(req.body.user, req.body.issues)
   .then(() => {
@@ -88,6 +89,18 @@ UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
   .catch((error: any) => {
     console.log('ERROR AT addIssues IN userMethods.ts', error);
   });
+}
+
+// method for getting a users issues out of the db
+UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
+  db.users.getIssues(req.body.user)
+  .then((data: any) => {
+    res.locals.userIssues = data;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getIssues IN userMethods.ts', error);
+  })
 }
 
 export default UserMethods;

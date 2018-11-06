@@ -83,11 +83,20 @@ app.post('/register',
   }
 );
 
-// route for storing user issues
+// route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
   (_: Request, res: Response) => {
     res.sendStatus(200);
+    res.end();
+  }
+);
+
+// route for delivering user issues
+app.get('/userIssues',
+  UserMethods.getIssues,
+  (_: Request, res: Response) => {
+    res.send(res.locals);
     res.end();
   }
 );
