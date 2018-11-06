@@ -27,7 +27,7 @@ import * as helmet from 'helmet';
 import Authenticate from './middleware/authenticate'
 // import companyDb middleware
 // import questionDb middleware
-import QuestionDatabase from './middleware/addQuestionDataToDb';
+import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
 // import companyDb middleware
 import Cookie from './middleware/cookies';
@@ -96,7 +96,7 @@ app.get('/companyList',
 
 // route to grab data from the database;
 app.get('/questionList', 
-  QuestionDatabase.getQuestionList, 
+DatabaseMethods.getQuestionList, 
   (_: Request, res: Response) => {
     res.send(res.locals.questionDataArray);
     res.end();
@@ -104,20 +104,34 @@ app.get('/questionList',
 
 // end point for company data submission
 // CompanyDatabase middleware handles the insertion of the data and calls the query statements
-app.post('/companyData', 
-  CompanyDatabase.insertData,
-  (_: Request, res: Response) => {
-    res.sendStatus(200);
-    res.end();
-  }
-);
+// app.post('/companyData', 
+//   CompanyDatabase.insertData,
+//   (_: Request, res: Response) => {
+//     res.sendStatus(200);
+//     res.end();
+//   }
+// );
 
+// route to submit question data
 app.post('/questionData', 
-QuestionDatabase.insertData,
+DatabaseMethods.insertQuestions,
 (_: Request, res: Response) => {
   res.sendStatus(200);
-})
+});
 
+// route to submit issue data
+app.post('/issueData', 
+DatabaseMethods.insertIssues,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
+});
+
+// insert comapny scores
+app.post('/insertCompanyScores', 
+CompanyDatabase.insertIssueScores,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
+});
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));

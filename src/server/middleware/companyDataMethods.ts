@@ -28,6 +28,18 @@ CompanyDatabase.insertData = (req: Request, _: Response, next: NextFunction) => 
   }); 
 }
 
+// insert issues score data
+CompanyDatabase.insertIssueScores = (req: Request, _: Response, next: NextFunction) => {
+  db.companies.insertIssues(req.body)
+  .then(() => {
+    console.log('ISSUE SCORES INSERTED');
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT insertIssues IN companyDataMethods.ts', error);
+  })
+}
+
 // deliver company list to the front end
 CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction) => {
   db.companies.getList()

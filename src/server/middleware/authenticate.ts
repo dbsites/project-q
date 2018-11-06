@@ -23,6 +23,7 @@ const Authenticate: any =  {};
 
 // registration route, new accounts are directed here and password is hashed then user is added to the db
 Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body.confirmPassword);
   return bcrypt.hash(req.body.confirmPassword, 10, (error, encrypted) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
