@@ -54,8 +54,8 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
       else {
         companyData[item.name] = {};
         companyData[item.name].ticker = item.ticker;
-        companyData[item.name].description = item.logo;
-        companyData[item.name].logo = item.description;
+        companyData[item.name].description = item.description;
+        companyData[item.name].logo = item.logo;
         companyData[item.name][item.issue] = {};
         companyData[item.name][item.issue].agreeScore = item.agreeScore;
         companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
