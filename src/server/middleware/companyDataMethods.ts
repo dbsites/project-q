@@ -44,7 +44,24 @@ CompanyDatabase.insertIssueScores = (req: Request, _: Response, next: NextFuncti
 CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction) => {
   db.companies.getList()
   .then((list: any[]) => {
-    res.locals.companyDataArray = list;
+    let companyData: any = {}
+    list.forEach((item:any) => {
+      if (companyData[item.name]) {
+        companyData[item.name][item.issue] = {};
+        companyData[item.name][item.issue].agreeScore = item.agreeScore;
+        companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
+      }
+      else {
+        companyData[item.name] = {};
+        companyData[item.name].ticker = item.ticker;
+        companyData[item.name].description = item.logo;
+        companyData[item.name].logo = item.description;
+        companyData[item.name][item.issue] = {};
+        companyData[item.name][item.issue].agreeScore = item.agreeScore;
+        companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
+      }
+    })
+    res.locals.companyDataArray = companyData;
     next();
   })
   .catch((error: any) => {
