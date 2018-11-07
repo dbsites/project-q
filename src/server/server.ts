@@ -85,8 +85,10 @@ app.post('/register',
 // route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.issues);
+    // sending back issues and question data in locals
+    res.status(200).send(res.locals);
   }
 );
 
@@ -113,6 +115,14 @@ app.get('/questionList',
 DatabaseMethods.getQuestionList, 
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.questionDataArray);
+});
+
+// route to submit question data
+
+app.post('/questionData', 
+DatabaseMethods.insertQuestions,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
 });
 
 /* APPLICATION DATA SUBMISSION ROUTES

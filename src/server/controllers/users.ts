@@ -54,20 +54,48 @@
 
     // add users selected issues
     async addIssues (user: string, issues: any) {
-
-      const arrayOfIssues = Object.keys(issues);
-
-      arrayOfIssues.forEach((issueId: any) => {
-          this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);', 
-          [v4(), user, issueId, undefined])
-          .catch((error: any) => {
-            console.log('ERROR ADDING ISSUE TO userIssues IN users.ts', error);
-          })
-        })
+      // check to see if there is user data in the db
+      this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', [user])
+      .then((issueData: any) => {
+        // if there is no data, store some data
+        if (issueData.length === 0) {
+          const arrayOfIssues: any[] = Object.keys(issues);
+         
+          arrayOfIssues.forEach((issueId: any) => {
+              this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);', 
+              [v4(), user, issueId, undefined])
+              .then(() => {
+                console.log('ISSUES STORED');
+              })
+              .catch((error: any) => {
+                console.log('ERROR ADDING ISSUE TO userIssues IN users.ts', error);
+              })
+            })
+        }
+      })
     }
 
     // get the user issues out of the db
     getIssues(user: any) {
       return this.db.any('SELECT * FROM "userIssues" WHERE "user" = (SELECT id FROM users WHERE email = $1);', [user]);
+    }
+
+    // get questons for users to answer from db
+    async getQuestions(issues: any) {
+      const issueArray = Object.keys(issues);
+      let questionsToSendToFrontEnd: any = {};
+
+      issueArray.forEach((issueId: any) => {
+        this.db.any('SELECT question FROM questions WHERE "issueId" = $1;', [issueId])
+        .then((questionData: any) => {
+          questionsToSendToFrontEnd[issueId] = questionData;
+          console.log(questionsToSendToFrontEnd);
+        })
+        .catch((error: any) => {
+          console.log('ERROR QUERYING FOR questionData in user.ts', error);
+        })
+      })
+      
+      return questionsToSendToFrontEnd;
     }
  }
