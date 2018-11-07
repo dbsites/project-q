@@ -11,6 +11,8 @@ import SurveyContainer from './SurveyContainer';
 const DashContainer = (props: any): any => {
   const { issues, surveyComplete } = props.userState;
 
+  console.log('Dash Issues: ', issues);
+
   if (!Object.keys(issues).length) return <IssuesContainer />
 
   if (!surveyComplete) return <SurveyContainer />

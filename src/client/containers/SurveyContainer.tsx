@@ -12,16 +12,16 @@ import SurveyQuestion from '../components/SurveyQuestion';
 
 import * as actions from '../actions/actionCreators';
 import { getOutstandingIssues } from '../reducers/userReducer';
-import { SurveyState, UserIssues, IssueQuestionsState } from '../reducers/types';
+import { IssueQuestionsState } from '../reducers/types';
 
-interface SurveyContainerProps {
-  answerQuestion: any; //TODO:
-  updateIssue: any; //TODO:
-  selectedIssues: UserIssues;
-  survey: SurveyState;
-}
+// interface SurveyContainerProps {
+//   answerQuestion: any; //TODO:
+//   updateIssue: any; //TODO:
+//   selectedIssues: UserIssues;
+//   survey: SurveyState;
+// }
 
-const SurveyContainer = (props: SurveyContainerProps): any => {
+const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, updateIssue,
     selectedIssues, survey
