@@ -38,13 +38,13 @@ export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(loginFields),
   })
-  .then((response: any) => {
+    .then((response: any) => {
       dispatch({
         type: actions.FETCH_LOGIN_SUCCESS,
         response,
       });
     })
-  .catch((err: any) => console.error(err));
+    .catch((err: any) => console.error(err));
 
 // Register Form Actions
 export interface updateRegisterFieldAction extends Action {
@@ -52,10 +52,32 @@ export interface updateRegisterFieldAction extends Action {
   payload: any,
 }
 
-export const updateRegisterField= (event: any): updateRegisterFieldAction => ({
+export const updateRegisterField = (event: any): updateRegisterFieldAction => ({
   type: actions.UPDATE_REGISTER_FIELD,
   payload: event,
 });
+
+export const fetchCompanyList = () => (dispatch: any) => {
+  fetch(`${HOST}/companyList`)
+    .then((response: any) => response.json())
+    .then((data: any) => {
+      dispatch({
+        type: actions.FETCH_COMPANY_LIST,
+        data
+      });
+    })
+    .catch((err: any) => console.error(err));
+}
+
+export const selectCompany = (event: any) => ({
+  type: actions.SELECT_COMPANY,
+  payload: event
+})
+
+export const sortCompanyList = (event: any) => ({
+  type: actions.SORT_COMPANY_LIST,
+  payload: event
+})
 
 // THUNK - Fetch Register Request
 export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>
@@ -67,13 +89,13 @@ export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(registerFields),
   })
-  .then((response: any) => {
+    .then((response: any) => {
       dispatch({
         type: actions.FETCH_REGISTER_SUCCESS,
         response,
       });
     })
-  .catch((err: any) => console.error(err));
+    .catch((err: any) => console.error(err));
 
 // User Object Actions TODO: Add functionality
 export const authUser = (userId: string) => ({
