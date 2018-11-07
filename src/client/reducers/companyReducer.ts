@@ -13,6 +13,7 @@ const initialCompanyState: any = {
 
 const companyReducer = (state: any = initialCompanyState, action: any): any => {
   switch (action.type) {
+
     case actions.FETCH_COMPANY_LIST:
       console.log('company list fetch: ', action.data);
       return {
@@ -20,9 +21,22 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         companyList: action.data,
       };
 
+    case actions.SELECT_COMPANY:
+      const companyList = state.companyList.companyDataArray;
+      const name = action.payload.field;
+
+      return {
+        ...state,
+        selectedCompany: companyList[name]
+      };
+
     case actions.GET_USER_ISSUES:
-      console.log(action.payload);
-      return state;
+      console.log('user issues:', action.payload);
+      // return state;
+      return {
+        ...state,
+        userIssues: Object.assign({}, action.payload)
+      };
 
     case actions.SORT_COMPANY_LIST:
       const category = action.payload.field.split('-')[1];
@@ -64,14 +78,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         companyList: sortedList
-      };
-
-
-    case actions.SELECT_COMPANY:
-      const i = Number(action.payload.field);
-      return {
-        ...state,
-        selectedCompany: state.companyList[i]
       };
 
     default:
