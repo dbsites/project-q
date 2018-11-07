@@ -85,17 +85,24 @@
       const issueArray = Object.keys(issues);
       let questionsToSendToFrontEnd: any = {};
 
-      issueArray.forEach((issueId: any) => {
-        this.db.any('SELECT question FROM questions WHERE "issueId" = $1;', [issueId])
+      for(let index = 0; index < issueArray.length; index += 1) {
+        await this.db.any('SELECT id, "issueId", question, bias FROM questions WHERE "issueId" = $1;', [issueArray[index]])
         .then((questionData: any) => {
-          questionsToSendToFrontEnd[issueId] = questionData;
-          console.log(questionsToSendToFrontEnd);
+          let questionDataObject: any = {}
+
+          questionData.forEach((questionDataReturned:any) => {
+            questionDataObject.questionId = questionDataReturned.id;
+            questionDataObject.questionText = questionDataReturned.question;
+            questionDataObject.bias = questionDataReturned.bias;
+          })
+
+          questionsToSendToFrontEnd[issueArray[index]] = questionDataObject;
         })
         .catch((error: any) => {
           console.log('ERROR QUERYING FOR questionData in user.ts', error);
         })
-      })
-      
+      }
+    
       return questionsToSendToFrontEnd;
     }
  }
