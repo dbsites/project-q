@@ -12,41 +12,50 @@ import SurveyQuestion from '../components/SurveyQuestion';
 
 import * as actions from '../actions/actionCreators';
 import { getOutstandingIssues } from '../reducers/userReducer';
+import { IssueQuestionsState } from '../reducers/types';
+import { getIssueName } from '../reducers/issuesReducer';
 
+// interface SurveyContainerProps {
+//   answerQuestion: any; //TODO:
+//   updateIssue: any; //TODO:
+//   selectedIssues: UserIssues;
+//   survey: SurveyState;
+// }
 
 const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, updateIssue,
-    selectedIssues, survey
+    issues, selectedIssues, survey
   } = props;
   
   // Initialize array to hold user's selected issues
-  const selectedIssuesArray = Object.keys(selectedIssues)
+  const selectedIssuesArray: string[] = Object.keys(selectedIssues)
   const selectedIssueCount: number = selectedIssuesArray.length;
   
   // Initialize index at 0 and identify currentIssue
   let issueIndex: number = 0;
-  let currentIssue: string = selectedIssuesArray[issueIndex];
+  let currentIssueId: string = selectedIssuesArray[issueIndex];
   
   // Initialize survey array to hold survey questions
-  let surveyArray: any[] = [];
+  let surveyArray: JSX.Element[] = [];
 
   // Helper Function to populate survey
-  const populateSurvey = (issue: string): any => {
+  const populateSurvey = (issueId: string): any => {
     // User function selecter to get survey questions from store for a given issue
-    const questionsList: any = getQuestionsList(survey, issue);
-    const questionsObject: any = getQuestionsObject(survey, issue);
-    
+    const questionsList: string[] = getQuestionsList(survey, issueId);
+    const questionsObject: IssueQuestionsState = getQuestionsObject(survey, issueId);
+
     // Initialize object to hold survey question answers
-    const answers: any = {
+    interface answersObj {
+      [index: string] : number
+    }
+    const answers: answersObj = {
       count: 0,
       agree: 0,
       disagree: 0,
     };
         
     // For each question, push a SurveyQuestion component into surveyArray
-    // surveyArray = [];
-    console.log('Questions List: ', questionsList);
     questionsList.forEach((question: string, index: number) => {
       const questionAnswer = questionsObject[question].answer;
       if (questionAnswer) {
@@ -56,7 +65,7 @@ const SurveyContainer = (props: any): any => {
       return surveyArray.push(
         <SurveyQuestion
           answerQuestion={answerQuestion}
-          issue={currentIssue}
+          issueId={currentIssueId}
           question={question}
           questionAnswer={questionAnswer}
           questionNumber={index + 1}
@@ -82,19 +91,17 @@ const SurveyContainer = (props: any): any => {
           answer = 'strongly disagree';
       }
       updateIssue({
-        issue: currentIssue,
+        issue: currentIssueId,
         answer: answer,
       })
     };
   };
 
   // Assign currentIssue to next issue with value 'null' and call 'populateSurvey'
-  console.log('Issue Index: ', issueIndex);
-  console.log('Selected Issue Count: ', selectedIssueCount);
   while (issueIndex < selectedIssueCount) {
-    currentIssue = selectedIssuesArray[issueIndex];
-    if (!selectedIssues[currentIssue]) {
-      populateSurvey(currentIssue);
+    currentIssueId = selectedIssuesArray[issueIndex];
+    if (!selectedIssues[currentIssueId]) {
+      populateSurvey(currentIssueId);
       break;
     }
     issueIndex += 1;
@@ -104,7 +111,7 @@ const SurveyContainer = (props: any): any => {
   const outstandingIssueCount: number = getOutstandingIssues(selectedIssues).length
   if (!outstandingIssueCount) return 
 
-  const headerText: string = `Survey Page ${selectedIssueCount - outstandingIssueCount + 1} of ${selectedIssueCount}: What is your perspective on ${currentIssue}`;
+  const headerText: string = `Survey Page ${selectedIssueCount - outstandingIssueCount + 1} of ${selectedIssueCount}: ${getIssueName(issues, currentIssueId)}`;
 
   return (
     <div className="survey-dashboard">
@@ -117,6 +124,7 @@ const SurveyContainer = (props: any): any => {
 };
 
 const mapStateToProps = (store: any): any => ({
+  issues: store.issues,
   selectedIssues: store.user.issues,
   survey: store.survey,
 });

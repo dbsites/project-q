@@ -64,14 +64,14 @@ app.post('/login',
   Cookie.give,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
-    res.send(res.locals.issuesAndBias);
+    res.status(200).send(res.locals.issuesAndBias);
   }
 );
 
 // login with cookies end point
 app.post('/login/cookie', (_: Request, res: Response) => {
   console.log('USER HAS A VALID COOKIE');
-  res.send(200);
+  res.sendStatus(200);
 });
 
 // registration end point
@@ -86,7 +86,7 @@ app.post('/register',
 app.post('/userIssues', 
   UserMethods.addIssues,
   (_: Request, res: Response) => {
-    res.send(res.locals.issues);
+    res.status(200).send(res.locals.issues);
   }
 );
 
@@ -94,8 +94,7 @@ app.post('/userIssues',
 app.get('/userIssues',
   UserMethods.getIssues,
   (_: Request, res: Response) => {
-    res.send(res.locals);
-    res.end();
+    res.status(200).send(res.locals);
   }
 );
 
@@ -105,7 +104,7 @@ app.get('/userIssues',
 app.get('/companyList', 
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.send(res.locals);
+    res.status(200).send(res.locals);
   }
 );
 
@@ -113,7 +112,7 @@ app.get('/companyList',
 app.get('/questionList', 
 DatabaseMethods.getQuestionList, 
   (_: Request, res: Response) => {
-    res.send(res.locals.questionDataArray);
+    res.status(200).send(res.locals.questionDataArray);
 });
 
 /* APPLICATION DATA SUBMISSION ROUTES
