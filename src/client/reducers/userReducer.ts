@@ -45,7 +45,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       }
 
     case actions.LOGOUT_USER:
-      const cookies: string[] = document.cookie.split(';');
+      const cookies: string[] = document.coie.split(';');
       for (let i = 0; i < cookies.length; i += 1) {
         const cookie: string = cookies[i];
         const eqPos: number = cookie.indexOf('=');
