@@ -12,16 +12,23 @@ import SurveyQuestion from '../components/SurveyQuestion';
 
 import * as actions from '../actions/actionCreators';
 import { getOutstandingIssues } from '../reducers/userReducer';
+import { SurveyState, UserIssues, IssueQuestionsState } from '../reducers/types';
 
+interface SurveyContainerProps {
+  answerQuestion: any; //TODO:
+  updateIssue: any; //TODO:
+  selectedIssues: UserIssues;
+  survey: SurveyState;
+}
 
-const SurveyContainer = (props: any): any => {
+const SurveyContainer = (props: SurveyContainerProps): any => {
   const {
     answerQuestion, updateIssue,
     selectedIssues, survey
   } = props;
   
   // Initialize array to hold user's selected issues
-  const selectedIssuesArray = Object.keys(selectedIssues)
+  const selectedIssuesArray: string[] = Object.keys(selectedIssues)
   const selectedIssueCount: number = selectedIssuesArray.length;
   
   // Initialize index at 0 and identify currentIssue
@@ -29,24 +36,25 @@ const SurveyContainer = (props: any): any => {
   let currentIssue: string = selectedIssuesArray[issueIndex];
   
   // Initialize survey array to hold survey questions
-  let surveyArray: any[] = [];
+  let surveyArray: JSX.Element[] = [];
 
   // Helper Function to populate survey
-  const populateSurvey = (issue: string): any => {
+  const populateSurvey = (issueId: string): any => {
     // User function selecter to get survey questions from store for a given issue
-    const questionsList: any = getQuestionsList(survey, issue);
-    const questionsObject: any = getQuestionsObject(survey, issue);
-    
+    const questionsList: string[] = getQuestionsList(survey, issueId);
+    const questionsObject: IssueQuestionsState = getQuestionsObject(survey, issueId);
+
     // Initialize object to hold survey question answers
-    const answers: any = {
+    interface answersObj {
+      [index: string] : number
+    }
+    const answers: answersObj = {
       count: 0,
       agree: 0,
       disagree: 0,
     };
         
     // For each question, push a SurveyQuestion component into surveyArray
-    // surveyArray = [];
-    console.log('Questions List: ', questionsList);
     questionsList.forEach((question: string, index: number) => {
       const questionAnswer = questionsObject[question].answer;
       if (questionAnswer) {

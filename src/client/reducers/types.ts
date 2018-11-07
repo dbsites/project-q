@@ -44,7 +44,7 @@ export interface IssueQuestionsState {
 };
 
 export interface SurveyState {
-  [name: string]: IssueQuestionsState,
+  [issueId: string]: IssueQuestionsState,
 };
 
 // User Object Types

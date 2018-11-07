@@ -8,7 +8,7 @@ import { SurveyState, QuestionState, IssueQuestionsState } from './types';
 
 // Define initial state
 const initialSurveyState: SurveyState = {
-  issueOne: {
+  '0755baa6-1b5f-49c2-918a-457f1e16fe1c': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -25,7 +25,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueTwo: {
+  '2383b711-794f-4829-a189-25ceb32753a2': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -42,7 +42,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueThree: {
+  '30d820a3-9d0c-48a2-ae5e-0624ad0ffc4f': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -59,7 +59,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueFour: {
+  '70df714e-8566-4265-abe5-266d5a2004a9': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -76,7 +76,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueFive: {
+  'f58fc13c-cb4d-4011-bf26-9fbd5eaef3b2': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -93,7 +93,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueSix: {
+  '58400255-75d9-41ad-b156-b073dbc03b0e': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -110,7 +110,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueSeven: {
+  '39c3c304-4a0f-4daa-947a-85b4131b452b': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -127,7 +127,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueEight: {
+  '580600c8-c633-476b-98d2-9676c70c177d': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -144,7 +144,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueNine: {
+  'fd054069-2079-4f99-bb1c-6973eef5f3bf': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -161,7 +161,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueTen: {
+  '9c82b608-f919-4f58-a23d-4e7a4528c146': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -178,7 +178,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueEleven: {
+  'bc5536d2-45a4-4093-9dc6-529589c56e49': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -195,7 +195,7 @@ const initialSurveyState: SurveyState = {
       answer: null,
     },
   },
-  issueTwelve: {
+  '7d9dc278-a6dc-4701-8b23-448ae3000cbb': {
     q1: {
       qid: 'q1',
       question: 'How would you answer this first survey question?',
@@ -268,5 +268,5 @@ export default surveyReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns survey questions
-export const getQuestionsList = (state: SurveyState, issue: string): string[] => Object.keys(state[issue]);
-export const getQuestionsObject = (state: SurveyState, issue: string): IssueQuestionsState => state[issue];
+export const getQuestionsList = (state: SurveyState, issueId: string): string[] => Object.keys(state[issueId]);
+export const getQuestionsObject = (state: SurveyState, issueId: string): IssueQuestionsState => state[issueId];

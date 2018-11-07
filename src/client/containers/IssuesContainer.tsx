@@ -35,31 +35,21 @@ const IssuesContainer = (props: any): any => {
 
   const footerButtons = issueCount ?
     <React.Fragment>
-      <input
-        className="issue-dashboard-footer-button"
-        onClick={clearIssues}
-        type="submit"
-        value="Clear All"
-      />
-      <input
-        className="issue-dashboard-footer-button"
-        onClick={() => submitIssues(userId, selectedIssues)}
-        type="submit"
-        value="Submit"
-      />
+      <div className="issue-dashboard-footer-button" onClick={clearIssues}>
+        Clear All
+      </div>
+      <div className="issue-dashboard-footer-button" onClick={() => submitIssues(userId, selectedIssues)}>
+        Submit
+      </div>
     </React.Fragment>
     :
     <React.Fragment>
-      <input 
-        className="issue-dashboard-footer-button invalid"
-        type="submit"
-        value="Clear All"
-      />
-      <input
-        className="issue-dashboard-footer-button invalid"
-        type="submit"
-        value="Submit"
-      />
+      <div className="issue-dashboard-footer-button invalid" >
+        Clear All
+      </div>
+      <div className="issue-dashboard-footer-button invalid" >
+        Submit
+      </div>
     </React.Fragment> ;
 
   return (
