@@ -24,10 +24,10 @@ import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
 // import authentication middleware
-import Authenticate from './middleware/authenticate'
+import UserMethods from './middleware/userMethods'
 // import companyDb middleware
 // import questionDb middleware
-import QuestionDatabase from './middleware/addQuestionDataToDb';
+import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
 // import companyDb middleware
 import Cookie from './middleware/cookies';
@@ -60,7 +60,7 @@ app.use(cookieParser());
 // login end point
 app.post('/login', 
   Cookie.check,
-  Authenticate.compareHash,
+  UserMethods.compareHash,
   Cookie.give,
   (_: Request, res: Response) => {
     res.sendStatus(200);
@@ -76,39 +76,89 @@ app.post('/login/cookie', (_: Request, res: Response) => {
 
 // registration end point
 app.post('/register', 
-  Authenticate.hashPassword,
+  UserMethods.hashPassword,
   (_: Request, res: Response) => {
     res.sendStatus(200);
     res.end();
   }
 );
 
-// TODO UPDATE END POINT TO GET USER ISSUES
+// route for storing user issues/
+app.post('/userIssues', 
+  UserMethods.addIssues,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+    res.end();
+  }
+);
+
+// route for delivering user issues
+app.get('/userIssues',
+  UserMethods.getIssues,
+  (_: Request, res: Response) => {
+    res.send(res.locals);
+    res.end();
+  }
+);
+
+// route for storing user answers to questions
 
 // end point for deliverying a list of companies on dashboard render
 app.get('/companyList', 
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.send(res.locals.companyDataArray);
+    res.send(res.locals);
     res.end();
   }
 );
 
-// end point for company data submission
-// CompanyDatabase middleware handles the insertion of the data and calls the query statements
-app.post('/companyData', 
+// route to grab data from the database;
+app.get('/questionList', 
+DatabaseMethods.getQuestionList, 
+  (_: Request, res: Response) => {
+    res.send(res.locals.questionDataArray);
+    res.end();
+});
+
+/* APPLICATION DATA SUBMISSION ROUTES
+***********************************************************
+  // end point for company data submission
+  
+  app.post('/companyData', 
   CompanyDatabase.insertData,
   (_: Request, res: Response) => {
     res.sendStatus(200);
     res.end();
-  }
-);
+    }
+  );
+***********************************************************
+  // insert company issue scores
 
-app.post('/questionData', 
-QuestionDatabase.insertData,
-(_: Request, res: Response) => {
-  res.sendStatus(200);
-})
+  app.post('/insertCompanyScores', 
+  CompanyDatabase.insertIssueScores,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+    }
+  );
+***********************************************************
+  // route to submit issue data
+  
+  app.post('/issueData', 
+  DatabaseMethods.insertIssues,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  });
+***********************************************************
+  // route to submit question data
+
+  app.post('/questionData', 
+  DatabaseMethods.insertQuestions,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  });
+***********************************************************
+*/
+
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));

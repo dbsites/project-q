@@ -19,10 +19,11 @@ import { userDataFromDb } from '../controllers/index';
 
 
 // create object which holds the authentication methods
-const Authenticate: any =  {};
+const UserMethods: any =  {};
 
 // registration route, new accounts are directed here and password is hashed then user is added to the db
-Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) => {
+UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body.confirmPassword);
   return bcrypt.hash(req.body.confirmPassword, 10, (error, encrypted) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
@@ -46,7 +47,7 @@ Authenticate.hashPassword = (req: Request, res: Response, next: NextFunction) =>
 
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
-Authenticate.compareHash = (req: Request, res: Response, next: NextFunction) => {
+UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
   // update the users remember me option
   if (req.body.rememberMe !== undefined) {
     db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
@@ -79,4 +80,27 @@ Authenticate.compareHash = (req: Request, res: Response, next: NextFunction) => 
   });
 }
 
-export default Authenticate;
+// method for storing user issues in the db
+UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
+  db.users.addIssues(req.body.userId, req.body.issues)
+  .then(() => {
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT addIssues IN userMethods.ts', error);
+  });
+}
+
+// method for getting a users issues out of the db
+UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
+  db.users.getIssues(req.body.user)
+  .then((data: any) => {
+    res.locals.userIssues = data;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getIssues IN userMethods.ts', error);
+  })
+}
+
+export default UserMethods;

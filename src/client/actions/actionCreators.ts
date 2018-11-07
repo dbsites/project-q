@@ -6,56 +6,49 @@
 // import actionType constants
 import actions from './actionTypes';
 
-import { Action } from 'redux';
+import { formFieldObject, updateFieldAction, logoutUserAction } from './types';
+import { LoginState, RegisterState, UserIssues } from '../reducers/types';
+import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
-
-// TODO: Explicit type for event parameter and return value
 
 // Form Actions
 // export const nextFormPage = (): any => ({
 //   type: actions.NEXT_FORM_PAGE,
 // })
 
-// Login Form Actions
-export interface updateLoginFieldAction extends Action {
-  type: string,
-  payload: any,
-}
-
-export const updateLoginField = (event: any): updateLoginFieldAction => ({
-  type: actions.UPDATE_LOGIN_FIELD,
-  payload: event,
+// Login and Registration Form Actions
+export const updateField = (fieldObject: formFieldObject): updateFieldAction => ({
+  type: actions.UPDATE_FIELD,
+  payload: fieldObject,
 });
 
-// THUNK - Fetch Login Request
-export const fetchLoginRequest = (loginFields: any) => (dispatch: any) =>
-  fetch(`${HOST}/login`, {
+// THUNK - Fetch Form Request
+export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState) => (dispatch: Dispatch) => {
+  // Determine fetch URI
+  let fetchURI: string = `${HOST}`;
+  if (form === 'login') {
+    fetchURI = fetchURI + '/login';
+  } else if (form === 'register') {
+    fetchURI = fetchURI + '/register';
+  } else throw new Error();
+  // Issue fetch request
+  fetch(fetchURI, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify(loginFields),
+    body: JSON.stringify(formFields),
   })
     .then((response: any) => {
       dispatch({
-        type: actions.FETCH_LOGIN_SUCCESS,
+        type: actions.FETCH_FORM_SUCCESS,
         response,
       });
     })
     .catch((err: any) => console.error(err));
-
-// Register Form Actions
-export interface updateRegisterFieldAction extends Action {
-  type: string,
-  payload: any,
 }
-
-export const updateRegisterField = (event: any): updateRegisterFieldAction => ({
-  type: actions.UPDATE_REGISTER_FIELD,
-  payload: event,
-});
 
 export const fetchCompanyList = () => (dispatch: any) => {
   fetch(`${HOST}/companyList`)
@@ -79,38 +72,45 @@ export const sortCompanyList = (event: any) => ({
   payload: event
 })
 
-// THUNK - Fetch Register Request
-export const fetchRegisterRequest = (registerFields: any) => (dispatch: any) =>
-  fetch(`${HOST}/register`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify(registerFields),
-  })
-    .then((response: any) => {
-      dispatch({
-        type: actions.FETCH_REGISTER_SUCCESS,
-        response,
-      });
-    })
-    .catch((err: any) => console.error(err));
-
 // User Object Actions TODO: Add functionality
 export const authUser = (userId: string) => ({
   type: actions.AUTH_USER,
   payload: userId,
 });
 
-export const logoutUser = () => ({
+export const logoutUser = (): logoutUserAction => ({
   type: actions.LOGOUT_USER,
 });
 
-// TODO: Actually save issues!
-export const submitIssues = (issues: string[]) => ({
-  type: actions.SUBMIT_ISSUES,
-  payload: issues,
+// THUNK - Fetch Submit User Issues
+export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {
+  // Create issues object
+  const issues: UserIssues = {};
+  console.log('IssuesArr: ', issuesArr);
+  issuesArr.forEach((issue: string) => issues[issue] = null);
+  const bodyObj = { userId, issues };
+  console.log(bodyObj);
+  // Issue fetch request
+  fetch(`${HOST}/userIssues`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify(bodyObj),
+  })
+    .then((response: any) => {
+      dispatch({
+        type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
+        response,
+      });
+    })
+    .catch((err: any) => console.error(err));
+};
+
+export const updateIssue = (issue: any) => ({
+  type: actions.UPDATE_ISSUE,
+  payload: issue,
 })
 
 // Issue Ranking Actions TODO: Add functionality
@@ -121,4 +121,14 @@ export const clearIssues = () => ({
 export const toggleIssue = (issueName: string) => ({
   type: actions.TOGGLE_ISSUE,
   payload: issueName,
+});
+
+export const completeSurvey = () => ({
+  type: actions.COMPLETE_SURVEY,
+});
+
+// Survey Question Actions
+export const answerQuestion = (event: any) => ({
+  type: actions.ANSWER_QUESTION,
+  payload: event,
 });

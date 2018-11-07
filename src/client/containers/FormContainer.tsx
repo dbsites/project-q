@@ -11,22 +11,24 @@ import * as actions from '../actions/actionCreators'
 
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import { formFieldObject } from '../actions/types';
+import { LoginState, RegisterState } from '../reducers/types';
 
 // TODO: Assign explicit type to store
 // Extract form values from store to pass as props
 const mapStateToProps = (store: any): any => ({
   loginFields: {
-    loginEmail: store.login.loginEmail,
-    loginPassword: store.login.loginPassword,
-    rememberMe: store.login.rememberMe,
+    loginEmail: store.form.login.loginEmail,
+    loginPassword: store.form.login.loginPassword,
+    rememberMe: store.form.login.rememberMe,
   },
   registerFields: {
-    firstName: store.register.firstName,
-    lastName: store.register.lastName,
-    registerEmail: store.register.registerEmail,
-    registerPassword: store.register.registerPassword,
-    confirmPassword: store.register.confirmPassword,
-    agreeTerms: store.register.agreeTerms,
+    firstName: store.form.register.firstName,
+    lastName: store.form.register.lastName,
+    registerEmail: store.form.register.registerEmail,
+    registerPassword: store.form.register.registerPassword,
+    confirmPassword: store.form.register.confirmPassword,
+    agreeTerms: store.form.register.agreeTerms,
   },
 });
 
@@ -36,18 +38,8 @@ const mapStateToProps = (store: any): any => ({
 // Extract form update and submit actions from store to pass as props
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    updateLoginField: (event: any) => {
-      // If input is a checkbox, payload is checked status, otherwise payload is value
-      const value = (event.target.type === 'checkbox') ? event.target.checked : event.target.value;
-      return dispatch(actions.updateLoginField({field: event.target.name, value: value}));
-    },
-    fetchLoginRequest: (loginFields: any) => dispatch(actions.fetchLoginRequest(loginFields)),
-    updateRegisterField: (event: any) => {
-      // If input is a checkbox, payload is checked status, otherwise payload is value
-      const value = (event.target.type === 'checkbox') ? event.target.checked : event.target.value;
-      return dispatch(actions.updateRegisterField({field: event.target.name, value: value}));
-    },
-    fetchRegisterRequest: (registerFields: any) => dispatch(actions.fetchRegisterRequest(registerFields)),
+    updateField: (fieldObject: formFieldObject) => dispatch(actions.updateField(fieldObject)),
+    fetchFormRequest: (form: string, formFields: LoginState | RegisterState) => dispatch(actions.fetchFormRequest(form, formFields)),
     logoutUser: () => dispatch(actions.logoutUser()),
   }
 }
@@ -58,21 +50,21 @@ let FormContainer: any = (props: any) => {
   const {
     match, 
     loginFields, registerFields,
-    fetchLoginRequest, fetchRegisterRequest,
-    updateLoginField, updateRegisterField,
+    fetchFormRequest,
+    updateField,
     logoutUser,
   } = props;
 
   const loginForm = <LoginForm
       loginFields={loginFields}
-      fetchLoginRequest={fetchLoginRequest}
-      updateLoginField={updateLoginField}
+      fetchFormRequest={fetchFormRequest}
+      updateField={updateField}
     />;
 
   const registerForm = <RegisterForm
       registerFields={registerFields}
-      fetchRegisterRequest={fetchRegisterRequest}
-      updateRegisterField={updateRegisterField}
+      fetchFormRequest={fetchFormRequest}
+      updateField={updateField}
     />
 
   let displayForm;
@@ -90,8 +82,10 @@ let FormContainer: any = (props: any) => {
 
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
-    <div className="form-container">
-      {displayForm}
+    <div className="main-dashboard">
+      <div className="form-container">
+        {displayForm}
+      </div>
     </div>
   )
 }

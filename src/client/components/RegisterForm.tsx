@@ -1,6 +1,6 @@
 /**
  * @module RegisterForm.tsx
- * @description User Registration Form Component
+ * @description User Registration Form Presentation Component
  */
 
 import * as React from 'react';
@@ -15,8 +15,8 @@ const RegisterForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     registerFields,
-    fetchRegisterRequest,
-    updateRegisterField
+    fetchFormRequest,
+    updateField
   } = props;
   const {
     firstName,
@@ -42,18 +42,18 @@ const RegisterForm: any = (props: any) => {
     <div className="login-register-form">
       <h2>Learn which companies are most aligned with <em>you.</em></h2> 
       <div className="change-form-link">Already have an account? <Link to='/account/login'>Log In</Link></div>
-      <FormField field={firstName} name="firstName" type="text" updateField={updateRegisterField} >First Name </FormField>
-      <FormField field={lastName} name="lastName" type="text" updateField={updateRegisterField} >Last Name </FormField>
+      <FormField field={firstName} form="register" name="firstName" type="text" updateField={updateField} >First Name </FormField>
+      <FormField field={lastName} form="register" name="lastName" type="text" updateField={updateField} >Last Name </FormField>
       <br />
-      <FormField field={registerEmail} name="registerEmail" type="text" updateField={updateRegisterField} >Email </FormField>
+      <FormField field={registerEmail} form="register" name="registerEmail" type="text" updateField={updateField} >Email </FormField>
       <br />
-      <FormField field={registerPassword} name="registerPassword" type="password" updateField={updateRegisterField} >Password </FormField>
+      <FormField field={registerPassword} form="register" name="registerPassword" type="password" updateField={updateField} >Password </FormField>
       <br />
-      <FormField field={confirmPassword} name="confirmPassword" type="password" updateField={updateRegisterField} >Confirm Password </FormField>
+      <FormField field={confirmPassword} form="register" name="confirmPassword" type="password" updateField={updateField} >Confirm Password </FormField>
       <br />
-      <FormField field={agreeTerms} name="agreeTerms" type="checkbox" updateField={updateRegisterField} >Agree Terms </FormField>
+      <FormField field={agreeTerms} form="register" name="agreeTerms" type="checkbox" updateField={updateField} >Agree Terms </FormField>
       <br />
-      <input className="submit-button" onClick={() => fetchRegisterRequest(registerFields)} type="submit"/>
+      <input className="submit-button" onClick={() => fetchFormRequest('register', registerFields)} type="submit"/>
     </div>
   )
 }

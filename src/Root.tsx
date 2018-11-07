@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Header from './client/components/Header';
+import Header from './client/containers/HeaderContainer';
 import Footer from './client/components/Footer';
 import Disclaimer from './client/components/Disclaimer'
 
