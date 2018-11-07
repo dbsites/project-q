@@ -6,7 +6,7 @@ export interface IssueState {
 };
 
 export interface IssuesState {
-  [name: string]: IssueState,
+  [issueId: string]: IssueState,
 };
 
 // Form Types
@@ -44,7 +44,7 @@ export interface IssueQuestionsState {
 };
 
 export interface SurveyState {
-  [name: string]: IssueQuestionsState,
+  [issueId: string]: IssueQuestionsState,
 };
 
 // User Object Types
@@ -56,7 +56,6 @@ export interface UserState {
   readonly userId: string | null,
   readonly isAuth: boolean | null,
   readonly issues: UserIssues,
-  readonly surveyComplete: boolean,
 };
 
 // TODO: will update to appropriate types (GM)

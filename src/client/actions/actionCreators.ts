@@ -94,10 +94,8 @@ export const logoutUser = (): logoutUserAction => ({
 export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {
   // Create issues object
   const issues: UserIssues = {};
-  console.log('IssuesArr: ', issuesArr);
   issuesArr.forEach((issue: string) => issues[issue] = null);
   const bodyObj = { userId, issues };
-  console.log(bodyObj);
   // Issue fetch request
   fetch(`${HOST}/userIssues`, {
     method: 'POST',
@@ -107,10 +105,11 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(bodyObj),
   })
+    .then(response => response.json())
     .then((response: any) => {
       dispatch({
         type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
-        response,
+        issues: response,
       });
     })
     .catch((err: any) => console.error(err));
@@ -126,13 +125,9 @@ export const clearIssues = () => ({
   type: actions.CLEAR_ISSUES
 });
 
-export const toggleIssue = (issueName: string) => ({
+export const toggleIssue = (issueId: string) => ({
   type: actions.TOGGLE_ISSUE,
-  payload: issueName,
-});
-
-export const completeSurvey = () => ({
-  type: actions.COMPLETE_SURVEY,
+  payload: issueId,
 });
 
 // Survey Question Actions

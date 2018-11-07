@@ -14,8 +14,6 @@ const FormField = (props: any): any => {
   // Declare helper function that to generate event object
   const callUpdateField = (event: any): void => {
     const value: string = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    console.log('value: ', value);
-    console.log('type: ', event.target.type);
     let output = {
       form,
       field: event.target.name,

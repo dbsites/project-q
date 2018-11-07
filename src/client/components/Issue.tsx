@@ -6,33 +6,29 @@
  import * as React from 'react';
 
 const Issue = (props: any) => {
-  const { issue, remaining, toggleIssue } = props;
+  const { issue, issueId, remaining, toggleIssue } = props;
 
   const issueCard = (
     <React.Fragment >
-      <div className="issue-card-header">{issue.name}</div>
-      <div className="issue-card-blurb">{issue.blurb}</div>
+      <span className="issue-card-text">{issue.name}</span>
     </React.Fragment>
   );
 
   const issueDivSelected = (
-    <div className="issue-card issue-card-selected">
+    <div className="issue-card issue-card-selected" onClick={() => toggleIssue(issueId)}>
       {issueCard}
-      <input className="issue-card-button" onClick={() => toggleIssue(issue.name)} type="submit" value="Clear" />
     </div>
   );
 
   const issueDivNotSelected = remaining ?
   (
-    <div className="issue-card">
+    <div className="issue-card" onClick={() => toggleIssue(issueId)}>
       {issueCard}
-      <input className="issue-card-button" onClick={() => toggleIssue(issue.name)} type="submit" value="Select" />
     </div>
   ) : 
   (
     <div className="issue-card issue-card-unavailable">
     {issueCard}
-    <input className="issue-card-button" type="submit" value="Select" />
   </div>
   );
 

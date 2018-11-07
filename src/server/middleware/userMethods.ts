@@ -24,7 +24,7 @@ const UserMethods: any =  {};
 // registration route, new accounts are directed here and password is hashed then user is added to the db
 UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.body.confirmPassword);
-  return bcrypt.hash(req.body.confirmPassword, 10, (error, encrypted) => {
+  return bcrypt.hash(req.body.confirmPassword, 10, (error: any, encrypted: any) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
       res.sendStatus(500);
@@ -81,9 +81,10 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
 }
 
 // method for storing user issues in the db
-UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
+UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.addIssues(req.body.userId, req.body.issues)
   .then(() => {
+    res.locals.issues = req.body.issues;
     next();
   })
   .catch((error: any) => {
@@ -93,7 +94,7 @@ UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
 
 // method for getting a users issues out of the db
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
-  db.users.getIssues(req.body.user)
+  db.users.getIssues(req.body.loginEmail)
   .then((data: any) => {
     res.locals.userIssues = data;
     next();
