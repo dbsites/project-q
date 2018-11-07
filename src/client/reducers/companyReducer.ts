@@ -7,7 +7,8 @@ import actions from '../actions/actionTypes';
 
 const initialCompanyState: any = {
   selectedCompany: {},
-  companyList: []
+  companyList: [],
+  userIssues: {},
 };
 
 const companyReducer = (state: any = initialCompanyState, action: any): any => {
@@ -18,6 +19,10 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         ...state,
         companyList: action.data,
       };
+
+    case actions.GET_USER_ISSUES:
+      console.log(action.payload);
+      return state;
 
     case actions.SORT_COMPANY_LIST:
       const category = action.payload.field.split('-')[1];
