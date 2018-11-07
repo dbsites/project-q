@@ -10,10 +10,10 @@ import FormContainer from './client/containers/FormContainer';
 import TermsContainer from './client/containers/TermsContainer';
 
 //testing only
-import DashContainer from './client/containers/DashContainer';
+// import DashContainer from './client/containers/DashContainer';
 
 //testing only
-// import App from './client/App';
+import App from './client/App';
 
 import './Root.css';
 
@@ -24,8 +24,8 @@ const Root = (props: any) => (
     <Router>
       <div className="screen">
         <Route path='/' component={Header} />
-        {/* <Route exact path='/' component={App} /> */}
-        <Route exact path='/' component={DashContainer} />
+        <Route exact path='/' component={App} />
+        {/* <Route exact path='/' component={DashContainer} /> */}
         <Route exact path='/account/:id' component={FormContainer} />
         <Route exact path='/terms/:id' component={TermsContainer} />
         <Route path='/' component={Footer} />
