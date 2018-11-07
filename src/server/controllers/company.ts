@@ -17,20 +17,20 @@ import { Issues } from './index';
 import { v4 } from 'uuid';
 
 export class CompanyRepository {
-  
-   constructor (db: any) {
-     // database
-     this.db = db;
-   }
 
-   private db: IDatabase<any>;
+  constructor(db: any) {
+    // database
+    this.db = db;
+  }
 
-   // add new company data to the database
-   
-   // TODO SOLVE ANY/OBJECT TYPING***********************************************
-   // add is asyncronous because I cannot return the db.none method the way that I did with the user controllers
-   // this async wrapper here makes sure all the data gets put into the database before we move on with the middleware
-  async add (companyData: any[]) {
+  private db: IDatabase<any>;
+
+  // add new company data to the database
+
+  // TODO SOLVE ANY/OBJECT TYPING***********************************************
+  // add is asyncronous because I cannot return the db.none method the way that I did with the user controllers
+  // this async wrapper here makes sure all the data gets put into the database before we move on with the middleware
+  async add(companyData: any[]) {
     for (let i = 0; i < companyData.length; i += 1) {
 
       // define the issue object which get added to the company object
@@ -45,16 +45,16 @@ export class CompanyRepository {
       }
 
       // after each issues object is created, submit the issues object and the rest of the company data 
-      this.db.none('INSERT INTO company (id, ticker, name, blurb, logo, issues) VALUES ($1, $2, $3, $4, $5, $6);', 
-      [v4(), companyData[i].ticker, companyData[i].companyName, companyData[i].blurb, companyData[i].link, JSON.stringify(issues)])
-      .catch((error: any) => {
-        console.log('ERROR AT ADD FUNCTION IN COMPANY.TS', error);
-      })
+      this.db.none('INSERT INTO companies (id, ticker, name, blurb, logo, issues) VALUES ($1, $2, $3, $4, $5, $6);',
+        [v4(), companyData[i].ticker, companyData[i].companyName, companyData[i].blurb, companyData[i].link, JSON.stringify(issues)])
+        .catch((error: any) => {
+          console.log('ERROR AT ADD FUNCTION IN COMPANY.TS', error);
+        })
     }
   };
 
   // query to get all companies out of the db
   getList() {
-    return this.db.any('SELECT * FROM company;')
+    return this.db.any('SELECT * FROM companies;')
   }
 }
