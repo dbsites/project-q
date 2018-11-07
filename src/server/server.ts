@@ -62,6 +62,7 @@ app.post('/login',
   Cookie.check,
   UserMethods.compareHash,
   Cookie.give,
+  UserMethods.getIssues,
   (_: Request, res: Response) => {
     res.sendStatus(200);
     res.end();
@@ -87,7 +88,7 @@ app.post('/register',
 app.post('/userIssues', 
   UserMethods.addIssues,
   (_: Request, res: Response) => {
-    res.sendStatus(200);
+    res.send(res.locals.issues);
     res.end();
   }
 );
