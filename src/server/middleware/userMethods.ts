@@ -81,10 +81,10 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
 }
 
 // method for storing user issues in the db
-UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
-  console.log('************************', req.body);
+UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.addIssues(req.body.userId, req.body.issues)
   .then(() => {
+    res.locals.issues = req.body.issues;
     next();
   })
   .catch((error: any) => {
@@ -94,7 +94,7 @@ UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
 
 // method for getting a users issues out of the db
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
-  db.users.getIssues(req.body.user)
+  db.users.getIssues(req.body.loginEmail)
   .then((data: any) => {
     res.locals.userIssues = data;
     next();
