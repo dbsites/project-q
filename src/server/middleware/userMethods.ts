@@ -49,6 +49,10 @@ UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => 
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
 UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
+  // check if cookie is present, if so skip middleware
+  if (res.locals.cookieCheck) {
+    next();
+  }
   // update the users remember me option
   if (req.body.rememberMe !== undefined) {
     db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)

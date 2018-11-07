@@ -69,10 +69,12 @@ app.post('/login',
 );
 
 // login with cookies end point
-app.post('/login/cookie', (_: Request, res: Response) => {
-  console.log('USER HAS A VALID COOKIE');
-  res.sendStatus(200);
-});
+// app.get('/login/cookie',
+//   UserMethods.getIssues,
+//   (_: Request, res: Response) => {
+//   console.log('USER HAS A VALID COOKIE');
+//   res.status(200).send(res.locals.issuesAndBias);
+// });
 
 // registration end point
 app.post('/register', 
