@@ -56,19 +56,14 @@
     async addIssues (user: string, issues: any) {
 
       const arrayOfIssues = Object.keys(issues);
-      console.log(arrayOfIssues);
 
-      arrayOfIssues.forEach((issue: any) => {
-        this.db.any('SELECT id FROM issues WHERE issue = $1;', [issue])
-        .then((issueId: any) => {
-          console.log(issueId);
+      arrayOfIssues.forEach((issueId: any) => {
           this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);', 
           [v4(), user, issueId, undefined])
           .catch((error: any) => {
             console.log('ERROR ADDING ISSUE TO userIssues IN users.ts', error);
           })
         })
-      })
     }
 
     // get the user issues out of the db
