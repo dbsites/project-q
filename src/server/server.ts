@@ -64,8 +64,7 @@ app.post('/login',
   Cookie.give,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
-    res.sendStatus(200);
-    res.end();
+    res.send(res.locals.issuesAndBias);
   }
 );
 
@@ -80,7 +79,6 @@ app.post('/register',
   UserMethods.hashPassword,
   (_: Request, res: Response) => {
     res.sendStatus(200);
-    res.end();
   }
 );
 
@@ -89,7 +87,6 @@ app.post('/userIssues',
   UserMethods.addIssues,
   (_: Request, res: Response) => {
     res.send(res.locals.issues);
-    res.end();
   }
 );
 
@@ -109,7 +106,6 @@ app.get('/companyList',
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     res.send(res.locals);
-    res.end();
   }
 );
 
@@ -118,7 +114,6 @@ app.get('/questionList',
 DatabaseMethods.getQuestionList, 
   (_: Request, res: Response) => {
     res.send(res.locals.questionDataArray);
-    res.end();
 });
 
 /* APPLICATION DATA SUBMISSION ROUTES
@@ -129,7 +124,6 @@ DatabaseMethods.getQuestionList,
   CompanyDatabase.insertData,
   (_: Request, res: Response) => {
     res.sendStatus(200);
-    res.end();
     }
   );
 ***********************************************************

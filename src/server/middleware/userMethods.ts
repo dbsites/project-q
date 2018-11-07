@@ -15,6 +15,7 @@ import { Request, Response, NextFunction } from 'express';
 import db from '../index';
 // import userData interface for ts
 import { userDataFromDb } from '../controllers/index';
+// import DatabaseMethods from './additionalDataMethods';
 
 
 
@@ -96,7 +97,11 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.getIssues(req.body.loginEmail)
   .then((data: any) => {
-    res.locals.userIssues = data;
+    let issuesAndBias: any = {}
+    data.forEach((item: any) => {
+      issuesAndBias[item.issue] = item.bias;
+    })
+    res.locals.issuesAndBias = issuesAndBias;
     next();
   })
   .catch((error: any) => {

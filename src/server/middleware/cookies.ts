@@ -36,6 +36,7 @@ Cookie.check = (req: Request, res: Response, next: NextFunction) => {
     db.users.findByEmail(req.cookies.user)
     .then ((data: userDataFromDb) => {
       if (data.id === req.cookies.key) {
+        // if the id matches the email, redirect to bypass the login page
         res.redirect('/login/cookie');
       }
       else {
@@ -46,7 +47,6 @@ Cookie.check = (req: Request, res: Response, next: NextFunction) => {
       console.log('ERROR AT Cookie.check IN cookies.ts', error);
     });
   }
-  // if the id matches the email, redirect to bypass the login page
 }
 
 export default Cookie;
