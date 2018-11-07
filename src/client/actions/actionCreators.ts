@@ -62,6 +62,14 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
+export const getUserIssues = () => (dispatch: any, getState: any) => {
+  const { user } = getState();
+  dispatch({
+    type: actions.GET_USER_ISSUES,
+    payload: user.issues,
+  })
+}
+
 export const selectCompany = (event: any) => ({
   type: actions.SELECT_COMPANY,
   payload: event
