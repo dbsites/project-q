@@ -68,6 +68,6 @@
 
     // get the user issues out of the db
     getIssues(user: any) {
-      return this.db.any('SELECT * FROM "userIssues" WHERE user = $1;', [user]);
+      return this.db.any('SELECT * FROM "userIssues" WHERE "user" = (SELECT id FROM users WHERE email = $1);', [user]);
     }
  }
