@@ -8,9 +8,10 @@ import { Link } from 'react-router-dom'
 
 const CompanyList = (props: any) => {
   const companyList: any = Object.assign({}, props.list.companyDataArray);
+
   const companyNames: any = Object.keys(companyList)
-    .map((companyName: any, idx: any) =>
-      <Link id={idx} className="company-names-list" to="#" onClick={props.selectCompany}>
+    .map((companyName: any) =>
+      <Link id={companyName} className="company-names-list" to="#" onClick={props.selectCompany}>
         {companyName}
       </Link>
     );
@@ -20,16 +21,13 @@ const CompanyList = (props: any) => {
     const companyNames: any = Object.keys(companyList);
 
     for (let i = 0; i < companyNames.length; i += 1) {
-      // console.log(companyNames[i]);
       const company = companyList[companyNames[i]];
-      // console.log('company in compTickers: ', company);
       companyTickersArr.push(
         <p id={i.toString()} className="company-list" onClick={props.sortListBy}>
           {company.ticker}
         </p>
       );
     }
-    // console.log('company tickers arr: ', companyTickersArr);
     return companyTickersArr;
   }
 
