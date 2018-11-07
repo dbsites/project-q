@@ -57,10 +57,6 @@ export class CompanyRepository {
 
   // query to get all companies out of the db
   getList() {
-<<<<<<< HEAD
-    return this.db.any('SELECT * FROM companies;')
-=======
     return this.db.any('SELECT * FROM companies INNER JOIN "companyIssues" ON companies.id = "companyIssues"."companyId";');
->>>>>>> master
   }
 }
