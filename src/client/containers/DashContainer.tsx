@@ -5,16 +5,16 @@
 
 import * as React from 'react';
 
-// import IssuesContainer from './IssuesContainer';
-// import SurveyContainer from './SurveyContainer';
+import IssuesContainer from './IssuesContainer';
+import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
 
-const DashContainer = (/*props: any*/): any => {
-  // const { issues, surveyComplete } = props.userState;
+const DashContainer = (props: any): any => {
+  const { issues, surveyComplete } = props.userState;
 
-  // if (!Object.keys(issues).length) return <IssuesContainer />
+  if (!Object.keys(issues).length) return <IssuesContainer />
 
-  // if (!surveyComplete) return <SurveyContainer />
+  if (!surveyComplete) return <SurveyContainer />
 
   return <QuadsContainer />
 };
