@@ -39,14 +39,14 @@
   overflow: auto;
 }
 
-.company-category a, .company-category p { 
+.header-category, /*.company-category p*/ { 
   padding: 5px;
   margin-top: 5px;
 }
 
 #company-category-name {
   /* background-color: red; */
-  min-width: 15%;
+  min-width: 100px;
   /* max-width: 180px; */
   resize: horizontal;
   overflow: hidden;
@@ -78,11 +78,19 @@
   grid-template-rows: auto;
 } */
 
-/* #company-names-list {
+.company-names-list {
+  display: block;
   list-style-position: inside;
   list-style-type: none; 
   padding-left: 5px;
-} */
+  white-space: nowrap;
+  margin: 0;
+}
+
+.company-list {
+  margin: 0;
+  padding: 0;
+}
 
 /* #company-names-list li td {
   color: red;
