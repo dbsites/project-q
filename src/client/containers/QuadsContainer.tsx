@@ -17,6 +17,7 @@ interface Props {
   companyList: any
   sortCompanyList: any
   selectCompany: any
+  getUserIssues: any
 }
 
 class QuadsContainer extends React.Component<Props> {
@@ -34,8 +35,10 @@ class QuadsContainer extends React.Component<Props> {
       companyList,
       selectCompany,
       selectedCompany,
-      sortCompanyList } = this.props;
+      sortCompanyList,
+      getUserIssues } = this.props;
 
+    getUserIssues();
     return (
       <div id="quads-container">
         <QuadsDisplay
@@ -58,6 +61,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   fetchCompanyList: () => dispatch(actions.fetchCompanyList()),
   selectCompany: (event: any) => dispatch(actions.selectCompany({ field: event.target.id })),
   sortCompanyList: (event: any) => dispatch(actions.sortCompanyList({ field: event.target.id })),
+  getUserIssues: () => dispatch(actions.getUserIssues())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);
