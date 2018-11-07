@@ -18,6 +18,7 @@ interface Props {
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
+  userIssues: any
 }
 
 class QuadsContainer extends React.Component<Props> {
@@ -26,8 +27,10 @@ class QuadsContainer extends React.Component<Props> {
   }
 
   componentDidMount() {
-    const { fetchCompanyList } = this.props as any;
-    return fetchCompanyList();
+    const { fetchCompanyList, getUserIssues } = this.props as any;
+    fetchCompanyList();
+    getUserIssues();
+    return;
   }
 
   render() {
@@ -36,9 +39,10 @@ class QuadsContainer extends React.Component<Props> {
       selectCompany,
       selectedCompany,
       sortCompanyList,
-      getUserIssues } = this.props;
+      userIssues
+    } = this.props;
 
-    getUserIssues();
+
     return (
       <div id="quads-container">
         <QuadsDisplay
@@ -46,6 +50,7 @@ class QuadsContainer extends React.Component<Props> {
           select={selectCompany}
           selected={selectedCompany}
           sort={sortCompanyList}
+          issues={userIssues}
         />
       </div>
     );
@@ -54,7 +59,8 @@ class QuadsContainer extends React.Component<Props> {
 
 const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
-  selectedCompany: state.company.selectedCompany
+  selectedCompany: state.company.selectedCompany,
+  userIssues: state.company.userIssues,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
