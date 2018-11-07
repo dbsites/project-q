@@ -8,63 +8,63 @@ import { IssuesState, IssueState } from './types';
 
 // Define initial state
 const initialIssuesState: IssuesState = {
-  issueOne: {
-    name: 'issueOne',
+  '0755baa6-1b5f-49c2-918a-457f1e16fe1c': {
+    name: 'Civil/Women\'s Rights',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueTwo: {
-    name: 'issueTwo',
+  '2383b711-794f-4829-a189-25ceb32753a2': {
+    name: 'Economy and Jobs',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueThree: {
-    name: 'issueThree',
+  '30d820a3-9d0c-48a2-ae5e-0624ad0ffc4f': {
+    name: 'Health Care',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueFour: {
-    name: 'issueFour',
+  '70df714e-8566-4265-abe5-266d5a2004a9': {
+    name: '2nd Amendment',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueFive: {
-    name: 'issueFive',
+  'f58fc13c-cb4d-4011-bf26-9fbd5eaef3b2': {
+    name: 'Drug Legalization',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueSix: {
-    name: 'issueSix',
+  '58400255-75d9-41ad-b156-b073dbc03b0e': {
+    name: 'Corporate Philanthropy',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueSeven: {
-    name: 'issueSeven',
+  '39c3c304-4a0f-4daa-947a-85b4131b452b': {
+    name: 'Money and Politics',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueEight: {
-    name: 'issueEight',
+  '580600c8-c633-476b-98d2-9676c70c177d': {
+    name: 'Environment',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueNine: {
-    name: 'issueNine',
+  'fd054069-2079-4f99-bb1c-6973eef5f3bf': {
+    name: 'Immigration',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueTen: {
-    name: 'issueTen',
+  '9c82b608-f919-4f58-a23d-4e7a4528c146': {
+    name: 'Executive Compensation',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueEleven: {
-    name: 'issueEleven',
+  'bc5536d2-45a4-4093-9dc6-529589c56e49': {
+    name: 'Taxes',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
-  issueTwelve: {
-    name: 'issueTwelve',
+  '7d9dc278-a6dc-4701-8b23-448ae3000cbb': {
+    name: 'Presidential Support',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },
@@ -75,11 +75,9 @@ const initialIssuesState: IssuesState = {
 const issueReducer = (state: IssueState, action: any): IssueState => {
   switch(action.type) {
     case actions.TOGGLE_ISSUE:
-      if (state.name === action.payload) {
-        return {
-          ...state,
-          selected: !state.selected,
-        }
+      return {
+        ...state,
+        selected: !state.selected,
       }
 
     default: 

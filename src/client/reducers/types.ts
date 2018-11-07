@@ -6,7 +6,7 @@ export interface IssueState {
 };
 
 export interface IssuesState {
-  [name: string]: IssueState,
+  [issueId: string]: IssueState,
 };
 
 // Form Types
