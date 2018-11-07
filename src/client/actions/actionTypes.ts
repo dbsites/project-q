@@ -25,6 +25,7 @@ enum ActionTypes {
 
   // Survey Question Actions
   ANSWER_QUESTION = 'ANSWER_QUESTION',
+  CLEAR_QUESTIONS = 'CLEAR_QUESTIONS',
 }
 
 export default ActionTypes;

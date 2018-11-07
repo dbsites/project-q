@@ -17,7 +17,7 @@ const issueReducer = (state: UserIssues, action: any): UserIssues => {
   switch (action.type) {
     case actions.UPDATE_ISSUE:
       const nextState: UserIssues = {};
-      nextState[action.payload.issue] = action.payload.answer;
+      nextState[action.payload.issue] = action.payload.position;
       return {
         ...state,
         ...nextState

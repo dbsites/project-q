@@ -34,9 +34,10 @@ export interface FormState {
 
 // Survey Object Types
 export interface QuestionState {
-  readonly qid: string,
+  readonly questionId: string,
   readonly question: string,
-  readonly answer: string | null,
+  readonly agree: boolean | null,
+  readonly position: string,
 };
 
 export interface IssueQuestionsState {
@@ -46,6 +47,12 @@ export interface IssueQuestionsState {
 export interface SurveyState {
   [issueId: string]: IssueQuestionsState,
 };
+
+export interface AnswerPayload {
+  agree: boolean,
+  issueId: string,
+  questionId: string,
+}
 
 // User Object Types
 export interface UserIssues {

@@ -11,21 +11,16 @@ import SurveyContainer from './SurveyContainer';
 const DashContainer = (props: any): any => {
   const { issues } = props.userState;
 
+  // CHeck if issues have already been selected - if not, serve IssuesContainer
   if (!Object.keys(issues).length) return <IssuesContainer />
 
-  // Check issues outstanding
-  let oustandingIssues: boolean = false;
+  // Helper function to check if any issues are outstanding (value is null)
+  const countOutstandingIssues = (): number => {
+    const outstandingIssuesArray = Object.keys(issues).filter((issue) => issues[issue] === null)
+    return outstandingIssuesArray.length;
+  }
 
-  Object.keys(issues).forEach((issue) => {
-    if (issues[issue] === null) {
-      oustandingIssues = true;
-    }
-  });
-
-  console.log('Dash Issues: ', issues);
-  console.log('Outstanding Issues: ', oustandingIssues);
-
-  if (oustandingIssues) return <SurveyContainer />
+  if (countOutstandingIssues()) return <SurveyContainer />
 
   return (
     <div>

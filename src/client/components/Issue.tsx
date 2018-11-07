@@ -3,7 +3,7 @@
  * @description Issue Card Presentation Component
  */
 
- import * as React from 'react';
+import * as React from 'react';
 
 const Issue = (props: any) => {
   const { issue, issueId, remaining, toggleIssue } = props;
