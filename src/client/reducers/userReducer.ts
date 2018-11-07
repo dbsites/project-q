@@ -11,7 +11,6 @@ const initialUserState: UserState = {
   userId: null,
   isAuth: null,
   issues: {},
-  surveyComplete: false,
 };
 
 const issueReducer = (state: UserIssues, action: any): UserIssues => {
@@ -58,25 +57,15 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       }
     
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      const issueState: UserIssues = {};
-      action.payload.forEach((issue: string): void => {
-        issueState[issue] = null;
-      })
       return {
         ... state,
-        issues: issueState,
+        issues: action.issues,
       }
 
     case actions.UPDATE_ISSUE:
       return {
         ... state,
         issues: issueReducer(state.issues, action),
-      }
-
-    case actions.COMPLETE_SURVEY:
-      return {
-        ... state,
-        surveyComplete: true,
       }
 
     default:

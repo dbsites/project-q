@@ -279,35 +279,39 @@ body {
 }
 
 .issue-dashboard-footer {
-  height: 100%;
+  display: flex;
   padding: 0 15%;
 }
 
 .issue-dashboard-footer-button {
-  background: #2e7d32;
-  border: none;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 36px;
+  border: 3px solid #2e7d32;
   color: #FFFFFF;
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  height: 5vh;
-  margin: 1vh 5%;
-  outline: none;
-  padding: 1vh 0;
+  margin: 1vh auto;
   width: 40%;
-  text-align: center;
+
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .issue-dashboard-footer-button:hover {
-  background: #005005;
+  background-color: #005005;
+  border: 3px solid #005005;
   cursor: pointer;
 }
 
 .issue-dashboard-footer > .invalid {
-  background: #cacbcd;
-  color: #424242;
+  border: 3px solid #212121;
+  color: #212121;
+}
+
+.issue-dashboard-footer > .invalid:hover {
+  background: none;
   cursor: not-allowed;
 }
 

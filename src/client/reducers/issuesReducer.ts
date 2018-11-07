@@ -106,3 +106,4 @@ export default issuesReducer;
 // Returns array and count of selected issues
 export const getSelectedIssues = (state: IssuesState): string[] => Object.keys(state).filter(issue => state[issue].selected);
 export const getSelectedIssueCount = (state: IssuesState): number => Object.keys(state).filter(issue => state[issue].selected).length;
+export const getIssueName = (state: IssuesState, issueId: string): string => state[issueId].name;
