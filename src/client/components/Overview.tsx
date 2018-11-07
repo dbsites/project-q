@@ -7,18 +7,20 @@ import * as React from 'react';
 
 const Overview = (props: any) => {
 
+  console.log('in overview:', props.selected)
+
   let display;
 
-  if (!props.selected.id) {
+  if (!props.selected.ticker) {
     display = (<p>Click a company to see their overview</p>);
   }
 
   else {
-    const { description, logo, id, name } = props.selected;
+    const { description, logo, ticker, name } = props.selected;
     display = (
       <ul>
-        <li key={id}>
-          <h2>Name: {name}</h2>
+        <li key={ticker}>
+          <h2>Name: {ticker} {name}</h2>
           <em>Logo: {logo}</em>
           <p>Description: {description}</p>
         </li>
