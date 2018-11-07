@@ -88,7 +88,7 @@ app.post('/register',
 app.post('/userIssues', 
   UserMethods.addIssues,
   (_: Request, res: Response) => {
-    res.send(res.locals.issues);
+    res.status(200).send(res.locals.issues);
     res.end();
   }
 );
@@ -97,7 +97,7 @@ app.post('/userIssues',
 app.get('/userIssues',
   UserMethods.getIssues,
   (_: Request, res: Response) => {
-    res.send(res.locals);
+    res.json(res.locals);
     res.end();
   }
 );

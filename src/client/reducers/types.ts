@@ -56,7 +56,6 @@ export interface UserState {
   readonly userId: string | null,
   readonly isAuth: boolean | null,
   readonly issues: UserIssues,
-  readonly surveyComplete: boolean,
 };
 
 export interface ApplicationState {

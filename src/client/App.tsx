@@ -16,7 +16,6 @@ import DashContainer from './containers/DashContainer'
 interface Props {
   isAuth: boolean,
   issues: string[],
-  surveyComplete: boolean,
 }
 
 class App extends React.Component<Props> {
@@ -58,7 +57,6 @@ const mapStateToProps = (state: any): Props => {
   return {
     isAuth: state.user.isAuth,
     issues: state.user.issues,
-    surveyComplete: state.user.surveyComplete,
   }
 }
 
