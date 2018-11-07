@@ -11,6 +11,7 @@ import registerReducer from './registerReducer';
 import userReducer from './userReducer';
 import issuesReducer from './issuesReducer';
 import surveyReducer from './surveyReducer';
+import companyReducer from './companyReducer';
 
 // Combine reducers
 const reducers: Reducer = combineReducers({
@@ -19,6 +20,7 @@ const reducers: Reducer = combineReducers({
   user: userReducer,
   issues: issuesReducer,
   survey: surveyReducer,
+  company: companyReducer,
 });
 
 export default reducers;
