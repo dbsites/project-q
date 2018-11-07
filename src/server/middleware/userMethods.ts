@@ -84,8 +84,9 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
 // method for storing user issues in the db
 UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.addIssues(req.body.userId, req.body.issues)
-  .then(() => {
+  .then((questionData: any) => {
     res.locals.issues = req.body.issues;
+    res.locals.questions = questionData;
     next();
   })
   .catch((error: any) => {
@@ -106,6 +107,18 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   })
   .catch((error: any) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
+  })
+}
+
+// method for returning the questions relevant to the users selected issues
+UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => {
+  db.users.getQuestions(req.body.issues)
+  .then((questionData: any) => {
+    res.locals.questionData = questionData;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR at getQuiestions IN userMethods.ts', error);
   })
 }
 

@@ -25,10 +25,10 @@ export class DatabaseRepository {
   
   // add questions
   async addQuestions(questionData: any[]) {
-    for(let i=0; i < questionData.length-1; i++) {
+    for(let i=0; i < questionData.length; i++) {
 
-      this.db.none('INSERT INTO questions (id, "issueId", issue, question) VALUES ($1, $2, $3, $4);', 
-      [v4(), questionData[i].issueId, questionData[i].issue, questionData[i].question])
+      this.db.none('INSERT INTO questions (id, "issueId", question, bias) VALUES ($1, $2, $3, $4);', 
+      [v4(), questionData[i].issueId, questionData[i].question, questionData[i].bias])
       .then(() => {
         console.log('DATA ENTERED');
       })

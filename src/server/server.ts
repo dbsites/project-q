@@ -85,8 +85,10 @@ app.post('/register',
 // route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.issues);
+    // sending back issues and question data in locals
+    res.status(200).send(res.locals);
   }
 );
 
@@ -152,7 +154,6 @@ DatabaseMethods.getQuestionList,
   });
 ***********************************************************
 */
-
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
