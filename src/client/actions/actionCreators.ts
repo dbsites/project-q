@@ -96,9 +96,9 @@ export const clearIssues = () => ({
   type: actions.CLEAR_ISSUES
 });
 
-export const toggleIssue = (issueName: string) => ({
+export const toggleIssue = (issueId: string) => ({
   type: actions.TOGGLE_ISSUE,
-  payload: issueName,
+  payload: issueId,
 });
 
 export const completeSurvey = () => ({

@@ -24,7 +24,7 @@ body {
 .header {
   box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
   height: 6vh;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .header-left {
@@ -71,7 +71,7 @@ body {
   text-align: center;
 }
 
-/* Main Container = 88vh */
+/* Main Container = 2vh(m) 84vh 2vh(m) */
 /* top 8vh / main 68 vh / bottom 8vh */
 .main-dashboard {
   margin: 2vh 2.5vw;
@@ -217,105 +217,64 @@ body {
   background: #005005;
 }
 
-/* Issue Dashboard - 86vh */
+/* Issue Dashboard - 84vh => 8vh/68vh/8vh */
 /* Issue Dashboard Header - 8vh */
 .issue-dashboard-header {
   color: #FFFFFF;
+  font-size: 1.75rem;
+  font-weight: bold;
+
   display: grid;
   justify-content: left;
   align-items: center;
-  font-weight: bold;
-  font-size: 1.5rem;
-  width: 100%;
 }
 
-/* Issue Dashboard Container - 66vh */
+/* Issue Dashboard Container - 68vh (1p/66/1p) */
 .issue-dashboard-container {
+  box-sizing: border-box;
+  padding: 1vh 0;
+
   display: flex;
   flex-flow: row wrap;
-  width: 100%;
 }
 
-/* Issue Card - 22vh */
+/* Issue Card - 11vh */
 .issue-card {
-  color: #FFFFFF;
-  border-radius: 4px;
+  border: 3px solid #616161;
+  border-radius: 36px;
   box-sizing: border-box;
-  height: 18vh;
-  padding: 1vh 0;
+  color: #616161;
+  font-size: 1.6rem;
   margin: 1vh auto;
-  width: 22%;
+  width: 44%;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
   
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
 .issue-card:hover {
+  color: #FFFFFF;
+  cursor: pointer;
   border: 3px solid #FFFFFF;
 }
 
-.issue-card-header {
-  font-size: 1.2rem;
-  font-weight: bold;
-  height: 3vh;
-  padding: 0.5vh 0;
-  text-align: center;
-}
-
-.issue-card-blurb {
-  font-size: .9rem;
-  height: 4vh;
-  padding: 1vh 1vw;
-  text-align: center;
-}
-
-.issue-card-button {
-  background: #2e7d32;
-  border: none;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: bold;
-  height: 4vh;
-  margin: 1vh 10%;
-  outline: none;
-  padding: 0.5vh 0;
-  width: 80%;
-  text-align: center;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-
-.issue-card-button:hover {
-  background: #005005;
-  cursor: pointer;
-}
-
 .issue-card-selected {
-  background: #fbfffc;
-  border: 3px solid #2e7d32;
+  border: 3px solid #FFFFFF;
+  color: #FFFFFF;
 }
 
 .issue-card-unavailable {
-  background: #e2e1e0;
-  border: 3px solid #8d8d8d;
-  color: #8d8d8d;
+  border: 3px solid #212121;
+  color: #212121;
   cursor: not-allowed;
 }
 
-.issue-card-selected .issue-card-button {
-  background: #c8e6c9;
-  color: #000000
-}
-
-.issue-card-selected .issue-card-button:hover {
-  background: #97b498;
-  color: #000000;
-  cursor: pointer;
-}
-
-.issue-card-unavailable .issue-card-button {
-  background: #8d8d8d;
-  color: #494949;
+.issue-card-unavailable:hover {
+  border: 3px solid #212121;
+  color: #212121;
   cursor: not-allowed;
 }
 
