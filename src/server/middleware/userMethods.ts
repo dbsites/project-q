@@ -24,7 +24,6 @@ const UserMethods: any =  {};
 
 // registration route, new accounts are directed here and password is hashed then user is added to the db
 UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => {
-  console.log(req.body.confirmPassword);
   return bcrypt.hash(req.body.confirmPassword, 10, (error: any, encrypted: any) => {
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
@@ -128,7 +127,6 @@ UserMethods.getIssues = async (req: Request, res: Response, next: NextFunction) 
     userReference = req.body.loginEmail;
   }
   // get the issues from the userIssues table, specific to a particular user
-  console.log('userRef: ', userReference);
    db.users.getIssues(userReference)
   .then((data: any) => {
     // this object will be a part of the output object sent to the front end
@@ -178,11 +176,9 @@ UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => 
 }
 // method for storing the user response to the survey
 UserMethods.addPosition = (req: Request, res: Response, next: NextFunction) => {
-  console.log('1');
   db.users.addPosition(req.body.userId, req.body.issues, req.body.questions)
   .then((responseObject: any) => {
     // iterate through the response object to build the locals object
-    console.log('5');
     res.locals.userId = req.body.userId;
     res.locals.issues = responseObject.issues;
     res.locals.questions = responseObject.questions;

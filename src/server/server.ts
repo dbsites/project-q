@@ -90,7 +90,6 @@ app.post('/userIssues',
   UserMethods.getIssues,
   (_: Request, res: Response) => {
     // sending back issues and question data in locals
-    // console.log(res.locals);
     res.status(200).send(res.locals);
   }
 );
