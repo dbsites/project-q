@@ -155,6 +155,38 @@ body {
   align-items: center;
 }
 
+.dashboard-side {
+  display: flex;
+  font-size: 2rem;
+  align-items: center;
+}
+
+.dashboard-side-button {
+  color: #666666;
+  margin: 1vh auto;
+  width: 100%;
+
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-side-button:hover {
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.dashboard-side > .invalid {
+  color: #212121;
+}
+
+.dashboard-side > .invalid:hover {
+  background: none;
+  cursor: not-allowed;
+}
+
 .dashboard-footer {
   display: flex;
   font-size: 2rem;
@@ -164,7 +196,7 @@ body {
 .dashboard-footer-button {
   color: #666666;
   margin: 1vh auto;
-  width: 20%;
+  width: 50%;
 
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
@@ -274,8 +306,8 @@ body {
 }
 
 .login-register-form .input-check-label input:checked ~ .checkmark {
-  background-color: #2e7d32;
-  border: 1px solid #2e7d32;
+  background-color: #005005;
+  border: 1px solid #005005;
 }
 
 /* Create checkmark - hidden when not checked */
@@ -296,7 +328,7 @@ body {
   top: 2px;
   width: 4px;
   height: 8px;
-  border: solid white;
+  border: solid #FFFFFF;
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
@@ -335,7 +367,6 @@ body {
 
 .login-register-form .change-form-link a:hover {
   color: #64a271;
-  font-weight: bold;
   text-decoration: underline;
 }
 
@@ -391,10 +422,14 @@ body {
 /* Survey Dashboard - 84vh => 8vh/68vh/8vh */
 .survey-dashboard-container {
   display: grid;
-  grid-template-rows: 16vh 16vh 16vh;
+  grid-template-columns: 15vw 60vw 15vw;
   margin: 1vh 0;
-  height: 78vh;
+  height: 48vh;
   width: 100%;
+}
+
+.survey-dashboard-question-container {
+  grid-template-rows: 16vh 16vh 16vh;
 }
 
 .survey-question {
@@ -410,6 +445,10 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.survey-question-text {
+  text-align: center;
 }
 
 .survey-question-text {

@@ -79,7 +79,14 @@ const issueReducer = (state: IssueState, action: any): IssueState => {
         ...state,
         selected: !state.selected,
       }
-
+    
+    case actions.FETCH_FORM_SUCCESS:
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+      return {
+        ...state,
+        selected: !state.selected,
+      }
+    
     default: 
     return state
   }
@@ -90,11 +97,23 @@ const issueReducer = (state: IssueState, action: any): IssueState => {
 const issuesReducer = (state: IssuesState = initialIssuesState, action: any): IssuesState => {
   switch (action.type) {
     case actions.TOGGLE_ISSUE:
-      const newState: IssuesState = {...state};
+      const newState: IssuesState = {...state };
       newState[action.payload] = issueReducer(state[action.payload], action);
       return newState;
     case actions.CLEAR_ISSUES:
       return initialIssuesState;
+
+    case actions.FETCH_FORM_SUCCESS:
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+      if (Object.keys(action.response.issues).length) {
+        const newState: IssuesState = { ...initialIssuesState }
+        Object.keys(action.response.issues).forEach((issueId) => {
+          newState[issueId] = issueReducer(newState[issueId], action);
+        });
+        return newState;
+      }
+      return state;
+      
     default:
       return state;
   }
