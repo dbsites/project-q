@@ -174,5 +174,21 @@ UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => 
     console.log('ERROR at getQuiestions IN userMethods.ts', error);
   })
 }
+// method for storing the user response to the survey
+UserMethods.addPosition = (req: Request, res: Response, next: NextFunction) => {
+  console.log('1');
+  db.users.addPosition(req.body.userId, req.body.issues, req.body.questions)
+  .then((responseObject: any) => {
+    // iterate through the response object to build the locals object
+    console.log('5');
+    res.locals.userId = req.body.userId;
+    res.locals.issues = responseObject.issues;
+    res.locals.questions = responseObject.questions;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT addPosition IN userMethods.ts', error);
+  })
+}
 
 export default UserMethods;
