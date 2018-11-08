@@ -119,14 +119,6 @@ DatabaseMethods.getQuestionList,
     res.status(200).send(res.locals.questionDataArray);
 });
 
- // route to submit question data
-
- app.post('/questionData', 
- DatabaseMethods.insertQuestions,
- (_: Request, res: Response) => {
-   res.sendStatus(200);
- });
-
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
   // end point for company data submission
