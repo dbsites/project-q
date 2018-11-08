@@ -87,7 +87,7 @@ app.post('/register',
 // route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
-  UserMethods.getQuestions,
+  UserMethods.getIssues,
   (_: Request, res: Response) => {
     // sending back issues and question data in locals
     res.status(200).send(res.locals);

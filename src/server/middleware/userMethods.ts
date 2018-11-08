@@ -108,8 +108,19 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
 }
 
 // method for getting a users issues out of the db
-UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
-  db.users.getIssues(req.body.loginEmail)
+UserMethods.getIssues = async (req: Request, res: Response, next: NextFunction) => {
+  let userReference: any; 
+  if(req.body.userId) {
+    await db.users.findById(req.body.userId)
+    .then((userData: any) => {
+      userReference = userData.email;
+      res.locals.userId = userData.id;
+    })
+  }
+  else {
+    userReference = req.body.loginEmail;
+  }
+  db.users.getIssues(userReference)
   .then((data: any) => {
     let issues: any = {};
     let issuesArray: any[] = []; 
@@ -118,7 +129,7 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
       issues[item.issue] = item.bias
       issuesArray.push(item.issue);
     })
-    res.locals.userId = data.user;
+    res.locals.userId = (res.locals.userId) ? res.locals.userId: data.user;
     res.locals.issues = issues;
     db.data.getIssueQuestions(issuesArray)
     .then((questions: any) => {

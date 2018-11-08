@@ -39,7 +39,7 @@
 
     // find user by id
     findById (id: number) {
-      return this.db.oneOrNone('SELECT * FROM users WHERE id = $1', +id);
+      return this.db.oneOrNone('SELECT * FROM users WHERE id = $1', id);
     }
 
     // find user by email
