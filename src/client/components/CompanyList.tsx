@@ -6,100 +6,141 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom'
 
-const CompanyList = (props: any) => {
-  const companyList: any = Object.assign({}, props.list.companyDataArray);
+import * as issueMatch from '../issueMatcher';
 
-  const companyNames: any = Object.keys(companyList)
-    .map((companyName: any) =>
-      <Link id={companyName} className="company-names-list" to="#" onClick={props.selectCompany}>
-        {companyName}
+const CompanyList = (props: any) => {
+  const { companyList, sortListBy, userIssues } = props;
+  const { issueMatcher } = issueMatch;
+
+  const companyNames: any = companyList
+    .map((company: any, index: any) =>
+      <Link id={index} className="company-names-list" to="#" onClick={props.selectCompany}>
+        {company.name}
       </Link>
     );
 
-  const companyTickers = () => {
-    const companyTickersArr: any = [];
-    const companyNames: any = Object.keys(companyList);
+  const companyTickers: any = companyList
+    .map((company: any, index: any) =>
+      <p id={index.toString()} className="company-list">
+        {company.ticker}
+      </p>
+    );
 
-    for (let i = 0; i < companyNames.length; i += 1) {
-      const company = companyList[companyNames[i]];
-      companyTickersArr.push(
-        <p id={i.toString()} className="company-list" onClick={props.sortListBy}>
-          {company.ticker}
-        </p>
-      );
+  const companyOverallScores = () => {
+    const companyOverallScoresArray = [];
+    let score: number = 0;
+
+    const userIssuesArray = Object.keys(userIssues)
+      .map((issueID: any) => {
+        return {
+          name: issueMatcher[issueID],
+          leaning: userIssues[issueID]
+        }
+      });
+
+    if (companyList.length > 0) {
+      for (let i = 0; i < companyList.length; i += 1) {
+        userIssuesArray.forEach((issue: any) => {
+          if (issue.leaning.includes('dis'))
+            score += companyList[i][issue.name].disagreeScore;
+          else
+            score += companyList[i][issue.name].agreeScore
+        })
+        companyOverallScoresArray.push(
+          <p className="company-list">
+            {Math.round(score / userIssuesArray.length)}
+          </p>
+        )
+        score = 0;
+      }
     }
-    return companyTickersArr;
+    return companyOverallScoresArray;
   }
 
+
+  const companyScoresPerIssue = () => {
+    const companyScorePerIssueArray = [];
+    let issueScoresArray = [];
+    let score: number = 0;
+
+    const userIssuesArray = Object.keys(userIssues)
+      .map((issueID: any) => {
+        return {
+          name: issueMatcher[issueID],
+          leaning: userIssues[issueID]
+        }
+      });
+
+    if (companyList.length > 0) {
+      for (let a = 0; a < Object.keys(userIssues).length; a += 1) {
+        for (let i = 0; i < companyList.length; i += 1) {
+
+          if (userIssuesArray[a].leaning.includes('dis'))
+            score = companyList[i][userIssuesArray[a].name].disagreeScore;
+          else
+            score = companyList[i][userIssuesArray[a].name].agreeScore;
+
+          issueScoresArray.push(
+            <p className="company-list">
+              {score}
+            </p>
+          );
+          score = 0;
+        }
+        const name = userIssuesArray[a].name.split(' ').join('=');
+        companyScorePerIssueArray.push(
+          // TODO specific ID for div
+          <div className="cl-category" id="cl-category-issue">
+            <Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>ISS</Link>
+            <div className="cl-list">
+              {...issueScoresArray}
+            </div>
+          </div>
+        );
+        issueScoresArray = [];
+      }
+    }
+    return companyScorePerIssueArray;
+  };
 
   return (
     <div className="divTable">
       <div className="divTableBody">
         <div className="divTableRow">
           <div className="divTableHead">
-            <div className="company-category" id="company-category-name">
-              <Link to='#' className="header-category" id='company-name' onClick={props.sortListBy}>COMPANY</Link>
-              {companyNames}
-            </div>
-            <div className="company-category" id="company-category-ticker">
-              <Link to='#' className="header-category" id='company-ticker' onClick={props.sortListBy}>TICKER</Link>
-              {companyTickers()}
+
+            <div className="cl-category" id="cl-category-name">
+              <Link to='#' className="cl-header" id='cl-header-name' onClick={sortListBy}>COMPANY</Link>
+              <div className="cl-list">
+                {companyNames}
+              </div>
             </div>
 
+            <div className="cl-category" id="cl-category-ticker">
+              <Link to='#' className="cl-header" id='cl-header-ticker' onClick={props.sortListBy}>TICKER</Link>
+              <div className="cl-list">
+                {companyTickers}
+              </div>
+            </div>
+
+            <div className="cl-category" id="cl-category-overall">
+              <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVA</Link>
+              <div className="cl-list">
+                {companyOverallScores()}
+              </div>
+            </div>
 
             {/* ***********************************/}
             {/* make this dynamic on user choices */}
             {/* ***********************************/}
 
-            <div className="company-category" id="company-category-overall">
-              <Link to='#' className="header-category" id='company-overall' onClick={props.sortListBy}>OVERALL</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>OVERALL</p>
-            </div>
-            <div className="company-category" id="company-category-issue-one">
-              <Link to='#' className="header-category" id='company-issue-1' onClick={props.sortListBy}>ISSUE</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>SCORE</p>
-            </div>
-            <div className="company-category" id="company-category-issue-two">
-              <Link to='#' className="header-category" id='company-issue-2' onClick={props.sortListBy}>ISSUE</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>SCORE</p>
-            </div>
-            <div className="company-category" id="company-category-issue-three">
-              <Link to='#' className="header-category" id='company-issue-3' onClick={props.sortListBy}>ISSUE</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>SCORE</p>
-            </div>
-            <div className="company-category" id="company-category-issue-four">
-              <Link to='#' className="header-category" id='company-issue-4' onClick={props.sortListBy}>ISSUE</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>SCORE</p>
-            </div>
-            <div className="company-category" id="company-category-issue-five">
-              <Link to='#' className="header-category" id='company-issue-5' onClick={props.sortListBy}>ISSUE</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>SCORE</p>
-            </div>
-            <div className="company-category" id="company-category-issue-six">
-              <Link to='#' className="header-category" id='company-issue-6' onClick={props.sortListBy}>ISSUE</Link>
-              {/* INSERT COMPANY TICKER LIST HERE */}
-              <p>SCORE</p>
-            </div>
+            {companyScoresPerIssue()}
           </div>
         </div>
       </div>
     </div>
-    // <div className="quad" id="company-list-quad">
-    //   <div className="quad-box" id="quad-box-cl">
-    //     <table>
-    //       {companyCategories}
-    //       {/* {test} */}
-    //       {/* {companyList} */}
-    //     </table>
-    //   </div>
-    // </div>
   );
 }
 
 export default CompanyList;
+
