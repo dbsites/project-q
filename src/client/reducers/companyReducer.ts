@@ -4,6 +4,7 @@
  */
 
 import actions from '../actions/actionTypes';
+import * as issueMatch from '../issueMatcher';
 
 const initialCompanyState: any = {
   selectedCompany: {},
@@ -11,47 +12,113 @@ const initialCompanyState: any = {
   userIssues: {},
 };
 
+const { issueMatcher } = issueMatch;
+
 const companyReducer = (state: any = initialCompanyState, action: any): any => {
   switch (action.type) {
 
     case actions.FETCH_COMPANY_LIST:
-      console.log('company list fetch: ', action.data);
+      const companyListArray = Object.values(action.data.companyDataArray);
       return {
         ...state,
-        companyList: action.data,
-      };
-
-    case actions.SELECT_COMPANY:
-      const companyList = state.companyList.companyDataArray;
-      const name = action.payload.field;
-
-      return {
-        ...state,
-        selectedCompany: companyList[name]
+        companyList: companyListArray,
       };
 
     case actions.GET_USER_ISSUES:
-      console.log('user issues:', action.payload);
-      // return state;
       return {
         ...state,
         userIssues: Object.assign({}, action.payload)
       };
 
+    case actions.ADD_COMPANY_SCORE:
+      const updatedCompanyList = state.companyList.slice(0);
+      const userIssuesArray = Object.keys(state.userIssues)
+        .map((issueID: any) => {
+          return {
+            name: issueMatcher[issueID],
+            leaning: state.userIssues[issueID]
+          }
+        });
+
+      let score = 0;
+
+      if (state.companyList.length > 0) {
+        for (let i = 0; i < state.companyList.length; i += 1) {
+          userIssuesArray.forEach((issue: any) => {
+            if (issue.leaning.includes('dis'))
+              score += state.companyList[i][issue.name].disagreeScore;
+            else
+              score += state.companyList[i][issue.name].agreeScore
+          })
+          updatedCompanyList[i].overallScore = score;
+          score = 0;
+        }
+      }
+
+      return {
+        ...state,
+        companyList: updatedCompanyList
+      }
+
+    case actions.MERGE_ISSUE_SCORES:
+      const newCompanyList = state.companyList.slice(0);
+      const userIssuesArr = Object.keys(state.userIssues)
+        .map((issueID: any) => {
+          return {
+            name: issueMatcher[issueID],
+            leaning: state.userIssues[issueID]
+          }
+        });
+
+      if (newCompanyList.length > 0) {
+        for (let i = 0; i < newCompanyList.length; i += 1) {
+          userIssuesArr.forEach((issue: any) => {
+            console.log('what is... ', newCompanyList[i][issue.name])
+            if (issue.leaning.includes('dis'))
+              newCompanyList[i][issue.name].alignedScore =
+                newCompanyList[i][issue.name].disagreeScore;
+            else
+              newCompanyList[i][issue.name].alignedScore =
+                newCompanyList[i][issue.name].agreeScore;
+          })
+        }
+      }
+      return {
+        ...state,
+        companyList: newCompanyList
+      }
+
+
+    case actions.SELECT_COMPANY:
+      const companyList = Object.values(state.companyList);
+      const position = action.payload.field;
+
+      return {
+        ...state,
+        selectedCompany: companyList[position]
+      };
+
+
     case actions.SORT_COMPANY_LIST:
-      const category = action.payload.field.split('-')[1];
-      const topListCompany = state.companyList.slice(0, 1)[0];
+      const companyArray = state.companyList;
+      const category = action.payload.field.split('-')[2];
+      console.log('sort category: ', category);
+
       let sortedList;
 
+      /**
+       * Sort list by 'NAME'
+       */
       if (category === 'name') {
-        if (topListCompany.name[0] !== 'Z') {
-          sortedList = state.companyList.slice(0).sort((a: any, b: any): any => {
+        const topListCompanyName = companyArray[0].name;
+        if (topListCompanyName[0] !== 'Z') {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
             if (a.name.toUpperCase() > b.name.toUpperCase()) return -1;
             if (a.name.toUpperCase() < b.name.toUpperCase()) return 1;
             return 0;
           });
         } else {
-          sortedList = state.companyList.slice(0).sort((a: any, b: any): any => {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
             if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
             if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
             return 0;
@@ -59,19 +126,74 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         }
       }
 
+      /**
+       * Sort list by 'TICKER'
+       */
       else if (category === 'ticker') {
-        if (topListCompany.ticker[0] !== 'Z') {
-          sortedList = state.companyList.slice(0).sort((a: any, b: any): any => {
+        const topListCompanyTicker = companyArray[0].ticker;
+        if (topListCompanyTicker[0] !== 'Z') {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
             if (a.ticker.toUpperCase() > b.ticker.toUpperCase()) return -1;
             if (a.ticker.toUpperCase() < b.ticker.toUpperCase()) return 1;
             return 0;
           });
         } else {
-          sortedList = state.companyList.slice(0).sort((a: any, b: any): any => {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
             if (a.ticker.toUpperCase() < b.ticker.toUpperCase()) return -1;
             if (a.ticker.toUpperCase() > b.ticker.toUpperCase()) return 1;
             return 0;
           });
+        }
+      }
+      /**
+       * Sort list by 'SCORE'
+       */
+      else if (category === 'overall') {
+        const lowestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest.overallScore > next.overallScore ? next : lowest);
+
+        const highestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest.overallScore > next.overallScore ? lowest : next);
+
+        const topListCompany = companyArray[0];
+
+        if (topListCompany.overallScore !== highestScoreCompany.overallScore && topListCompany.overallScore !== lowestScoreCompany.overallScore) {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
+            return b.overallScore - a.overallScore;
+          });
+        } else if (topListCompany.overallScore === highestScoreCompany.overallScore) {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
+            return a.overallScore - b.overallScore;
+          })
+        } else {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
+            return b.overallScore - a.overallScore;
+          })
+        }
+      }
+
+      // category === 'issue', category is the search term
+      else {
+        const categoryName = category.replace(/=/g, ' ').trim();
+
+        const lowestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest[categoryName].alignedScore > next[categoryName].alignedScore ? next : lowest);
+
+        const highestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest[categoryName].alignedScore > next[categoryName].alignedScore ? lowest : next);
+
+        const topListCompany = companyArray[0];
+
+        if (topListCompany[categoryName].alignedScore !== highestScoreCompany[categoryName].alignedScore && topListCompany[categoryName].alignedScore !== lowestScoreCompany[categoryName].alignedScore) {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
+            return b[categoryName].alignedScore - a[categoryName].alignedScore;
+          });
+        }
+        else if (topListCompany[categoryName].alignedScore === highestScoreCompany[categoryName].alignedScore) {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
+            return a[categoryName].alignedScore - b[categoryName].alignedScore;
+          })
+        }
+        else {
+          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
+            return b[categoryName].alignedScore - a[categoryName].alignedScore;
+          })
         }
       }
 
