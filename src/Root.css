@@ -380,52 +380,55 @@ body {
 /* Survey Dashboard - 84vh => 8vh/68vh/8vh */
 .survey-dashboard-container {
   display: grid;
-  grid-template-rows: 22vh 22vh 22vh;
+  grid-template-rows: 16vh 16vh 16vh;
   margin: 1vh 0;
   height: 78vh;
   width: 100%;
 }
 
 .survey-question {
-  border-radius: 4px;
-  height: 20vh;
-  margin: 1vh 0;
+  margin: 0;
 }
 
 .survey-question-box {
   font-size: 1.25rem;
   height: 18vh;
-  margin: 2.5vh 2vw;
-  text-align: center;
+  margin: 0 2vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .survey-question-text {
   color: white;
   display: inline-block;
-  padding: 1vh 0 3vh 0;
+  padding: 1vh 0 1vh 0;
+}
+
+.survey-question-hr {
+  margin-bottom: 1vh;
+  width: 50vw;
+}
+
+.survey-question-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .survey-button {
   border: none;
   box-sizing: border-box;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: bold;
-  height: 5vh;
-  margin: 2vh 5%;
-  outline: none;
-  padding: 1vh 0;
-  width: 40%;
-  text-align: center;
+  color: #666666;
+  font-size: 1.4rem;
+  margin: 0 10vw;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.survey-agree-button {
-  background-color: #000000;
-}
-
-.survey-agree-button:hover {
-  background: #005005;
+.survey-button:hover {
+  color: white;
   cursor: pointer;
 }
 
@@ -437,18 +440,6 @@ body {
   color: #8e0000;
 }
 
-.survey-disagree-button {
-  background-color: #000000;
-  border: 3px solid #8e0000
-}
-
-.survey-disagree-button:hover {
-  background: #8e0000;
-  cursor: pointer;
-}
-
 .survey-deselected-button {
-  background-color: #000000;
-  border: 3px solid #212121;
   color: #212121;
 }

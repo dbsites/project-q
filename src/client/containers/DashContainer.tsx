@@ -7,9 +7,10 @@ import * as React from 'react';
 
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
+import { submitSurvey } from '../actions/actionCreators';
 
 const DashContainer = (props: any): any => {
-  const { issues } = props.userState;
+  const { issues, survey, userId } = props.userState;
   // CHeck if issues have already been selected - if not, serve IssuesContainer
   if (!Object.keys(issues).length) return <IssuesContainer />
 
@@ -20,6 +21,25 @@ const DashContainer = (props: any): any => {
   }
 
   if (countOutstandingIssues()) return <SurveyContainer />
+
+  // If no outstanding issues, console.log props
+  const surveyObj: any = {
+    userId: userId,
+    issues: issues,
+    questions: {},
+  };
+  
+  const issueIdArray = Object.keys(survey);
+  issueIdArray.forEach((issueId) => {
+    const questionIdArray = Object.keys(survey[issueId]);
+    questionIdArray.forEach((questionId) => {
+      surveyObj.questions[questionId] = {};
+      surveyObj.questions[questionId].issueId = issueId;
+      surveyObj.questions[questionId].position = survey[issueId][questionId].position;
+    });
+  });
+
+  submitSurvey(surveyObj);
 
   return (
     <div>

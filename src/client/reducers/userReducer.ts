@@ -57,21 +57,18 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       }
     
     case actions.FETCH_FORM_SUCCESS:
-      if (action.issues) {
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+      console.log(action);
+      if (action.response.issues) {
         return {
           ...state,
-          issues: action.issues,
+          userId: action.response.userId,
+          issues: action.response.issues,
         }
       }
       return {
         ...state,
       };
-    
-    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      return {
-        ... state,
-        issues: action.issues,
-      }
 
     case actions.UPDATE_ISSUE:
       return {
