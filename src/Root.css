@@ -1,3 +1,7 @@
+html {
+  font-size: 2vh;
+}
+
 body {
   background: #000000;
   font-family: 'Cinzel', serif;
@@ -16,7 +20,7 @@ body {
 .form-header {
   color: #FFFFFF;
   letter-spacing: 5px;
-  margin-top: 2vh;
+  margin-top: 1.5vh;
 
   display: flex;
   align-items: center;
@@ -24,7 +28,7 @@ body {
 }
 
 .form-header-welcome-text {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin: 1vh;
 }
 
@@ -36,6 +40,11 @@ body {
 .form-header-logo-image {
   height: 14vh;
 }
+
+.form-header-tagline {
+  font-size: 1.1rem;
+}
+
 
 /* Header */
 .header {
@@ -96,7 +105,7 @@ body {
 .footer-links li a {
   color: inherit;
   font-size: 0.8rem;
-  padding: 7px 20px;
+  padding: 4px 20px;
   text-decoration: none;
 }
 
@@ -112,20 +121,20 @@ body {
 }
 
 .disclaimer-text {
-  font-size: 7px;
+  font-size: 0.6rem;
   text-align: center;
 }
 
 /* Header Footer Shared */
 
-/* Main Container = 12vh + 20vh + 50vh + 10vh = 92vh */
+/* Main Container = 12vh + 14vh + 52vh + 14vh = 92vh */
 /* top 8vh / main 68 vh / bottom 8vh */
 .main-dashboard {
   margin: 0 2.5vw;
   padding: 0 2.5vw;
 
   display: grid;
-  grid-template-rows: 12vh 15vh 50vh 15vh;
+  grid-template-rows: 12vh 14vh 52vh 14vh;
 }
 
 /* Form Dashboard 2vh + 28vh + 60vh + 2vh = 92vh*/
@@ -148,12 +157,12 @@ body {
 
 .dashboard-footer {
   display: flex;
+  font-size: 2rem;
   padding: 4vh 15%;
 }
 
 .dashboard-footer-button {
   color: #666666;
-  font-size: 1.8rem;
   margin: 1vh auto;
   width: 20%;
 
@@ -196,8 +205,8 @@ body {
 .login-register-form .input-div {
   background: #000000;
   border-bottom: 1px solid #FFFFFF;
-  font-size: 16px;
-  margin: 6px 0;
+  font-size: 1.5rem;
+  margin: 0.2vh 0;
 
   display: flex;
 }
@@ -206,7 +215,7 @@ body {
   color: #FFFFFF;
   display: inline-block;
   margin: 0 4px;
-  padding: 12px 2px;
+  padding: 10px 2px;
   white-space: nowrap;
 }
 
@@ -216,9 +225,9 @@ body {
   box-sizing: border-box;
   color: #FFFFFF;
   font-family: 'Cinzel', serif;
-  font-size: 16px;
+  font-size: 1.5rem;
   outline: none;
-  padding: 12px 2px;
+  padding: 10px 2px;
   width: 100%;
 }
 
@@ -236,9 +245,10 @@ body {
 .login-register-form .input-check-label {
   color: #FFFFFF;
   display: inline-block;
+  font-size: 1.5rem;
   position: relative;
-  padding: 0 0 10px 25px;
-  margin: 12px 2px;
+  padding: 0 0 1vh 25px;
+  margin: 12px 2px 6px 2px;
   cursor: pointer;
 }
 
@@ -299,10 +309,10 @@ body {
 
 .login-register-form .submit-button {
   color: #666666;
-  font-size: 22px;
+  font-size: 2.6rem;
   font-weight: bold;
   outline: none;
-  padding: 12px 24px;
+  padding: 10px 24px;
 }
 
 .login-register-form .submit-button:hover {
@@ -312,7 +322,8 @@ body {
 
 .login-register-form .change-form-link {
   color: #666666;
-  padding: 16px 0;
+  font-size: 1.8rem;
+  padding: 14px 0;
   text-align: right;
   width: 100%;
 }
@@ -409,7 +420,7 @@ body {
 
 .survey-question-hr {
   margin-bottom: 1vh;
-  width: 50vw;
+  width: 40vw;
 }
 
 .survey-question-buttons {
@@ -422,7 +433,7 @@ body {
   border: none;
   box-sizing: border-box;
   color: #666666;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin: 0 10vw;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
