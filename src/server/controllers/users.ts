@@ -141,7 +141,7 @@
 
       for (let currQuestion = 0; currQuestion < questionsArray.length; currQuestion += 1) {
         await this.db.none('INSERT INTO "userAnswers" (id, "user", question, bias) VALUES ($1, $2, $3, $4);', 
-        [v4(), user, questionsArray[currQuestion], questions[questionsArray[currQuestion]].agree])
+        [v4(), user, questionsArray[currQuestion], questions[questionsArray[currQuestion]].position])
         .then(() => {
           // abuild the question object
           questionResponseObject[questionsArray[currQuestion]] = {};
