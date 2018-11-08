@@ -58,7 +58,6 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
     
     case actions.FETCH_FORM_SUCCESS:
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      console.log(action);
       if (action.response.issues) {
         return {
           ...state,
