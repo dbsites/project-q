@@ -7,7 +7,7 @@ import * as React from 'react';
 
 const Overview = (props: any) => {
 
-  console.log('in overview:', props.selected)
+  // console.log('in overview:', props.selected)
 
   let display;
 
@@ -20,7 +20,7 @@ const Overview = (props: any) => {
     display = (
       <ul>
         <li key={ticker}>
-          <h2>Name: {ticker} {name}</h2>
+          <h2>Name: {name} ({ticker})</h2>
           <em>Logo: {logo}</em>
           <p>Description: {description}</p>
         </li>
