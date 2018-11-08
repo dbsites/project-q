@@ -35,7 +35,7 @@ const DashContainer = (props: any): any => {
     questionIdArray.forEach((questionId) => {
       surveyObj.questions[questionId] = {};
       surveyObj.questions[questionId].issueId = issueId;
-      surveyObj.questions[questionId].position = survey[issueId][questionId].position;
+      surveyObj.questions[questionId].agree = survey[issueId][questionId].agree;
     });
   });
 
