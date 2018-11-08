@@ -11,8 +11,8 @@ const Footer = () => {
   return (
     <div className="footer">
       <ul className="footer-links">
-        <li><Link to='/terms/privacy'>PRIVACY POLICY</Link></li>
-        <li><Link to='/terms/service'>TERMS AND CONDITIONS</Link></li>
+        <li key="privacy-policy"><Link to='/terms/privacy'>PRIVACY POLICY</Link></li>
+        <li key="terms-of-service"><Link to='/terms/service'>TERMS AND CONDITIONS</Link></li>
       </ul>
       <Disclaimer />
     </div>
