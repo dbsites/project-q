@@ -20,11 +20,13 @@ const QuadsDisplay = (props: any) => {
       // selected={props.selected}
       />
       <IssuesCharts
-        selected={props.selected}
+        selectedCompany={props.selected}
+        userIssues={props.issues}
       />
       <CompanyList
-        list={props.list}
+        companyList={props.list}
         sortListBy={props.sort}
+        // selectedCompany={props.selected}
         selectCompany={props.select}
         userIssues={props.issues}
       />
