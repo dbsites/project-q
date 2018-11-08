@@ -27,7 +27,11 @@ class QuadsContainer extends React.Component<Props> {
   }
 
   componentDidMount() {
-    const { fetchCompanyList, getUserIssues } = this.props as any;
+    const {
+      fetchCompanyList,
+      getUserIssues
+    } = this.props as any;
+
     fetchCompanyList();
     getUserIssues();
     return;
@@ -41,7 +45,6 @@ class QuadsContainer extends React.Component<Props> {
       sortCompanyList,
       userIssues
     } = this.props;
-
 
     return (
       <div id="quads-container">
@@ -65,9 +68,15 @@ const mapStateToProps = (state: any): any => ({
 
 const mapDispatchToProps = (dispatch: any): any => ({
   fetchCompanyList: () => dispatch(actions.fetchCompanyList()),
-  selectCompany: (event: any) => dispatch(actions.selectCompany({ field: event.target.id })),
-  sortCompanyList: (event: any) => dispatch(actions.sortCompanyList({ field: event.target.id })),
-  getUserIssues: () => dispatch(actions.getUserIssues())
+  selectCompany: (event: any) => {
+    event.preventDefault();
+    dispatch(actions.selectCompany({ field: event.target.id }));
+  },
+  sortCompanyList: (event: any) => {
+    event.preventDefault();
+    dispatch(actions.sortCompanyList({ field: event.target.id }));
+  },
+  getUserIssues: () => dispatch(actions.getUserIssues()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);
