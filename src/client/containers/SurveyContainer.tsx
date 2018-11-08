@@ -43,19 +43,20 @@ const SurveyContainer = (props: any): any => {
   // Helper Function to populate survey
   const populateSurvey = (issueId: string): any => {
     // User function selecter to get survey questions from store for a given issue
-    const questionsList: string[] = getQuestionIdList(survey, issueId);
+    const questionsIdList: string[] = getQuestionIdList(survey, issueId);
     const questionsObject: IssueQuestionsState = getQuestionsObject(survey, issueId);
         
     // For each question, push a SurveyQuestion component into surveyArray
-    questionsList.forEach((question: string) => {
-      const questionAgree = questionsObject[question].agree;
+    questionsIdList.forEach((questionId: string) => {
+      const questionAgree = questionsObject[questionId].agree;
       return surveyArray.push(
         <SurveyQuestion
           answerQuestion={answerQuestion}
           issueId={currentIssueId}
-          questionId={question}
+          key={questionId}
+          questionId={questionId}
           questionAgree={questionAgree}
-          questionText={questionsObject[question].question}
+          questionText={questionsObject[questionId].question}
         />,
       );
     });
