@@ -18,6 +18,10 @@ import { userDataFromDb } from '../controllers/index';
 const Cookie: any = {}
 
 Cookie.give = (_: Request, res: Response, next: NextFunction) => {
+  // check for cookieCheck, if true skip middleware
+  if (res.locals.cookieCheck) {
+    next();
+  }
   const sevenDays = 7 * 24 * 60 * 1000;
   const twoHours = 2 * 60 * 1000;
   const cookieLength: number = (res.locals.remember) ? sevenDays : twoHours;
@@ -37,10 +41,11 @@ Cookie.check = (req: Request, res: Response, next: NextFunction) => {
     .then ((data: userDataFromDb) => {
       if (data.id === req.cookies.key) {
         // if the id matches the email, redirect to bypass the login page
-        res.redirect('/login/cookie');
+        res.locals.cookiesRedirect = true; 
+        next();
       }
       else {
-        next();
+        res.sendStatus(400);
       }
     })
     .catch((error: any) => {

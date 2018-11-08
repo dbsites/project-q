@@ -41,7 +41,8 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(formFields),
   })
-    .then((response: any) => {
+  .then(response => response.json())
+  .then((response: any) => {
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
@@ -111,14 +112,14 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(bodyObj),
   })
-    .then(response => response.json())
-    .then((response: any) => {
-      dispatch({
-        type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
-        issues: response,
-      });
-    })
-    .catch((err: any) => console.error(err));
+  .then(response => response.json())
+  .then((response: any) => {
+    dispatch({
+      type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
+      response,
+    });
+  })
+  .catch((err: any) => console.error(err));
 };
 
 export const updateIssue = (issue: any) => ({
@@ -140,4 +141,24 @@ export const toggleIssue = (issueId: string) => ({
 export const answerQuestion = (event: any) => ({
   type: actions.ANSWER_QUESTION,
   payload: event,
+})
+
+export const clearQuestions = (issueId: string) => ({
+  type: actions.CLEAR_QUESTIONS,
+  payload: issueId,
 });
+
+export const submitSurvey = (surveyObj: any) => {
+  // Issue Fetch Request
+  fetch(`${HOST}/userSurvey`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify(surveyObj),
+  })
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err))
+}

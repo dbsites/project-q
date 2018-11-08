@@ -11,16 +11,16 @@ const FormField = (props: any): any => {
     updateField,                        // dispatch
   } = props;
 
-  // Declare helper function that to generate event object
+  // Declare helper function to generate payload object
   const callUpdateField = (event: any): void => {
     const value: string = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    let output = {
+    const payload = {
       form,
       field: event.target.name,
       type: event.target.type,
       value,
     };
-    updateField(output);
+    updateField(payload);
   }
 
   // Declare input field
@@ -31,8 +31,8 @@ const FormField = (props: any): any => {
 
   // Declare label and warpper
   let label = type !== 'checkbox' ?
-  <React.Fragment><label className="input-field-label" htmlFor={name}>{children} </label> {input}</React.Fragment>:  // case: default
-  <React.Fragment><label className="input-check-label" htmlFor={name}>{children} {input} <span className="checkmark" /></label></React.Fragment>; // case: checkbox
+  <div className="input-div"><label className="input-field-label" htmlFor={name}>{children} </label> {input}</div>:  // case: default
+  <div className="input-check-div"><label className="input-check-label" htmlFor={name}>{children} {input} <span className="checkmark" /></label></div>; // case: checkbox
 
   // Additional wrapping in case of name field
   if (name === 'firstName' || name === 'lastName') {

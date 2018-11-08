@@ -5,16 +5,18 @@
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import Disclaimer from './Disclaimer';
 
-const Header = () => {
+const Footer = () => {
   return (
-    <div>
-      <ul className="footer">
-        <li><Link to='/terms/service'>TERMS OF SERVICE</Link></li>
+    <div className="footer">
+      <ul className="footer-links">
         <li><Link to='/terms/privacy'>PRIVACY POLICY</Link></li>
+        <li><Link to='/terms/service'>TERMS AND CONDITIONS</Link></li>
       </ul>
+      <Disclaimer />
     </div>
   );
 };
 
-export default Header;
+export default Footer;

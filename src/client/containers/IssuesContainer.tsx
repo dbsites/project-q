@@ -10,6 +10,7 @@ import * as actions from '../actions/actionCreators';
 import { getSelectedIssueCount, getSelectedIssues } from '../reducers/issuesReducer';
 
 import Issue from '../components/Issue';
+import Header from '../containers/HeaderContainer';
 
 const IssuesContainer = (props: any): any => {
   const {
@@ -26,35 +27,38 @@ const IssuesContainer = (props: any): any => {
   const issuesArray: any[] = [];
 
   Object.keys(issues).forEach((issueId) => {
-    issuesArray.push(<Issue issue={issues[issueId]} issueId={issueId} remaining={issuesRemaining} toggleIssue={toggleIssue} />);
+    issuesArray.push(<Issue issue={issues[issueId]} issueId={issueId} key={issueId} remaining={issuesRemaining} toggleIssue={toggleIssue} />);
   });
 
   const headerText = issuesRemaining ?
-    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Issues Important To You` :
+    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Platforms That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
     <React.Fragment>
-      <div className="issue-dashboard-footer-button" onClick={clearIssues}>
+      <div className="dashboard-footer-button" onClick={clearIssues}>
         Clear All
       </div>
-      <div className="issue-dashboard-footer-button" onClick={() => submitIssues(userId, selectedIssues)}>
+      <div className="dashboard-footer-button" onClick={() => submitIssues(userId, selectedIssues)}>
         Submit
       </div>
     </React.Fragment>
     :
     <React.Fragment>
-      <div className="issue-dashboard-footer-button invalid" >
+      <div className="dashboard-footer-button invalid" >
         Clear All
       </div>
-      <div className="issue-dashboard-footer-button invalid" >
+      <div className="dashboard-footer-button invalid" >
         Submit
       </div>
     </React.Fragment> ;
 
   return (
     <div className="main-dashboard">
-      <div className="issue-dashboard-header">
+      <div className="header">
+        <Header />
+      </div>
+      <div className="dashboard-header">
         <span>
           {headerText}
         </span>
@@ -62,7 +66,7 @@ const IssuesContainer = (props: any): any => {
       <div className="issue-dashboard-container">
         {issuesArray}
       </div>
-      <div className="issue-dashboard-footer">
+      <div className="dashboard-footer">
         {footerButtons}
       </div>
     </div>

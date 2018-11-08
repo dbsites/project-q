@@ -8,25 +8,39 @@ import * as React from 'react';
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
+import { submitSurvey } from '../actions/actionCreators';
 
 const DashContainer = (props: any): any => {
-  const { issues } = props.userState;
-
+  const { issues, survey, userId } = props.userState;
+  // CHeck if issues have already been selected - if not, serve IssuesContainer
   if (!Object.keys(issues).length) return <IssuesContainer />
 
-  // Check issues outstanding
-  let oustandingIssues: boolean = false;
+  // Helper function to check if any issues are outstanding (value is null)
+  const countOutstandingIssues = (): number => {
+    const outstandingIssuesArray = Object.keys(issues).filter((issue) => issues[issue] === null)
+    return outstandingIssuesArray.length;
+  }
 
-  Object.keys(issues).forEach((issue) => {
-    if (issues[issue] === null) {
-      oustandingIssues = true;
-    }
+  if (countOutstandingIssues()) return <SurveyContainer />
+
+  // If no outstanding issues, console.log props
+  const surveyObj: any = {
+    userId: userId,
+    issues: issues,
+    questions: {},
+  };
+  
+  const issueIdArray = Object.keys(survey);
+  issueIdArray.forEach((issueId) => {
+    const questionIdArray = Object.keys(survey[issueId]);
+    questionIdArray.forEach((questionId) => {
+      surveyObj.questions[questionId] = {};
+      surveyObj.questions[questionId].issueId = issueId;
+      surveyObj.questions[questionId].agree = survey[issueId][questionId].agree;
+    });
   });
 
-  // console.log('Dash Issues: ', issues);
-  // console.log('Outstanding Issues: ', oustandingIssues);
-
-  if (oustandingIssues) return <SurveyContainer />
+  submitSurvey(surveyObj);
 
   return <QuadsContainer />
 };

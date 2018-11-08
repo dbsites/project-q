@@ -64,41 +64,51 @@ app.post('/login',
   Cookie.give,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.issuesAndBias);
+    res.status(200).send(res.locals);
   }
 );
 
 // login with cookies end point
-app.post('/login/cookie', (_: Request, res: Response) => {
-  console.log('USER HAS A VALID COOKIE');
-  res.sendStatus(200);
-});
+// app.get('/login/cookie',
+//   UserMethods.getIssues,
+//   (_: Request, res: Response) => {
+//   console.log('USER HAS A VALID COOKIE');
+//   res.status(200).send(res.locals.issuesAndBias);
+// });
 
 // registration end point
 app.post('/register', 
   UserMethods.hashPassword,
   (_: Request, res: Response) => {
-    res.sendStatus(200);
+    res.status(200).send(res.locals);
   }
 );
 
 // route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.issues);
-  }
-);
-
-// route for delivering user issues
-app.get('/userIssues',
   UserMethods.getIssues,
   (_: Request, res: Response) => {
+    // sending back issues and question data in locals
     res.status(200).send(res.locals);
   }
 );
 
+// route for delivering user issues
+// app.get('/userIssues',
+//   UserMethods.getIssues,
+//   (_: Request, res: Response) => {
+//     res.status(200).send(res.locals);
+//   }
+// );
+
 // route for storing user answers to questions
+app.post('/userSurvey',
+  UserMethods.addPosition,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
+  }
+);
 
 // end point for deliverying a list of companies on dashboard render
 app.get('/companyList', 
@@ -152,7 +162,6 @@ DatabaseMethods.getQuestionList,
   });
 ***********************************************************
 */
-
 
 // wake up the server
 app.listen(PORT, () => console.log(`Server listening on PORT: ${PORT}`));
