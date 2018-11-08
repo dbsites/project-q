@@ -11,11 +11,14 @@ import { Redirect } from 'react-router-dom'
 import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
+import { SurveyState } from './reducers/types';
 
 // TODO: Find more appropriate home for interface
 interface Props {
   isAuth: boolean,
   issues: string[],
+  survey: SurveyState,
+  userId: string,
 }
 
 class App extends React.Component<Props> {
@@ -57,6 +60,8 @@ const mapStateToProps = (state: any): Props => {
   return {
     isAuth: state.user.isAuth,
     issues: state.user.issues,
+    survey: state.survey,
+    userId: state.user.userId,
   }
 }
 

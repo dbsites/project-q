@@ -13,6 +13,7 @@ import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import { formFieldObject } from '../actions/types';
 import { LoginState, RegisterState } from '../reducers/types';
+import FormHeader from '../components/FormHeader';
 
 // TODO: Assign explicit type to store
 // Extract form values from store to pass as props
@@ -82,7 +83,8 @@ let FormContainer: any = (props: any) => {
 
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
-    <div className="main-dashboard">
+    <div className="form-dashboard">
+      <FormHeader />
       <div className="form-container">
         {displayForm}
       </div>

@@ -84,7 +84,7 @@ const SurveyContainer = (props: any): any => {
   const outstandingIssueCount: number = getOutstandingIssues(selectedIssues).length
   if (!outstandingIssueCount) return
 
-  const headerText: string = `Survey Page ${selectedIssueCount - outstandingIssueCount + 1} of ${selectedIssueCount}: ${getIssueName(issues, currentIssueId)}`;
+  const headerText: string = getIssueName(issues, currentIssueId);
 
   // Helper function that generates active or inactive footer buttons
   const generateFooterButtons = (issueId: string) => {
