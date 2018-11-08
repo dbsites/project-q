@@ -1,33 +1,61 @@
+/**
+ * @module IssuesCharts.tsx
+ * @description User issues broken down by company selection
+ */
+
 import * as React from 'react';
 
-const issueMatcher = {
-  '0755baa6-1b5f-49c2-918a-457f1e16fe1c': "Civil/Women's Rights",
-  '2383b711-794f-4829-a189-25ceb32753a2': "Economy and Jobs",
-  '30d820a3-9d0c-48a2-ae5e-0624ad0ffc4f': "Health Care",
-  '70df714e-8566-4265-abe5-266d5a2004a9': "2nd Amendment",
-  'f58fc13c-cb4d-4011-bf26-9fbd5eaef3b2': "Drug Legalization",
-  '58400255-75d9-41ad-b156-b073dbc03b0e': "Money and Politics"
-} 
+// Link up in the refactor
+// import { getIssueName } from '../reducers/issuesReducer';
 
-
+import * as issueMatch from '../issueMatcher';
 
 const IssuesCharts = (props: any) => {
-  console.log('issues props: ', props.selected)
-  // const {
-  //   description, logo, ticker, //name
-  // } = props;
+  const {
+    selectedCompany,
+    userIssues
+  } = props;
 
-  const issues = Object.keys(props.selected)
-    .filter(key => key !== 'description' && key !== 'logo' && key !== 'ticker');
+  const { issueMatcher } = issueMatch;
+  let display: any = 'Click company for scores on issues you care about';
 
-  console.log('issues key issues: ', issues);
+  //ie...{7d9dc278-a6dc-4701-8b23-448ae3000cbb: "strongly disagree"...}
+  console.log('user issues obj: ', userIssues);
 
-  let display;
+  // user issues objects array with name and their position
+  //{
+  //  name: "Drug Legalization",
+  //  leaning: "disagree"
+  //}
+  const userIssuesArray = Object.keys(userIssues)
+    .map((issueID: any) => {
+      return {
+        name: issueMatcher[issueID],
+        leaning: userIssues[issueID]
+      }
+    });
 
-  if (!props.selected.id) {
-    display = (<p>Click a company to see their overview</p>);
-  } else {
-    display = (<p>Future issues charts for {props.selected.name}</p>)
+  if (selectedCompany.name) {
+
+    display = userIssuesArray
+      .map((issueObj: any) => {
+        const { name, leaning } = issueObj;
+        let agreeScore, disagreeScore;
+
+        if (leaning.includes('dis')) {
+          disagreeScore = (<strong>{selectedCompany[name].disagreeScore}</strong>);
+          agreeScore = (<span>{selectedCompany[name].agreeScore}</span>)
+        } else {
+          agreeScore = (<strong>{selectedCompany[name].agreeScore}</strong>);
+          disagreeScore = (<span>{selectedCompany[name].disagreeScore}</span>)
+        }
+
+        return (
+          <p>
+            {name}: Agree {agreeScore} / Disagree {disagreeScore}... You lean '{leaning}'
+          </p>
+        );
+      });
   }
 
   return (
