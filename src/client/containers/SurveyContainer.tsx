@@ -6,7 +6,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { getQuestionsList, getQuestionsObject } from '../reducers/surveyReducer';
+import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition } from '../reducers/surveyReducer';
 
 import SurveyQuestion from '../components/SurveyQuestion';
 
@@ -14,6 +14,7 @@ import * as actions from '../actions/actionCreators';
 import { getOutstandingIssues } from '../reducers/userReducer';
 import { IssueQuestionsState } from '../reducers/types';
 import { getIssueName } from '../reducers/issuesReducer';
+import SurveyPage from '../components/SurveyPage';
 
 // interface SurveyContainerProps {
 //   answerQuestion: any; //TODO:
@@ -24,7 +25,7 @@ import { getIssueName } from '../reducers/issuesReducer';
 
 const SurveyContainer = (props: any): any => {
   const {
-    answerQuestion, updateIssue,
+    answerQuestion, clearQuestions, updateIssue,
     issues, selectedIssues, survey
   } = props;
   
@@ -42,59 +43,22 @@ const SurveyContainer = (props: any): any => {
   // Helper Function to populate survey
   const populateSurvey = (issueId: string): any => {
     // User function selecter to get survey questions from store for a given issue
-    const questionsList: string[] = getQuestionsList(survey, issueId);
+    const questionsList: string[] = getQuestionIdList(survey, issueId);
     const questionsObject: IssueQuestionsState = getQuestionsObject(survey, issueId);
-
-    // Initialize object to hold survey question answers
-    interface answersObj {
-      [index: string] : number
-    }
-    const answers: answersObj = {
-      count: 0,
-      agree: 0,
-      disagree: 0,
-    };
         
     // For each question, push a SurveyQuestion component into surveyArray
-    questionsList.forEach((question: string, index: number) => {
-      const questionAnswer = questionsObject[question].answer;
-      if (questionAnswer) {
-        answers.count += 1;
-        answers[questionAnswer] += 1;
-      }
+    questionsList.forEach((question: string) => {
+      const questionAgree = questionsObject[question].agree;
       return surveyArray.push(
         <SurveyQuestion
           answerQuestion={answerQuestion}
           issueId={currentIssueId}
-          question={question}
-          questionAnswer={questionAnswer}
-          questionNumber={index + 1}
+          questionId={question}
+          questionAgree={questionAgree}
           questionText={questionsObject[question].question}
         />,
       );
     });
-
-    // If all three questions answered, update issue in user object
-    if (answers.count === 3) {
-      let answer: string;
-      switch(answers.agree) {
-        case 3:
-          answer = 'strongly agree';
-          break;
-        case 2:
-          answer = 'agree';
-          break;
-        case 1:
-          answer = 'disagree';
-          break;
-        default:
-          answer = 'strongly disagree';
-      }
-      updateIssue({
-        issue: currentIssueId,
-        answer: answer,
-      })
-    };
   };
 
   // Assign currentIssue to next issue with value 'null' and call 'populateSurvey'
@@ -107,19 +71,81 @@ const SurveyContainer = (props: any): any => {
     issueIndex += 1;
   }
 
+  // Helper function to update Issues if user clicks "Next Issue"
+  const callUpdateIssue = () => {
+    const position = getPosition(survey, currentIssueId);
+    return updateIssue({
+      issue: currentIssueId,
+      position: position,
+    })
+  }
+
   // If no outstanding issues, complete survey
   const outstandingIssueCount: number = getOutstandingIssues(selectedIssues).length
-  if (!outstandingIssueCount) return 
+  if (!outstandingIssueCount) return
 
   const headerText: string = `Survey Page ${selectedIssueCount - outstandingIssueCount + 1} of ${selectedIssueCount}: ${getIssueName(issues, currentIssueId)}`;
 
+  // Helper function that generates active or inactive footer buttons
+  const generateFooterButtons = (issueId: string) => {
+    if(getOutstandingQuestionsCount(survey, issueId) === 3) {
+      // If no questions answered, return invalid buttons
+      return (
+        <React.Fragment>
+          <div className="dashboard-footer-button invalid" >
+            Clear
+          </div>
+          <div className="dashboard-footer-button invalid" >
+            Next
+          </div>
+        </React.Fragment>
+      )
+    } else if (getOutstandingQuestionsCount(survey, issueId)) {
+      // If 1 or 2 questions answered, return clear button only
+      return (
+        <React.Fragment>
+          <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
+            Clear
+          </div>
+          <div className="dashboard-footer-button invalid" >
+            Next
+          </div>
+        </React.Fragment>
+      )
+    } else if (outstandingIssueCount === 1) {
+      return (
+        // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
+        <React.Fragment>
+          <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
+            Clear
+          </div>
+          <div className="dashboard-footer-button" onClick={() => callUpdateIssue()}>
+            Complete
+          </div>
+        </React.Fragment>
+      )
+    }
+    return (
+      // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
+      <React.Fragment>
+        <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
+          Clear
+        </div>
+        <div className="dashboard-footer-button" onClick={() => callUpdateIssue()}>
+          Next
+        </div>
+      </React.Fragment>
+    )
+  }
+
+  const footerButtons = generateFooterButtons(currentIssueId);
+  
   return (
-    <div className="survey-dashboard">
-      <div className="survey-dashboard-header">{headerText}</div>
-      <div className="survey-dashboard-container">
-        {surveyArray}
-      </div>
-    </div>
+    <SurveyPage
+      headerText={headerText}
+      surveyArray={surveyArray}
+      footerButtons={footerButtons}
+    />
   )
 };
 
@@ -131,6 +157,7 @@ const mapStateToProps = (store: any): any => ({
 
 const mapDispatchToProps = (dispatch: any): any => ({
   answerQuestion: (event: any) => dispatch(actions.answerQuestion(event)),
+  clearQuestions: (issueId: string) => dispatch(actions.clearQuestions(issueId)),
   updateIssue: (issue: any) => dispatch(actions.updateIssue(issue)),
 });
 

@@ -105,3 +105,8 @@ export const answerQuestion = (event: any) => ({
   type: actions.ANSWER_QUESTION,
   payload: event,
 })
+
+export const clearQuestions = (issueId: string) => ({
+  type: actions.CLEAR_QUESTIONS,
+  payload: issueId,
+});

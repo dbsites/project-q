@@ -11,16 +11,16 @@ const FormField = (props: any): any => {
     updateField,                        // dispatch
   } = props;
 
-  // Declare helper function that to generate event object
+  // Declare helper function to generate payload object
   const callUpdateField = (event: any): void => {
     const value: string = event.target.type === 'checkbox' ? event.target.checked : event.target.value;
-    let output = {
+    const payload = {
       form,
       field: event.target.name,
       type: event.target.type,
       value,
     };
-    updateField(output);
+    updateField(payload);
   }
 
   // Declare input field
