@@ -16,9 +16,7 @@ const QuadsDisplay = (props: any) => {
       <Overview
         selected={props.selected}
       />
-      <StockGraph
-      // selected={props.selected}
-      />
+      <StockGraph />
       <IssuesCharts
         selectedCompany={props.selected}
         userIssues={props.issues}
@@ -26,7 +24,6 @@ const QuadsDisplay = (props: any) => {
       <CompanyList
         companyList={props.list}
         sortListBy={props.sort}
-        // selectedCompany={props.selected}
         selectCompany={props.select}
         userIssues={props.issues}
       />
