@@ -103,6 +103,12 @@ app.post('/userIssues',
 // );
 
 // route for storing user answers to questions
+app.post('/userSurvey',
+  UserMethods.addPosition,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
+  }
+);
 
 // end point for deliverying a list of companies on dashboard render
 app.get('/companyList', 
