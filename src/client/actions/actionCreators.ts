@@ -41,10 +41,11 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(formFields),
   })
+  .then(response => response.json())
   .then((response: any) => {
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
-        response,
+        issues: response,
       });
     })
   .catch((err: any) => console.error(err));
@@ -76,6 +77,7 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
     body: JSON.stringify(bodyObj),
   })
   .then(response => response.json())
+  .then(response => console.log(response))
   .then((response: any) => {
     dispatch({
       type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,

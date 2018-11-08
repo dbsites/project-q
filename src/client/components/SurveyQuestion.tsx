@@ -27,7 +27,7 @@ const SurveyQuestion = (props: any) => {
     agreeButton = <input className="survey-button survey-agree-button" onClick={() => callAnswerQuestion(true)} type="submit" value="Agree" />;
     disagreeButton = <input className="survey-button survey-disagree-button" onClick={() => callAnswerQuestion(false)} type="submit" value="Disagree" />;
   } else if (questionAgree) {
-    agreeButton = <input className="survey-button survey-agree-button" type="submit" value="Agree" />;
+    agreeButton = <input className="survey-button survey-agree-button survey-agreed" type="submit" value="Agree" />;
     disagreeButton = <input className="survey-button survey-disagree-button survey-deselected-button" onClick={() => callAnswerQuestion(false)} type="submit" value="Disagree" />;
   } else {
     agreeButton = <input className="survey-button survey-agree-button survey-deselected-button" onClick={() => callAnswerQuestion(true)} type="submit" value="Agree" />;

@@ -7,6 +7,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+const eTradeLogo = require('../assets/eTrade.png')
+
 let Header = (props: any) => {
 
   // Header Links depend on user auth status
@@ -21,7 +23,11 @@ let Header = (props: any) => {
   return (
     <div>
       <ul className="header">
-        <li className="header-left"><Link to='/'>ETHIQ</Link></li>
+        <li className="header-left">
+          <Link to='/'>
+            <img alt="Welcome to eTrade powered by Ethiq" className="header-logo-image" src={eTradeLogo} />
+          </Link>
+        </li>
         {headerRight}
       </ul>
     </div>

@@ -56,6 +56,17 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
         isAuth: false,
       }
     
+    case actions.FETCH_FORM_SUCCESS:
+      if (action.issues) {
+        return {
+          ...state,
+          issues: action.issues,
+        }
+      }
+      return {
+        ...state,
+      };
+    
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
       return {
         ... state,

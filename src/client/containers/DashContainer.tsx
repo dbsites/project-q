@@ -10,7 +10,6 @@ import SurveyContainer from './SurveyContainer';
 
 const DashContainer = (props: any): any => {
   const { issues } = props.userState;
-
   // CHeck if issues have already been selected - if not, serve IssuesContainer
   if (!Object.keys(issues).length) return <IssuesContainer />
 
