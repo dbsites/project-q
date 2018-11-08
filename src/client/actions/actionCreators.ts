@@ -58,6 +58,12 @@ export const fetchCompanyList = () => (dispatch: any) => {
         type: actions.FETCH_COMPANY_LIST,
         data
       });
+      dispatch({
+        type: actions.ADD_COMPANY_SCORE
+      });
+      dispatch({
+        type: actions.MERGE_ISSUE_SCORES
+      })
     })
     .catch((err: any) => console.error(err));
 }
