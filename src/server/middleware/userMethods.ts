@@ -111,12 +111,23 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.getIssues(req.body.loginEmail)
   .then((data: any) => {
-    let issuesAndBias: any = {}
+    let issues: any = {};
+    let issuesArray: any[] = []; 
+
     data.forEach((item: any) => {
-      issuesAndBias[item.issue] = item.bias;
+      issues[item.issue] = item.bias
+      issuesArray.push(item.issue);
     })
-    res.locals.issuesAndBias = issuesAndBias;
-    next();
+    res.locals.userId = data.user;
+    res.locals.issues = issues;
+    db.data.getIssueQuestions(issuesArray)
+    .then((questions: any) => {
+      res.locals.questions = questions;
+      next();
+    })
+    .catch((error: any) => {
+      console.log('ERROR AT getIssueQuestions IN userMethods.ts', error);
+    })
   })
   .catch((error: any) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
