@@ -54,7 +54,7 @@ const initialIssuesState: IssuesState = {
     selected: false,
   },
   '9c82b608-f919-4f58-a23d-4e7a4528c146': {
-    name: 'Executive Compensation',
+    name: 'Salary Gap / Wages',
     blurb: `Do you support or oppose this particular issue?`,
     selected: false,
   },

@@ -10,6 +10,7 @@ import * as actions from '../actions/actionCreators';
 import { getSelectedIssueCount, getSelectedIssues } from '../reducers/issuesReducer';
 
 import Issue from '../components/Issue';
+import Header from '../containers/HeaderContainer';
 
 const IssuesContainer = (props: any): any => {
   const {
@@ -30,7 +31,7 @@ const IssuesContainer = (props: any): any => {
   });
 
   const headerText = issuesRemaining ?
-    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Issues Important To You` :
+    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Platforms That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
@@ -54,6 +55,9 @@ const IssuesContainer = (props: any): any => {
 
   return (
     <div className="main-dashboard">
+      <div className="header">
+        <Header />
+      </div>
       <div className="dashboard-header">
         <span>
           {headerText}

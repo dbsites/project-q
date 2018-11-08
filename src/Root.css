@@ -1,30 +1,54 @@
 body {
   background: #000000;
-  font-family: 'Mundo Sans', sans-serif;
+  font-family: 'Cinzel', serif;
   margin: 0;
 }
 
-/* Wrapper for Header/Body/Footer - 100vh */
+/* Wrapper for Body/Footer - 92vh + 8vh = 100vh */
 .screen {
   display: grid;
-  grid-template-rows: 6vh 88vh 3vh 3vh; 
+  grid-template-rows: 92vh 8vh; 
   height: 100vh;
   width: 100vw;
 }
 
-/* Header 6vh / Footer 3vh / Disclaimer 3vh */
-.header, .footer {
+/* Form Header */
+.form-header {
   color: #FFFFFF;
+  letter-spacing: 5px;
+  margin-top: 2vh;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-header-welcome-text {
+  font-size: 1.5rem;
+  margin: 1vh;
+}
+
+.form-header-hr {
+  width: 40vw;
+  margin: 1vh 0 2vh 0;
+}
+
+.form-header-logo-image {
+  height: 14vh;
+}
+
+/* Header */
+.header {
+  color: #FFFFFF;
+  font-size: 1.2rem;
   list-style-type: none;
   margin: 0;
   overflow: hidden;
   padding: 0;
 }
 
-.header {
-  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.3);
-  height: 6vh;
-  font-size: 1.2rem;
+.header-logo-image {
+  height: 8vh;
 }
 
 .header-left {
@@ -35,14 +59,14 @@ body {
   float: right;
 }
 
-.header li a, .footer li a {
+.header li a {
   color: inherit;
   display: block;
   text-align: center;
   text-decoration: none;
 }
 
-.header a:hover, .footer a:hover {
+.header a:hover {
   background-color: #212121;
   font-weight: bold;
 }
@@ -51,19 +75,40 @@ body {
   padding: 14px 20px;
 }
 
-.footer li a {
-  font-size: 0.8rem;
-  padding: 4px 20px;
+/* Footer - 4vh + 4vh = 8vh */
+.footer {
+  color: #666666;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
 }
 
-.footer, .disclaimer {
-  color: #FFFFFF;
+/* Footer Links */
+.footer-links {
+  letter-spacing: 1.5px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
   display: flex;
   justify-content: center;
 }
 
+.footer-links li a {
+  color: inherit;
+  font-size: 0.8rem;
+  padding: 7px 20px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #FFFFFF;
+}
+
+/* Disclaimer */
 .disclaimer {
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .disclaimer-text {
@@ -71,39 +116,46 @@ body {
   text-align: center;
 }
 
-/* Main Container = 2vh(m) 84vh 2vh(m) */
+/* Header Footer Shared */
+
+/* Main Container = 12vh + 20vh + 50vh + 10vh = 92vh */
 /* top 8vh / main 68 vh / bottom 8vh */
 .main-dashboard {
+  margin: 0 2.5vw;
+  padding: 0 2.5vw;
+
+  display: grid;
+  grid-template-rows: 12vh 15vh 50vh 15vh;
+}
+
+/* Form Dashboard 2vh + 28vh + 60vh + 2vh = 92vh*/
+.form-dashboard {
   margin: 2vh 2.5vw;
   padding: 0 2.5vw;
 
   display: grid;
-  grid-template-rows: 8vh 68vh 8vh;
+  grid-template-rows: 28vh 62vh 
 }
 
 .dashboard-header {
   color: #FFFFFF;
-  font-size: 1.75rem;
-  font-weight: bold;
+  font-size: 2rem;
 
-  display: grid;
-  justify-content: left;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 .dashboard-footer {
   display: flex;
-  padding: 0 15%;
+  padding: 4vh 15%;
 }
 
 .dashboard-footer-button {
-  border-radius: 36px;
-  border: 3px solid #2e7d32;
-  color: #FFFFFF;
-  font-size: 1.4rem;
-  font-weight: bold;
+  color: #666666;
+  font-size: 1.8rem;
   margin: 1vh auto;
-  width: 40%;
+  width: 20%;
 
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
@@ -113,13 +165,11 @@ body {
 }
 
 .dashboard-footer-button:hover {
-  background-color: #005005;
-  border: 3px solid #005005;
+  color: #FFFFFF;
   cursor: pointer;
 }
 
 .dashboard-footer > .invalid {
-  border: 3px solid #212121;
   color: #212121;
 }
 
@@ -137,44 +187,38 @@ body {
 }
 
 .login-register-form {
-  background: #FFFFFF;
-  border-radius: 4px;
   box-sizing: content-box;
   padding: 24px;
   width: 600px;
 }
 
-.login-register-form .change-form-link {
-  margin-bottom: 6px;
-}
-
-.login-register-form .change-form-link a {
-  color: #64a271;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-.login-register-form .change-form-link a:hover {
-  color: #64a271;
-  text-decoration: underline;
-}
-
 /* Login/Register Style - Input Form Fields */
+.login-register-form .input-div {
+  background: #000000;
+  border-bottom: 1px solid #FFFFFF;
+  font-size: 16px;
+  margin: 6px 0;
+
+  display: flex;
+}
+
 .login-register-form .input-field-label {
+  color: #FFFFFF;
   display: inline-block;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 12px 2px 8px 2px;
+  margin: 0 4px;
+  padding: 12px 2px;
+  white-space: nowrap;
 }
 
 .login-register-form .input-field {
-  background-color: #FAFAFA;
-  border: 1px solid #CDCFD4;
-  border-radius: 4px;
+  background: #000000;
+  border: none;
   box-sizing: border-box;
-  font-size: 14px;
+  color: #FFFFFF;
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
   outline: none;
-  padding: 12px;
+  padding: 12px 2px;
   width: 100%;
 }
 
@@ -184,19 +228,18 @@ body {
   width: 50%;
 }
 
-.login-register-form .input-field-name-wrapper:nth-of-type(2) {
+.login-register-form .input-field-name-wrapper:nth-of-type(1) {
   padding-right: 24px;
 }
 
 /* Login/Register Style - Input Form Check Box */
 .login-register-form .input-check-label {
+  color: #FFFFFF;
   display: inline-block;
-  font-weight: bold;
   position: relative;
   padding: 0 0 10px 25px;
   margin: 12px 2px;
   cursor: pointer;
-  font-size: 14px;
 }
 
 .login-register-form .input-check {
@@ -248,27 +291,48 @@ body {
   transform: rotate(45deg);
 }
 
+.login-register-form .submit-button-container {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+}
+
 .login-register-form .submit-button {
-  background: #2e7d32;
-  border-radius: 4px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  font-size: 14px;
+  color: #666666;
+  font-size: 22px;
   font-weight: bold;
   outline: none;
   padding: 12px 24px;
-  width: 100%;
 }
 
 .login-register-form .submit-button:hover {
-  background: #005005;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.login-register-form .change-form-link {
+  color: #666666;
+  padding: 16px 0;
+  text-align: right;
+  width: 100%;
+}
+
+.login-register-form .change-form-link a {
+  color: #64a271;
+  text-decoration: none;
+}
+
+.login-register-form .change-form-link a:hover {
+  color: #64a271;
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 /* Issue Dashboard - 84vh => 8vh/68vh/8vh */
 /* Issue Dashboard Container - 68vh (1p/66/1p) */
 .issue-dashboard-container {
   box-sizing: border-box;
-  padding: 1vh 0;
+  padding: 4vh 6vw;
 
   display: flex;
   flex-flow: row wrap;
@@ -276,13 +340,12 @@ body {
 
 /* Issue Card - 11vh */
 .issue-card {
-  border: 3px solid #616161;
-  border-radius: 36px;
+  /* border: 3px solid #616161; */
   box-sizing: border-box;
   color: #616161;
   font-size: 1.6rem;
   margin: 1vh auto;
-  width: 44%;
+  width: 33%;
   
   display: flex;
   justify-content: center;
@@ -294,22 +357,22 @@ body {
 .issue-card:hover {
   color: #FFFFFF;
   cursor: pointer;
-  border: 3px solid #FFFFFF;
+  /* border: 3px solid #FFFFFF; */
 }
 
 .issue-card-selected {
-  border: 3px solid #FFFFFF;
+  /* border: 3px solid #FFFFFF; */
   color: #FFFFFF;
 }
 
 .issue-card-unavailable {
-  border: 3px solid #212121;
+  /* border: 3px solid #212121; */
   color: #212121;
   cursor: not-allowed;
 }
 
 .issue-card-unavailable:hover {
-  border: 3px solid #212121;
+  /* border: 3px solid #212121; */
   color: #212121;
   cursor: not-allowed;
 }
@@ -317,68 +380,66 @@ body {
 /* Survey Dashboard - 84vh => 8vh/68vh/8vh */
 .survey-dashboard-container {
   display: grid;
-  grid-template-rows: 22vh 22vh 22vh;
+  grid-template-rows: 16vh 16vh 16vh;
   margin: 1vh 0;
   height: 78vh;
   width: 100%;
 }
 
 .survey-question {
-  border-radius: 4px;
-  height: 20vh;
-  margin: 1vh 0;
+  margin: 0;
 }
 
 .survey-question-box {
   font-size: 1.25rem;
   height: 18vh;
-  margin: 2.5vh 2vw;
-  text-align: center;
+  margin: 0 2vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .survey-question-text {
   color: white;
   display: inline-block;
-  padding: 1vh 0 3vh 0;
+  padding: 1vh 0 1vh 0;
+}
+
+.survey-question-hr {
+  margin-bottom: 1vh;
+  width: 50vw;
+}
+
+.survey-question-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .survey-button {
   border: none;
-  border-radius: 36px;
   box-sizing: border-box;
-  color: #FFFFFF;
-  font-size: 1rem;
-  font-weight: bold;
-  height: 5vh;
-  margin: 2vh 5%;
-  outline: none;
-  padding: 1vh 0;
-  width: 40%;
-  text-align: center;
+  color: #666666;
+  font-size: 1.4rem;
+  margin: 0 10vw;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
 
-.survey-agree-button {
-  background-color: #000000;
-  border: 3px solid #005005;}
-
-.survey-agree-button:hover {
-  background: #005005;
+.survey-button:hover {
+  color: white;
   cursor: pointer;
 }
 
-.survey-disagree-button {
-  background-color: #000000;
-  border: 3px solid #8e0000
+.survey-agreed {
+  color: #005005;
 }
 
-.survey-disagree-button:hover {
-  background: #8e0000;
-  cursor: pointer;
+.survey-disagreed {
+  color: #8e0000;
 }
 
 .survey-deselected-button {
-  background-color: #000000;
-  border: 3px solid #212121;
   color: #212121;
 }

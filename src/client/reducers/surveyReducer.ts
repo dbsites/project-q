@@ -301,10 +301,26 @@ const surveyReducer = (state: SurveyState = initialSurveyState, action: any): Su
       return {
         ...state,
         ...clearState,
-      } 
+      }
+
+    case actions.FETCH_FORM_SUCCESS:
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+      const newState: any = {};
+      const questionIdArray = Object.keys(action.response.questions);
+      questionIdArray.forEach((questionId) => {
+        const issueId = action.response.questions[questionId].issueId;
+        if (!newState[issueId]) newState[issueId] = {};
+        newState[issueId][questionId] = {
+          questionId: questionId,
+          question: action.response.questions[questionId].questionText,
+          agree: null,
+          position: action.response.questions[questionId].position,
+        }
+      });
+      return newState;
 
     default: 
-    return state
+    return state;
   }
 }
 

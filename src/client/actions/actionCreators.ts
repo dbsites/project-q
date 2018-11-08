@@ -41,6 +41,7 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(formFields),
   })
+  .then(response => response.json())
   .then((response: any) => {
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
@@ -79,7 +80,7 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
   .then((response: any) => {
     dispatch({
       type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
-      issues: response,
+      response,
     });
   })
   .catch((err: any) => console.error(err));
@@ -110,3 +111,18 @@ export const clearQuestions = (issueId: string) => ({
   type: actions.CLEAR_QUESTIONS,
   payload: issueId,
 });
+
+export const submitSurvey = (surveyObj: any) => {
+  // Issue Fetch Request
+  fetch(`${HOST}/userSurvey`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify(surveyObj),
+  })
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err))
+}

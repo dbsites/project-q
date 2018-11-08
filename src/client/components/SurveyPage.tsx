@@ -4,11 +4,15 @@
  */
 
 import * as React from 'react';
+import Header from '../containers/HeaderContainer'
 
 const SurveyPage = (props: any) => {
   const { headerText, surveyArray, footerButtons } = props;
   return (
     <div className="main-dashboard">
+      <div className="header">
+        <Header />
+      </div>
       <div className="dashboard-header">
         {headerText}
       </div>

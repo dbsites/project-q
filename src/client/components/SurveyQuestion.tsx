@@ -24,20 +24,21 @@ const SurveyQuestion = (props: any) => {
   }
 
   if (questionAgree === null) {
-    agreeButton = <input className="survey-button survey-agree-button" onClick={() => callAnswerQuestion(true)} type="submit" value="Agree" />;
-    disagreeButton = <input className="survey-button survey-disagree-button" onClick={() => callAnswerQuestion(false)} type="submit" value="Disagree" />;
+    agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(true)}>Agree</div>;
+    disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
   } else if (questionAgree) {
-    agreeButton = <input className="survey-button survey-agree-button" type="submit" value="Agree" />;
-    disagreeButton = <input className="survey-button survey-disagree-button survey-deselected-button" onClick={() => callAnswerQuestion(false)} type="submit" value="Disagree" />;
+    agreeButton = <div className="survey-button survey-agreed" >Agree</div>;
+    disagreeButton = <div className="survey-button survey-deselected-button" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
   } else {
-    agreeButton = <input className="survey-button survey-agree-button survey-deselected-button" onClick={() => callAnswerQuestion(true)} type="submit" value="Agree" />;
-    disagreeButton = <input className="survey-button survey-disagree-button" type="submit" value="Disagree" />;
+    agreeButton = <div className="survey-button survey-deselected-button" onClick={() => callAnswerQuestion(true)} >Agree</div>;
+    disagreeButton = <div className="survey-button survey-disagreed" >Disagree</div>;
   }
 
   return (
-    <div className='survey-question'>
-      <div className="survey-question-box">
-        <span className="survey-question-text">{questionText}</span>
+    <div className="survey-question-box">
+      <span className="survey-question-text">{questionText}</span>
+      <div className="survey-question-hr"><hr /></div>
+      <div className="survey-question-buttons">
         {agreeButton}
         {disagreeButton}
       </div>
