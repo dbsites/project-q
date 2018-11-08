@@ -109,12 +109,13 @@ UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
 
 // method for getting a users issues out of the db
 UserMethods.getIssues = async (req: Request, res: Response, next: NextFunction) => {
+  // check if cookie is present, if so skip middleware
   // dynamically assign a variable for the getIssues query
   let userReference: any; 
   // if coming from a /userIssues this will be true
   if(req.body.userId) {
     // get the email and id
-    await db.users.findById(req.body.userId)
+   await db.users.findById(req.body.userId)
     .then((userData: any) => {
       // assign reference to change the flow of the getIssues query
       userReference = userData.email;
@@ -127,7 +128,8 @@ UserMethods.getIssues = async (req: Request, res: Response, next: NextFunction) 
     userReference = req.body.loginEmail;
   }
   // get the issues from the userIssues table, specific to a particular user
-  db.users.getIssues(userReference)
+  console.log('userRef: ', userReference);
+   db.users.getIssues(userReference)
   .then((data: any) => {
     // this object will be a part of the output object sent to the front end
     let issues: any = {};
@@ -135,26 +137,26 @@ UserMethods.getIssues = async (req: Request, res: Response, next: NextFunction) 
     let issuesArray: any[] = []; 
 
     // iterate through the issue objects returned from the getIssues query
-    data.forEach((item: any) => {
-      // add to teh issues object for the front end, issueId is the key and the bias is the value
-      issues[item.issue] = item.bias
-      // push the issueId on to the array in order to get the associated questions
-      issuesArray.push(item.issue);
-    })
-    // assign the userId value, if coming from login (data.user) if coming from /userIssues (res.locals.userId)
-    res.locals.userId = (res.locals.userId) ? res.locals.userId : data.user;
-    // add the issues object to the object sent to the front end
-    res.locals.issues = issues;
-    // query db for all questions related to the users selected issues
-    db.data.getIssueQuestions(issuesArray)
-    .then((questions: any) => {
-      // add the questions object to the objet returned to teh front end
-      res.locals.questions = questions;
-      next();
-    })
-    .catch((error: any) => {
-      console.log('ERROR AT getIssueQuestions IN userMethods.ts', error);
-    })
+      data.issues.forEach((item: any) => {
+        // add to teh issues object for the front end, issueId is the key and the bias is the value
+        issues[item.issue] = item.bias
+        // push the issueId on to the array in order to get the associated questions
+        issuesArray.push(item.issue);
+      })
+      // assign the userId value, if coming from login (data.user) if coming from /userIssues (res.locals.userId)
+      res.locals.userId = (res.locals.userId) ? res.locals.userId : data.user;
+      // add the issues object to the object sent to the front end
+      res.locals.issues = issues;
+      // query db for all questions related to the users selected issues
+      db.data.getIssueQuestions(issuesArray)
+      .then((questions: any) => {
+        // add the questions object to the objet returned to teh front end
+        res.locals.questions = questions;
+        next();
+      })
+      .catch((error: any) => {
+        console.log('ERROR AT getIssueQuestions IN userMethods.ts', error);
+      })
   })
   .catch((error: any) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
