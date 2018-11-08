@@ -15,6 +15,7 @@ import { Request, Response, NextFunction } from 'express';
 import db from '../index';
 // import userData interface for ts
 import { userDataFromDb } from '../controllers/index';
+// import DatabaseMethods from './additionalDataMethods';
 
 
 
@@ -48,6 +49,10 @@ UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => 
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
 UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
+  // check if cookie is present, if so skip middleware
+  if (res.locals.cookieCheck) {
+    next();
+  }
   // update the users remember me option
   if (req.body.rememberMe !== undefined) {
     db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
@@ -83,8 +88,9 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
 // method for storing user issues in the db
 UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.addIssues(req.body.userId, req.body.issues)
-  .then(() => {
+  .then((questionData: any) => {
     res.locals.issues = req.body.issues;
+    res.locals.questions = questionData;
     next();
   })
   .catch((error: any) => {
@@ -96,11 +102,27 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   db.users.getIssues(req.body.loginEmail)
   .then((data: any) => {
-    res.locals.userIssues = data;
+    let issuesAndBias: any = {}
+    data.forEach((item: any) => {
+      issuesAndBias[item.issue] = item.bias;
+    })
+    res.locals.issuesAndBias = issuesAndBias;
     next();
   })
   .catch((error: any) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
+  })
+}
+
+// method for returning the questions relevant to the users selected issues
+UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => {
+  db.users.getQuestions(req.body.issues)
+  .then((questionData: any) => {
+    res.locals.questionData = questionData;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR at getQuiestions IN userMethods.ts', error);
   })
 }
 
