@@ -89,7 +89,8 @@
         await this.db.any('SELECT id, "issueId", question, bias FROM questions WHERE "issueId" = $1;', [issueArray[index]])
         .then((questionData: any) => {
           let questionDataObject: any = {}
-
+          console.log(questionData);
+          
           questionData.forEach((questionDataReturned:any) => {
             questionDataObject.questionId = questionDataReturned.id;
             questionDataObject.questionText = questionDataReturned.question;

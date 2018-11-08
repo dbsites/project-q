@@ -80,7 +80,7 @@ app.post('/login',
 app.post('/register', 
   UserMethods.hashPassword,
   (_: Request, res: Response) => {
-    res.sendStatus(200);
+    res.status(200).send(res.locals);
   }
 );
 

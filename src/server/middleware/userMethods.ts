@@ -36,7 +36,16 @@ UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => 
       // db.users accesses methods defined in users repo
       db.users.add(req.body)
       .then(() => {
-        next();
+        db.users.findByEmail(req.body.registerEmail)
+        .then((data: any) => {
+          res.locals.userId = data.id;
+          res.locals.issues = [];
+          res.locals.questions = {};
+          next();
+        })
+        .catch((error: any) => {
+          console.log('ERROR AT findByEmail IN userMethods', error);
+        })
       })
       .catch((error: any) => {
         console.log('ERROR AT REGISTRATION IN AUTHENTICATE.ts', error);
