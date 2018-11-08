@@ -422,7 +422,7 @@ body {
 /* Survey Dashboard - 84vh => 8vh/68vh/8vh */
 .survey-dashboard-container {
   display: grid;
-  grid-template-columns: 15vw 60vw 15vw;
+  grid-template-columns: 12vw 66vw 12vw;
   margin: 1vh 0;
   height: 48vh;
   width: 100%;
