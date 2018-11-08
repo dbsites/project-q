@@ -55,7 +55,7 @@
     // add users selected issues
     async addIssues (user: string, issues: any) {
       // check to see if there is user data in the db, in order to not store duplicate values
-      this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', [user])
+      await this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', [user])
       .then((issueData: any) => {
         // if there is no data, store some data
         if (issueData.length === 0) {
@@ -63,12 +63,9 @@
           const arrayOfIssues: any[] = Object.keys(issues);
          
           // use the array to insert each user selected issue into the userIssues table
-          arrayOfIssues.forEach((issueId: any) => {
-              this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);', 
+          arrayOfIssues.forEach(async (issueId: any) => {
+              await this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);', 
               [v4(), user, issueId, undefined])
-              .then(() => {
-                console.log('ISSUES STORED');
-              })
               .catch((error: any) => {
                 console.log('ERROR ADDING ISSUE TO userIssues IN users.ts', error);
               })
@@ -76,10 +73,25 @@
         }
       })
     }
-
+    // 'SELECT * FROM "userIssues" WHERE "user" = (S
     // get the user issues out of the db
-    getIssues(user: any) {
-      return this.db.any('SELECT * FROM "userIssues" WHERE "user" = (SELECT id FROM users WHERE email = $1);', [user]);
+    async getIssues(user: any) {
+      let userData: any = {}
+      await this.db.one('SELECT id FROM users WHERE email = $1;', user)
+      .then( async (user: any) => {
+        userData.id = user.id;
+        await this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', [user.id])
+        .then((data: any) => {
+          userData.issues = data;
+        })
+        .catch((error: any) => {
+          console.log('ERROR AT getIssues IN user.ts', error);
+        })
+      })
+      .catch((error: any) => {
+        console.log('CATCH 2: ERROR AT getIssues IN user.ts', error);
+      })
+      return userData;
     }
 
     // get questons for users to answer from db
@@ -121,11 +133,11 @@
       // first submit the issue bias for each issues
       const issueArray = Object.keys(issues);
       let issueResponseObject: any = {};
-      console.log('2');
 
       for (let currIssue = 0; currIssue < issueArray.length; currIssue += 1) {
-        await this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);',
-        [v4(), user, issueArray[currIssue], issues[issueArray[currIssue]]])
+
+        await this.db.none('UPDATE "userIssues" SET bias = $1 WHERE "user" = $2;',
+        [issues[issueArray[currIssue]], user])
         .then(() => {
           // add issues and biases to the issues response object for the front end
           issueResponseObject[issueArray[currIssue]] = issues[issueArray[currIssue]]
@@ -134,7 +146,6 @@
           console.log('ERROR AT addPosition IN users.ts', error);
         })
       }
-      console.log('3');
       // then submit the question response data
       const questionsArray = Object.keys(questions);
       let questionResponseObject: any = {};
@@ -152,7 +163,6 @@
         })
         await this.db.one('SELECT question, bias FROM questions WHERE id = $1', [questionsArray[currQuestion]])
         .then((questionData: any) => {
-          console.log(questionData);
           
             questionResponseObject[questionsArray[currQuestion]].questionText = questionData.question;
             questionResponseObject[questionsArray[currQuestion]].position = questionData.bias;
