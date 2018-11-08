@@ -23,8 +23,8 @@ const DashContainer = (props: any): any => {
     }
   });
 
-  console.log('Dash Issues: ', issues);
-  console.log('Outstanding Issues: ', oustandingIssues);
+  // console.log('Dash Issues: ', issues);
+  // console.log('Outstanding Issues: ', oustandingIssues);
 
   if (oustandingIssues) return <SurveyContainer />
 
