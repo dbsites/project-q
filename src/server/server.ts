@@ -64,7 +64,7 @@ app.post('/login',
   Cookie.give,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.issuesAndBias);
+    res.status(200).send(res.locals);
   }
 );
 
@@ -80,14 +80,14 @@ app.post('/login',
 app.post('/register', 
   UserMethods.hashPassword,
   (_: Request, res: Response) => {
-    res.sendStatus(200);
+    res.status(200).send(res.locals);
   }
 );
 
 // route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
-  UserMethods.getQuestions,
+  UserMethods.getIssues,
   (_: Request, res: Response) => {
     // sending back issues and question data in locals
     res.status(200).send(res.locals);
@@ -95,12 +95,12 @@ app.post('/userIssues',
 );
 
 // route for delivering user issues
-app.get('/userIssues',
-  UserMethods.getIssues,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
-  }
-);
+// app.get('/userIssues',
+//   UserMethods.getIssues,
+//   (_: Request, res: Response) => {
+//     res.status(200).send(res.locals);
+//   }
+// );
 
 // route for storing user answers to questions
 
