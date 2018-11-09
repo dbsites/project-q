@@ -19,6 +19,7 @@ import SurveyQuestion from '../components/SurveyQuestion';
 
 // Import Types
 import { IssueQuestionsState, SurveyState } from '../reducers/types';
+import ProgressBar from '../components/ProgressBar';
 
 const SurveyContainer = (props: any): any => {
   const {
@@ -28,6 +29,7 @@ const SurveyContainer = (props: any): any => {
 
   // Initialize array to hold user's selected issues
   const selectedIssuesArray: string[] = Object.keys(selectedIssues)
+  const issuesCount: number = selectedIssuesArray.length;
   let currentIssueId: string = selectedIssuesArray[surveyPage];
 
   // Initialize survey array to hold survey questions
@@ -70,17 +72,18 @@ const SurveyContainer = (props: any): any => {
   const headerText: string = getIssueName(issues, currentIssueId);
 
   // Helper function that generates active or inactive footer buttons
-  const generateFooterButtons = (issueId: string) => {
+  const generateFooterBar = (issueId: string) => {
     if (getOutstandingQuestionsCount(survey, issueId) === 3) {
       // If no questions answered, return invalid button and progress bar
       return (
         <React.Fragment>
           <div className="dashboard-footer-button invalid" >
             Clear
-            </div>
-          <div className="dashboard-footer-button invalid" >
-            PROGRESS BAR
-            </div>
+          </div>
+          <ProgressBar
+            surveyPage={surveyPage}
+            issuesCount={issuesCount}
+          />
         </React.Fragment>
       )
     }
@@ -89,10 +92,11 @@ const SurveyContainer = (props: any): any => {
       <React.Fragment>
         <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
           Clear
-          </div>
-        <div className="dashboard-footer-button invalid" >
-          PROGRESS BAR
-          </div>
+        </div>
+        <ProgressBar
+          surveyPage={surveyPage}
+          issuesCount={issuesCount}
+        />
       </React.Fragment>
     )
   }
@@ -132,7 +136,7 @@ const SurveyContainer = (props: any): any => {
     )
   }
 
-  const footerButtons = generateFooterButtons(currentIssueId);
+  const footerBar = generateFooterBar(currentIssueId);
   const leftButton = generateLeftButton();
   const rightButton = generateRightButton(currentIssueId);
 
@@ -142,7 +146,7 @@ const SurveyContainer = (props: any): any => {
       surveyArray={surveyArray}
       leftButton={leftButton}
       rightButton={rightButton}
-      footerButtons={footerButtons}
+      footerBar={footerBar}
     />
   )
 };
