@@ -111,4 +111,5 @@ export default userReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns an object of outstanding issues
+export const getIssueCount = (issues: UserIssues): number => Object.keys(issues).length;
 export const getOutstandingIssues = (issues: UserIssues): string[] => Object.keys(issues).filter(issue => issues[issue] === null);

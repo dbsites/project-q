@@ -37,8 +37,8 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(formFields),
   })
-  .then(response => response.json())
-  .then((response: any) => {
+    .then(response => response.json())
+    .then((response: any) => {
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
@@ -108,14 +108,14 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(bodyObj),
   })
-  .then(response => response.json())
-  .then((response: any) => {
-    dispatch({
-      type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
-      response,
-    });
-  })
-  .catch((err: any) => console.error(err));
+    .then(response => response.json())
+    .then((response: any) => {
+      dispatch({
+        type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
+        response,
+      });
+    })
+    .catch((err: any) => console.error(err));
 };
 
 export const updateIssue = (issue: any) => ({
@@ -154,6 +154,8 @@ export const prevPage = () => ({
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   // Issue Fetch Request
+  console.log('attempting to submit survey');
+  console.log(surveyObj);
   fetch(`${HOST}/userSurvey`, {
     method: 'POST',
     headers: {
@@ -162,12 +164,13 @@ export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(surveyObj),
   })
-  .then(response => response.json())
-  .then(response => {
-    dispatch({
-      type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
-      response,
-    });
-  })
-  .catch(err => console.error(err))
+    .then(response => response.json())
+    .then(response => {
+      console.log('survey submission server response received');
+      dispatch({
+        type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
+        response,
+      });
+    })
+    .catch(err => console.error(err))
 }

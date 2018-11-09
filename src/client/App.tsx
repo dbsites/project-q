@@ -17,13 +17,15 @@ interface Props {
   isAuth: boolean,
   issues: string[],
   issuesComplete: boolean | null,
+  selectedIssues: any,
   surveyComplete: boolean | null,
   survey: SurveyState,
+  surveyPage: number,
   userId: string,
 }
 
 class App extends React.Component<Props> {
-  constructor (props: any) {
+  constructor(props: any) {
     super(props);
   }
 
@@ -37,7 +39,7 @@ class App extends React.Component<Props> {
       const cookieArray = document.cookie.split(';');
       for (let item of cookieArray) {
         let itemString = item.trim();
-        if(itemString.startsWith('key=')) {
+        if (itemString.startsWith('key=')) {
           return authUser(itemString.substr(4));
         }
       }
@@ -62,8 +64,10 @@ const mapStateToProps = (state: any): Props => {
     isAuth: state.user.isAuth,
     issues: state.user.issues,
     issuesComplete: state.user.issuesComplete,
+    selectedIssues: state.user.issues,
     surveyComplete: state.user.surveyComplete,
     survey: state.survey,
+    surveyPage: state.user.surveyPage,
     userId: state.user.userId,
   }
 }

@@ -11,7 +11,6 @@ import * as actions from '../actions/actionCreators';
 
 // Import Selector Functions
 import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition } from '../reducers/surveyReducer';
-import { getOutstandingIssues } from '../reducers/userReducer';
 import { getIssueName } from '../reducers/issuesReducer';
 
 // Import Componenets
@@ -19,20 +18,18 @@ import SurveyPage from '../components/SurveyPage';
 import SurveyQuestion from '../components/SurveyQuestion';
 
 // Import Types
-import { IssueQuestionsState } from '../reducers/types';
+import { IssueQuestionsState, SurveyState } from '../reducers/types';
 
 const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, clearQuestions, updateIssue, updateIssuesSelected, prevPage,  // Actions
     issues, selectedIssues, survey, surveyPage,                                   // State
   } = props;
-  
+
   // Initialize array to hold user's selected issues
   const selectedIssuesArray: string[] = Object.keys(selectedIssues)
-  
-  // Identify currentIssue by surveyPage
   let currentIssueId: string = selectedIssuesArray[surveyPage];
-  
+
   // Initialize survey array to hold survey questions
   let surveyArray: JSX.Element[] = [];
 
@@ -41,7 +38,7 @@ const SurveyContainer = (props: any): any => {
     // User function selecter to get survey questions from store for a given issue
     const questionsIdList: string[] = getQuestionIdList(survey, issueId);
     const questionsObject: IssueQuestionsState = getQuestionsObject(survey, issueId);
-        
+
     // For each question, push a SurveyQuestion component into surveyArray
     questionsIdList.forEach((questionId: string) => {
       const questionAgree = questionsObject[questionId].agree;
@@ -70,36 +67,32 @@ const SurveyContainer = (props: any): any => {
     })
   }
 
-  // If no outstanding issues, complete survey
-  const outstandingIssueCount: number = getOutstandingIssues(selectedIssues).length
-  if (!outstandingIssueCount) return
-
   const headerText: string = getIssueName(issues, currentIssueId);
 
   // Helper function that generates active or inactive footer buttons
   const generateFooterButtons = (issueId: string) => {
-    if(getOutstandingQuestionsCount(survey, issueId) === 3) {
+    if (getOutstandingQuestionsCount(survey, issueId) === 3) {
       // If no questions answered, return invalid button and progress bar
       return (
         <React.Fragment>
           <div className="dashboard-footer-button invalid" >
             Clear
-          </div>
+            </div>
           <div className="dashboard-footer-button invalid" >
             PROGRESS BAR
-          </div>
+            </div>
         </React.Fragment>
       )
-    } 
+    }
     // If questions answered, return clear button and progress bar
     return (
       <React.Fragment>
         <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
           Clear
-        </div>
+          </div>
         <div className="dashboard-footer-button invalid" >
           PROGRESS BAR
-        </div>
+          </div>
       </React.Fragment>
     )
   }
@@ -142,7 +135,7 @@ const SurveyContainer = (props: any): any => {
   const footerButtons = generateFooterButtons(currentIssueId);
   const leftButton = generateLeftButton();
   const rightButton = generateRightButton(currentIssueId);
-  
+
   return (
     <SurveyPage
       headerText={headerText}
@@ -165,6 +158,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   answerQuestion: (event: any) => dispatch(actions.answerQuestion(event)),
   clearQuestions: (issueId: string) => dispatch(actions.clearQuestions(issueId)),
   prevPage: () => dispatch(actions.prevPage()),
+  submitSurvey: (surveyObj: SurveyState) => dispatch(actions.submitSurvey(surveyObj)),
   updateIssue: (issue: any) => dispatch(actions.updateIssue(issue)),
   updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
 });
