@@ -14,10 +14,10 @@ let Header = (props: any) => {
   // Header Links depend on user auth status
   const headerRight = [];
   if (props.isAuth) {
-    headerRight.push(<li className="header-right"><Link to='/account/logout'>LOGOUT</Link></li>);
+    headerRight.push(<li className="header-right" key="logout"><Link to='/account/logout'>LOGOUT</Link></li>);
   } else {
-    headerRight.push(<li className="header-right"><Link to='/account/register'>REGISTER</Link></li>);
-    headerRight.push(<li className="header-right"><Link to='/account/login'>LOGIN</Link></li>);
+    headerRight.push(<li className="header-right" key="register"><Link to='/account/register'>REGISTER</Link></li>);
+    headerRight.push(<li className="header-right" key="login"><Link to='/account/login'>LOGIN</Link></li>);
   }
 
   return (

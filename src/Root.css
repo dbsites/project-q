@@ -1,3 +1,7 @@
+html {
+  font-size: 2vh;
+}
+
 body {
   background: #000000;
   font-family: 'Cinzel', serif;
@@ -16,7 +20,7 @@ body {
 .form-header {
   color: #FFFFFF;
   letter-spacing: 5px;
-  margin-top: 2vh;
+  margin-top: 1.5vh;
 
   display: flex;
   align-items: center;
@@ -24,7 +28,7 @@ body {
 }
 
 .form-header-welcome-text {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin: 1vh;
 }
 
@@ -36,6 +40,11 @@ body {
 .form-header-logo-image {
   height: 14vh;
 }
+
+.form-header-tagline {
+  font-size: 1.1rem;
+}
+
 
 /* Header */
 .header {
@@ -96,7 +105,7 @@ body {
 .footer-links li a {
   color: inherit;
   font-size: 0.8rem;
-  padding: 7px 20px;
+  padding: 4px 20px;
   text-decoration: none;
 }
 
@@ -112,20 +121,20 @@ body {
 }
 
 .disclaimer-text {
-  font-size: 7px;
+  font-size: 0.6rem;
   text-align: center;
 }
 
 /* Header Footer Shared */
 
-/* Main Container = 12vh + 20vh + 50vh + 10vh = 92vh */
+/* Main Container = 12vh + 14vh + 52vh + 14vh = 92vh */
 /* top 8vh / main 68 vh / bottom 8vh */
 .main-dashboard {
   margin: 0 2.5vw;
   padding: 0 2.5vw;
 
   display: grid;
-  grid-template-rows: 12vh 15vh 50vh 15vh;
+  grid-template-rows: 12vh 14vh 52vh 14vh;
 }
 
 /* Form Dashboard 2vh + 28vh + 60vh + 2vh = 92vh*/
@@ -146,16 +155,48 @@ body {
   align-items: center;
 }
 
+.dashboard-side {
+  display: flex;
+  font-size: 2rem;
+  align-items: center;
+}
+
+.dashboard-side-button {
+  color: #666666;
+  margin: 1vh auto;
+  width: 100%;
+
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboard-side-button:hover {
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.dashboard-side > .invalid {
+  color: #212121;
+}
+
+.dashboard-side > .invalid:hover {
+  background: none;
+  cursor: not-allowed;
+}
+
 .dashboard-footer {
   display: flex;
+  font-size: 2rem;
   padding: 4vh 15%;
 }
 
 .dashboard-footer-button {
   color: #666666;
-  font-size: 1.8rem;
   margin: 1vh auto;
-  width: 20%;
+  width: 50%;
 
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 
@@ -189,15 +230,15 @@ body {
 .login-register-form {
   box-sizing: content-box;
   padding: 24px;
-  width: 600px;
+  width: 60vw;
 }
 
 /* Login/Register Style - Input Form Fields */
 .login-register-form .input-div {
   background: #000000;
   border-bottom: 1px solid #FFFFFF;
-  font-size: 16px;
-  margin: 6px 0;
+  font-size: 1.4rem;
+  margin: 0.2vh 0;
 
   display: flex;
 }
@@ -206,7 +247,7 @@ body {
   color: #FFFFFF;
   display: inline-block;
   margin: 0 4px;
-  padding: 12px 2px;
+  padding: 10px 2px;
   white-space: nowrap;
 }
 
@@ -216,9 +257,9 @@ body {
   box-sizing: border-box;
   color: #FFFFFF;
   font-family: 'Cinzel', serif;
-  font-size: 16px;
+  font-size: 1.4rem;
   outline: none;
-  padding: 12px 2px;
+  padding: 10px 2px;
   width: 100%;
 }
 
@@ -236,9 +277,10 @@ body {
 .login-register-form .input-check-label {
   color: #FFFFFF;
   display: inline-block;
+  font-size: 1.4rem;
   position: relative;
-  padding: 0 0 10px 25px;
-  margin: 12px 2px;
+  padding: 0 0 1vh 25px;
+  margin: 12px 2px 6px 2px;
   cursor: pointer;
 }
 
@@ -264,8 +306,8 @@ body {
 }
 
 .login-register-form .input-check-label input:checked ~ .checkmark {
-  background-color: #2e7d32;
-  border: 1px solid #2e7d32;
+  background-color: #005005;
+  border: 1px solid #005005;
 }
 
 /* Create checkmark - hidden when not checked */
@@ -286,7 +328,7 @@ body {
   top: 2px;
   width: 4px;
   height: 8px;
-  border: solid white;
+  border: solid #FFFFFF;
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
@@ -299,10 +341,10 @@ body {
 
 .login-register-form .submit-button {
   color: #666666;
-  font-size: 22px;
+  font-size: 2.0rem;
   font-weight: bold;
   outline: none;
-  padding: 12px 24px;
+  padding: 10px 24px;
 }
 
 .login-register-form .submit-button:hover {
@@ -312,7 +354,8 @@ body {
 
 .login-register-form .change-form-link {
   color: #666666;
-  padding: 16px 0;
+  font-size: 1.6rem;
+  padding: 14px 0;
   text-align: right;
   width: 100%;
 }
@@ -324,7 +367,6 @@ body {
 
 .login-register-form .change-form-link a:hover {
   color: #64a271;
-  font-weight: bold;
   text-decoration: underline;
 }
 
@@ -380,10 +422,14 @@ body {
 /* Survey Dashboard - 84vh => 8vh/68vh/8vh */
 .survey-dashboard-container {
   display: grid;
-  grid-template-rows: 16vh 16vh 16vh;
+  grid-template-columns: 12vw 66vw 12vw;
   margin: 1vh 0;
-  height: 78vh;
+  height: 48vh;
   width: 100%;
+}
+
+.survey-dashboard-question-container {
+  grid-template-rows: 16vh 16vh 16vh;
 }
 
 .survey-question {
@@ -402,6 +448,10 @@ body {
 }
 
 .survey-question-text {
+  text-align: center;
+}
+
+.survey-question-text {
   color: white;
   display: inline-block;
   padding: 1vh 0 1vh 0;
@@ -409,7 +459,7 @@ body {
 
 .survey-question-hr {
   margin-bottom: 1vh;
-  width: 50vw;
+  width: 40vw;
 }
 
 .survey-question-buttons {
@@ -422,7 +472,7 @@ body {
   border: none;
   box-sizing: border-box;
   color: #666666;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin: 0 10vw;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
