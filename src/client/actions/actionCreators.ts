@@ -6,16 +6,12 @@
 // import actionType constants
 import actions from './actionTypes';
 
+// import types
 import { formFieldObject, updateFieldAction, logoutUserAction } from './types';
 import { LoginState, RegisterState, UserIssues } from '../reducers/types';
 import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
-
-// Form Actions
-// export const nextFormPage = (): any => ({
-//   type: actions.NEXT_FORM_PAGE,
-// })
 
 // Login and Registration Form Actions
 export const updateField = (fieldObject: formFieldObject): updateFieldAction => ({
@@ -87,14 +83,18 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
 };
 
 export const updateIssue = (issue: any) => ({
-  type: actions.UPDATE_ISSUE,
+  type: actions.UPDATE_ISSUE_POSITION,
   payload: issue,
 })
 
 // Issue Ranking Actions TODO: Add functionality
 export const clearIssues = () => ({
-  type: actions.CLEAR_ISSUES
+  type: actions.CLEAR_ISSUES,
 });
+
+export const updateIssuesSelected = () => ({
+  type: actions.UPDATE_ISSUES_SELECTED,
+})
 
 export const toggleIssue = (issueId: string) => ({
   type: actions.TOGGLE_ISSUE,
@@ -112,7 +112,11 @@ export const clearQuestions = (issueId: string) => ({
   payload: issueId,
 });
 
-export const submitSurvey = (surveyObj: any) => {
+export const prevPage = () => ({
+  type: actions.PREV_PAGE,
+})
+
+export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   // Issue Fetch Request
   fetch(`${HOST}/userSurvey`, {
     method: 'POST',
@@ -123,6 +127,11 @@ export const submitSurvey = (surveyObj: any) => {
     body: JSON.stringify(surveyObj),
   })
   .then(response => response.json())
-  .then(response => console.log(response))
+  .then(response => {
+    dispatch({
+      type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
+      response,
+    });
+  })
   .catch(err => console.error(err))
 }

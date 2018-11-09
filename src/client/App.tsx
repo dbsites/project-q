@@ -17,6 +17,8 @@ import { SurveyState } from './reducers/types';
 interface Props {
   isAuth: boolean,
   issues: string[],
+  issuesComplete: boolean | null,
+  surveyComplete: boolean | null,
   survey: SurveyState,
   userId: string,
 }
@@ -60,6 +62,8 @@ const mapStateToProps = (state: any): Props => {
   return {
     isAuth: state.user.isAuth,
     issues: state.user.issues,
+    issuesComplete: state.user.issuesComplete,
+    surveyComplete: state.user.surveyComplete,
     survey: state.survey,
     userId: state.user.userId,
   }
@@ -68,6 +72,8 @@ const mapStateToProps = (state: any): Props => {
 const mapDispatchToProps = (dispatch: any): any => {
   return {
     authUser: (userId: string) => dispatch(actions.authUser(userId)),
+    prevPage: () => dispatch(actions.prevPage()),
+    submitSurvey: (surveyObj: any) => dispatch(actions.submitSurvey(surveyObj)),
   }
 }
 

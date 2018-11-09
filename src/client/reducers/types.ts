@@ -63,12 +63,13 @@ export interface UserState {
   readonly userId: string | null,
   readonly isAuth: boolean | null,
   readonly issues: UserIssues,
+  readonly issuesComplete: boolean | null,
+  readonly surveyComplete: boolean | null,
+  readonly surveyPage: number,
 };
 
 export interface ApplicationState {
   readonly issues: IssuesState,
-  // readonly login: LoginState,
-  // readonly register: RegisterState,
   readonly form: FormState,
   readonly survey: SurveyState,
   readonly user: UserState,
