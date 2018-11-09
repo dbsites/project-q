@@ -73,7 +73,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       if (newCompanyList.length > 0) {
         for (let i = 0; i < newCompanyList.length; i += 1) {
           userIssuesArr.forEach((issue: any) => {
-            console.log('what is... ', newCompanyList[i][issue.name])
             if (issue.leaning.includes('dis'))
               newCompanyList[i][issue.name].alignedScore =
                 newCompanyList[i][issue.name].disagreeScore;

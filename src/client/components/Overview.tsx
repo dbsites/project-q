@@ -18,19 +18,22 @@ const Overview = (props: any) => {
   else {
     const { description, logo, ticker, name } = props.selected;
     display = (
-      <ul>
+      <ul id="list-overview">
         <li key={ticker}>
-          <h2>Name: {name} ({ticker})</h2>
-          <em>Logo: {logo}</em>
-          <p>Description: {description}</p>
+          <h2>{name} ({ticker})</h2>
+          <img src={logo} id="overview-company-logo" />
+          <p>{description}</p>
         </li>
       </ul>
     )
   }
   return (
-    <div className='quad'>
-      <h3>Overview</h3>
-      {display}
+    <div className='quad' id="quad-overview">
+      <div className="quad-container">
+        {display}
+
+      </div>
+      {/* <h3>Overview</h3> */}
     </div>
   );
 }

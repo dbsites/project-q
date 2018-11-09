@@ -16,7 +16,9 @@ const QuadsDisplay = (props: any) => {
       <Overview
         selected={props.selected}
       />
-      <StockGraph />
+      <StockGraph
+        selected={props.selected}
+      />
       <IssuesCharts
         selectedCompany={props.selected}
         userIssues={props.issues}

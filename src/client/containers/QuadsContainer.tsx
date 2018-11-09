@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 import * as actions from '../actions/actionCreators'
 
+import Header from '../containers/HeaderContainer';
 import QuadsDisplay from '../components/QuadsDisplay';
 
 import '../assets/QuadsContainer.css';
@@ -47,14 +48,19 @@ class QuadsContainer extends React.Component<Props> {
     } = this.props;
 
     return (
-      <div id="quads-container">
-        <QuadsDisplay
-          list={companyList}
-          select={selectCompany}
-          selected={selectedCompany}
-          sort={sortCompanyList}
-          issues={userIssues}
-        />
+      <div className="main-dashboard">
+        <div className="header">
+          <Header />
+        </div>
+        <div id="quads-container">
+          <QuadsDisplay
+            list={companyList}
+            select={selectCompany}
+            selected={selectedCompany}
+            sort={sortCompanyList}
+            issues={userIssues}
+          />
+        </div>
       </div>
     );
   }

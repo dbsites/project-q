@@ -1,6 +1,6 @@
 #quads-container {
-  background-color: white;
-  border: 2px solid gold;
+  /* background-color: white; */
+  /* border: 2px solid gold; */
   display: grid;
   grid-template-columns: minmax(400px, 600px) minmax(400px, 800px);
   grid-template-rows: minmax(300px, 400px) minmax(300px, 400px);
@@ -8,16 +8,51 @@
   margin: 0 auto;
 }
 
+#quad-stock {
+}
+
+#quad-issues {
+
+}
+
+#quad-overview {
+  overflow: auto;
+}
+
+.quad-container {
+  display: inline-block;
+  /* border: 2px solid gold; */
+  margin: 20px auto;
+  /* height: 200px; */
+  width: 100%;
+  text-align: center;
+  vertical-align: top;
+}
+.quad-container p {
+  color: #FFFFFF;
+}
+.quad {
+  /* overflow: auto; */
+  background-color: black;
+}
+
+.quad h3 {
+  color: #FFFFFF;
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
 .divTable {
-  background-color: #DCDCDC;
-  border: 2px solid gold;
+  background-color: #000000;
+  /* border: 2px solid gold; */
   position: relative;
-  overflow: scroll;
+  width: 100%;
+  overflow-x: scroll;
 }
 
 .divTableHead {
   display: inline-block;
-  white-space: nowrap;
+  white-space: pre;
   width: 100%;
 }
 
@@ -29,7 +64,7 @@
   left: 0;
   max-height: 100%;
   width: 100%;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .cl-category {
@@ -50,7 +85,7 @@
 #cl-category-name {
   /* background-color: red; */
   min-width: 100px;
-  /* max-width: 180px; */
+  max-width: 300px;
   resize: horizontal;
   overflow: hidden;
 }
@@ -59,31 +94,10 @@
   padding-top: 5px;
   padding-left: 5px;
 }
-/* #company-category-ticker {
-  background-color: green;
+
+.cl-list a, .cl-list p {
+  color: #FFFFFF;
 }
-
-#company-category-price {
-  background-color: yellow;
-}
-
-#company-category-change {
-  background-color: blue;
-}
-
-#company-category-52H {
-  background-color: purple;
-}
-
-#company-category-52L {
-  background-color: paleturquoise;
-} */
-
-/* #company-list-quad {
-  display: grid;
-  grid-template-columns: 20% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-  grid-template-rows: auto;
-} */
 
 .company-names-list, .company-list{
   display: block;
@@ -99,39 +113,23 @@
   padding: 0;
 }
 
-/* #company-names-list li td {
-  color: red;
-  font-size: 1em;
-  padding-right: 15px;
+#img-stock-graph {
+  position: relative;
+  text-align: center;
+  height: 95%;
+  width: 100%;
 }
 
-#company-names-list li td a {
-  display: inline-block;
-  white-space: nowrap;
-  margin-right: 10px;
-} */
-
-/* #company-categories-list {
-  margin-bottom: 0;
-  margin-right: 0;
-  padding-left: 5px;
-} */
-
-/* #company-categories-list li {
-  display: inline;
-  font-size: 0.8em;
-  margin-right: 5px;
+#list-overview {
+  list-style-type: none; 
+  padding-left: 20px;
 }
 
-.company-category a {
-  color: black;
-  text-decoration: none;
-} */
-
-/* table {
-  border-collapse: collapse;
+#list-overview h2, #list-overview em, #list-overview p{
+  color: #FFFFFF;
 }
 
-table, td, th {
-  border: 1px solid black;
-} */
+#overview-company-logo {
+  max-width: 400px;
+  max-height: 200px;
+}
