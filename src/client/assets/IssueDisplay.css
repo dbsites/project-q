@@ -1,0 +1,43 @@
+.issues-container {
+  display: inline-block;
+  /* border: 2px solid gold; */
+  margin: 20px auto;
+  /* height: 200px; */
+  width: 100%;
+  text-align: center;
+  vertical-align: top;
+}
+
+.issues-container p {
+  color: #FFFFFF;
+}
+
+.stock-container {
+  margin: 20px auto;
+}
+
+.stock-container p {
+
+  color: #FFFFFF;
+}
+
+.issue-box {
+  height: 150px;
+  width: 150px;
+  max-width: 175px;
+  /* border: 2px solid red; */
+  display: inline-block;
+  vertical-align: top;
+}
+
+.issue-box p {
+  margin: 0;
+  color: #ffffff,
+}
+
+.pie-chart-slice {
+  height: 100px;
+  width: 100px;
+  margin: 0 auto;
+}
+

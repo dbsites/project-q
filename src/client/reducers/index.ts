@@ -11,6 +11,7 @@ import { combineReducers, Reducer } from 'redux';
 import userReducer from './userReducer';
 import issuesReducer from './issuesReducer';
 import surveyReducer from './surveyReducer';
+import companyReducer from './companyReducer';
 
 // Import store type
 import { ApplicationState } from './types';
@@ -24,6 +25,7 @@ const reducers: Reducer = combineReducers<ApplicationState>({
   user: userReducer,
   issues: issuesReducer,
   survey: surveyReducer,
+  company: companyReducer,
 });
 
 export default reducers;

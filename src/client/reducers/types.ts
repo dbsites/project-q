@@ -68,9 +68,16 @@ export interface UserState {
   readonly surveyPage: number,
 };
 
+// TODO: will update to appropriate types (GM)
+export interface CompanyState {
+  readonly selectedCompany: any
+  readonly companyList: any
+}
+
 export interface ApplicationState {
   readonly issues: IssuesState,
   readonly form: FormState,
   readonly survey: SurveyState,
   readonly user: UserState,
+  readonly company: CompanyState,
 };
