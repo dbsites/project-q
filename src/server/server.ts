@@ -30,7 +30,7 @@ import UserMethods from './middleware/userMethods'
 import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
 // import companyDb middleware
-import Cookie from './middleware/cookies';
+import AuthMethods from './middleware/authMethods';
 
 // activate the express server
 const app: Application = express();
@@ -56,12 +56,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // cookie initializer
 app.use(cookieParser());
+
+// route to get '/' for initial session check
+app.get('/', 
+  AuthMethods.checkCookie,
+  AuthMethods.createSession,
+  UserMethods.getIssues,
+  (_: Request, res: Response) => {
+  res.status(200).send(res.locals);
+}
+);
   
 // login end point
 app.post('/login', 
   Cookie.check,
   UserMethods.compareHash,
-  Cookie.give,
+  AuthMethods.giveCookie,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
@@ -123,7 +133,15 @@ app.get('/questionList',
 DatabaseMethods.getQuestionList, 
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.questionDataArray);
-});
+  }
+);
+
+app.post('/updateCompanyData',
+  CompanyDatabase.updateData,
+  (_: Request, res: Response) => {
+  res.sendStatus(200);
+  }
+);
 
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
