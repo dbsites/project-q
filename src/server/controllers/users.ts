@@ -73,25 +73,9 @@
         }
       })
     }
-    // 'SELECT * FROM "userIssues" WHERE "user" = (S
-    // get the user issues out of the db
-    async getIssues(user: any) {
-      let userData: any = {}
-      await this.db.one('SELECT id FROM users WHERE email = $1;', user)
-      .then( async (user: any) => {
-        userData.id = user.id;
-        await this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', [user.id])
-        .then((data: any) => {
-          userData.issues = data;
-        })
-        .catch((error: any) => {
-          console.log('ERROR AT getIssues IN user.ts', error);
-        })
-      })
-      .catch((error: any) => {
-        console.log('CATCH 2: ERROR AT getIssues IN user.ts', error);
-      })
-      return userData;
+    // get relevant data from userIssues table
+    getIssues(user: string) {
+     return this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', user);
     }
 
     // get questons for users to answer from db

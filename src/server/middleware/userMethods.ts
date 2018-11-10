@@ -107,62 +107,42 @@ UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
 }
 
 // method for getting a users issues out of the db
-UserMethods.getIssues = async (req: Request, res: Response, next: NextFunction) => {
-  // check if cookie is present, if so skip middleware
+UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
+  // res.locals.user = { userId: string, isAuth: boolean }
+
   // dynamically assign a variable for the getIssues query
-  let userReference: any; 
-  // if coming from a /userIssues this will be true
-  if(req.body.userId) {
-    // get the email and id
-   await db.users.findById(req.body.userId)
-    .then((userData: any) => {
-      // assign reference to change the flow of the getIssues query
-      userReference = userData.email;
-      // add the userId to the output object
-      res.locals.userId = userData.id;
-    })
-  }
-  // if coming from login route this will be true
-  else {
-    userReference = req.body.loginEmail;
-  }
+  let userReference: string = req.cookies.userId;
+
   // get the issues from the userIssues table, specific to a particular user
    db.users.getIssues(userReference)
-  .then((data: any) => {
+  .then((issues: any[]) => {
+
     // this object will be a part of the output object sent to the front end
-    let issues: any = {};
-    // this array is used to get all the questions relevant to users selected issues
-    let issuesArray: any[] = []; 
+    res.locals.users.issues = {};
 
     // iterate through the issue objects returned from the getIssues query
-      data.issues.forEach((item: any) => {
-        // add to teh issues object for the front end, issueId is the key and the bias is the value
-        issues[item.issue] = item.bias
-        // push the issueId on to the array in order to get the associated questions
-        issuesArray.push(item.issue);
-      })
-      // assign the userId value, if coming from login (data.user) if coming from /userIssues (res.locals.userId)
-      res.locals.userId = (res.locals.userId) ? res.locals.userId : data.user;
-      // add the issues object to the object sent to the front end
-      res.locals.issues = issues;
-      // query db for all questions related to the users selected issues
-      db.data.getIssueQuestions(issuesArray)
-      .then((questions: any) => {
-        // add the questions object to the objet returned to teh front end
-        res.locals.questions = questions;
-        next();
-      })
-      .catch((error: any) => {
-        console.log('ERROR AT getIssueQuestions IN userMethods.ts', error);
-      })
+    issues.forEach((issue: any) => {
+      // declare issue id for readability
+      let issueId = issue.issue;
+      // add to teh issues object for the front end, issueId is the key and the bias is the value
+      res.locals.users.issues[issueId] = issue.bias;
+    })
+
+    // move on to UserMethods.getQuestions out of the database for userIssues
+    // res.locals.user = { userId: string, isAuth: boolean, issues: object }
+    next();
   })
   .catch((error: any) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
-  })
+    res.status(500).send('ERROR ACCESSING USERMETHODS DATABASE');
+  });
 }
 
 // method for returning the questions relevant to the users selected issues
 UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => {
+  // check res.locals for issues length
+  const issuesArray = Object.keys(res.locals.user.)
+  if (res.locals.user.issues.length > )
   // query the db for questions related to a set of issues
   db.users.getQuestions(req.body.issues)
   .then((questionData: any) => {
@@ -174,6 +154,7 @@ UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => 
     console.log('ERROR at getQuiestions IN userMethods.ts', error);
   })
 }
+
 // method for storing the user response to the survey
 UserMethods.addPosition = (req: Request, res: Response, next: NextFunction) => {
   db.users.addPosition(req.body.userId, req.body.issues, req.body.questions)
