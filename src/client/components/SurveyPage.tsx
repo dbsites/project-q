@@ -7,7 +7,7 @@ import * as React from 'react';
 import Header from '../containers/HeaderContainer'
 
 const SurveyPage = (props: any) => {
-  const { headerText, surveyArray, leftButton, rightButton, footerButtons } = props;
+  const { headerText, surveyArray, leftButton, rightButton, footerBar } = props;
   return (
     <div className="main-dashboard">
       <div className="header">
@@ -26,7 +26,7 @@ const SurveyPage = (props: any) => {
         </div>
       </div>
       <div className="dashboard-footer">
-        {footerButtons}
+        {footerBar}
       </div>
     </div>
   );

@@ -27,11 +27,11 @@ const SurveyQuestion = (props: any) => {
     agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(true)}>Agree</div>;
     disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
   } else if (questionAgree) {
-    agreeButton = <div className="survey-button survey-agreed" >Agree</div>;
-    disagreeButton = <div className="survey-button survey-deselected-button" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
+    agreeButton = <div className="survey-button survey-selected" >Agree</div>;
+    disagreeButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
   } else {
-    agreeButton = <div className="survey-button survey-deselected-button" onClick={() => callAnswerQuestion(true)} >Agree</div>;
-    disagreeButton = <div className="survey-button survey-disagreed" >Disagree</div>;
+    agreeButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(true)} >Agree</div>;
+    disagreeButton = <div className="survey-button survey-selected" >Disagree</div>;
   }
 
   return (
