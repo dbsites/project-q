@@ -79,9 +79,9 @@ app.post('/register',
 
 // login end point
 app.post('/login', 
-  Sessions.check,
   UserMethods.compareHash,
   Sessions.create,
+  UserMethods.getAccountInfo,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
