@@ -77,28 +77,34 @@ UserMethods.login = async (req: Request, res: Response, next: NextFunction) => {
   // db.users accesses methods defined in the users controller
   db.users.findByEmail(req.body.loginEmail)
   .then((data: userDataFromDb) => {
-    // user bcrypt to compate the plaintext password to the encrypted hash
-    bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
-      if (match) {
-        // builds the desired front end user object
-        res.locals.user = {};
-        res.locals.user.userId = data.id;
-        res.locals.user.remember = data.remember;
-        // call next to advance to Session.create
-        // res.locals.user = {userId: string, remember: boolean }
-        next();
-      }
-      else if (!match) {
-        res.status(401).send('Incorrect Credentials');
-      }
-      else {
-        console.log('ERROR AT COMPARE IN AUTHENTICATE.TS', error);
-        res.sendStatus(500);
-      }
-    })
+    // if user does not exist
+    if (!data) {
+      res.status(401).send('INVALID CREDENTIALS');
+    }
+    else {
+      // user bcrypt to compate the plaintext password to the encrypted hash
+      bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
+        if (match) {
+          // builds the desired front end user object
+          res.locals.user = {};
+          res.locals.user.userId = data.id;
+          res.locals.user.remember = data.remember;
+          // call next to advance to Session.create
+          // res.locals.user = {userId: string, remember: boolean }
+          next();
+        }
+        else if (!match) {
+          res.status(401).send('Incorrect Credentials');
+        }
+        else {
+          console.log('ERROR AT COMPARE IN userMethods.ts', error);
+          res.sendStatus(500);
+        }
+      })
+    }
   })
   .catch((error: any) => {
-    console.log('ERROR AT USER FIND BY EMAIL IN AUTHENTICATE.TS', error);
+    console.log('ERROR AT USER FIND BY EMAIL IN userMethods.ts', error);
     res.sendStatus(500);
   });
 }

@@ -34,7 +34,7 @@ Sessions.create = async (_: Request, res: Response, next: NextFunction) => {
   // declare variables to determine expiration date in milliseconds
   const expirationDate: number = (res.locals.user.remember) ? THIRTY_DAYS : TWENTY_MINUTES;
   // set the session expiration date
-  await redisClient.expire(`${<string>process.env.REDIS_KEY_PREFIX}${res.locals.user.userId}`, expirationDate);
+  redisClient.expire(`${<string>process.env.REDIS_KEY_PREFIX}${res.locals.user.userId}`, expirationDate);
   
   // create a cookie for the user
   res.cookie(<string>process.env.COOKIES_KEY, res.locals.user.userId, { maxAge: expirationDate });
@@ -65,7 +65,6 @@ Sessions.check = (req: Request, res: Response, next: NextFunction) => {
     
     // if key is not found in sessions db, send back 401 with false isAuth
     if (error) {
-      
       res.locals.user.isAuth = false;
       res.status(401).send(res.locals.user);
     }
@@ -83,11 +82,41 @@ Sessions.check = (req: Request, res: Response, next: NextFunction) => {
       
       // else send 401 with false isAuth
       else {
-        console.log('FAILING IN ELSE');
         res.status(401).send(res.locals.user);
       }
     }
   })
+}
+
+// method to delete user sessions and deauthorize
+Sessions.end = async (req: Request, res: Response, next: NextFunction) => {
+  // dynamically generate a user reference to logout with or without a cookie
+  let userReference: string;
+  console.log('HERE!');
+
+  // if the user is logging out but does not have an active cookie
+  if (!req.cookies[<string>process.env.COOKIES_KEY]) {
+    userReference = `${<string>process.env.REDIS_KEY_PREFIX}${req.body.userId}`
+  }
+  else {
+    userReference = `${<string>process.env.REDIS_KEY_PREFIX}${req.cookies[<string>process.env.COOKIES_KEY]}`
+    // delete the cookie
+    res.clearCookie(<string>process.env.COOKIES_KEY);
+    res.clearCookie(<string>process.env.COOKIES_VALUE);
+  }
+  // deauthorize the user, so front end can render login page
+  res.locals.user = {};
+  res.locals.user.isAuth = false;
+
+  //check if an active session exists
+  if (await redisClient.exists(userReference)) {
+    // delete the session id from redis
+    redisClient.del(userReference);
+  }
+
+  // move on to end the response
+  // res.locals.user = { isAuth: false }
+  next();
 }
 
 export default Sessions;

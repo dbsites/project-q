@@ -85,9 +85,19 @@ app.post('/login',
   UserMethods.getIssues,
   UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.user);
   }
 );
+
+// route for logout which deletes sessions
+app.post('/logout', 
+  Sessions.end,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.user);
+  }
+);
+
+
 
 // route for storing user issues/
 app.post('/userIssues', 
