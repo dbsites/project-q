@@ -22,33 +22,35 @@ import { userDataFromDb } from '../controllers/index';
 // create object which holds the authentication methods
 const UserMethods: any =  {};
 
-// registration route, new accounts are directed here and password is hashed then user is added to the db
-UserMethods.hashPassword = (req: Request, res: Response, next: NextFunction) => {
+// account creation and password hashing
+UserMethods.createAccount = (req: Request, res: Response, next: NextFunction) => {
+  // hash the user password using bcrypt
   return bcrypt.hash(req.body.confirmPassword, 10, (error: any, encrypted: any) => {
+    // if the hashing fails, respond with a server failure
     if (error) {
       console.log('ERROR IN authenticate.ts for Encryption', error);
-      res.sendStatus(500);
+      res.status(500).send('SERVER ERROR');
     }
     else {
-      // replace the plain text password with the new encrypted one
-      req.body.confirmPassword = encrypted;
       // db.users accesses methods defined in users repo
-      db.users.add(req.body)
-      .then(() => {
-        db.users.findByEmail(req.body.registerEmail)
-        .then((data: any) => {
-          res.locals.userId = data.id;
-          res.locals.issues = [];
-          res.locals.questions = {};
+      db.users.add(req.body, encrypted)
+      .then((userObject: any) => {
+
+          res.locals.user.userId = userObject.id;
+          res.locals.user.rememberMe = false;
+          res.locals.user.surveyComplete = false;
+          res.locals.user.issuesComplete = false;
+          res.locals.user.firstName = req.body.firstName;
+          res.locals.user.lastName = req.body.lastName;
+          res.locals.user.issues = {};
+
+          // call next middleware, Sessions.start
+          // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
           next();
         })
-        .catch((error: any) => {
-          console.log('ERROR AT findByEmail IN userMethods', error);
-        })
-      })
       .catch((error: any) => {
-        console.log('ERROR AT REGISTRATION IN AUTHENTICATE.ts', error);
-        res.sendStatus(500);
+        console.log('ERROR AT createAccount IN userMethods.ts', error);
+        res.send(500).send('SERVER FAILURE');
       });
     }
   })
@@ -116,7 +118,7 @@ UserMethods.getAccountInfo = (req: Request, res: Response, next: NextFunction) =
   })
   .catch((error: any) => {
     console.log('ERROR AT getAccountInfo IN userMethods.ts', error);
-    res.status(501).send('SERVER ERROR');
+    res.status(500).send('SERVER ERROR');
   })
 }
 
@@ -210,7 +212,7 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
     })
     .catch((error: any) => {
       console.log('ERROR at getQuestions IN userMethods.ts', error);
-      res.status(501).send('SERVER ERROR');
+      res.status(500).send('SERVER ERROR');
     })
   }
 }

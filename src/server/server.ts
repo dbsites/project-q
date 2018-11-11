@@ -68,28 +68,21 @@ app.get('/',
   }
 );
   
-// login end point
-app.post('/login', 
-  Sessions.check,
-  UserMethods.compareHash,
-  Sessions.start,
-  UserMethods.getIssues,
+// registration end point
+app.post('/register', 
+  UserMethods.createAccount,
+  Sessions.create,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }
 );
 
-// login with cookies end point
-// app.get('/login/cookie',
-//   UserMethods.getIssues,
-//   (_: Request, res: Response) => {
-//   console.log('USER HAS A VALID COOKIE');
-//   res.status(200).send(res.locals.issuesAndBias);
-// });
-
-// registration end point
-app.post('/register', 
-  UserMethods.hashPassword,
+// login end point
+app.post('/login', 
+  Sessions.check,
+  UserMethods.compareHash,
+  Sessions.create,
+  UserMethods.getIssues,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }

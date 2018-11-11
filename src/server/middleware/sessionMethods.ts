@@ -13,24 +13,36 @@
 import { Request, Response, NextFunction } from 'express';
 // import the connection to the redis client
 import redisClient from '../redis';
+ // import v4 to generate ssids
+import { v4 } from 'uuid';
+// import constants
+import { COOKIES_KEY, THIRTY_DAYS, TWENTY_MINUTES, COOKIES_VALUE } from '../constants/constants'
 // import the env files
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 const Sessions: any = {}
 
-// give cookies and start session
-Sessions.create = (_: Request, res: Response, next: NextFunction) => {
-  // check for cookieCheck, if true skip middleware
-  if (res.locals.cookieCheck) {
-    next();
-  }
-  // total time = number of days * number of hours * number of minutes * number of seconds * number of milliseconds
-  const thirtyDays = 30 * 24 * 60 * 60 * 1000;
-  const twentyMinutes = 20 * 60 * 1000;
-  const cookieLength: number = (res.locals.remember) ? thirtyDays : twentyMinutes;
-  res.cookie('user', res.locals.loginEmail, { maxAge: cookieLength });
-  res.cookie('key', res.locals.userId, { maxAge: cookieLength });  
+// authenticate the user object and start a user session
+Sessions.create = async (_: Request, res: Response, next: NextFunction) => {
+  // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
+  
+  // create a session in redis with the key from userid and a new v4 key assigned as the value 
+  const SSID = `${process.env.REDIS_SSID_PREFIX}${v4()}`
+  await redisClient.rpush(`${process.env.REDIS_KEY_PREFIX}${res.locals.user.userId}`, SSID);
+
+  // declare variables to determine expiration date in milliseconds
+  const expirationDate: number = (res.locals.remember) ? THIRTY_DAYS : TWENTY_MINUTES;
+  // set the session expiration date
+  await redisClient.expire(`${process.env.REDIS_KEY_PREFIX}${res.locals.user.userId}`, expirationDate);
+  
+  // create a cookie for the user
+  res.cookie(COOKIES_KEY, res.locals.userId, { maxAge: expirationDate });
+  res.cookie(COOKIES_VALUE, SSID, { maxAge: expirationDate });  
+  res.locals.user.isAuth = true;
+
+  // move on to end the reponse
+  // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string, isAuth: bool }
   next();
 }
 
