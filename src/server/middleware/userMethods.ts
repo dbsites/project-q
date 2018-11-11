@@ -66,14 +66,10 @@ UserMethods.createAccount = (req: Request, res: Response, next: NextFunction) =>
 
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
-UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
-  // check if cookie is present, if so skip middleware
-  if (res.locals.cookieCheck) {
-    next();
-  }
+UserMethods.login = async (req: Request, res: Response, next: NextFunction) => {
   // update the users remember me option
   if (req.body.rememberMe !== undefined) {
-    db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
+    await db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
     .catch((error: any) => {
       console.log('ERROR AT rememberUser IN authenticate.ts', error);
     })
@@ -81,17 +77,19 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
   // db.users accesses methods defined in the users controller
   db.users.findByEmail(req.body.loginEmail)
   .then((data: userDataFromDb) => {
+    // user bcrypt to compate the plaintext password to the encrypted hash
     bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
       if (match) {
         // builds the desired front end user object
         res.locals.user = {};
         res.locals.user.userId = data.id;
-        res.locals.user.loginEmail = data.email;
-        res.locals.user.rememberMe = data.remember;
+        res.locals.user.remember = data.remember;
+        // call next to advance to Session.create
+        // res.locals.user = {userId: string, remember: boolean }
         next();
       }
       else if (!match) {
-        res.send('Incorrect Password');
+        res.status(401).send('Incorrect Credentials');
       }
       else {
         console.log('ERROR AT COMPARE IN AUTHENTICATE.TS', error);

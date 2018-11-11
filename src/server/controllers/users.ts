@@ -44,7 +44,7 @@
 
     // find user by email
     findByEmail (email: string) {
-      return this.db.oneOrNone('SELECT * FROM users WHERE email = $1', email);
+      return this.db.oneOrNone('SELECT id, password, remember FROM users WHERE email = $1', email);
     }
 
     // update user to remembered or not

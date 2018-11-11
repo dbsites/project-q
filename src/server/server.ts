@@ -79,10 +79,11 @@ app.post('/register',
 
 // login end point
 app.post('/login', 
-  UserMethods.compareHash,
+  UserMethods.login,
   Sessions.create,
   UserMethods.getAccountInfo,
   UserMethods.getIssues,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }

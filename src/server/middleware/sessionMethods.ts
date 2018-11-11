@@ -32,7 +32,7 @@ Sessions.create = async (_: Request, res: Response, next: NextFunction) => {
   await redisClient.set(`${<string>process.env.REDIS_KEY_PREFIX}${res.locals.user.userId}`, `${<string>process.env.REDIS_SSID_PREFIX}${SSID}`);
 
   // declare variables to determine expiration date in milliseconds
-  const expirationDate: number = (res.locals.remember) ? THIRTY_DAYS : TWENTY_MINUTES;
+  const expirationDate: number = (res.locals.user.remember) ? THIRTY_DAYS : TWENTY_MINUTES;
   // set the session expiration date
   await redisClient.expire(`${<string>process.env.REDIS_KEY_PREFIX}${res.locals.user.userId}`, expirationDate);
   
