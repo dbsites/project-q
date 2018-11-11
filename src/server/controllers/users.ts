@@ -81,7 +81,7 @@
 
     // get relevant data from userIssues table
     getIssues(user: string) {
-     return this.db.any('SELECT "userIssues".issue, issues.issue, issues.description, "userIssues".bias FROM "userIssues" INNER JOIN issues ON "userIssues".issue = issues.id WHERE "userIssues".user = $1', user);
+     return this.db.any('SELECT "userIssues".issue, issues.issue_name, issues.description, "userIssues".bias FROM "userIssues" INNER JOIN issues ON "userIssues".issue = issues.id WHERE "userIssues".user = $1;', [user]);
     }
 
     // get questons for users to answer from db

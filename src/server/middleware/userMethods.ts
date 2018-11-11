@@ -84,9 +84,9 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
     bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
       if (match) {
         // builds the desired front end user object
-        res.locals.userId = data.id;
-        res.locals.loginEmail = data.email;
-        res.locals.rememberMe = data.remember;
+        res.locals.user.userId = data.id;
+        res.locals.user.loginEmail = data.email;
+        res.locals.user.rememberMe = data.remember;
         next();
       }
       else if (!match) {
