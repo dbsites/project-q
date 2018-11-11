@@ -73,7 +73,7 @@ app.post('/register',
   UserMethods.createAccount,
   Sessions.create,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.user);
   }
 );
 

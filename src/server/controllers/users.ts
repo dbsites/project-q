@@ -28,7 +28,7 @@
     // add a new user to the database
     // userData Interface imported on line 16
     add (userData: userData, encrypted: string) {
-      return this.db.one('INSERT INTO users (id, email, password, first_name, last_name, agree_terms, remember, survey_complete, issues_complete) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id;', 
+      return this.db.one('INSERT INTO users (id, email, password, first_name, last_name, agree_terms, remember, survey_complete, issues_complete) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;', 
         [v4(), userData.registerEmail, encrypted, userData.firstName, userData.lastName, userData.agreeTerms, false, false, false]);
     }
 
@@ -82,7 +82,6 @@
     // get relevant data from userIssues table
     getIssues(user: string) {
      return this.db.any('SELECT "userIssues".issue, issues.issue, issues.description, "userIssues".bias FROM "userIssues" INNER JOIN issues ON "userIssues".issue = issues.id WHERE "userIssues".user = $1', user);
-     );
     }
 
     // get questons for users to answer from db

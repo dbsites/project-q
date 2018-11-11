@@ -35,22 +35,30 @@ UserMethods.createAccount = (req: Request, res: Response, next: NextFunction) =>
       // db.users accesses methods defined in users repo
       db.users.add(req.body, encrypted)
       .then((userObject: any) => {
+        
+        // translate data into user response object
+        res.locals.user = {};
+        res.locals.user.userId = userObject.id;
+        res.locals.user.rememberMe = false;
+        res.locals.user.surveyComplete = false;
+        res.locals.user.issuesComplete = false;
+        res.locals.user.firstName = req.body.firstName;
+        res.locals.user.lastName = req.body.lastName;
+        res.locals.user.issues = {};
 
-          res.locals.user.userId = userObject.id;
-          res.locals.user.rememberMe = false;
-          res.locals.user.surveyComplete = false;
-          res.locals.user.issuesComplete = false;
-          res.locals.user.firstName = req.body.firstName;
-          res.locals.user.lastName = req.body.lastName;
-          res.locals.user.issues = {};
-
-          // call next middleware, Sessions.start
-          // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
-          next();
-        })
+        // call next middleware, Sessions.start
+        // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
+        next();
+      })
       .catch((error: any) => {
-        console.log('ERROR AT createAccount IN userMethods.ts', error);
-        res.send(500).send('SERVER FAILURE');
+        if (error.code === '23505') {
+          console.log('***ACCOUNT ALREADY EXISTS***', error.error);
+          res.status(401).send('REGISTRATION FAILURE');
+        }
+        else {
+          console.log('ERROR AT createAccount IN userMethods.ts', error.error);
+          res.status(500).send('SERVER FAILURE');
+        }
       });
     }
   })
