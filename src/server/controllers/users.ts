@@ -52,6 +52,11 @@
       return this.db.none('UPDATE users SET remember = $1 WHERE email = $2', [remember, email]);
     }
 
+    // get account data for user
+    getAccountData (user: string) {
+      return this.db.one('SELECT first_name, last_name, issues_complete, survey_complete FROM users WHERE id = $1;', [user]);
+    }
+
     // add users selected issues
     async addIssues (user: string, issues: any) {
       // check to see if there is user data in the db, in order to not store duplicate values
@@ -73,43 +78,16 @@
         }
       })
     }
+
     // get relevant data from userIssues table
     getIssues(user: string) {
-     return this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', user);
+     return this.db.any('SELECT "userIssues".issue, issues.issue, issues.description, "userIssues".bias FROM "userIssues" INNER JOIN issues ON "userIssues".issue = issues.id WHERE "userIssues".user = $1', user);
+     );
     }
 
     // get questons for users to answer from db
-    async getQuestions(issues: any) {
-      // create an array of issues from the issue object
-      const issueArray = Object.keys(issues);
-      // prep a variable to hold the question objects related to teh issues
-      let questionsToSendToFrontEnd: any = {};
-
-      // iterate through the issueArray (AWAIT GAVE "forEach" PROBLEMS)
-      for(let index = 0; index < issueArray.length; index += 1) {
-        // at each issue query the db to get question data to build a question object for front end
-        await this.db.any('SELECT id, "issueId", question, bias FROM questions WHERE "issueId" = $1;', [issueArray[index]])
-        .then((questionData: any) => {
-          // create an object to hold the question data we need to send to the front
-          let questionDataObject: any = {}
-          
-          // iterate through the array of question objects returned by the query to build desired question obj
-          questionData.forEach((questionDataReturned:any) => {
-            questionDataObject.questionId = questionDataReturned.id;
-            questionDataObject.questionText = questionDataReturned.question;
-            questionDataObject.bias = questionDataReturned.bias;
-          })
-
-          // add the question object to the object which needs to be sent out
-          questionsToSendToFrontEnd[issueArray[index]] = questionDataObject;
-        })
-        .catch((error: any) => {
-          console.log('ERROR QUERYING FOR questionData in user.ts', error);
-        })
-      }
-
-      // after iterating through the issueArray return the question object to be sent to the front end
-      return questionsToSendToFrontEnd;
+    async getQuestions(user: string) {
+      return this.db.any('SELECT questions.id, questions.issue_id, questions.question, questions.bias, "userAnswers".agree FROM questions INNER JOIN "userAnswers" ON questions.id = "userAnswers".question WHERE "userAnswers"."user" = $1;', [user]);
     }
 
     // update the user positions for their selected issues
@@ -165,3 +143,7 @@
       return responseObject;
     }
  }
+
+
+ 
+ 

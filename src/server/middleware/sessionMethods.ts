@@ -39,6 +39,13 @@ Sessions.check = (req: Request, res: Response, next: NextFunction) => {
   
   // declare user object now to build throughout the middleware
   res.locals.user = {}
+  
+  // if no cookies are present
+  if (!req.cookies.userId) {
+    res.locals.user.isAuth = false;
+    res.status(401).send(res.locals.user);
+  }
+
   res.locals.user.userId = req.cookies.userId;
 
   // check for a valid session id in cookies
@@ -57,6 +64,7 @@ Sessions.check = (req: Request, res: Response, next: NextFunction) => {
       // if valid session, call next to get user data
       if (res.locals.user.isAuth) {
         // move to next middlewear, UserMethods.getIssues to continue building the response object
+        // res.locals.user = { userId: string, isAuth: boolean }
         next();
       }
 

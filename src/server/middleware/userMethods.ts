@@ -94,6 +94,32 @@ UserMethods.compareHash = (req: Request, res: Response, next: NextFunction) => {
   });
 }
 
+// method for getting a users account information
+UserMethods.getAccountInfo = (req: Request, res: Response, next: NextFunction) => {
+  //res.locals.user = { userId: string, isAuth: boolean }
+  
+  // create a user reference based on dynamically present data
+  let userReference = (res.locals.user.userId) ? res.locals.user.userId : req.body.userId;
+  
+  // query db for user information
+  db.users.getAccountData(userReference)
+  .then((userData: any) => {
+    // translate user data into the shape needed for the front end
+    res.locals.user.firstName = userData.first_name;
+    res.locals.user.lastName = userData.last_name;
+    res.locals.user.issuesComplete = userData.issues_complete;
+    res.locals.user.surveyComplete = userData.survey_complete;
+
+    // call next middleware, UserMethods.getIssues
+    // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string, issuesComplete: bool, surveryComplete: bool }
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getAccountInfo IN userMethods.ts', error);
+    res.status(501).send('SERVER ERROR');
+  })
+}
+
 // method for storing user issues in the db
 UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
   // query the db to insert issues for a user sent in from the front end
@@ -108,51 +134,85 @@ UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
 
 // method for getting a users issues out of the db
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
-  // res.locals.user = { userId: string, isAuth: boolean }
+  // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string, issuesComplete: bool, surveryComplete: bool }
+
+  // if user has not chosen their issues, move on
+  if (!res.locals.user.issuesComplete) {
+    next();
+  }
 
   // dynamically assign a variable for the getIssues query
-  let userReference: string = req.cookies.userId;
+  let userReference: string;
+  if(req.cookies.userId) {
+    userReference = req.cookies.userId;
+  }
+  else {
+    userReference = req.body.userId;
+  }
 
   // get the issues from the userIssues table, specific to a particular user
    db.users.getIssues(userReference)
-  .then((issues: any[]) => {
-
+   .then((issues: any[]) => {
     // this object will be a part of the output object sent to the front end
-    res.locals.users.issues = {};
+    res.locals.user.issues = {};
 
-    // iterate through the issue objects returned from the getIssues query
-    issues.forEach((issue: any) => {
-      // declare issue id for readability
-      let issueId = issue.issue;
-      // add to teh issues object for the front end, issueId is the key and the bias is the value
-      res.locals.users.issues[issueId] = issue.bias;
-    })
+    let userHasIssues = issues.length;
 
-    // move on to UserMethods.getQuestions out of the database for userIssues
-    // res.locals.user = { userId: string, isAuth: boolean, issues: object }
-    next();
+    if (userHasIssues) {
+      // iterate through the issue objects returned from the getIssues query
+      issues.forEach((issueObject: any) => {
+        // declare issue id for readability
+        let issueId = issueObject.issue;
+  
+        // add to teh issues object for the front end, issueId is the key and the bias is the value
+        res.locals.users.issues[issueId] = {};
+        res.locals.user.issues[issueId].issueId = issueId;
+        res.locals.user.issues[issueId].issue = issueObject.issue_name;
+        res.locals.user.issues[issueId].blurb = issueObject.description;
+        res.locals.user.issues[issueId].position = issueObject.position;
+      })
+  
+      // move on to UserMethods.getQuestions out of the database for userIssues
+      // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
+      next();
+    } else next();
   })
   .catch((error: any) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
-    res.status(500).send('ERROR ACCESSING USERMETHODS DATABASE');
+    res.status(500).send('SERVER ERROR');
   });
+
 }
 
 // method for returning the questions relevant to the users selected issues
-UserMethods.getQuestions = (req: Request, res: Response, next: NextFunction) => {
-  // check res.locals for issues length
-  const issuesArray = Object.keys(res.locals.user.)
-  if (res.locals.user.issues.length > )
-  // query the db for questions related to a set of issues
-  db.users.getQuestions(req.body.issues)
-  .then((questionData: any) => {
-    // pass along the questionData from the query
-    res.locals.questionData = questionData;
+UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
+   // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
+
+  // if user has not chosen their issues and not taken the survey, move on
+  if (!res.locals.user.issuesComplete && res.locals.user.surveyComplete) {
     next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR at getQuiestions IN userMethods.ts', error);
-  })
+  }
+  else {
+    // query database for questions for user issues questionData = {id: v4, question: text, bias: text, agree: boolean, issueId: v4}
+    db.users.getQuestions(res.locals.user.userId)
+    .then((questionData: any) => {
+      // take each questionData object returned from the database and translate it to the user response object
+      questionData.forEach((questionObject : any) =>{
+        res.locals.user.issues[questionObject.issue_id][questionObject.id] = {};
+        res.locals.user.issues[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
+        res.locals.user.issues[questionObject.issue_id][questionObject.id].questionText = questionObject.question;
+        res.locals.user.issues[questionObject.issue_id][questionObject.id].bias = questionObject.bias;
+        res.locals.user.issues[questionObject.issue_id][questionObject.id].agree = questionObject.agree;
+      });
+      // move on to end fetch and return response object
+      // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
+      next();
+    })
+    .catch((error: any) => {
+      console.log('ERROR at getQuestions IN userMethods.ts', error);
+      res.status(501).send('SERVER ERROR');
+    })
+  }
 }
 
 // method for storing the user response to the survey

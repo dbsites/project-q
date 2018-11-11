@@ -30,7 +30,7 @@ import UserMethods from './middleware/userMethods'
 import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
 // import companyDb middleware
-import AuthMethods from './middleware/authMethods';
+import Sessions from './middleware/sessionMethods';
 
 // activate the express server
 const app: Application = express();
@@ -59,19 +59,20 @@ app.use(cookieParser());
 
 // route to get '/' for initial session check
 app.get('/', 
-  AuthMethods.checkCookie,
-  AuthMethods.createSession,
+  Sessions.check,
+  UserMethods.getAccountInfo,
   UserMethods.getIssues,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-  res.status(200).send(res.locals);
-}
+    res.status(200).send(res.locals.user);
+  }
 );
   
 // login end point
 app.post('/login', 
-  Cookie.check,
+  Sessions.check,
   UserMethods.compareHash,
-  AuthMethods.giveCookie,
+  Sessions.start,
   UserMethods.getIssues,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
