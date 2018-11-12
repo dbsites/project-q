@@ -57,6 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
+app.get('/',
   Sessions.check,
   UserMethods.getAccountInfo,
   UserMethods.getIssues,
@@ -64,6 +65,7 @@ app.use(cookieParser());
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.user);
   }
+)
   
 // registration end point
 app.post('/register', 
@@ -124,7 +126,9 @@ app.post('/userIssues',
 
 // route for storing user answers to questions
 app.post('/userSurvey',
-  UserMethods.addPosition,
+  UserMethods.updateIssuePositons,
+  UserMethods.updateUserSurvey,
+  CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }
@@ -138,12 +142,7 @@ app.get('/companyList',
   }
 );
 
-app.post('/updateCompanyData',
-  CompanyDatabase.updateData,
-  (_: Request, res: Response) => {
-  res.sendStatus(200);
-  }
-);
+
 
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
@@ -180,6 +179,13 @@ app.post('/updateCompanyData',
   (_: Request, res: Response) => {
     res.sendStatus(200);
   });
+***********************************************************
+  app.post('/updateCompanyData',
+    CompanyDatabase.updateData,
+    (_: Request, res: Response) => {
+    res.sendStatus(200);
+    }
+  );
 ***********************************************************
 */
 

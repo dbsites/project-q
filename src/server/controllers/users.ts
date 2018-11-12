@@ -115,57 +115,14 @@
       }
     }
 
-    // update the user positions for their selected issues
-    async addPosition(user: string, issues: any, questions: any) {
-      // first submit the issue bias for each issues
-      const issueArray = Object.keys(issues);
-      let issueResponseObject: any = {};
+    // update a users position on an issue
+    updateIssuePosition(user: string, issueId: string, position: string) {
+      return this.db.none('UPDATE user_issues SET position = $1 WHERE user_id = $2 AND issue_id = $3;', [position, user, issueId]);
+    }
 
-      for (let currIssue = 0; currIssue < issueArray.length; currIssue += 1) {
-
-        await this.db.none('UPDATE "userIssues" SET bias = $1 WHERE "user" = $2;',
-        [issues[issueArray[currIssue]], user])
-        .then(() => {
-          // add issues and biases to the issues response object for the front end
-          issueResponseObject[issueArray[currIssue]] = issues[issueArray[currIssue]]
-        })
-        .catch((error: any) => {
-          console.log('ERROR AT addPosition IN users.ts', error);
-        })
-      }
-      // then submit the question response data
-      const questionsArray = Object.keys(questions);
-      let questionResponseObject: any = {};
-
-      for (let currQuestion = 0; currQuestion < questionsArray.length; currQuestion += 1) {
-        await this.db.none('INSERT INTO "userAnswers" (id, "user", question, bias) VALUES ($1, $2, $3, $4);', 
-        [v4(), user, questionsArray[currQuestion], questions[questionsArray[currQuestion]].position])
-        .then(() => {
-          // abuild the question object
-          questionResponseObject[questionsArray[currQuestion]] = {};
-          questionResponseObject[questionsArray[currQuestion]].issueId = questions[questionsArray[currQuestion]].issueId;
-        })
-        .catch((error: any) => {
-          console.log('ERROR AT currQuestion IN user.ts', error);
-        })
-        await this.db.one('SELECT question, bias FROM questions WHERE id = $1', [questionsArray[currQuestion]])
-        .then((questionData: any) => {
-          
-            questionResponseObject[questionsArray[currQuestion]].questionText = questionData.question;
-            questionResponseObject[questionsArray[currQuestion]].position = questionData.bias;
-            questionResponseObject[questionsArray[currQuestion]].agree = questions[questionsArray[currQuestion]].position;
-  
-        })
-          .catch((error: any) => {
-            console.log('ERROR AT questionData AT addPosition IN users.ts', error);
-          })
-      }
-      const responseObject: any = {
-        issues: JSON.parse(JSON.stringify(issueResponseObject)),
-        questions: JSON.parse(JSON.stringify(questionResponseObject)),
-      }
-      console.log('4');
-      return responseObject;
+    // update a users survey answers
+    updateUserSurvey(user: string, questionId: string, agree: boolean) {
+      return this.db.none('INSERT INTO user_answers (id, user_id, question_id, agree) VALUES ($1, $2, $3, $4);', [v4(), user, questionId, agree]);
     }
  }
 

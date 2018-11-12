@@ -17,8 +17,6 @@ import db from '../index';
 import { userDataFromDb } from '../controllers/index';
 // import DatabaseMethods from './additionalDataMethods';
 
-
-
 // create object which holds the authentication methods
 const UserMethods: any =  {};
 
@@ -206,7 +204,6 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
       issues.forEach((issueObject: any) => {
         // declare issue id for readability
         let issueId = issueObject.issue_id;
-  
         // add to teh issues object for the front end, issueId is the key and the bias is the value
         res.locals.user.issues[issueId] = {};
         res.locals.user.issues[issueId].issueId = issueId;
@@ -239,8 +236,6 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
     // query database for questions for user issues questionData = {id: v4, question: text, bias: text, agree: boolean, issueId: v4}
     db.users.getQuestions(res.locals.user.userId, res.locals.arrayOfIssueIds, res.locals.user.surveryComplete)
     .then((questionData: any) => {
-      console.log(questionData);
-      // console.log(Object.keys(res.locals.user.issues));
       // take each questionData object returned from the database and translate it to the user response object
       questionData.forEach((questionObject : any) => {
         res.locals.user.issues[questionObject.issue_id][questionObject.id] = {};
@@ -261,18 +256,38 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
 }
 
 // method for storing the user response to the survey
-UserMethods.addPosition = (req: Request, res: Response, next: NextFunction) => {
-  db.users.addPosition(req.body.userId, req.body.issues, req.body.questions)
-  .then((responseObject: any) => {
-    // iterate through the response object to build the locals object
-    res.locals.userId = req.body.userId;
-    res.locals.issues = responseObject.issues;
-    res.locals.questions = responseObject.questions;
-    next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT addPosition IN userMethods.ts', error);
-  })
+UserMethods.updateIssuePositons = async (req: Request, _: Response, next: NextFunction) => {
+
+  // build an array of issue Ids
+  const issueIds = Object.keys(req.body.issues);
+
+  // for each id update the user_issues table
+  for (let i = 0; i < issueIds.length; i += 1) {
+    await db.users.updateIssuePosition(req.body.userId, issueIds[i],req.body.issues[issueIds[i]])
+  }
+
+  // call next middleware to update user answers table
+  // no res.locals
+  next();
 }
+
+UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunction) => {
+
+  // build an array of question ids
+  const questionIds = Object.keys(req.body.questions);
+
+  // iterate through the questions ids to update the user answers
+  for (let i = 0; i < questionIds.length; i += 1) {
+    await db.users.updateUserSurvey(req.body.userId, questionIds[i], req.body.questions[questionIds[i]]);
+  }
+
+  // call next method to deliver the company list to the front end
+  // no res.locals
+  next();
+}
+    
+
+
+ 
 
 export default UserMethods;
