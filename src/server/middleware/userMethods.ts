@@ -227,11 +227,22 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
       
       // take each questionData object returned from the database and translate it to the user response object
       questionData.forEach((questionObject : any) => {
-        res.locals.user.questions[questionObject.issue_id] = {};
-        res.locals.user.questions[questionObject.issue_id].questionId = questionObject.id;
-        res.locals.user.questions[questionObject.issue_id].questionText = questionObject.question_text;
-        res.locals.user.questions[questionObject.issue_id].position = questionObject.position;
-        res.locals.user.questions[questionObject.issue_id].agree = (questionObject.agree) ? questionObject.agree : null;
+        console.log('*****', questionObject, '****');
+        if (res.locals.user.questions[questionObject.issue_id]) {
+          res.locals.user.questions[questionObject.issue_id][questionObject.id] = {};
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].position = questionObject.position;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : null;
+        }
+        else {
+          res.locals.user.questions[questionObject.issue_id] = {};
+          res.locals.user.questions[questionObject.issue_id][questionObject.id] = {};
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].position = questionObject.position;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : null;
+        }
       });
       // move on to end fetch and return response object
       // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
