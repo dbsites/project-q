@@ -83,4 +83,8 @@ CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => 
   }); 
 }
 
+CompanyDatabase.getTickers = () => {
+  return db.companies.getTickers();
+}
+
 export default CompanyDatabase;
