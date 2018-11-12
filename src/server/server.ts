@@ -114,7 +114,7 @@ app.post('/userIssues',
   UserMethods.getQuestions,
   (_: Request, res: Response) => {
     // sending back user, issues, and question data in locals
-    res.status(200).send(res.locals.user);
+    res.status(200).send(res.locals.user.questions);
   }
 );
 
@@ -181,7 +181,9 @@ app.get('/companyList',
     res.sendStatus(200);
   });
 ***********************************************************
-  app.post('/updateCompanyData',
+  // route to update company data  
+
+app.post('/updateCompanyData',
     CompanyDatabase.updateData,
     (_: Request, res: Response) => {
     res.sendStatus(200);

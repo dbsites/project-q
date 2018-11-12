@@ -154,28 +154,15 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
   });
 }
 
-UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunction) => {
-  db.users.updateIssuesComplete(req.body.userId, res.locals.user.issuesComplete)
-  .then(() => {
-    // move on to get the account data
-    // res.locals.user = { userId: string, issues: {}, issuesComplete: bool }
-    next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT updateIssuesComplete IN userMethods.ts', error);
-    res.status(500).send('SERVER FAILURE');
-  })
-}
-
 // method for getting a users issues out of the db
 UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string, issuesComplete: bool, surveryComplete: bool }
-
+  
   // if user has not chosen their issues, move on
   if (!res.locals.user.issuesComplete) {
     next();
   }
-
+  
   // dynamically assign a variable for the getIssues query
   let userReference: string;
   if(req.cookies.userId) {
@@ -187,16 +174,17 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   else {
     userReference = req.body.userId;
   }
-
+  
   // get the issues from the userIssues table, specific to a particular user
-   db.users.getIssues(userReference)
-   .then((issues: any[]) => {
-    // this object will be a part of the output object sent to the front end
-    res.locals.user.issuesSelected = {};
-
+  db.users.getIssues(userReference)
+  .then((issues: any[]) => {
+    
     let userHasIssues = issues.length;
-
+    
     if (userHasIssues) {
+      // this object will be a part of the output object sent to the front end
+      res.locals.user.issuesSelected = {};
+      
       // iterate through the issue objects returned from the getIssues query
       issues.forEach((issueObject: any) => {
         // declare issue id for readability
@@ -208,7 +196,7 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
         res.locals.user.issuesSelected[issueId].blurb = issueObject.description;
         res.locals.user.issuesSelected[issueId].position = issueObject.position;
       })
-  
+      
       // move on to UserMethods.getQuestions out of the database for userIssues
       // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
       next();
@@ -218,13 +206,13 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
     console.log('ERROR AT getIssues IN userMethods.ts', error);
     res.status(500).send('SERVER ERROR');
   });
-
+  
 }
 
 // method for returning the questions relevant to the users selected issues
 UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
-   // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
-
+  // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
+  
   // if user has not chosen their issues and not taken the survey, move on
   if (!res.locals.user.issuesComplete && !res.locals.user.surveyComplete) {
     next();
@@ -233,13 +221,17 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
     // query database for questions for user issues questionData = {id: v4, question: text, bias: text, agree: boolean, issueId: v4}
     db.users.getQuestions(res.locals.user.userId, res.locals.arrayOfIssueIds, res.locals.user.surveryComplete)
     .then((questionData: any) => {
+
+      // instantiate questions object
+      res.locals.user.questions = {};
+      
       // take each questionData object returned from the database and translate it to the user response object
       questionData.forEach((questionObject : any) => {
-        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id] = {};
-        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
-        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
-        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].position = questionObject.position;
-        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : "undefined";
+        res.locals.user.questions[questionObject.issue_id] = {};
+        res.locals.user.questions[questionObject.issue_id].questionId = questionObject.id;
+        res.locals.user.questions[questionObject.issue_id].questionText = questionObject.question_text;
+        res.locals.user.questions[questionObject.issue_id].position = questionObject.position;
+        res.locals.user.questions[questionObject.issue_id].agree = (questionObject.agree) ? questionObject.agree : null;
       });
       // move on to end fetch and return response object
       // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
@@ -254,25 +246,38 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
 
 // method for storing the user response to the survey
 UserMethods.updateIssuePositons = async (req: Request, _: Response, next: NextFunction) => {
-
+  
   // build an array of issue Ids
   const issueIds = Object.keys(req.body.issues);
-
+  
   // for each id update the user_issues table
   for (let i = 0; i < issueIds.length; i += 1) {
     await db.users.updateIssuePosition(req.body.userId, issueIds[i],req.body.issues[issueIds[i]])
   }
-
+  
   // call next middleware to update user answers table
   // no res.locals
   next();
 }
 
-UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunction) => {
+UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunction) => {
+  db.users.updateIssuesComplete(req.body.userId, res.locals.user.issuesComplete)
+  .then(() => {
+    // move on to get the account data
+    // res.locals.user = { userId: string, issues: {}, issuesComplete: bool }
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT updateIssuesComplete IN userMethods.ts', error);
+    res.status(500).send('SERVER FAILURE');
+  })
+}
 
+UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunction) => {
+  
   // build an array of question ids
   const questionIds = Object.keys(req.body.questions);
-
+  
   // iterate through the questions ids to update the user answers
   for (let i = 0; i < questionIds.length; i += 1) {
     await db.users.updateUserSurvey(req.body.userId, questionIds[i], req.body.questions[questionIds[i]]);
