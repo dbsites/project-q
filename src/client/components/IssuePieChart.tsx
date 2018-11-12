@@ -1,5 +1,5 @@
 /**
- * @module IssuePieChart.jsx (YES, JSX)
+ * @module IssuePieChart.tsx
  * @description Single Issue Display Component
  */
 
