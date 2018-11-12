@@ -27,12 +27,8 @@ const DashContainer = (props: any): any => {
 
   const issueCount: number = getIssueCount(selectedIssues);
 
-  console.log('survey page: ', surveyPage)
-  console.log('issue count: ', issueCount)
-
   if (surveyPage !== issueCount) return <SurveyContainer />
 
-  // If no outstanding issues, console.log props
   const surveyObj: any = {
     userId: userId,
     issues: issues,
@@ -50,7 +46,8 @@ const DashContainer = (props: any): any => {
   });
 
   submitSurvey(surveyObj);
-
+  console.log('issues in dash container: ', issues);
+  //userIssues={issues}
   return <QuadsContainer />
 };
 
