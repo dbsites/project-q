@@ -143,11 +143,6 @@ export const answerQuestion = (event: any) => ({
   payload: event,
 })
 
-export const clearQuestions = (issueId: string) => ({
-  type: actions.CLEAR_QUESTIONS,
-  payload: issueId,
-});
-
 export const prevPage = () => ({
   type: actions.PREV_PAGE,
 })

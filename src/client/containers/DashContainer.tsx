@@ -8,6 +8,8 @@ import * as React from 'react';
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
+
+// Import selector functions
 import { getIssueCount } from '../reducers/userReducer';
 // import { submitSurvey } from '../actions/actionCreators';
 
@@ -27,12 +29,8 @@ const DashContainer = (props: any): any => {
 
   const issueCount: number = getIssueCount(selectedIssues);
 
-  console.log('survey page: ', surveyPage)
-  console.log('issue count: ', issueCount)
-
   if (surveyPage !== issueCount) return <SurveyContainer />
 
-  // If no outstanding issues, console.log props
   const surveyObj: any = {
     userId: userId,
     issues: issues,

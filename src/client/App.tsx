@@ -10,6 +10,8 @@ import { Redirect } from 'react-router-dom'
 import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
+
+// Import Types
 import { SurveyState } from './reducers/types';
 
 // TODO: Find more appropriate home for interface
@@ -52,7 +54,7 @@ class App extends React.Component<Props> {
     // Destructure auth status from props
     const { isAuth } = this.props;
     if (isAuth === false) {
-      return <Redirect to='/account/login' />
+      return <Redirect to='/account/register' />
     }
     return <DashContainer userState={this.props} />
   }

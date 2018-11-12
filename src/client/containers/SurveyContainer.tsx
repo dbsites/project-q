@@ -23,8 +23,8 @@ import ProgressBar from '../components/ProgressBar';
 
 const SurveyContainer = (props: any): any => {
   const {
-    answerQuestion, clearQuestions, updateIssue, updateIssuesSelected, prevPage,  // Actions
-    issues, selectedIssues, survey, surveyPage,                                   // State
+    answerQuestion, updateIssue, updateIssuesSelected, prevPage,  // Actions
+    issues, selectedIssues, survey, surveyPage,                   // State
   } = props;
 
   // Initialize array to hold user's selected issues
@@ -71,36 +71,6 @@ const SurveyContainer = (props: any): any => {
 
   const headerText: string = getIssueName(issues, currentIssueId);
 
-  // Helper function that generates active or inactive footer buttons
-  const generateFooterBar = (issueId: string) => {
-    if (getOutstandingQuestionsCount(survey, issueId) === 3) {
-      // If no questions answered, return invalid button and progress bar
-      return (
-        <React.Fragment>
-          <div className="dashboard-footer-button invalid" >
-            Clear
-          </div>
-          <ProgressBar
-            surveyPage={surveyPage}
-            issuesCount={issuesCount}
-          />
-        </React.Fragment>
-      )
-    }
-    // If questions answered, return clear button and progress bar
-    return (
-      <React.Fragment>
-        <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
-          Clear
-        </div>
-        <ProgressBar
-          surveyPage={surveyPage}
-          issuesCount={issuesCount}
-        />
-      </React.Fragment>
-    )
-  }
-
   // Helper function that generates left buttons
   const generateLeftButton = () => {
     if (!surveyPage) {
@@ -136,9 +106,10 @@ const SurveyContainer = (props: any): any => {
     )
   }
 
-  const footerBar = generateFooterBar(currentIssueId);
   const leftButton = generateLeftButton();
   const rightButton = generateRightButton(currentIssueId);
+
+  const footerBar = <ProgressBar surveyPage={surveyPage} issuesCount={issuesCount} />
 
   return (
     <SurveyPage
@@ -160,7 +131,6 @@ const mapStateToProps = (store: any): any => ({
 
 const mapDispatchToProps = (dispatch: any): any => ({
   answerQuestion: (event: any) => dispatch(actions.answerQuestion(event)),
-  clearQuestions: (issueId: string) => dispatch(actions.clearQuestions(issueId)),
   prevPage: () => dispatch(actions.prevPage()),
   submitSurvey: (surveyObj: SurveyState) => dispatch(actions.submitSurvey(surveyObj)),
   updateIssue: (issue: any) => dispatch(actions.updateIssue(issue)),

@@ -48,7 +48,7 @@ body {
 
 /* Header */
 .header {
-  color: #FFFFFF;
+  color: #666666;
   font-size: 1.2rem;
   list-style-type: none;
   margin: 0;
@@ -76,8 +76,7 @@ body {
 }
 
 .header a:hover {
-  background-color: #212121;
-  font-weight: bold;
+  color: #FFFFFF;
 }
 
 .header li a {
@@ -230,15 +229,15 @@ body {
 .login-register-form {
   box-sizing: content-box;
   padding: 24px;
-  width: 60vw;
+  width: 45vw;
 }
 
 /* Login/Register Style - Input Form Fields */
 .login-register-form .input-div {
   background: #000000;
   border-bottom: 1px solid #FFFFFF;
-  font-size: 1.4rem;
-  margin: 0.2vh 0;
+  font-size: 1.2rem;
+  margin: 0.3vh 0;
 
   display: flex;
 }
@@ -247,7 +246,7 @@ body {
   color: #FFFFFF;
   display: inline-block;
   margin: 0 4px;
-  padding: 10px 2px;
+  padding: 1vh 0.1vw;
   white-space: nowrap;
 }
 
@@ -257,9 +256,9 @@ body {
   box-sizing: border-box;
   color: #FFFFFF;
   font-family: 'Cinzel', serif;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   outline: none;
-  padding: 10px 2px;
+  padding: 1vh 0.1vw;
   width: 100%;
 }
 
@@ -274,13 +273,16 @@ body {
 }
 
 /* Login/Register Style - Input Form Check Box */
+.login-register-form .input-check-div {
+  margin: 0.5vh 0 2.5vh 0.2vw;
+}
+
 .login-register-form .input-check-label {
   color: #FFFFFF;
   display: inline-block;
-  font-size: 1.4rem;
   position: relative;
-  padding: 0 0 1vh 25px;
-  margin: 12px 2px 6px 2px;
+  padding: 0 0 0 1.8vw;
+  margin: 1vh 0;
   cursor: pointer;
 }
 
@@ -293,21 +295,21 @@ body {
 }
 
 .login-register-form .checkmark {
-  background-color: #FAFAFA;
-  border: 1px solid #CDCFD4;
+  background-color: #666666;
+  border: 0.1vh solid #666666;
   border-radius: 2px;
 
   position: absolute;
   top: 0;
   left: 0;
 
-  height: 16px;
-  width: 16px;
+  height: 2.1vh;
+  width: 2.1vh;
 }
 
 .login-register-form .input-check-label input:checked ~ .checkmark {
-  background-color: #005005;
-  border: 1px solid #005005;
+  background-color: #FFFFFF;
+  border: 1px solid #FFFFFF;
 }
 
 /* Create checkmark - hidden when not checked */
@@ -324,18 +326,20 @@ body {
 
 /* Style the checkmark/indicator */
 .login-register-form .checkmark:after {
-  left: 5px;
-  top: 2px;
-  width: 4px;
-  height: 8px;
-  border: solid #FFFFFF;
-  border-width: 0 3px 3px 0;
+  left: 0.6vh;
+  top: 0.2vh;
+  width: 0.5vh;
+  height: 1vh;
+  border: solid #000000;
+  border-width: 0 0.5vh 0.5vh 0;
   transform: rotate(45deg);
 }
 
 .login-register-form .submit-button-container {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  margin: 1vh 0;
   white-space: nowrap;
 }
 
@@ -354,20 +358,18 @@ body {
 
 .login-register-form .change-form-link {
   color: #666666;
-  font-size: 1.6rem;
-  padding: 14px 0;
-  text-align: right;
+  font-size: 1.4rem;
+  text-align: center;
   width: 100%;
 }
 
 .login-register-form .change-form-link a {
-  color: #64a271;
+  color: #666666;
   text-decoration: none;
 }
 
 .login-register-form .change-form-link a:hover {
-  color: #64a271;
-  text-decoration: underline;
+  color: #FFFFFF;
 }
 
 /* Issue Dashboard - 84vh => 8vh/68vh/8vh */
@@ -493,22 +495,16 @@ body {
 /* Progress Bar Component */
 
 .progress-bar-container {
-  height: 100%;
-  width: 40vw;
-
-  display: grid;
-  grid-template-rows: 1fr 3fr;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .progress-bar {
   border-radius: 50px;
   border: 2px solid #666666;
-  height: 100%;
-}
-
-.progress-bar-label {
-  color: #FFFFFF;
-  font-size: 0.8rem;
+  height: 2.5vh;
+  width: 30vw;
 }
 
 .progress-bar-fill {

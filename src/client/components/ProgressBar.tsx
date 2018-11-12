@@ -35,7 +35,6 @@ const ProgressBar = (props: ProgressBarProps) => {
 
   return (
     <div className="progress-bar-container">
-      <div className="progress-bar-label">Progress Bar</div>
       <div className="progress-bar">
         <ProgressBarFill percentComplete={percentComplete}/>
         <div>{percentComplete}</div>

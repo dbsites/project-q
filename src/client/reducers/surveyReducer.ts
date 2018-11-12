@@ -295,14 +295,6 @@ const surveyReducer = (state: SurveyState = initialSurveyState, action: any): Su
         ...nextState
       }
     
-    case actions.CLEAR_QUESTIONS:
-      const clearState: SurveyState = {};
-      clearState[action.payload] = initialSurveyState[action.payload]
-      return {
-        ...state,
-        ...clearState,
-      }
-
     case actions.FETCH_FORM_SUCCESS:
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
       const newState: any = {};

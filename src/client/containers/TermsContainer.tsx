@@ -6,25 +6,27 @@
 import * as React from 'react';
 import TermsOfService from '../components/TermsOfService';
 import PrivacyPolicy from '../components/PrivacyPolicy';
+import FAQ from '../components/FAQ';
 
-const TermsContainer = ({ match }: any) => (
-  <div className="main-container">
-    {match.params.id === 'service' ?
-      (
-        <div>
-          <h1>Terms of Service</h1>
-          <TermsOfService />
-        </div>
-      )
-      :
-      (
-        <div>
-          <h1>Privacy Policy</h1>
-          <PrivacyPolicy />
-        </div>
-      )
-    }
-  </div>
-);
+const TermsContainer = ({ match }: any) => {
+  let termsDisplay: JSX.Element;
+  const { id } = match.params;
+  switch (id) {
+    case 'service':
+      termsDisplay = <TermsOfService />
+      break;
+    case 'privacy':
+      termsDisplay = <PrivacyPolicy />
+      break;
+    default:
+      termsDisplay = <FAQ />
+      break;
+  }
+  return (
+    <div className="main-container">
+      {termsDisplay}
+    </div>
+  );
+};
 
 export default TermsContainer;
