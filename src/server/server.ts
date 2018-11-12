@@ -30,7 +30,7 @@ import UserMethods from './middleware/userMethods'
 import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
 // import companyDb middleware
-import Cookie from './middleware/cookies';
+import Sessions from './middleware/sessionMethods';
 
 // activate the express server
 const app: Application = express();
@@ -56,31 +56,51 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // cookie initializer
 app.use(cookieParser());
-  
-// login end point
-app.post('/login', 
-  Cookie.check,
-  UserMethods.compareHash,
-  Cookie.give,
+
+app.get('/',
+  Sessions.check,
+  UserMethods.getAccountInfo,
   UserMethods.getIssues,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.user);
+  }
+)
+  
+// registration end point
+app.post('/register', 
+  UserMethods.createAccount,
+  Sessions.create,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.user);
   }
 );
 
-// login with cookies end point
-// app.get('/login/cookie',
-//   UserMethods.getIssues,
-//   (_: Request, res: Response) => {
-//   console.log('USER HAS A VALID COOKIE');
-//   res.status(200).send(res.locals.issuesAndBias);
-// });
-
-// registration end point
-app.post('/register', 
-  UserMethods.hashPassword,
+// login end point
+app.post('/login', 
+  UserMethods.login,
+  Sessions.create,
+  UserMethods.getAccountInfo,
+  UserMethods.getIssues,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.user);
+  }
+);
+
+// route for logout which deletes sessions
+app.post('/logout', 
+  Sessions.end,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.user);
+  }
+);
+
+// route for getting a list of issues for the front end
+app.get('/getIssues',
+  DatabaseMethods.getIssues,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.issues);
   }
 );
 
@@ -88,14 +108,16 @@ app.post('/register',
 app.post('/userIssues', 
   UserMethods.addIssues,
   UserMethods.getIssues,
+  UserMethods.updateIssuesComplete,
+  UserMethods.getAccountInfo,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    // sending back issues and question data in locals
-    res.status(200).send(res.locals);
+    // sending back user, issues, and question data in locals
+    res.status(200).send(res.locals.user);
   }
 );
 
 // route for delivering user issues
-// app.get('/userIssues',
 //   UserMethods.getIssues,
 //   (_: Request, res: Response) => {
 //     res.status(200).send(res.locals);
@@ -104,26 +126,23 @@ app.post('/userIssues',
 
 // route for storing user answers to questions
 app.post('/userSurvey',
-  UserMethods.addPosition,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
-  }
-);
-
-// end point for deliverying a list of companies on dashboard render
-app.get('/companyList', 
+  UserMethods.updateIssuePositons,
+  UserMethods.updateUserSurvey,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }
 );
 
-// route to grab data from the database;
-app.get('/questionList', 
-DatabaseMethods.getQuestionList, 
+// end point for deliverying a list of companies on dashboard render
+app.get('/companyList',
+  CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.questionDataArray);
-});
+    res.status(200).send(res.locals);
+  }
+);
+
+
 
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
@@ -160,6 +179,13 @@ DatabaseMethods.getQuestionList,
   (_: Request, res: Response) => {
     res.sendStatus(200);
   });
+***********************************************************
+  app.post('/updateCompanyData',
+    CompanyDatabase.updateData,
+    (_: Request, res: Response) => {
+    res.sendStatus(200);
+    }
+  );
 ***********************************************************
 */
 

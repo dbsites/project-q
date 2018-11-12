@@ -25,26 +25,36 @@ DatabaseMethods.insertQuestions = (req: Request, _: Response, next: NextFunction
   .catch((error: any) => {
     console.log('ERROR AT INSERT DATA IN addQuestionToDb', error);
   });
-  
-}
-
-// delivers the questions data to the front end
-DatabaseMethods.getQuestionList = (_: Request, res: Response, next: NextFunction) => {
-  db.data.getQuestions()
-    .then((data: any[]) => {
-      res.locals.questionDataArray = data;
-      next();
-    })
-    .catch((error: any) => {
-      console.log('ERROR AT getQuestionList IN addQuestionsDataToDb.ts', error);
-      res.sendStatus(500);
-    })
 }
 
 // inserts issue data
 DatabaseMethods.insertIssues = (req: Request, _: Response, next: NextFunction) => {
   db.data.addIssues(req.body)
   .then(() => {
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT insertIssues IN addQuestionToDb', error);
+  });
+}
+
+// gets all issue data
+DatabaseMethods.getIssues = (_: Request, res: Response, next: NextFunction) => {
+  // declare object to return to the front end
+  res.locals.issues = {};
+
+  // query db for issue data
+  db.data.getIssues()
+  .then((issueData: any[]) => {
+    // for each issue object, build out the response object
+    issueData.forEach((issueObject: any) => {
+      res.locals.issues[issueObject.id] = {}
+      res.locals.issues[issueObject.id].issueId = issueObject.id;
+      res.locals.issues[issueObject.id].issueName = issueObject.issue_name;
+      res.locals.issues[issueObject.id].issueBlurb = issueObject.description;
+    })
+    // move on to end response and deliver issues object
+    // res.locals.issues = {issueId: { issueId: string, issueName: string, issueBlurb: string}}
     next();
   })
   .catch((error: any) => {
