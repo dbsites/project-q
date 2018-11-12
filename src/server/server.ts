@@ -57,7 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
-app.get('/',
+app.get('/auth',
   Sessions.check,
   UserMethods.getAccountInfo,
   UserMethods.getIssues,
