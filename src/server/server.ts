@@ -57,8 +57,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
-// route to get '/' for initial session check
-app.get('/', 
   Sessions.check,
   UserMethods.getAccountInfo,
   UserMethods.getIssues,
@@ -66,7 +64,6 @@ app.get('/',
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.user);
   }
-);
   
 // registration end point
 app.post('/register', 
@@ -97,20 +94,28 @@ app.post('/logout',
   }
 );
 
-
+// route for getting a list of issues for the front end
+app.get('/getIssues',
+  DatabaseMethods.getIssues,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.issues);
+  }
+);
 
 // route for storing user issues/
 app.post('/userIssues', 
   UserMethods.addIssues,
   UserMethods.getIssues,
+  UserMethods.updateIssuesComplete,
+  UserMethods.getAccountInfo,
+  UserMethods.getQuestions,
   (_: Request, res: Response) => {
-    // sending back issues and question data in locals
-    res.status(200).send(res.locals);
+    // sending back user, issues, and question data in locals
+    res.status(200).send(res.locals.user);
   }
 );
 
 // route for delivering user issues
-// app.get('/userIssues',
 //   UserMethods.getIssues,
 //   (_: Request, res: Response) => {
 //     res.status(200).send(res.locals);
@@ -126,7 +131,7 @@ app.post('/userSurvey',
 );
 
 // end point for deliverying a list of companies on dashboard render
-app.get('/companyList', 
+app.get('/companyList',
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
@@ -134,8 +139,8 @@ app.get('/companyList',
 );
 
 // route to grab data from the database;
-app.get('/questionList', 
-DatabaseMethods.getQuestionList, 
+app.get('/getQuestions',
+  DatabaseMethods.getQuestionList, 
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.questionDataArray);
   }

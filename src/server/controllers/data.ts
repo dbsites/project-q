@@ -80,4 +80,9 @@ export class DatabaseRepository {
       }
   }
 
+  // get issues from db for front end
+  getIssues() {
+    return this.db.query('SELECT id, issue_name, description FROM issues;');
+  } 
+
 }

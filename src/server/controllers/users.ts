@@ -58,34 +58,27 @@
     }
 
     // add users selected issues
-    async addIssues (user: string, issues: any) {
-      // check to see if there is user data in the db, in order to not store duplicate values
-      await this.db.any('SELECT * FROM "userIssues" WHERE "user" = $1;', [user])
-      .then((issueData: any) => {
-        // if there is no data, store some data
-        if (issueData.length === 0) {
-          // create an array out of the issues object to query with
-          const arrayOfIssues: any[] = Object.keys(issues);
-         
-          // use the array to insert each user selected issue into the userIssues table
-          arrayOfIssues.forEach(async (issueId: any) => {
-              await this.db.none('INSERT INTO "userIssues" (id, "user", issue, bias) VALUES ($1, $2, $3, $4);', 
-              [v4(), user, issueId, undefined])
-              .catch((error: any) => {
-                console.log('ERROR ADDING ISSUE TO userIssues IN users.ts', error);
-              })
-            })
-        }
-      })
+    async addIssues (user: string, issues: any, userIssueIds: string[]) {
+      // delete user_issues for user
+      await this.db.none('DELETE FROM user_issues WHERE user_id = $1', user);
+
+      // insert new issues
+      for (let i = 0; i < userIssueIds.length; i += 1) {
+        await this.db.none('INSERT INTO user_issues (id, user_id, issue_id, position) VALUES ($1, $2, $3, $4);', [v4(), user, userIssueIds[i], issues[userIssueIds[i]]]); 
+      }
+    }
+
+    updateIssuesComplete (user: string, complete: boolean) {
+      return this.db.none('UPDATE users SET issues_complete = $2 WHERE id = $1;', [user, complete]);
     }
 
     // get relevant data from userIssues table
     getIssues(user: string) {
-     return this.db.any('SELECT "userIssues".issue, issues.issue_name, issues.description, "userIssues".bias FROM "userIssues" INNER JOIN issues ON "userIssues".issue = issues.id WHERE "userIssues".user = $1;', [user]);
+     return this.db.any('SELECT user_issues.issue_id, issues.issue_name, issues.description, user_issues.position FROM user_issues INNER JOIN issues ON user_issues.issue_id = issues.id WHERE user_issues.user_id = $1;', [user]);
     }
 
     // get questons for users to answer from db
-    async getQuestions(user: string) {
+    getQuestions(user: string) {
       return this.db.any('SELECT questions.id, questions.issue_id, questions.question, questions.bias, "userAnswers".agree FROM questions INNER JOIN "userAnswers" ON questions.id = "userAnswers".question WHERE "userAnswers"."user" = $1;', [user]);
     }
 

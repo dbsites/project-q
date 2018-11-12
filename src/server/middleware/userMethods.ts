@@ -136,15 +136,39 @@ UserMethods.getAccountInfo = (req: Request, res: Response, next: NextFunction) =
 }
 
 // method for storing user issues in the db
-UserMethods.addIssues = (req: Request, _: Response, next: NextFunction) => {
+UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
+  // instantiate the user response object
+  res.locals.user = {};
+  res.locals.user.userId = req.body.userId;
+
+  // array of issueIds
+  const arrayOfIssueIds = Object.keys(req.body.issues);
+
   // query the db to insert issues for a user sent in from the front end
-  db.users.addIssues(req.body.userId, req.body.issues)
+  db.users.addIssues(req.body.userId, req.body.issues, arrayOfIssueIds)
   .then(() => {
+    // now move on to create issues object for front end response object in UserMethods.getIssues
+    // add this to locals for control flow through the questions middleware
+    res.locals.user.issuesComplete = true;
+    // res.locals.user.issues = { userId: string, issueId: {}, issuesComplete: bool }
     next();
   })
   .catch((error: any) => {
     console.log('ERROR AT addIssues IN userMethods.ts', error);
   });
+}
+
+UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunction) => {
+  db.users.updateIssuesComplete(req.body.userId, res.locals.user.issuesComplete)
+  .then(() => {
+    // move on to get the account data
+    // res.locals.user = { userId: string, issues: {}, issuesComplete: bool }
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT updateIssuesComplete IN userMethods.ts', error);
+    res.status(500).send('SERVER FAILURE');
+  })
 }
 
 // method for getting a users issues out of the db
@@ -160,6 +184,9 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   let userReference: string;
   if(req.cookies.userId) {
     userReference = req.cookies.userId;
+  }
+  else if (res.locals.user.userId) {
+    userReference = res.locals.user.userId;
   }
   else {
     userReference = req.body.userId;
@@ -177,10 +204,10 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
       // iterate through the issue objects returned from the getIssues query
       issues.forEach((issueObject: any) => {
         // declare issue id for readability
-        let issueId = issueObject.issue;
+        let issueId = issueObject.issue_id;
   
         // add to teh issues object for the front end, issueId is the key and the bias is the value
-        res.locals.users.issues[issueId] = {};
+        res.locals.user.issues[issueId] = {};
         res.locals.user.issues[issueId].issueId = issueId;
         res.locals.user.issues[issueId].issue = issueObject.issue_name;
         res.locals.user.issues[issueId].blurb = issueObject.description;
@@ -204,7 +231,7 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
    // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
 
   // if user has not chosen their issues and not taken the survey, move on
-  if (!res.locals.user.issuesComplete && res.locals.user.surveyComplete) {
+  if (!res.locals.user.issuesComplete && !res.locals.user.surveyComplete) {
     next();
   }
   else {

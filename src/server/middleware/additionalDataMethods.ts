@@ -52,4 +52,28 @@ DatabaseMethods.insertIssues = (req: Request, _: Response, next: NextFunction) =
   });
 }
 
+// gets all issue data
+DatabaseMethods.getIssues = (_: Request, res: Response, next: NextFunction) => {
+  // declare object to return to the front end
+  res.locals.issues = {};
+
+  // query db for issue data
+  db.data.getIssues()
+  .then((issueData: any[]) => {
+    // for each issue object, build out the response object
+    issueData.forEach((issueObject: any) => {
+      res.locals.issues[issueObject.id] = {}
+      res.locals.issues[issueObject.id].issueId = issueObject.id;
+      res.locals.issues[issueObject.id].issueName = issueObject.issue_name;
+      res.locals.issues[issueObject.id].issueBlurb = issueObject.description;
+    })
+    // move on to end response and deliver issues object
+    // res.locals.issues = {issueId: { issueId: string, issueName: string, issueBlurb: string}}
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT insertIssues IN addQuestionToDb', error);
+  });
+}
+
 export default DatabaseMethods;
