@@ -16,6 +16,7 @@ import '../assets/QuadsContainer.css';
 interface Props {
   selectedCompany: any
   companyList: any
+  fetchCompanyList: any
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
@@ -30,12 +31,12 @@ class QuadsContainer extends React.Component<Props> {
   componentDidMount() {
     const {
       fetchCompanyList,
-      getUserIssues
-    } = this.props as any;
+      getUserIssues,
+    } = this.props;
 
     fetchCompanyList();
+    //refactor using selector functions in issueReducers
     getUserIssues();
-    return;
   }
 
   render() {
