@@ -64,6 +64,8 @@ export interface UserState {
   readonly isAuth: boolean | null,
   readonly issues: UserIssues,
   readonly issuesComplete: boolean | null,
+  readonly firstName: string | null,
+  readonly lastName: string | null,
   readonly surveyComplete: boolean | null,
   readonly surveyPage: number,
 };

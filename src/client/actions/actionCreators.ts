@@ -7,7 +7,7 @@
 import actions from './actionTypes';
 
 // import types
-import { formFieldObject, updateFieldAction, logoutUserAction } from './types';
+import { formFieldObject, updateFieldAction } from './types';
 import { LoginState, RegisterState, UserIssues } from '../reducers/types';
 import { Dispatch } from 'redux';
 
@@ -65,6 +65,28 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     .catch((err: any) => console.error(err));
 }
 
+// THUNK - Fetch Logout User Request
+export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
+  const fetchURI: string = `${HOST}/logout`;
+  // Issue fetch request
+  fetch(fetchURI, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify({userId: userId}),
+  })
+    .then(response => response.json())
+    .then((response: any) => {
+      dispatch({
+        type: actions.FETCH_LOGOUT_SUCCESS,
+        response
+      });
+    })
+    .catch(err => console.error(err));
+}
+
 export const fetchCompanyList = () => (dispatch: any) => {
   fetch(`${HOST}/companyList`)
     .then((response: any) => response.json())
@@ -100,10 +122,6 @@ export const sortCompanyList = (event: any) => ({
   type: actions.SORT_COMPANY_LIST,
   payload: event
 })
-
-export const logoutUser = (): logoutUserAction => ({
-  type: actions.LOGOUT_USER,
-});
 
 // THUNK - Fetch Submit User Issues
 export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {

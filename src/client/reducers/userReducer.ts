@@ -12,6 +12,8 @@ const initialUserState: UserState = {
   isAuth: null,
   issues: {},
   issuesComplete: null,
+  firstName: null,
+  lastName: null,
   surveyComplete: null,
   surveyPage: 0,
 };
@@ -37,38 +39,18 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
   switch (action.type) {
   
     case actions.FETCH_AUTH_SUCCESS:
+    case actions.FETCH_FORM_SUCCESS:
+    case actions.FETCH_LOGOUT_SUCCESS:
+      return {
+        ...initialUserState,
+        ...response,
+      };
+    
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+      console.log(response);
       return {
         ...state,
         ...response,
-      };
-
-    // TODO: DEPRECATE
-    case actions.LOGOUT_USER:
-      const cookies: string[] = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i += 1) {
-        const cookie: string = cookies[i];
-        const eqPos: number = cookie.indexOf('=');
-        const name: string = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      }
-      return {
-        ...state,
-        isAuth: false,
-      }
-    
-    case actions.FETCH_FORM_SUCCESS:
-    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      if (Object.keys(action.response.issues).length) {
-        return {
-          ...state,
-          userId: action.response.userId,
-          issues: action.response.issues,
-          issuesComplete: true,
-        }
-      }
-      return {
-        ...state,
-        issuesComplete: false,
       };
 
     case actions.FETCH_SUBMIT_SURVEY_SUCCESS:

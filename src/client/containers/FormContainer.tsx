@@ -31,6 +31,7 @@ const mapStateToProps = (store: any): any => ({
     confirmPassword: store.form.register.confirmPassword,
     agreeTerms: store.form.register.agreeTerms,
   },
+  userId: store.user.userId,
 });
 
 // TODO: Assign explicit type to dispatch
@@ -41,7 +42,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     updateField: (fieldObject: formFieldObject) => dispatch(actions.updateField(fieldObject)),
     fetchFormRequest: (form: string, formFields: LoginState | RegisterState) => dispatch(actions.fetchFormRequest(form, formFields)),
-    logoutUser: () => dispatch(actions.logoutUser()),
+    fetchLogout: (userId: string) => dispatch(actions.fetchLogout(userId)),
   }
 }
 
@@ -53,7 +54,8 @@ let FormContainer: any = (props: any) => {
     loginFields, registerFields,
     fetchFormRequest,
     updateField,
-    logoutUser,
+    fetchLogout,
+    userId,
   } = props;
 
   const loginForm = <LoginForm
@@ -71,7 +73,7 @@ let FormContainer: any = (props: any) => {
   let displayForm;
   
   if (match.params.id === 'logout') {
-    logoutUser();
+    fetchLogout(userId);
     return <Redirect to='/account/login' />
   }
   
