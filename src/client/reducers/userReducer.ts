@@ -4,13 +4,13 @@
  */
 
 import actions from '../actions/actionTypes';
-import { UserState, UserIssues } from './types';
+import { UserState, UserSelectedIssues } from './types';
 
 // Define initial state
 const initialUserState: UserState = {
   userId: null,
   isAuth: null,
-  issues: {},
+  selectedIssues: {},
   issuesComplete: null,
   firstName: null,
   lastName: null,
@@ -18,10 +18,26 @@ const initialUserState: UserState = {
   surveyPage: 0,
 };
 
-const issueReducer = (state: UserIssues, action: any): UserIssues => {
+const issueReducer = (state: UserSelectedIssues, action: any): UserSelectedIssues => {
+  const nextState: UserSelectedIssues = {};
+
   switch (action.type) {
+    case actions.ADD_ISSUE:
+      nextState[action.issueId] = null;
+      return {
+        ...state,
+        ...nextState,
+      };
+
+    case actions.REMOVE_ISSUE:
+      Object.keys(state).forEach((issueId) => {
+        if (issueId !== action.issueId) {
+          nextState[issueId] = state[issueId];
+        }
+      })
+      return nextState;
+      
     case actions.UPDATE_ISSUE_POSITION:
-      const nextState: UserIssues = {};
       nextState[action.payload.issue] = action.payload.position;
       return {
         ...state,
@@ -62,23 +78,29 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
     case actions.UPDATE_ISSUE_POSITION:
     const newSurveyPage = state.surveyPage + 1;
       return {
-        ... state,
+        ...state,
         surveyPage: newSurveyPage,
-        issues: issueReducer(state.issues, action),
+        selectedIssues: issueReducer(state.selectedIssues, action),
       }
 
     case actions.PREV_PAGE:
     const lastSurveyPage = state.surveyPage - 1;
       return {
-        ... state,
+        ...state,
         surveyPage: lastSurveyPage,
       }
 
     case actions.UPDATE_ISSUES_SELECTED:
       return {
-        ... state,
+        ...state,
         issuesComplete: false,
         surveyPage: 0,
+      }
+
+    case actions.CLEAR_ISSUES2:
+      return {
+        ...state,
+        selectedIssues: {},
       }
 
     default:
@@ -90,5 +112,5 @@ export default userReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns an object of outstanding issues
-export const getIssueCount = (issues: UserIssues): number => Object.keys(issues).length;
-export const getOutstandingIssues = (issues: UserIssues): string[] => Object.keys(issues).filter(issue => issues[issue] === null);
+export const getSelectedIssueCount = (issues: UserSelectedIssues): number => Object.keys(issues).length;
+export const getOutstandingIssues = (issues: UserSelectedIssues): string[] => Object.keys(issues).filter(issue => issues[issue] === null);

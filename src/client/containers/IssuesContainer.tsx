@@ -5,33 +5,35 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import * as actions from '../actions/actionCreators';
 
-import { getSelectedIssueCount, getSelectedIssues } from '../reducers/issuesReducer';
+import { getSelectedIssueCount } from '../reducers/userReducer';
 
-import Issue from '../components/Issue';
+// Import Presentation Components
 import Header from '../containers/HeaderContainer';
+import Issue from '../components/Issue';
 
 const IssuesContainer = (props: any): any => {
   const {
-    issues, userId,
-    clearIssues, toggleIssue,
-    submitIssues,
+    issues,                    // Props from issues state
+    selectedIssues, userId,    // Props from user state
+    addIssue, removeIssue,     // Actions from user reducer
+    clearIssues, submitIssues, // Actions from user reducer
   } = props;
 
-  const selectedIssues = getSelectedIssues(issues);
-  const issueCount = getSelectedIssueCount(issues);
+  const issueCount = getSelectedIssueCount(selectedIssues);
   const issuesRemaining = 6 - issueCount;
   const additional = issueCount === 0 ? '' : 'Additional ';
   
   const issuesArray: any[] = [];
 
   Object.keys(issues).forEach((issueId) => {
-    issuesArray.push(<Issue issue={issues[issueId]} issueId={issueId} key={issueId} remaining={issuesRemaining} toggleIssue={toggleIssue} />);
+    issuesArray.push(<Issue issue={issues[issueId]} issueId={issueId} key={issueId} remaining={issuesRemaining} addIssue={addIssue} removeIssue={removeIssue} />);
   });
 
   const headerText = issuesRemaining ?
-    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Platforms That Matter Most To You` :
+    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Issues That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
@@ -74,13 +76,15 @@ const IssuesContainer = (props: any): any => {
 };
 
 const mapStateToProps = (store: any): any => ({
+  selectedIssues: store.user.selectedIssues,
   userId: store.user.userId,
   issues: store.issues,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
-  clearIssues: () => dispatch(actions.clearIssues()),
-  toggleIssue: (issue: string) => dispatch(actions.toggleIssue(issue)),
+  clearIssues2: () => dispatch(actions.clearIssues2()),
+  addIssue: (issueId: string) => dispatch(actions.addIssue(issueId)),
+  removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
   submitIssues: (userId: string, issuesArr: string[]) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesArr)),
 })
 

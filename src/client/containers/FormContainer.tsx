@@ -31,6 +31,7 @@ const mapStateToProps = (store: any): any => ({
     confirmPassword: store.form.register.confirmPassword,
     agreeTerms: store.form.register.agreeTerms,
   },
+  isAuth: store.user.isAuth,
   userId: store.user.userId,
 });
 
@@ -55,7 +56,7 @@ let FormContainer: any = (props: any) => {
     fetchFormRequest,
     updateField,
     fetchLogout,
-    userId,
+    isAuth, userId,
   } = props;
 
   const loginForm = <LoginForm
@@ -83,9 +84,13 @@ let FormContainer: any = (props: any) => {
     displayForm = registerForm;
   }
 
+  // Redirect if user is authorized
+  const authRedirect = isAuth ? <Redirect to='/'/> : '';
+
   // Pass relevant field values and actions to Login and Registration Form Components
   return (
     <div className="form-dashboard">
+      {authRedirect}
       <FormHeader />
       <div className="form-container">
         {displayForm}

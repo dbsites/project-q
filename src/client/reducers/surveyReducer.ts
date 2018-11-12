@@ -297,6 +297,7 @@ const surveyReducer = (state: SurveyState = initialSurveyState, action: any): Su
     
     case actions.FETCH_FORM_SUCCESS:
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+    if (action.response.question) {
       const newState: any = {};
       const questionIdArray = Object.keys(action.response.questions);
       questionIdArray.forEach((questionId) => {
@@ -310,6 +311,8 @@ const surveyReducer = (state: SurveyState = initialSurveyState, action: any): Su
         }
       });
       return newState;
+    }
+    return state;
 
     default: 
     return state;

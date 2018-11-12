@@ -10,7 +10,7 @@ import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
 
 // Import selector functions
-import { getIssueCount } from '../reducers/userReducer';
+import { getSelectedIssueCount } from '../reducers/userReducer';
 // import { submitSurvey } from '../actions/actionCreators';
 
 const DashContainer = (props: any): any => {
@@ -27,7 +27,7 @@ const DashContainer = (props: any): any => {
   //   return outstandingIssuesArray.length;
   // }
 
-  const issueCount: number = getIssueCount(selectedIssues);
+  const issueCount: number = getSelectedIssueCount(selectedIssues);
 
   if (surveyPage !== issueCount) return <SurveyContainer />
 

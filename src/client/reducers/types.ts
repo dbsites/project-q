@@ -2,7 +2,6 @@
 export interface IssueState {
   readonly name: string,
   readonly blurb: string,
-  readonly selected: boolean,
 };
 
 export interface IssuesState {
@@ -55,14 +54,14 @@ export interface AnswerPayload {
 }
 
 // User Object Types
-export interface UserIssues {
+export interface UserSelectedIssues {
   [name: string]: boolean | null,
 };
 
 export interface UserState {
   readonly userId: string | null,
   readonly isAuth: boolean | null,
-  readonly issues: UserIssues,
+  readonly selectedIssues: UserSelectedIssues,
   readonly issuesComplete: boolean | null,
   readonly firstName: string | null,
   readonly lastName: string | null,

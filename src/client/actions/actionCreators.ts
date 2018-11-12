@@ -8,7 +8,7 @@ import actions from './actionTypes';
 
 // import types
 import { formFieldObject, updateFieldAction } from './types';
-import { LoginState, RegisterState, UserIssues } from '../reducers/types';
+import { LoginState, RegisterState, UserSelectedIssues } from '../reducers/types';
 import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
@@ -126,7 +126,7 @@ export const sortCompanyList = (event: any) => ({
 // THUNK - Fetch Submit User Issues
 export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {
   // Create issues object
-  const issues: UserIssues = {};
+  const issues: UserSelectedIssues = {};
   issuesArr.forEach((issue: string) => issues[issue] = null);
   const bodyObj = { userId, issues };
   // Issue fetch request
@@ -153,19 +153,24 @@ export const updateIssue = (issue: any) => ({
   payload: issue,
 })
 
-// Issue Ranking Actions TODO: Add functionality
-export const clearIssues = () => ({
-  type: actions.CLEAR_ISSUES,
+// Issue Ranking Actions
+export const clearIssues2 = () => ({
+  type: actions.CLEAR_ISSUES2,
 });
+
+export const addIssue = (issueId: string) => ({
+  type: actions.ADD_ISSUE,
+  issueId,
+})
+
+export const removeIssue = (issueId: string) => ({
+  type: actions.REMOVE_ISSUE,
+  issueId,
+})
 
 export const updateIssuesSelected = () => ({
   type: actions.UPDATE_ISSUES_SELECTED,
 })
-
-export const toggleIssue = (issueId: string) => ({
-  type: actions.TOGGLE_ISSUE,
-  payload: issueId,
-});
 
 // Survey Question Actions
 export const answerQuestion = (event: any) => ({
