@@ -146,7 +146,7 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
     // now move on to create issues object for front end response object in UserMethods.getIssues
     // add this to locals for control flow through the questions middleware
     res.locals.user.issuesComplete = true;
-    // res.locals.user.issues = { userId: string, issueId: {}, issuesComplete: bool }
+    // res.locals.user.issues = { userId: string, issuesComplete: bool }
     next();
   })
   .catch((error: any) => {
@@ -192,7 +192,7 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
    db.users.getIssues(userReference)
    .then((issues: any[]) => {
     // this object will be a part of the output object sent to the front end
-    res.locals.user.issues = {};
+    res.locals.user.issuesSelected = {};
 
     let userHasIssues = issues.length;
 
@@ -202,15 +202,15 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
         // declare issue id for readability
         let issueId = issueObject.issue_id;
         // add to teh issues object for the front end, issueId is the key and the bias is the value
-        res.locals.user.issues[issueId] = {};
-        res.locals.user.issues[issueId].issueId = issueId;
-        res.locals.user.issues[issueId].issue = issueObject.issue_name;
-        res.locals.user.issues[issueId].blurb = issueObject.description;
-        res.locals.user.issues[issueId].position = issueObject.position;
+        res.locals.user.issuesSelected[issueId] = {};
+        res.locals.user.issuesSelected[issueId].issueId = issueId;
+        res.locals.user.issuesSelected[issueId].issue = issueObject.issue_name;
+        res.locals.user.issuesSelected[issueId].blurb = issueObject.description;
+        res.locals.user.issuesSelected[issueId].position = issueObject.position;
       })
   
       // move on to UserMethods.getQuestions out of the database for userIssues
-      // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
+      // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
       next();
     } else next();
   })
@@ -223,7 +223,7 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
 
 // method for returning the questions relevant to the users selected issues
 UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
-   // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
+   // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
 
   // if user has not chosen their issues and not taken the survey, move on
   if (!res.locals.user.issuesComplete && !res.locals.user.surveyComplete) {
@@ -235,14 +235,14 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
     .then((questionData: any) => {
       // take each questionData object returned from the database and translate it to the user response object
       questionData.forEach((questionObject : any) => {
-        res.locals.user.issues[questionObject.issue_id][questionObject.id] = {};
-        res.locals.user.issues[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
-        res.locals.user.issues[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
-        res.locals.user.issues[questionObject.issue_id][questionObject.id].position = questionObject.position;
-        res.locals.user.issues[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : "undefined";
+        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id] = {};
+        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
+        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
+        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].position = questionObject.position;
+        res.locals.user.issuesSelected[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : "undefined";
       });
       // move on to end fetch and return response object
-      // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issues: object }
+      // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
       next();
     })
     .catch((error: any) => {
