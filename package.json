@@ -7,6 +7,7 @@
     "build": "webpack --mode production",
     "dev-server": "webpack-dev-server --mode development --open --hot",
     "server": "nodemon --exec ts-node ./src/server/server.ts",
+    "daemon": "nodemon --exec ts-node ./src/server/daemonServer.ts",
     "redis": "ts-node ./src/server/redis.ts",
     "test": "jest"
   },
