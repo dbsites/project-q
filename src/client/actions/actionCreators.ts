@@ -40,7 +40,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
 
 // THUNK - Fetch Form Request
 export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState) => (dispatch: Dispatch) => {
-  // Determine fetch URI
+  // Derive POST request URI from form to be submitted
   let fetchURI: string = `${HOST}`;
   if (form === 'login') {
     fetchURI = fetchURI + '/login';
@@ -89,6 +89,7 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
     .catch(err => console.error(err));
 }
 
+// THUNK - Fetch Issues to populate issues state (issueId, text, blurb)
 export const fetchIssues = () => (dispatch: any) => {
   fetch (`${HOST}/getIssues`)
     .then(response => response.json())
@@ -140,9 +141,9 @@ export const sortCompanyList = (event: any) => ({
 
 // THUNK - Fetch Submit User Issues
 export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
-  // Create issues object
+  const fetchURI: string = `${HOST}/userIssues`;
   // Issue fetch request
-  fetch(`${HOST}/userIssues`, {
+  fetch(fetchURI, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -67,6 +67,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       return {
         ...state,
         ...response,
+        issuesComplete: true,
       };
 
     case actions.FETCH_SUBMIT_SURVEY_SUCCESS:
