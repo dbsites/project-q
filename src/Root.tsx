@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Footer from './client/components/Footer';
 
-import FormContainer from './client/containers/FormContainer';
-import TermsContainer from './client/containers/TermsContainer';
-import App from './client/App';
+// import QuadsContainer from './client/containers/QuadsContainer';
+// import FormContainer from './client/containers/FormContainer';
+// import TermsContainer from './client/containers/TermsContainer';
+// import App from './client/App';
 
 import './Root.css';
+import QuadsContainer from './client/containers/QuadsContainer';
 
 // Root pulls store out of params to pass to Redux Provider
 // Wrap React Router in Redux Provider and nest App in '/' path with optional 'filter' param
@@ -16,9 +18,10 @@ const Root = (props: any) => (
   <Provider store={props.store} >
     <Router>
       <div className="screen">
-        <Route exact path='/' component={App} />
-        <Route exact path='/account/:id' component={FormContainer} />
-        <Route exact path='/terms/:id' component={TermsContainer} />
+        {/* <Route exact path='/' component={App} /> */}
+        <Route exact path='/' component={QuadsContainer} />
+        {/* <Route exact path='/account/:id' component={FormContainer} /> */}
+        {/* <Route exact path='/terms/:id' component={TermsContainer} /> */}
         <Route path='/' component={Footer} />
       </div>
     </Router>
