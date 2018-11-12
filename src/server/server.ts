@@ -26,9 +26,9 @@ import * as helmet from 'helmet';
 // import authentication middleware
 import UserMethods from './middleware/userMethods'
 // import companyDb middleware
-// import questionDb middleware
-import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
+// import database middleware
+import DatabaseMethods from './middleware/additionalDataMethods';
 // import companyDb middleware
 import Sessions from './middleware/sessionMethods';
 

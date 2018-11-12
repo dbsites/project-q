@@ -68,4 +68,8 @@ export class CompanyRepository {
         [item.description, item.logo, item.name]);
     })
   }
+
+  async getTickers() {
+    return await this.db.query('SELECT ticker FROM companies;');
+  }
 }
