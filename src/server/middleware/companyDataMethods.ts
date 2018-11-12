@@ -47,20 +47,20 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
     let companyData: any = {}
     // loop through the list of objects and create an more digestable data object for the front end
     list.forEach((item:any) => {
-      if (companyData[item.name]) {
-        companyData[item.name][item.issue] = {};
-        companyData[item.name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
+      if (companyData[item.full_name]) {
+        companyData[item.full_name][item.issue] = {};
+        companyData[item.full_name][item.issue].agreeScore = item.agreeScore;
+        companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
       }
       else {
-        companyData[item.name] = {};
-        companyData[item.name].name = item.name;
-        companyData[item.name].ticker = item.ticker;
-        companyData[item.name].description = item.description;
-        companyData[item.name].logo = item.logo;
-        companyData[item.name][item.issue] = {};
-        companyData[item.name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.name][item.issue].disagreeScore = item.disagreeScore;
+        companyData[item.full_name] = {};
+        companyData[item.full_name].name = item.full_name;
+        companyData[item.full_name].ticker = item.ticker;
+        companyData[item.full_name].description = item.description;
+        companyData[item.full_name].logo = item.logo;
+        companyData[item.full_name][item.issue] = {};
+        companyData[item.full_name][item.issue].agreeScore = item.agreeScore;
+        companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
       }
     })
     res.locals.companyDataArray = companyData;
@@ -72,15 +72,19 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
   });
 }
 
-CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => {
-  // db.users accesses methods defined in company controller
-  db.companies.updateData(req.body)
-  .then(() => {
-    next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT INSERT DATA IN addCompanyToDb', error);
-  }); 
+// CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => {
+//   // db.users accesses methods defined in company controller
+//   db.companies.updateData(req.body)
+//   .then(() => {
+//     next();
+//   })
+//   .catch((error: any) => {
+//     console.log('ERROR AT INSERT DATA IN addCompanyToDb', error);
+//   }); 
+// }
+
+CompanyDatabase.getTickers = () => {
+  return db.companies.getTickers();
 }
 
 export default CompanyDatabase;

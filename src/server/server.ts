@@ -26,9 +26,9 @@ import * as helmet from 'helmet';
 // import authentication middleware
 import UserMethods from './middleware/userMethods'
 // import companyDb middleware
-// import questionDb middleware
-import DatabaseMethods from './middleware/additionalDataMethods';
 import CompanyDatabase from './middleware/companyDataMethods';
+// import database middleware
+import DatabaseMethods from './middleware/additionalDataMethods';
 // import companyDb middleware
 import Sessions from './middleware/sessionMethods';
 
@@ -45,7 +45,7 @@ app.use(express.static(path.resolve(__dirname, '../../dist')));
 app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
 
 //  protects from some well-known web vulnerabilities by setting HTTP headers appropriately.
-app.use(helmet())
+app.use(helmet());
 
 // tell express to use bodyparser to parse json files in req.body
 // limit 10mb increases the amount of data which can be parsed by the server at once, this could have side effects 
@@ -72,6 +72,7 @@ app.post('/register',
   UserMethods.createAccount,
   Sessions.create,
   (_: Request, res: Response) => {
+    console.log(res.locals.user);
     res.status(200).send(res.locals.user);
   }
 );

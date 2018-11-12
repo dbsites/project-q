@@ -100,6 +100,7 @@ Sessions.end = async (req: Request, res: Response, next: NextFunction) => {
   else {
     userReference = `${<string>process.env.REDIS_KEY_PREFIX}${req.cookies[<string>process.env.COOKIES_KEY]}`
   }
+  
   // delete the cookie
   res.clearCookie(<string>process.env.COOKIES_KEY);
   res.clearCookie(<string>process.env.COOKIES_VALUE);
