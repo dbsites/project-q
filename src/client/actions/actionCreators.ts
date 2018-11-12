@@ -19,6 +19,24 @@ export const updateField = (fieldObject: formFieldObject): updateFieldAction => 
   payload: fieldObject,
 });
 
+// THUNK - Fetch Authorization
+export const fetchAuth = () => (dispatch: Dispatch) => {
+  const fetchURI: string = `${HOST}/auth`;
+  // Issue fetch request
+  fetch(fetchURI, {
+    method: 'GET',
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+  })
+    .then(response => response.json())
+    .then((response: any) => {
+      dispatch({
+        type: actions.FETCH_AUTH_SUCCESS,
+        response
+      });
+    })
+    .catch(err => console.error(err));
+}
+
 // THUNK - Fetch Form Request
 export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState) => (dispatch: Dispatch) => {
   // Determine fetch URI
@@ -82,12 +100,6 @@ export const sortCompanyList = (event: any) => ({
   type: actions.SORT_COMPANY_LIST,
   payload: event
 })
-
-// User Object Actions TODO: Add functionality
-export const authUser = (userId: string) => ({
-  type: actions.AUTH_USER,
-  payload: userId,
-});
 
 export const logoutUser = (): logoutUserAction => ({
   type: actions.LOGOUT_USER,

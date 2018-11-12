@@ -32,20 +32,17 @@ const issueReducer = (state: UserIssues, action: any): UserIssues => {
 }
 
 const userReducer = (state: UserState = initialUserState, action: any): UserState => {
+  // Destructure response object from action
+  const {response} = action;
   switch (action.type) {
-    case actions.AUTH_USER:
-      if (action.payload === 'cookie not found') {
-        return {
-          ...state,
-          isAuth: false,
-        }
-      }
+  
+    case actions.FETCH_AUTH_SUCCESS:
       return {
         ...state,
-        userId: action.payload,
-        isAuth: true,
-      }
+        ...response,
+      };
 
+    // TODO: DEPRECATE
     case actions.LOGOUT_USER:
       const cookies: string[] = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i += 1) {

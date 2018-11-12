@@ -11,6 +11,8 @@ import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
 
+import Loading from './components/Loading'
+
 // Import Types
 import { SurveyState } from './reducers/types';
 
@@ -33,29 +35,22 @@ class App extends React.Component<Props> {
 
   // Upon mount, check if user is logged in
   componentDidMount() {
-    // Extract authUser action from props
-    const { authUser } = this.props as any;
-
-    // Extract user id from cookie if it exists
-    if (document.cookie) {
-      const cookieArray = document.cookie.split(';');
-      for (let item of cookieArray) {
-        let itemString = item.trim();
-        if (itemString.startsWith('key=')) {
-          return authUser(itemString.substr(4));
-        }
-      }
-    }
-    // If cookie not found, return authUser(false)
-    return authUser('cookie not found');
+    // Extract fetchAuth action from props and call
+    const { fetchAuth } = this.props as any;
+    fetchAuth();
   }
 
   render() {
     // Destructure auth status from props
     const { isAuth } = this.props;
+    if (isAuth === null) {
+      return <Loading />
+    }
     if (isAuth === false) {
+      // If user hasn't been authenticated, redirect to Registration
       return <Redirect to='/account/register' />
     }
+    // Otherwise render dashboard
     return <DashContainer userState={this.props} />
   }
 };
@@ -76,7 +71,7 @@ const mapStateToProps = (state: any): Props => {
 
 const mapDispatchToProps = (dispatch: any): any => {
   return {
-    authUser: (userId: string) => dispatch(actions.authUser(userId)),
+    fetchAuth: () => dispatch(actions.fetchAuth()),
     prevPage: () => dispatch(actions.prevPage()),
     submitSurvey: (surveyObj: any) => dispatch(actions.submitSurvey(surveyObj)),
   }
