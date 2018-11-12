@@ -143,6 +143,7 @@ UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
 
   // array of issueIds
   const arrayOfIssueIds = Object.keys(req.body.issues);
+  res.locals.arrayOfIssueIds = arrayOfIssueIds;
 
   // query the db to insert issues for a user sent in from the front end
   db.users.addIssues(req.body.userId, req.body.issues, arrayOfIssueIds)
@@ -236,14 +237,18 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
   }
   else {
     // query database for questions for user issues questionData = {id: v4, question: text, bias: text, agree: boolean, issueId: v4}
-    db.users.getQuestions(res.locals.user.userId)
+    db.users.getQuestions(res.locals.user.userId, res.locals.arrayOfIssueIds)
     .then((questionData: any) => {
+      console.log(questionData);
+      // console.log(Object.keys(res.locals.user.issues));
       // take each questionData object returned from the database and translate it to the user response object
-      questionData.forEach((questionObject : any) =>{
+      questionData.forEach((questionObject : any) => {
+        // console.log('1', questionObject.issue_id);
+        // console.log('2', res.locals.user.issues[questionObject.issue_id].issueId);
         res.locals.user.issues[questionObject.issue_id][questionObject.id] = {};
         res.locals.user.issues[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
-        res.locals.user.issues[questionObject.issue_id][questionObject.id].questionText = questionObject.question;
-        res.locals.user.issues[questionObject.issue_id][questionObject.id].bias = questionObject.bias;
+        res.locals.user.issues[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
+        res.locals.user.issues[questionObject.issue_id][questionObject.id].position = questionObject.position;
         res.locals.user.issues[questionObject.issue_id][questionObject.id].agree = questionObject.agree;
       });
       // move on to end fetch and return response object

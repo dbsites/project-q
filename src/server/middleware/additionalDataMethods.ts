@@ -25,20 +25,6 @@ DatabaseMethods.insertQuestions = (req: Request, _: Response, next: NextFunction
   .catch((error: any) => {
     console.log('ERROR AT INSERT DATA IN addQuestionToDb', error);
   });
-  
-}
-
-// delivers the questions data to the front end
-DatabaseMethods.getQuestionList = (_: Request, res: Response, next: NextFunction) => {
-  db.data.getQuestions()
-    .then((data: any[]) => {
-      res.locals.questionDataArray = data;
-      next();
-    })
-    .catch((error: any) => {
-      console.log('ERROR AT getQuestionList IN addQuestionsDataToDb.ts', error);
-      res.sendStatus(500);
-    })
 }
 
 // inserts issue data

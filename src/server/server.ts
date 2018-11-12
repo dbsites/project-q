@@ -138,14 +138,6 @@ app.get('/companyList',
   }
 );
 
-// route to grab data from the database;
-app.get('/getQuestions',
-  DatabaseMethods.getQuestionList, 
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.questionDataArray);
-  }
-);
-
 app.post('/updateCompanyData',
   CompanyDatabase.updateData,
   (_: Request, res: Response) => {
