@@ -19,6 +19,11 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
+// import node-fetch to hit the finance api
+import fetch from 'node-fetch';
+// import the env files
+import * as dotenv from 'dotenv';
+dotenv.config();
 // import companyDb middleware
 import CompanyDatabase from './middleware/companyDataMethods';
 // import database middleware
@@ -32,7 +37,7 @@ const app: Application = express();
 const PORT = 6000;
 
 // define interval constant
-// const interval = 60 * 1000;
+const fiveSeconds = 5000;
 
 // Allow CORS, credentials true expects  request to come with credentials and origin specifies where they should come from
 app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
@@ -49,18 +54,41 @@ app.use(bodyParser.json({limit: '10mb'}));
 // one call per stock ticker
 // -> query for tickers 
 
-async function getStockPrices() {
-  const stockSymbols: any = [];
-  await CompanyDatabase.getTickers();
+function getStockPrices() {
+
+  CompanyDatabase.getTickers()
+  .then((stockSymbols: any[]) => {
+
+    let startSymbol = 0;
+    let stockInterval = setInterval(() => { getStockData() }, fiveSeconds)
+
+    if (startSymbol === 500) {
+      clearInterval(stockInterval);
+    }
+
+    function getStockData() {
+      for (let currSymbol = startSymbol; currSymbol < 1; currSymbol += 1) {
+        // make the api call
+        
+        fetch(`https://api.intrinio.com/prices?identifier=${stockSymbols[currSymbol].ticker.split(".")[0]}&api_key=${<string>process.env.STOCK_API_KEY}`)
+        .then((response: any) => response.json())
+        .then((response: any) => {
+          console.log(response);
+        })
+        .catch((err: any) => console.error(err));
+        // store the data
+        // update the currSymbol
+      }
+    }
+    return true;
+  })
+  .catch(() => {
+
+  })
 }
 
-function showSymbols() {
-  return 
-}
+getStockPrices();
 
-stockSymbols.forEach((item: any) => {
-  console.log(item);
-});
 
 
 // iterate through the tickers 

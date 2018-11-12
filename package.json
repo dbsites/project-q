@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Quail-CS/project-q#readme",
   "dependencies": {
+    "@types/node-fetch": "^2.1.2",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
@@ -31,6 +32,7 @@
     "express": "^4.16.4",
     "fs": "0.0.1-security",
     "helmet": "^3.14.0",
+    "node-fetch": "^2.2.1",
     "pg-promise": "^8.5.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
