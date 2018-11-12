@@ -37,12 +37,10 @@ UserMethods.createAccount = (req: Request, res: Response, next: NextFunction) =>
         // translate data into user response object
         res.locals.user = {};
         res.locals.user.userId = userObject.id;
-        res.locals.user.rememberMe = false;
         res.locals.user.surveyComplete = false;
         res.locals.user.issuesComplete = false;
         res.locals.user.firstName = req.body.firstName;
         res.locals.user.lastName = req.body.lastName;
-        res.locals.user.issues = {};
 
         // call next middleware, Sessions.start
         // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
