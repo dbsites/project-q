@@ -37,12 +37,6 @@ export class DatabaseRepository {
     }
   };
 
-  // deliver questions
-  // REFACTOR **************maybe a dead method, not sure we need a blanket list of the questions anywhere**********
-  getQuestions(){
-    return this.db.any('SELECT * FROM questions;')
-  }
-
   // deliver questions related to an issues
   async getIssueQuestions(issues: any[]) {
     // question object stores the questions from each query
@@ -79,5 +73,10 @@ export class DatabaseRepository {
         })
       }
   }
+
+  // get issues from db for front end
+  getIssues() {
+    return this.db.query('SELECT id, issue_name, description FROM issues;');
+  } 
 
 }

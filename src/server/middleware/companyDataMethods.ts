@@ -72,4 +72,15 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
   });
 }
 
+CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => {
+  // db.users accesses methods defined in company controller
+  db.companies.updateData(req.body)
+  .then(() => {
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT INSERT DATA IN addCompanyToDb', error);
+  }); 
+}
+
 export default CompanyDatabase;
