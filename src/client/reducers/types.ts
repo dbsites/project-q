@@ -1,5 +1,6 @@
 // Issue(s) Object Types
 export interface IssueState {
+  readonly issueId: string,
   readonly name: string,
   readonly blurb: string,
 };

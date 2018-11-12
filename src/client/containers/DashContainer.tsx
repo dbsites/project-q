@@ -16,10 +16,13 @@ import { getSelectedIssueCount } from '../reducers/userReducer';
 const DashContainer = (props: any): any => {
   const {
     issues, issuesComplete, selectedIssues, survey, surveyPage, userId,
-    submitSurvey
+    fetchIssues, submitSurvey
   } = props.userState;
   // CHeck if issues have already been selected - if not, serve IssuesContainer
-  if (!issuesComplete) return <IssuesContainer />
+  if (!issuesComplete) {
+    fetchIssues();
+    return <IssuesContainer />
+  } 
 
   // Helper function to check if any issues are outstanding (value is null)
   // const countOutstandingIssues = (): number => {

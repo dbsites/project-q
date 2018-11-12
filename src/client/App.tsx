@@ -72,6 +72,7 @@ const mapStateToProps = (state: any): Props => {
 const mapDispatchToProps = (dispatch: any): any => {
   return {
     fetchAuth: () => dispatch(actions.fetchAuth()),
+    fetchIssues: () => dispatch(actions.fetchIssues()),
     prevPage: () => dispatch(actions.prevPage()),
     submitSurvey: (surveyObj: any) => dispatch(actions.submitSurvey(surveyObj)),
   }

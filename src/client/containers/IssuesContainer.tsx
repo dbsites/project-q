@@ -29,11 +29,31 @@ const IssuesContainer = (props: any): any => {
   const issuesArray: any[] = [];
 
   Object.keys(issues).forEach((issueId) => {
-    issuesArray.push(<Issue issue={issues[issueId]} issueId={issueId} key={issueId} remaining={issuesRemaining} addIssue={addIssue} removeIssue={removeIssue} />);
+    let issue: JSX.Element;
+    if (issueId in selectedIssues) {
+      issue = <Issue
+        issue={issues[issueId]}
+        issueId={issueId}
+        key={issueId}
+        remaining={issuesRemaining}
+        selected={true}
+        toggleIssue={removeIssue}
+      />
+    } else {
+      issue = <Issue
+        issue={issues[issueId]}
+        issueId={issueId}
+        key={issueId}
+        remaining={issuesRemaining}
+        selected={false}
+        toggleIssue={addIssue}
+      />
+    }
+    issuesArray.push(issue);
   });
 
   const headerText = issuesRemaining ?
-    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Issues That Matter Most To You` :
+    `Select Up To ${6 - issueCount} ${additional} Issues That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
@@ -82,10 +102,10 @@ const mapStateToProps = (store: any): any => ({
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
-  clearIssues2: () => dispatch(actions.clearIssues2()),
+  clearIssues: () => dispatch(actions.clearIssues()),
   addIssue: (issueId: string) => dispatch(actions.addIssue(issueId)),
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
-  submitIssues: (userId: string, issuesArr: string[]) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesArr)),
+  submitIssues: (userId: string, selectedIssues: any) => dispatch(actions.fetchSubmitIssuesRequest(userId, selectedIssues)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);

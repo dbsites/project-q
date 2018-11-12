@@ -8,7 +8,7 @@ import actions from './actionTypes';
 
 // import types
 import { formFieldObject, updateFieldAction } from './types';
-import { LoginState, RegisterState, UserSelectedIssues } from '../reducers/types';
+import { LoginState, RegisterState } from '../reducers/types';
 import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
@@ -29,6 +29,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Auth Request Response: ', response);
       dispatch({
         type: actions.FETCH_AUTH_SUCCESS,
         response
@@ -57,6 +58,7 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Form Request Response: ', response);
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
@@ -81,8 +83,21 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
     .then((response: any) => {
       dispatch({
         type: actions.FETCH_LOGOUT_SUCCESS,
-        response
+        response,
       });
+    })
+    .catch(err => console.error(err));
+}
+
+export const fetchIssues = () => (dispatch: any) => {
+  fetch (`${HOST}/getIssues`)
+    .then(response => response.json())
+    .then((response: any) => {
+      console.log('Fetch Issues Request Response: ', response);
+      dispatch({
+        type: actions.FETCH_ISSUES_SUCCESS,
+        response,
+      })
     })
     .catch(err => console.error(err));
 }
@@ -124,11 +139,8 @@ export const sortCompanyList = (event: any) => ({
 })
 
 // THUNK - Fetch Submit User Issues
-export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) => (dispatch: Dispatch) => {
+export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
   // Create issues object
-  const issues: UserSelectedIssues = {};
-  issuesArr.forEach((issue: string) => issues[issue] = null);
-  const bodyObj = { userId, issues };
   // Issue fetch request
   fetch(`${HOST}/userIssues`, {
     method: 'POST',
@@ -136,10 +148,14 @@ export const fetchSubmitIssuesRequest = (userId: string, issuesArr: string[]) =>
       'Content-Type': 'application/json',
     },
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify(bodyObj),
+    body: JSON.stringify({
+      userId: userId,
+      issues: selectedIssues,
+    }),
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Submit Issues Response: ', response);
       dispatch({
         type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
         response,
@@ -154,8 +170,8 @@ export const updateIssue = (issue: any) => ({
 })
 
 // Issue Ranking Actions
-export const clearIssues2 = () => ({
-  type: actions.CLEAR_ISSUES2,
+export const clearIssues = () => ({
+  type: actions.CLEAR_ISSUES,
 });
 
 export const addIssue = (issueId: string) => ({

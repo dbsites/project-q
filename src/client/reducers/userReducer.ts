@@ -97,7 +97,14 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
         surveyPage: 0,
       }
 
-    case actions.CLEAR_ISSUES2:
+    case actions.ADD_ISSUE:
+    case actions.REMOVE_ISSUE:
+      return {
+        ... state,
+        selectedIssues: issueReducer(state.selectedIssues, action),
+      }
+
+    case actions.CLEAR_ISSUES:
       return {
         ...state,
         selectedIssues: {},
