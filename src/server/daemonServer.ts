@@ -20,7 +20,7 @@ import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
 // import companyDb middleware
-import CompanyDatabase from './middleware/companyDataMethods';
+// import CompanyDatabase from './middleware/companyDataMethods';
 // import database middleware
 // import DatabaseMethods from './middleware/additionalDataMethods';
 
@@ -49,18 +49,18 @@ app.use(bodyParser.json({limit: '10mb'}));
 // one call per stock ticker
 // -> query for tickers 
 
-async function getStockPrices() {
-  const stockSymbols: any = [];
-  await CompanyDatabase.getTickers();
-}
+// async function getStockPrices() {
+//   const stockSymbols: any = [];
+//   await CompanyDatabase.getTickers();
+// }
 
-function showSymbols() {
-  return 
-}
+// function showSymbols() {
+//   return 
+// }
 
-stockSymbols.forEach((item: any) => {
-  console.log(item);
-});
+// stockSymbols.forEach((item: any) => {
+//   console.log(item);
+// });
 
 
 // iterate through the tickers 

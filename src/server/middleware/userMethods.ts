@@ -86,7 +86,6 @@ UserMethods.login = async (req: Request, res: Response, next: NextFunction) => {
           // builds the desired front end user object
           res.locals.user = {};
           res.locals.user.userId = data.id;
-          res.locals.user.remember = data.remember;
           // call next to advance to Session.create
           // res.locals.user = {userId: string, remember: boolean }
           next();
