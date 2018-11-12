@@ -78,36 +78,41 @@
     }
 
     // get questons for users to answer from db
-    async getQuestions(user: string, issueIds: any[]) {
-     if (issueIds.length === 0) {
-      return [];
-     } else if(issueIds.length === 1) {
+    async getQuestions(user: string, issueIds: any[], surveyComplete: boolean) {
+      if (!surveyComplete) {
+        
+        return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position FROM questions INNER JOIN user_issues ON questions.issue_id = user_issues.issue_id WHERE user_issues.user_id = $1;', [user]);
 
-        return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE questions.issue_id = $1 AND user_answers.user_id = $2;', [issueIds[0], user]);
+      } else if (issueIds.length === 0) {
 
-        } else if(issueIds.length === 2) {
+          return [];
+
+      } else if(issueIds.length === 1) {
+
+          return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE questions.issue_id = $1 AND user_answers.user_id = $2;', [issueIds[0], user]);
+
+      } else if(issueIds.length === 2) {
 
           return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2) AND user_answers.user_id = $3;', [issueIds[0], issueIds[1], user]);
 
-          } else if(issueIds.length === 3) {
+      } else if(issueIds.length === 3) {
 
-            return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3) AND user_answers.user_id = $4;', [issueIds[0], issueIds[1], issueIds[2], user]);
+          return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3) AND user_answers.user_id = $4;', [issueIds[0], issueIds[1], issueIds[2], user]);
 
-          } else if(issueIds.length === 4) {
+      } else if(issueIds.length === 4) {
 
-            return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3 OR questions.issue_id = $4) AND user_answers.user_id = $5;', [issueIds[0], issueIds[1], issueIds[2], issueIds[3], user]);
+          return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3 OR questions.issue_id = $4) AND user_answers.user_id = $5;', [issueIds[0], issueIds[1], issueIds[2], issueIds[3], user]);
 
-          } else if(issueIds.length === 5) {
+      } else if(issueIds.length === 5) {
 
-            return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3 OR questions.issue_id = $4 OR questions.issue_id = $5) AND user_answers.user_id = $6;', [issueIds[0], issueIds[1], issueIds[2], issueIds[3], issueIds[4], user]);
+          return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3 OR questions.issue_id = $4 OR questions.issue_id = $5) AND user_answers.user_id = $6;', [issueIds[0], issueIds[1], issueIds[2], issueIds[3], issueIds[4], user]);
 
-          } else if(issueIds.length === 6) {
+      } else if(issueIds.length === 6) {
 
-            return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3 OR questions.issue_id = $4 OR questions.issue_id = $5 OR questions.issue_id = $6) AND user_answers.user_id = $7;', [issueIds[0], issueIds[1], issueIds[2], issueIds[3], issueIds[4], issueIds[5], user]);
-          }
-          else {
-            return [];
-          }
+          return this.db.any('SELECT questions.id, questions.issue_id, questions.question_text, questions.position, user_answers.agree FROM questions INNER JOIN user_answers ON questions.id = user_answers.question_id WHERE (questions.issue_id = $1 OR questions.issue_id = $2 OR questions.issue_id = $3 OR questions.issue_id = $4 OR questions.issue_id = $5 OR questions.issue_id = $6) AND user_answers.user_id = $7;', [issueIds[0], issueIds[1], issueIds[2], issueIds[3], issueIds[4], issueIds[5], user]);
+      } else {
+          return [];
+      }
     }
 
     // update the user positions for their selected issues
