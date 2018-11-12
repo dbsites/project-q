@@ -92,7 +92,6 @@ Sessions.check = (req: Request, res: Response, next: NextFunction) => {
 Sessions.end = async (req: Request, res: Response, next: NextFunction) => {
   // dynamically generate a user reference to logout with or without a cookie
   let userReference: string;
-  console.log('HERE!');
 
   // if the user is logging out but does not have an active cookie
   if (!req.cookies[<string>process.env.COOKIES_KEY]) {
@@ -100,10 +99,10 @@ Sessions.end = async (req: Request, res: Response, next: NextFunction) => {
   }
   else {
     userReference = `${<string>process.env.REDIS_KEY_PREFIX}${req.cookies[<string>process.env.COOKIES_KEY]}`
-    // delete the cookie
-    res.clearCookie(<string>process.env.COOKIES_KEY);
-    res.clearCookie(<string>process.env.COOKIES_VALUE);
   }
+  // delete the cookie
+  res.clearCookie(<string>process.env.COOKIES_KEY);
+  res.clearCookie(<string>process.env.COOKIES_VALUE);
   // deauthorize the user, so front end can render login page
   res.locals.user = {};
   res.locals.user.isAuth = false;
