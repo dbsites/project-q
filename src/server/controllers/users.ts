@@ -68,8 +68,14 @@
       }
     }
 
+    // indicate that the user has selected issues
     updateIssuesComplete (user: string, complete: boolean) {
       return this.db.none('UPDATE users SET issues_complete = $2 WHERE id = $1;', [user, complete]);
+    }
+
+    // indicate that the user has answered questions
+    updateSurveyComplete (user: string, complete: boolean) {
+      return this.db.none('UPDATE users SET survey_complete = $2 WHERE id = $1;', [user, complete]);
     }
 
     // get relevant data from userIssues table
