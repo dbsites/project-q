@@ -129,9 +129,10 @@ app.post('/userIssues',
 app.post('/userSurvey',
   UserMethods.updateIssuePositons,
   UserMethods.updateUserSurvey,
+  UserMethods.updateSurveyComplete,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.companyDataArray);
   }
 );
 
