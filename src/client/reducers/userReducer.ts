@@ -4,22 +4,40 @@
  */
 
 import actions from '../actions/actionTypes';
-import { UserState, UserIssues } from './types';
+import { UserState, UserIssuesSelected } from './types';
 
 // Define initial state
 const initialUserState: UserState = {
   userId: null,
   isAuth: null,
-  issues: {},
+  issuesSelected: {},
   issuesComplete: null,
+  firstName: null,
+  lastName: null,
   surveyComplete: null,
   surveyPage: 0,
 };
 
-const issueReducer = (state: UserIssues, action: any): UserIssues => {
+const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelected => {
+  const nextState: UserIssuesSelected = {};
+
   switch (action.type) {
+    case actions.ADD_ISSUE:
+      nextState[action.issueId] = null;
+      return {
+        ...state,
+        ...nextState,
+      };
+
+    case actions.REMOVE_ISSUE:
+      Object.keys(state).forEach((issueId) => {
+        if (issueId !== action.issueId) {
+          nextState[issueId] = state[issueId];
+        }
+      })
+      return nextState;
+      
     case actions.UPDATE_ISSUE_POSITION:
-      const nextState: UserIssues = {};
       nextState[action.payload.issue] = action.payload.position;
       return {
         ...state,
@@ -32,46 +50,24 @@ const issueReducer = (state: UserIssues, action: any): UserIssues => {
 }
 
 const userReducer = (state: UserState = initialUserState, action: any): UserState => {
+  // Destructure response object from action
+  const {response} = action;
   switch (action.type) {
-    case actions.AUTH_USER:
-      if (action.payload === 'cookie not found') {
-        return {
-          ...state,
-          isAuth: false,
-        }
-      }
-      return {
-        ...state,
-        userId: action.payload,
-        isAuth: true,
-      }
-
-    case actions.LOGOUT_USER:
-      const cookies: string[] = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i += 1) {
-        const cookie: string = cookies[i];
-        const eqPos: number = cookie.indexOf('=');
-        const name: string = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      }
-      return {
-        ...state,
-        isAuth: false,
-      }
-    
+  
+    case actions.FETCH_AUTH_SUCCESS:
     case actions.FETCH_FORM_SUCCESS:
+    case actions.FETCH_LOGOUT_SUCCESS:
+      return {
+        ...initialUserState,
+        ...response,
+      };
+    
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      if (Object.keys(action.response.issues).length) {
-        return {
-          ...state,
-          userId: action.response.userId,
-          issues: action.response.issues,
-          issuesComplete: true,
-        }
-      }
+      console.log(response);
       return {
         ...state,
-        issuesComplete: false,
+        ...response,
+        issuesComplete: true,
       };
 
     case actions.FETCH_SUBMIT_SURVEY_SUCCESS:
@@ -83,23 +79,36 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
     case actions.UPDATE_ISSUE_POSITION:
     const newSurveyPage = state.surveyPage + 1;
       return {
-        ... state,
+        ...state,
         surveyPage: newSurveyPage,
-        issues: issueReducer(state.issues, action),
+        issuesSelected: issueReducer(state.issuesSelected, action),
       }
 
     case actions.PREV_PAGE:
     const lastSurveyPage = state.surveyPage - 1;
       return {
-        ... state,
+        ...state,
         surveyPage: lastSurveyPage,
       }
 
     case actions.UPDATE_ISSUES_SELECTED:
       return {
-        ... state,
+        ...state,
         issuesComplete: false,
         surveyPage: 0,
+      }
+
+    case actions.ADD_ISSUE:
+    case actions.REMOVE_ISSUE:
+      return {
+        ... state,
+        issuesSelected: issueReducer(state.issuesSelected, action),
+      }
+
+    case actions.CLEAR_ISSUES:
+      return {
+        ...state,
+        issuesSelected: {},
       }
 
     default:
@@ -111,5 +120,5 @@ export default userReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns an object of outstanding issues
-export const getIssueCount = (issues: UserIssues): number => Object.keys(issues).length;
-export const getOutstandingIssues = (issues: UserIssues): string[] => Object.keys(issues).filter(issue => issues[issue] === null);
+export const getSelectedIssueCount = (issuesSelected: UserIssuesSelected): number => Object.keys(issuesSelected).length;
+export const getOutstandingIssues = (issuesSelected: UserIssuesSelected): string[] => Object.keys(issuesSelected).filter(issue => issuesSelected[issue] === null);
