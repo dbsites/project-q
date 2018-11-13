@@ -38,6 +38,9 @@ const IssuesCharts = (props: any) => {
         const issueInfo = { name, leaning, agreeScore, disagreeScore };
         return <IssuePieChart info={issueInfo} />
       });
+  } else {
+    display = [];
+    while (display.length !== )
   }
 
   return (

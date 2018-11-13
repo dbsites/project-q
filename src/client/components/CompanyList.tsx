@@ -133,22 +133,13 @@ const CompanyList = (props: any) => {
                   {companyOverallScores()}
                 </div>
               </div>
-
-              {/* ***********************************/}
-              {/* make this dynamic on user choices */}
-              {/* ***********************************/}
-
               {companyScoresPerIssue()}
             </div>
           </div>
         </div>
       </div>
     );
-
   }
-
-  // console.log('props in cl: ', props);
-
 }
 
 export default CompanyList;
