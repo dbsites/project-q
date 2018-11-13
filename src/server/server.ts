@@ -129,9 +129,10 @@ app.post('/userIssues',
 app.post('/userSurvey',
   UserMethods.updateIssuePositons,
   UserMethods.updateUserSurvey,
+  UserMethods.updateSurveyComplete,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.companyDataArray);
   }
 );
 
@@ -142,6 +143,13 @@ app.get('/companyList',
     res.status(200).send(res.locals);
   }
 );
+
+// app.post('/updateCompanyData',
+//     CompanyDatabase.updateData,
+//     (_: Request, res: Response) => {
+//       res.sendStatus(200);
+//     }
+//   );
 
 
 

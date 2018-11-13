@@ -5,33 +5,55 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
+
 import * as actions from '../actions/actionCreators';
 
-import { getSelectedIssueCount, getSelectedIssues } from '../reducers/issuesReducer';
+import { getSelectedIssueCount } from '../reducers/userReducer';
 
-import Issue from '../components/Issue';
+// Import Presentation Components
 import Header from '../containers/HeaderContainer';
+import Issue from '../components/Issue';
 
 const IssuesContainer = (props: any): any => {
   const {
-    issues, userId,
-    clearIssues, toggleIssue,
-    submitIssues,
+    issues,                    // Props from issues state
+    issuesSelected, userId,    // Props from user state
+    addIssue, removeIssue,     // Actions from user reducer
+    clearIssues, submitIssues, // Actions from user reducer
   } = props;
 
-  const selectedIssues = getSelectedIssues(issues);
-  const issueCount = getSelectedIssueCount(issues);
+  const issueCount = getSelectedIssueCount(issuesSelected);
   const issuesRemaining = 6 - issueCount;
   const additional = issueCount === 0 ? '' : 'Additional ';
   
   const issuesArray: any[] = [];
 
   Object.keys(issues).forEach((issueId) => {
-    issuesArray.push(<Issue issue={issues[issueId]} issueId={issueId} key={issueId} remaining={issuesRemaining} toggleIssue={toggleIssue} />);
+    let issue: JSX.Element;
+    if (issueId in issuesSelected) {
+      issue = <Issue
+        issue={issues[issueId]}
+        issueId={issueId}
+        key={issueId}
+        remaining={issuesRemaining}
+        selected={true}
+        toggleIssue={removeIssue}
+      />
+    } else {
+      issue = <Issue
+        issue={issues[issueId]}
+        issueId={issueId}
+        key={issueId}
+        remaining={issuesRemaining}
+        selected={false}
+        toggleIssue={addIssue}
+      />
+    }
+    issuesArray.push(issue);
   });
 
   const headerText = issuesRemaining ?
-    `Select Up To ${6 - getSelectedIssueCount(issues)} ${additional} Platforms That Matter Most To You` :
+    `Select Up To ${6 - issueCount} ${additional} Issues That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
   const footerButtons = issueCount ?
@@ -39,7 +61,7 @@ const IssuesContainer = (props: any): any => {
       <div className="dashboard-footer-button" onClick={clearIssues}>
         Clear All
       </div>
-      <div className="dashboard-footer-button" onClick={() => submitIssues(userId, selectedIssues)}>
+      <div className="dashboard-footer-button" onClick={() => submitIssues(userId, issuesSelected)}>
         Submit
       </div>
     </React.Fragment>
@@ -58,7 +80,7 @@ const IssuesContainer = (props: any): any => {
       <div className="header">
         <Header />
       </div>
-      <div className="dashboard-header">
+      <div className="dashboard-header dashboard-issue-header">
         <span>
           {headerText}
         </span>
@@ -74,14 +96,16 @@ const IssuesContainer = (props: any): any => {
 };
 
 const mapStateToProps = (store: any): any => ({
+  issuesSelected: store.user.issuesSelected,
   userId: store.user.userId,
   issues: store.issues,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
   clearIssues: () => dispatch(actions.clearIssues()),
-  toggleIssue: (issue: string) => dispatch(actions.toggleIssue(issue)),
-  submitIssues: (userId: string, issuesArr: string[]) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesArr)),
+  addIssue: (issueId: string) => dispatch(actions.addIssue(issueId)),
+  removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
+  submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesSelected)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);

@@ -190,11 +190,7 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
         // declare issue id for readability
         let issueId = issueObject.issue_id;
         // add to teh issues object for the front end, issueId is the key and the bias is the value
-        res.locals.user.issuesSelected[issueId] = {};
-        res.locals.user.issuesSelected[issueId].issueId = issueId;
-        res.locals.user.issuesSelected[issueId].issue = issueObject.issue_name;
-        res.locals.user.issuesSelected[issueId].blurb = issueObject.description;
-        res.locals.user.issuesSelected[issueId].position = issueObject.position;
+        res.locals.user.issuesSelected[issueId] = issueObject.position;
       })
       
       // move on to UserMethods.getQuestions out of the database for userIssues
@@ -227,11 +223,21 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
       
       // take each questionData object returned from the database and translate it to the user response object
       questionData.forEach((questionObject : any) => {
-        res.locals.user.questions[questionObject.issue_id] = {};
-        res.locals.user.questions[questionObject.issue_id].questionId = questionObject.id;
-        res.locals.user.questions[questionObject.issue_id].questionText = questionObject.question_text;
-        res.locals.user.questions[questionObject.issue_id].position = questionObject.position;
-        res.locals.user.questions[questionObject.issue_id].agree = (questionObject.agree) ? questionObject.agree : null;
+        if (res.locals.user.questions[questionObject.issue_id]) {
+          res.locals.user.questions[questionObject.issue_id][questionObject.id] = {};
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].position = questionObject.position;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : null;
+        }
+        else {
+          res.locals.user.questions[questionObject.issue_id] = {};
+          res.locals.user.questions[questionObject.issue_id][questionObject.id] = {};
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].questionText = questionObject.question_text;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].position = questionObject.position;
+          res.locals.user.questions[questionObject.issue_id][questionObject.id].agree = (questionObject.agree) ? questionObject.agree : null;
+        }
       });
       // move on to end fetch and return response object
       // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
@@ -273,7 +279,22 @@ UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunct
   })
 }
 
-UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunction) => {
+UserMethods.updateSurveyComplete = (req: Request, res: Response, next: NextFunction) => {
+  db.users.updateSurveyComplete(req.body.userId, res.locals.user.surveyComplete)
+  .then(() => {
+    // move on to get company data for the dashboard
+      // res.locals.user = { surveyComplete: true }
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT updateIssuesComplete IN userMethods.ts', error);
+    res.status(500).send('SERVER FAILURE');
+  })
+}
+
+
+
+UserMethods.updateUserSurvey = async (req: Request, res: Response, next: NextFunction) => {
   
   // build an array of question ids
   const questionIds = Object.keys(req.body.questions);
@@ -283,8 +304,12 @@ UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunct
     await db.users.updateUserSurvey(req.body.userId, questionIds[i], req.body.questions[questionIds[i]]);
   }
 
+  // update locals to reflect survey complete to pass into the next middleware
+  res.locals.user = {};
+  res.locals.user.surveyComplete = true;
+
   // call next method to deliver the company list to the front end
-  // no res.locals
+  // res.locals.user = { surveyComplete: true }
   next();
 }
     
