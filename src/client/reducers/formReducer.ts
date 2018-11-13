@@ -52,6 +52,13 @@ const loginReducer = (state: LoginState = initialLoginState, action: any): Login
       [action.payload.field]: action.payload.value,
     };
 
+    // FETCH_FORM_FAILURE - update form with error message
+    case actions.FETCH_FORM_FAILURE:
+    return {
+      ...state,
+      loginError: action.message,
+    }
+
     default:
       return state;
   }
@@ -76,6 +83,13 @@ const registerReducer = (state: RegisterState = initialRegisterState, action: an
         emailValid,
         [action.payload.field]: action.payload.value,
       };
+    
+    // FETCH_FORM_FAILURE - update form with error message
+    case actions.FETCH_FORM_FAILURE:
+      return {
+        ...state,
+        registerError: action.message,
+      }
 
     default:
       return state;
@@ -105,6 +119,21 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
         login: initialLoginState,
         register: initialRegisterState,
       };
+
+    //  FETCH_FORM_FAILURE - Update form with error message
+    case actions.FETCH_FORM_FAILURE:
+      if (action.form === 'register') {
+        return {
+          ...state,
+          register: registerReducer(state.register, action),
+        };
+      }
+      if (action.form === 'login') {
+        return {
+          ...state,
+          login: loginReducer(state.login, action),
+        };
+      }
 
     default:
       return state;

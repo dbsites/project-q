@@ -4,7 +4,7 @@
  */
 
 import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import FormField from './FormField';
 import FormError from './FormError';
@@ -16,10 +16,12 @@ const RegisterForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     registerFields,
+    fetchFormFail,
     fetchFormRequest,
     updateField
   } = props;
   const {
+    emailValid,
     firstName,
     lastName,
     registerEmail,
@@ -29,18 +31,12 @@ const RegisterForm: any = (props: any) => {
     registerError,
   } = registerFields;
 
-  // Check for cookie - if present, log user in
-  if (document.cookie) {
-    const cookieArray = document.cookie.split(';');
-    for (let item of cookieArray) {
-      let itemString = item.trim();
-      if(itemString.startsWith('key=')) {
-        return <Redirect to='/' />;
-      }
-    }
-  }
-
   const callFetchFormRequest = (registerFields: any): any => {
+    if (!firstName.length || !lastName.length) return fetchFormFail('register', 'Please enter your first and last name');
+    if (!emailValid) return fetchFormFail('register', 'Please enter a valid email address');
+    if (registerPassword.length < 8) return fetchFormFail('register', 'Password must be at least 8 characters');
+    if (registerPassword !== confirmPassword) return fetchFormFail('register', 'Passwords and Confirm Password must match');
+    if (!agreeTerms) return fetchFormFail('register', 'Please agree to the terms of service to continue');
     return fetchFormRequest('register', registerFields)
   }
 

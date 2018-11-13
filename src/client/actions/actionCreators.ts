@@ -59,14 +59,36 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(formFields),
   })
-    .then(response => response.json())
-    .then((response: any) => {
+    .then(response => {
+      if (response.status === 401) {
+        return dispatch({
+          type: actions.FETCH_FORM_FAILURE,
+          form: form,
+          message: 'Invalid email address or password',
+        })
+      }
+      if (response.status === 501) {
+        return dispatch({
+          type: actions.FETCH_FORM_FAILURE,
+          form: form,
+          message: 'Servers are busy - please try again',
+        })
+      }
+      response.json()
       console.log('Fetch Form Response: ', response);
-      dispatch({
+      return dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
       });
     })
+    // .then(response => response.json())
+    // .then((response: any) => {
+    //   console.log('Fetch Form Response: ', response);
+    //   dispatch({
+    //     type: actions.FETCH_FORM_SUCCESS,
+    //     response,
+    //   });
+    // })
     .catch((err: any) => console.error(err));
 }
 
@@ -176,6 +198,30 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
     .catch((err: any) => console.error(err));
 };
 
+export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
+  // Issue Fetch Request
+  dispatch({
+    type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
+  });
+  fetch(`${HOST}/userSurvey`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify(surveyObj),
+  })
+    .then(response => response.json())
+    .then(response => {
+      console.log('Fetch Submit Survey Response: ', response);
+      dispatch({
+        type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
+        response,
+      });
+    })
+    .catch(err => console.error(err))
+}
+
 export const updateIssue = (issue: any) => ({
   type: actions.UPDATE_ISSUE_POSITION,
   payload: issue,
@@ -210,26 +256,9 @@ export const prevPage = () => ({
   type: actions.PREV_PAGE,
 })
 
-export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
-  // Issue Fetch Request
-  dispatch({
-    type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
-  });
-  fetch(`${HOST}/userSurvey`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify(surveyObj),
-  })
-    .then(response => response.json())
-    .then(response => {
-      console.log('Fetch Submit Survey Response: ', response);
-      dispatch({
-        type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
-        response,
-      });
-    })
-    .catch(err => console.error(err))
-}
+// Fetch Form Request Fail
+export const fetchFormFail = (form: string, message: string) => ({
+  type: actions.FETCH_FORM_FAILURE,
+  form: form,
+  message: message,
+})

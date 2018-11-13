@@ -19,12 +19,14 @@ import FormHeader from '../components/FormHeader';
 // Extract form values from store to pass as props
 const mapStateToProps = (store: any): any => ({
   loginFields: {
+    emailValid: store.form.login.emailValid,
     loginEmail: store.form.login.loginEmail,
     loginPassword: store.form.login.loginPassword,
     rememberMe: store.form.login.rememberMe,
     loginError: store.form.login.loginError,
   },
   registerFields: {
+    emailValid: store.form.register.emailValid,
     firstName: store.form.register.firstName,
     lastName: store.form.register.lastName,
     registerEmail: store.form.register.registerEmail,
@@ -44,6 +46,7 @@ const mapStateToProps = (store: any): any => ({
 const mapDispatchToProps = (dispatch: any) => {
   return {
     updateField: (fieldObject: formFieldObject) => dispatch(actions.updateField(fieldObject)),
+    fetchFormFail: (form: string, message: string) => dispatch(actions.fetchFormFail(form, message)),
     fetchFormRequest: (form: string, formFields: LoginState | RegisterState) => dispatch(actions.fetchFormRequest(form, formFields)),
     fetchLogout: (userId: string) => dispatch(actions.fetchLogout(userId)),
   }
@@ -55,7 +58,7 @@ let FormContainer: any = (props: any) => {
   const {
     match, 
     loginFields, registerFields,
-    fetchFormRequest,
+    fetchFormFail, fetchFormRequest,
     updateField,
     fetchLogout,
     isAuth, userId,
@@ -63,12 +66,14 @@ let FormContainer: any = (props: any) => {
 
   const loginForm = <LoginForm
       loginFields={loginFields}
+      fetchFormFail={fetchFormFail}
       fetchFormRequest={fetchFormRequest}
       updateField={updateField}
     />;
 
   const registerForm = <RegisterForm
       registerFields={registerFields}
+      fetchFormFail={fetchFormFail}
       fetchFormRequest={fetchFormRequest}
       updateField={updateField}
     />
