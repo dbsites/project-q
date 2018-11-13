@@ -8,48 +8,22 @@ import * as React from 'react';
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
-import { getIssueCount } from '../reducers/userReducer';
-// import { submitSurvey } from '../actions/actionCreators';
+import Loading from '../components/Loading';
 
 const DashContainer = (props: any): any => {
   const {
-    issues, issuesComplete, selectedIssues, survey, surveyPage, userId,
-    submitSurvey
+    issues, issuesComplete, loading, surveyComplete,
+    fetchIssues,
   } = props.userState;
-  // CHeck if issues have already been selected - if not, serve IssuesContainer
-  if (!issuesComplete) return <IssuesContainer />
 
-  // Helper function to check if any issues are outstanding (value is null)
-  // const countOutstandingIssues = (): number => {
-  //   const outstandingIssuesArray = Object.keys(issues).filter((issue) => issues[issue] === null)
-  //   return outstandingIssuesArray.length;
-  // }
-
-  const issueCount: number = getIssueCount(selectedIssues);
-
-  console.log('survey page: ', surveyPage)
-  console.log('issue count: ', issueCount)
-
-  if (surveyPage !== issueCount) return <SurveyContainer />
-
-  // If no outstanding issues, console.log props
-  const surveyObj: any = {
-    userId: userId,
-    issues: issues,
-    questions: {},
-  };
-
-  const issueIdArray = Object.keys(survey);
-  issueIdArray.forEach((issueId) => {
-    const questionIdArray = Object.keys(survey[issueId]);
-    questionIdArray.forEach((questionId) => {
-      surveyObj.questions[questionId] = {};
-      surveyObj.questions[questionId].issueId = issueId;
-      surveyObj.questions[questionId].agree = survey[issueId][questionId].agree;
-    });
-  });
-
-  submitSurvey(surveyObj);
+  // Check if issues and survey are already complete
+  if (!issuesComplete || !surveyComplete) {
+    if (!Object.keys(issues).length || loading.issuesLoading || loading.surveyLoading) {
+      if (!loading.issuesLoading && !Object.keys(issues).length) fetchIssues();
+      return <Loading />
+    };
+    return issuesComplete ? <SurveyContainer /> : <IssuesContainer />;
+  } 
 
   return <QuadsContainer />
 };

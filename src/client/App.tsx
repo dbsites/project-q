@@ -10,14 +10,20 @@ import { Redirect } from 'react-router-dom'
 import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
-import { SurveyState } from './reducers/types';
+
+import Loading from './components/Loading'
+
+// Import Types
+import { SurveyState, LoadingState } from './reducers/types';
 
 // TODO: Find more appropriate home for interface
 interface Props {
   isAuth: boolean,
   issues: string[],
   issuesComplete: boolean | null,
-  selectedIssues: any,
+  issuesSelected: any,
+  fetchAuth: any,
+  loading: LoadingState,
   surveyComplete: boolean | null,
   survey: SurveyState,
   surveyPage: number,
@@ -31,52 +37,48 @@ class App extends React.Component<Props> {
 
   // Upon mount, check if user is logged in
   componentDidMount() {
-    // Extract authUser action from props
-    const { authUser } = this.props as any;
-
-    // Extract user id from cookie if it exists
-    if (document.cookie) {
-      const cookieArray = document.cookie.split(';');
-      for (let item of cookieArray) {
-        let itemString = item.trim();
-        if (itemString.startsWith('key=')) {
-          return authUser(itemString.substr(4));
-        }
-      }
-    }
-    // If cookie not found, return authUser(false)
-    return authUser('cookie not found');
+    // Extract fetchAuth action from props and call
   }
 
   render() {
     // Destructure auth status from props
-    const { isAuth } = this.props;
-    if (isAuth === false) {
-      return <Redirect to='/account/login' />
+    const { isAuth, fetchAuth, loading } = this.props;
+    if (loading.authLoading === true) {
+      return <Loading />
     }
+    if (isAuth === null) {
+      fetchAuth();
+      return <Loading />
+    } 
+    if (isAuth === false) {
+      // If user hasn't been authenticated, redirect to Registration
+      return <Redirect to='/account/register' />
+    }
+    // Otherwise render dashboard
     return <DashContainer userState={this.props} />
   }
 };
 
 // mapStatetoProps to access user auth status
-const mapStateToProps = (state: any): Props => {
+const mapStateToProps = (state: any): any => {
   return {
     isAuth: state.user.isAuth,
-    issues: state.user.issues,
+    issues: state.issues,
     issuesComplete: state.user.issuesComplete,
-    selectedIssues: state.user.issues,
+    issuesSelected: state.user.issuesSelected,
+    loading: state.loading,
     surveyComplete: state.user.surveyComplete,
     survey: state.survey,
     surveyPage: state.user.surveyPage,
     userId: state.user.userId,
-  }
+  };
 }
 
 const mapDispatchToProps = (dispatch: any): any => {
   return {
-    authUser: (userId: string) => dispatch(actions.authUser(userId)),
+    fetchAuth: () => dispatch(actions.fetchAuth()),
+    fetchIssues: () => dispatch(actions.fetchIssues()),
     prevPage: () => dispatch(actions.prevPage()),
-    submitSurvey: (surveyObj: any) => dispatch(actions.submitSurvey(surveyObj)),
   }
 }
 

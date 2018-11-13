@@ -144,12 +144,12 @@ app.get('/companyList',
   }
 );
 
-app.post('/updateCompanyData',
-    CompanyDatabase.updateData,
-    (_: Request, res: Response) => {
-      res.sendStatus(200);
-    }
-  );
+// app.post('/updateCompanyData',
+//     CompanyDatabase.updateData,
+//     (_: Request, res: Response) => {
+//       res.sendStatus(200);
+//     }
+//   );
 
 
 
