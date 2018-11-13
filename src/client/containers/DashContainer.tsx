@@ -8,31 +8,22 @@ import * as React from 'react';
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
-
-// Import selector functions
-import { getSelectedIssueCount } from '../reducers/userReducer';
-// import { submitSurvey } from '../actions/actionCreators';
+import Loading from '../components/Loading';
 
 const DashContainer = (props: any): any => {
   const {
-    issues, issuesComplete, selectedIssues, survey, surveyPage, userId,
+    issues, issuesComplete, loading, survey, surveyComplete, userId,
     fetchIssues, submitSurvey
   } = props.userState;
-  // CHeck if issues have already been selected - if not, serve IssuesContainer
-  if (!issuesComplete) {
-    fetchIssues();
-    return <IssuesContainer />
+
+  // Check if issues and survey are already complete
+  if (!issuesComplete || !surveyComplete) {
+    if (!Object.keys(issues).length || loading.issuesLoading) {
+      if (!loading.issuesLoading) fetchIssues();
+      return <Loading />
+    };
+    return issuesComplete ? <SurveyContainer /> : <IssuesContainer />;
   } 
-
-  // Helper function to check if any issues are outstanding (value is null)
-  // const countOutstandingIssues = (): number => {
-  //   const outstandingIssuesArray = Object.keys(issues).filter((issue) => issues[issue] === null)
-  //   return outstandingIssuesArray.length;
-  // }
-
-  const issueCount: number = getSelectedIssueCount(selectedIssues);
-
-  if (surveyPage !== issueCount) return <SurveyContainer />
 
   const surveyObj: any = {
     userId: userId,

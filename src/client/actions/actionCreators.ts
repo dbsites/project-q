@@ -23,6 +23,9 @@ export const updateField = (fieldObject: formFieldObject): updateFieldAction => 
 export const fetchAuth = () => (dispatch: Dispatch) => {
   const fetchURI: string = `${HOST}/auth`;
   // Issue fetch request
+  dispatch({
+    type: actions.FETCH_AUTH_REQUEST,
+  });
   fetch(fetchURI, {
     method: 'GET',
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
@@ -91,6 +94,9 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
 
 // THUNK - Fetch Issues to populate issues state (issueId, text, blurb)
 export const fetchIssues = () => (dispatch: any) => {
+  dispatch({
+    type: actions.FETCH_ISSUES_REQUEST,
+  });
   fetch (`${HOST}/getIssues`)
     .then(response => response.json())
     .then((response: any) => {

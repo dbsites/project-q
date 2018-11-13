@@ -24,13 +24,13 @@ import ProgressBar from '../components/ProgressBar';
 const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, updateIssue, updateIssuesSelected, prevPage,  // Actions
-    issues, selectedIssues, survey, surveyPage,                   // State
+    issues, issuesSelected, survey, surveyPage,                   // State
   } = props;
 
   // Initialize array to hold user's selected issues
-  const selectedIssuesArray: string[] = Object.keys(selectedIssues)
-  const issuesCount: number = selectedIssuesArray.length;
-  let currentIssueId: string = selectedIssuesArray[surveyPage];
+  const issuesSelectedArray: string[] = Object.keys(issuesSelected)
+  const issuesCount: number = issuesSelectedArray.length;
+  let currentIssueId: string = issuesSelectedArray[surveyPage];
 
   // Initialize survey array to hold survey questions
   let surveyArray: JSX.Element[] = [];
@@ -69,6 +69,8 @@ const SurveyContainer = (props: any): any => {
     })
   }
 
+  console.log('Issues: ', issues);
+  console.log('CurrentIssueId: ', currentIssueId);
   const headerText: string = getIssueName(issues, currentIssueId);
 
   // Helper function that generates left buttons
@@ -124,7 +126,7 @@ const SurveyContainer = (props: any): any => {
 
 const mapStateToProps = (store: any): any => ({
   issues: store.issues,
-  selectedIssues: store.user.issues,
+  issuesSelected: store.user.issuesSelected,
   survey: store.survey,
   surveyPage: store.user.surveyPage,
 });

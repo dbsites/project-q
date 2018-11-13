@@ -268,6 +268,13 @@ const questionReducer = (state: QuestionState, action: any, issueId: string, que
         ...action.response[issueId][questionId]
       };
       return nextState;
+      
+    case actions.FETCH_AUTH_SUCCESS:
+      nextState = {
+        ...nextState,
+        ...action.response.questions[issueId][questionId]
+      };
+      return nextState;
 
     default: 
     return state
@@ -286,6 +293,14 @@ const questionsReducer = (state: IssueQuestionsState, action: any, issueId: stri
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
       const questionsIdArray = Object.keys(action.response[issueId]);
       questionsIdArray.forEach((questionId) => {
+        const questionState = state[questionId] ? {...state[questionId]} : {};
+        nextState[questionId] = questionReducer(questionState as QuestionState, action, issueId, questionId)
+      })
+      return nextState;
+
+    case actions.FETCH_AUTH_SUCCESS:
+      const questionsIdArray2 = Object.keys(action.response.questions[issueId]);
+      questionsIdArray2.forEach((questionId) => {
         const questionState = state[questionId] ? {...state[questionId]} : {};
         nextState[questionId] = questionReducer(questionState as QuestionState, action, issueId, questionId)
       })
@@ -312,6 +327,15 @@ const surveyReducer = (state: SurveyState = initialSurveyState, action: any): Su
         nextState[issueId] = questionsReducer(issueQuestionsState, action, issueId);
       });
       return nextState;
+
+      case actions.FETCH_AUTH_SUCCESS:
+        if (action.response.questions) {
+          const issuesIdArray = Object.keys(action.response.questions);
+          issuesIdArray.forEach((issueId) => {
+            const issueQuestionsState = state[issueId] ? {...state[issueId]} : {};
+            nextState[issueId] = questionsReducer(issueQuestionsState, action, issueId);
+          })
+        } else return state;
 
     default: 
     return state;

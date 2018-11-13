@@ -4,13 +4,13 @@
  */
 
 import actions from '../actions/actionTypes';
-import { UserState, UserSelectedIssues } from './types';
+import { UserState, UserIssuesSelected } from './types';
 
 // Define initial state
 const initialUserState: UserState = {
   userId: null,
   isAuth: null,
-  selectedIssues: {},
+  issuesSelected: {},
   issuesComplete: null,
   firstName: null,
   lastName: null,
@@ -18,8 +18,8 @@ const initialUserState: UserState = {
   surveyPage: 0,
 };
 
-const issueReducer = (state: UserSelectedIssues, action: any): UserSelectedIssues => {
-  const nextState: UserSelectedIssues = {};
+const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelected => {
+  const nextState: UserIssuesSelected = {};
 
   switch (action.type) {
     case actions.ADD_ISSUE:
@@ -81,7 +81,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       return {
         ...state,
         surveyPage: newSurveyPage,
-        selectedIssues: issueReducer(state.selectedIssues, action),
+        issuesSelected: issueReducer(state.issuesSelected, action),
       }
 
     case actions.PREV_PAGE:
@@ -102,13 +102,13 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
     case actions.REMOVE_ISSUE:
       return {
         ... state,
-        selectedIssues: issueReducer(state.selectedIssues, action),
+        issuesSelected: issueReducer(state.issuesSelected, action),
       }
 
     case actions.CLEAR_ISSUES:
       return {
         ...state,
-        selectedIssues: {},
+        issuesSelected: {},
       }
 
     default:
@@ -120,5 +120,5 @@ export default userReducer;
 
 // -- SELECTOR FUNCTIONS -- //
 // Returns an object of outstanding issues
-export const getSelectedIssueCount = (issues: UserSelectedIssues): number => Object.keys(issues).length;
-export const getOutstandingIssues = (issues: UserSelectedIssues): string[] => Object.keys(issues).filter(issue => issues[issue] === null);
+export const getSelectedIssueCount = (issuesSelected: UserIssuesSelected): number => Object.keys(issuesSelected).length;
+export const getOutstandingIssues = (issuesSelected: UserIssuesSelected): string[] => Object.keys(issuesSelected).filter(issue => issuesSelected[issue] === null);

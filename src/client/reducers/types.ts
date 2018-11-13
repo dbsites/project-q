@@ -55,20 +55,25 @@ export interface AnswerPayload {
 }
 
 // User Object Types
-export interface UserSelectedIssues {
+export interface UserIssuesSelected {
   [name: string]: boolean | null,
 };
 
 export interface UserState {
   readonly userId: string | null,
   readonly isAuth: boolean | null,
-  readonly selectedIssues: UserSelectedIssues,
+  readonly issuesSelected: UserIssuesSelected,
   readonly issuesComplete: boolean | null,
   readonly firstName: string | null,
   readonly lastName: string | null,
   readonly surveyComplete: boolean | null,
   readonly surveyPage: number,
 };
+
+export interface LoadingState {
+  readonly authLoading: boolean,
+  readonly issuesLoading: boolean,
+}
 
 // TODO: will update to appropriate types (GM)
 export interface CompanyState {
@@ -77,9 +82,10 @@ export interface CompanyState {
 }
 
 export interface ApplicationState {
-  readonly issues: IssuesState,
+  readonly company: CompanyState,
   readonly form: FormState,
+  readonly issues: IssuesState,
+  readonly loading: LoadingState,
   readonly survey: SurveyState,
   readonly user: UserState,
-  readonly company: CompanyState,
 };

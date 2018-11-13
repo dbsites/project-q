@@ -14,14 +14,16 @@ import DashContainer from './containers/DashContainer'
 import Loading from './components/Loading'
 
 // Import Types
-import { SurveyState } from './reducers/types';
+import { SurveyState, LoadingState } from './reducers/types';
 
 // TODO: Find more appropriate home for interface
 interface Props {
   isAuth: boolean,
   issues: string[],
   issuesComplete: boolean | null,
-  selectedIssues: any,
+  issuesSelected: any,
+  fetchAuth: any,
+  loading: LoadingState,
   surveyComplete: boolean | null,
   survey: SurveyState,
   surveyPage: number,
@@ -36,16 +38,18 @@ class App extends React.Component<Props> {
   // Upon mount, check if user is logged in
   componentDidMount() {
     // Extract fetchAuth action from props and call
-    const { fetchAuth } = this.props as any;
-    fetchAuth();
   }
 
   render() {
     // Destructure auth status from props
-    const { isAuth } = this.props;
-    if (isAuth === null) {
+    const { isAuth, fetchAuth, loading } = this.props;
+    if (loading.authLoading === true) {
       return <Loading />
     }
+    if (isAuth === null) {
+      fetchAuth();
+      return <Loading />
+    } 
     if (isAuth === false) {
       // If user hasn't been authenticated, redirect to Registration
       return <Redirect to='/account/register' />
@@ -56,17 +60,18 @@ class App extends React.Component<Props> {
 };
 
 // mapStatetoProps to access user auth status
-const mapStateToProps = (state: any): Props => {
+const mapStateToProps = (state: any): any => {
   return {
     isAuth: state.user.isAuth,
-    issues: state.user.issues,
+    issues: state.issues,
     issuesComplete: state.user.issuesComplete,
-    selectedIssues: state.user.issues,
+    issuesSelected: state.user.issuesSelected,
+    loading: state.loading,
     surveyComplete: state.user.surveyComplete,
     survey: state.survey,
     surveyPage: state.user.surveyPage,
     userId: state.user.userId,
-  }
+  };
 }
 
 const mapDispatchToProps = (dispatch: any): any => {
