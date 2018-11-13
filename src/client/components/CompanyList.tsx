@@ -41,7 +41,7 @@ const CompanyList = (props: any) => {
     if (companyList.length > 0) {
       for (let i = 0; i < companyList.length; i += 1) {
         userIssuesArray.forEach((issue: any) => {
-          if (issue.leaning.includes('dis'))
+          if (issue.leaning.includes('con'))
             score += companyList[i][issue.name].disagreeScore;
           else
             score += companyList[i][issue.name].agreeScore
