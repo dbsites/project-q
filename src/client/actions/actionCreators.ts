@@ -32,7 +32,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Auth Request Response: ', response);
+      console.log('Fetch Auth Response: ', response);
       dispatch({
         type: actions.FETCH_AUTH_SUCCESS,
         response
@@ -61,7 +61,6 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Form Request Response: ', response);
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
@@ -100,7 +99,6 @@ export const fetchIssues = () => (dispatch: any) => {
   fetch (`${HOST}/getIssues`)
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Issues Request Response: ', response);
       dispatch({
         type: actions.FETCH_ISSUES_SUCCESS,
         response,
@@ -165,7 +163,6 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Submit Issues Response: ', response);
       dispatch({
         type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
         response,
@@ -210,8 +207,6 @@ export const prevPage = () => ({
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   // Issue Fetch Request
-  console.log('attempting to submit survey');
-  console.log(surveyObj);
   dispatch({
     type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
   });
@@ -225,7 +220,6 @@ export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   })
     .then(response => response.json())
     .then(response => {
-      console.log('survey submission server response received');
       dispatch({
         type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
         response,

@@ -23,7 +23,7 @@ import ProgressBar from '../components/ProgressBar';
 
 const SurveyContainer = (props: any): any => {
   const {
-    answerQuestion, updateIssue, updateIssuesSelected, prevPage,  // Actions
+    answerQuestion, submitSurvey, updateIssue, updateIssuesSelected, prevPage,  // Actions
     issues, survey, user,                                                       // State
   } = props;
 
@@ -39,7 +39,6 @@ const SurveyContainer = (props: any): any => {
 
   // Generate progress bar
   const footerBar = <ProgressBar surveyPage={surveyPage} issuesCount={issuesCount} />
-  console.log('Questions: ', getQuestionsList(survey));
 
   // Short-circuit process if survey complete
   if (surveyPage === issuesCount) {
@@ -49,8 +48,7 @@ const SurveyContainer = (props: any): any => {
       userId: userId,
       questions: getQuestionsList(survey),
     };
-    console.log('SurveyObj: ', surveyObj)
-    // submitSurvey(surveyObj);
+    submitSurvey(surveyObj);
 
     return (
       <SurveyPage

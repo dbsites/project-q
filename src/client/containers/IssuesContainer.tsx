@@ -80,7 +80,7 @@ const IssuesContainer = (props: any): any => {
       <div className="header">
         <Header />
       </div>
-      <div className="dashboard-header">
+      <div className="dashboard-header dashboard-issue-header">
         <span>
           {headerText}
         </span>

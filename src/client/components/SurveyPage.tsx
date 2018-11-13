@@ -30,7 +30,7 @@ const SurveyPage = (props: any) => {
       <div className="header">
         <Header />
       </div>
-      <div className="dashboard-header">
+      <div className="dashboard-header dashboard-survey-header">
         {headerText}
       </div>
       <div className="survey-dashboard-container">

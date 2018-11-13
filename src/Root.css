@@ -37,6 +37,13 @@ body {
   margin: 1vh 0 2vh 0;
 }
 
+.form-header-hr hr {
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+  border: none;
+  height: 1px;
+}
+
 .form-header-logo-image {
   height: 14vh;
 }
@@ -151,12 +158,20 @@ body {
 
 .dashboard-header {
   color: #FFFFFF;
-  font-size: 1.8rem;
-  padding-top: 3vh;
 
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dashboard-issue-header {
+  font-size: 1.8rem;
+  padding-top: 4vh;
+}
+
+.dashboard-survey-header {
+  font-size: 2.2rem;
+  padding-top: 1vh;
 }
 
 .dashboard-side {
@@ -194,13 +209,13 @@ body {
 .dashboard-footer {
   display: flex;
   justify-content: center;
-  padding: 1vh 15% 7vh 15%;
+  padding: 1vh 15% 1vh 15%;
 }
 
 .dashboard-footer-button {
   color: #666666;
   font-size: 2rem;
-  margin: 0 auto;
+  margin: 0 auto 6vh auto;
   width: 50%;
 
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -471,6 +486,13 @@ body {
   width: 40vw;
 }
 
+.survey-question-hr hr {
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+  border: none;
+  height: 1px;
+}
+
 .survey-question-buttons {
   display: flex;
   flex-direction: row;
@@ -502,6 +524,8 @@ body {
 /* Progress Bar Component */
 
 .progress-bar-container {
+  margin: 5vh auto auto auto;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -516,7 +540,10 @@ body {
 
 .progress-bar-fill {
   background: #538161;
-  height: 100%;
   border-radius: inherit;
-  transition: width .2s ease-in;
+  color: white;
+  font-weight: bold;
+  height: 100%;
+  text-align: center;
+  transition: width .3s ease-in;
 }

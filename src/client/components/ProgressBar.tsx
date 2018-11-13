@@ -21,7 +21,9 @@ const ProgressBarFill = (props: progressBarFillProps) => {
     <div
       className="progress-bar-fill"
       style={{ width: `${percentComplete}%`}}
-    />
+    >
+      {percentComplete}%
+    </div>
   )
 }
 
@@ -37,7 +39,6 @@ const ProgressBar = (props: ProgressBarProps) => {
     <div className="progress-bar-container">
       <div className="progress-bar">
         <ProgressBarFill percentComplete={percentComplete}/>
-        <div>{percentComplete}</div>
       </div>
     </div>
   )

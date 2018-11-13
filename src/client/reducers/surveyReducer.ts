@@ -93,7 +93,6 @@ const surveyReducer = (state: SurveyState = initialSurveyState, action: any): Su
       case actions.FETCH_FORM_SUCCESS:
         if (action.response.questions) {
           const issuesIdArray = Object.keys(action.response.questions);
-          console.log('issuesIdArray: ', issuesIdArray);
           issuesIdArray.forEach((issueId) => {
             const issueQuestionsState = state[issueId] ? {...state[issueId]} : {};
             nextState[issueId] = questionsReducer(issueQuestionsState, action, issueId);
