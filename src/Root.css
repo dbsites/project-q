@@ -193,6 +193,7 @@ body {
 
 .dashboard-footer {
   display: flex;
+  justify-content: center;
   padding: 1vh 15% 7vh 15%;
 }
 

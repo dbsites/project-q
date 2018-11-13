@@ -17,12 +17,12 @@ import Issue from '../components/Issue';
 const IssuesContainer = (props: any): any => {
   const {
     issues,                    // Props from issues state
-    selectedIssues, userId,    // Props from user state
+    issuesSelected, userId,    // Props from user state
     addIssue, removeIssue,     // Actions from user reducer
     clearIssues, submitIssues, // Actions from user reducer
   } = props;
 
-  const issueCount = getSelectedIssueCount(selectedIssues);
+  const issueCount = getSelectedIssueCount(issuesSelected);
   const issuesRemaining = 6 - issueCount;
   const additional = issueCount === 0 ? '' : 'Additional ';
   
@@ -30,7 +30,7 @@ const IssuesContainer = (props: any): any => {
 
   Object.keys(issues).forEach((issueId) => {
     let issue: JSX.Element;
-    if (issueId in selectedIssues) {
+    if (issueId in issuesSelected) {
       issue = <Issue
         issue={issues[issueId]}
         issueId={issueId}
@@ -61,7 +61,7 @@ const IssuesContainer = (props: any): any => {
       <div className="dashboard-footer-button" onClick={clearIssues}>
         Clear All
       </div>
-      <div className="dashboard-footer-button" onClick={() => submitIssues(userId, selectedIssues)}>
+      <div className="dashboard-footer-button" onClick={() => submitIssues(userId, issuesSelected)}>
         Submit
       </div>
     </React.Fragment>
@@ -96,7 +96,7 @@ const IssuesContainer = (props: any): any => {
 };
 
 const mapStateToProps = (store: any): any => ({
-  selectedIssues: store.user.selectedIssues,
+  issuesSelected: store.user.issuesSelected,
   userId: store.user.userId,
   issues: store.issues,
 });
@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   clearIssues: () => dispatch(actions.clearIssues()),
   addIssue: (issueId: string) => dispatch(actions.addIssue(issueId)),
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
-  submitIssues: (userId: string, selectedIssues: any) => dispatch(actions.fetchSubmitIssuesRequest(userId, selectedIssues)),
+  submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesSelected)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);
