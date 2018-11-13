@@ -190,11 +190,7 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
         // declare issue id for readability
         let issueId = issueObject.issue_id;
         // add to teh issues object for the front end, issueId is the key and the bias is the value
-        res.locals.user.issuesSelected[issueId] = {};
-        res.locals.user.issuesSelected[issueId].issueId = issueId;
-        res.locals.user.issuesSelected[issueId].issue = issueObject.issue_name;
-        res.locals.user.issuesSelected[issueId].blurb = issueObject.description;
-        res.locals.user.issuesSelected[issueId].position = issueObject.position;
+        res.locals.user.issuesSelected[issueId] = issueObject.position;
       })
       
       // move on to UserMethods.getQuestions out of the database for userIssues
