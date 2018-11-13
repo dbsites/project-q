@@ -23,7 +23,7 @@ const DashContainer = (props: any): any => {
       return <Loading />
     };
     return issuesComplete ? <SurveyContainer /> : <IssuesContainer />;
-  } 
+  }
 
   return <QuadsContainer />
 };
