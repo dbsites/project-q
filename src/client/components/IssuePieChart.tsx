@@ -18,7 +18,7 @@ const IssueDisplay = (props: any) => {
   } = props.info;
 
   console.log('issue display:', name, agreeScore, disagreeScore)
-
+        
   return (
     <div className="issue-box">
       <PieChart
