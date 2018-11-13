@@ -223,7 +223,6 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
       
       // take each questionData object returned from the database and translate it to the user response object
       questionData.forEach((questionObject : any) => {
-        console.log('*****', questionObject, '****');
         if (res.locals.user.questions[questionObject.issue_id]) {
           res.locals.user.questions[questionObject.issue_id][questionObject.id] = {};
           res.locals.user.questions[questionObject.issue_id][questionObject.id].questionId = questionObject.id;
@@ -280,7 +279,22 @@ UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunct
   })
 }
 
-UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunction) => {
+UserMethods.updateSurveyComplete = (req: Request, res: Response, next: NextFunction) => {
+  db.users.updateSurveyComplete(req.body.userId, res.locals.user.surveyComplete)
+  .then(() => {
+    // move on to get company data for the dashboard
+      // res.locals.user = { surveyComplete: true }
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT updateIssuesComplete IN userMethods.ts', error);
+    res.status(500).send('SERVER FAILURE');
+  })
+}
+
+
+
+UserMethods.updateUserSurvey = async (req: Request, res: Response, next: NextFunction) => {
   
   // build an array of question ids
   const questionIds = Object.keys(req.body.questions);
@@ -290,8 +304,12 @@ UserMethods.updateUserSurvey = async (req: Request, _: Response, next: NextFunct
     await db.users.updateUserSurvey(req.body.userId, questionIds[i], req.body.questions[questionIds[i]]);
   }
 
+  // update locals to reflect survey complete to pass into the next middleware
+  res.locals.user = {};
+  res.locals.user.surveyComplete = true;
+
   // call next method to deliver the company list to the front end
-  // no res.locals
+  // res.locals.user = { surveyComplete: true }
   next();
 }
     
