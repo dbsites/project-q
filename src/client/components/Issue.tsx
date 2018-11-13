@@ -6,7 +6,10 @@
 import * as React from 'react';
 
 const Issue = (props: any) => {
-  const { issue, issueId, remaining, toggleIssue } = props;
+  const {
+    issue, issueId, remaining, selected, 
+    toggleIssue,
+ } = props;
 
   const issueCard = (
     <React.Fragment >
@@ -32,7 +35,7 @@ const Issue = (props: any) => {
   </div>
   );
 
-  const issueDiv = issue.selected ? issueDivSelected : issueDivNotSelected;
+  const issueDiv = selected ? issueDivSelected : issueDivNotSelected;
 
   return issueDiv;
 };

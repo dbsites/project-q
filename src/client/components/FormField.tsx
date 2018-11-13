@@ -7,7 +7,7 @@ import * as React from 'react';
 
 const FormField = (props: any): any => {
   const {
-    children, field, form, name, type,  // state
+    children, autofocus, field, form, name, type,  // state
     updateField,                        // dispatch
   } = props;
 
@@ -24,8 +24,8 @@ const FormField = (props: any): any => {
   }
 
   // Declare input field
-  let input = type !== 'checkbox' ?
-  <input className="input-field" id={name} name={name} onChange={callUpdateField} type={type} value={field} /> :  
+  const input: JSX.Element = type !== 'checkbox' ?
+  <input autoFocus={autofocus} className="input-field" id={name} name={name} onChange={callUpdateField} type={type} value={field} /> :  
   <input className="input-check" id={name} name={name} onChange={callUpdateField} type={type} checked={field} />;
 
 

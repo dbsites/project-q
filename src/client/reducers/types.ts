@@ -1,8 +1,8 @@
 // Issue(s) Object Types
 export interface IssueState {
+  readonly issueId: string,
   readonly name: string,
   readonly blurb: string,
-  readonly selected: boolean,
 };
 
 export interface IssuesState {
@@ -35,7 +35,7 @@ export interface FormState {
 // Survey Object Types
 export interface QuestionState {
   readonly questionId: string,
-  readonly question: string,
+  readonly questionText: string,
   readonly agree: boolean | null,
   readonly position: string,
 };
@@ -55,18 +55,26 @@ export interface AnswerPayload {
 }
 
 // User Object Types
-export interface UserIssues {
+export interface UserIssuesSelected {
   [name: string]: boolean | null,
 };
 
 export interface UserState {
   readonly userId: string | null,
   readonly isAuth: boolean | null,
-  readonly issues: UserIssues,
+  readonly issuesSelected: UserIssuesSelected,
   readonly issuesComplete: boolean | null,
+  readonly firstName: string | null,
+  readonly lastName: string | null,
   readonly surveyComplete: boolean | null,
   readonly surveyPage: number,
 };
+
+export interface LoadingState {
+  readonly authLoading: boolean,
+  readonly issuesLoading: boolean,
+  readonly surveyLoading: boolean,
+}
 
 // TODO: will update to appropriate types (GM)
 export interface CompanyState {
@@ -75,9 +83,10 @@ export interface CompanyState {
 }
 
 export interface ApplicationState {
-  readonly issues: IssuesState,
+  readonly company: CompanyState,
   readonly form: FormState,
+  readonly issues: IssuesState,
+  readonly loading: LoadingState,
   readonly survey: SurveyState,
   readonly user: UserState,
-  readonly company: CompanyState,
 };

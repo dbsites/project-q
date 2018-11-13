@@ -13,7 +13,3 @@ export interface updateFieldAction extends Action {
   payload: formFieldObject,
 };
 
-// User - Logout Action
-export interface logoutUserAction extends Action {
-  type: string,
-};
