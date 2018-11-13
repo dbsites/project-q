@@ -30,12 +30,11 @@ class QuadsContainer extends React.Component<Props> {
 
   componentDidMount() {
     const {
-      fetchCompanyList,
+      // fetchCompanyList,
       getUserIssues,
     } = this.props;
 
-    fetchCompanyList();
-    //refactor using selector functions in issueReducers
+    // fetchCompanyList();
     getUserIssues();
   }
 
@@ -47,6 +46,8 @@ class QuadsContainer extends React.Component<Props> {
       sortCompanyList,
       userIssues
     } = this.props;
+
+    console.log('in quadscontainer: companylist --> ', companyList);
 
     return (
       <div className="main-dashboard">

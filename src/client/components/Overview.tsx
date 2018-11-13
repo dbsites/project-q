@@ -7,33 +7,38 @@ import * as React from 'react';
 
 import { PieChart } from 'react-easy-chart';
 
-interface CompanyInfo {
-  readonly description: string,
-  readonly logo: string,
-  readonly ticker: string,
-  readonly name: string,
-  readonly overallScore: number,
-}
+// interface CompanyInfo {
+//   readonly description: string,
+//   readonly logo: string,
+//   readonly ticker: string,
+//   readonly name: string,
+//   readonly overallScore: number,
+// }
 
-interface SelectedCompany {
-  readonly selected: CompanyInfo
-}
+// interface SelectedCompany {
+//   readonly selected: CompanyInfo
+// }
 
-const Overview = (props: SelectedCompany) => {
+const Overview = (props: any) => {
 
   console.log('overview in props: ', props);
   let display;
 
-  console.log('props in overview: ', props.selected.ticker);
   //TODO: styling --> center justify this to quad
   if (!props.selected.ticker) {
     display = (<p>Click a company to see their overview</p>);
   }
 
   else {
-    const { description, /*ticker, overallScore, logo, name*/ } = props.selected;
+    const { description, overallScore/*, logoticker, , name*/ } = props.selected;
 
-    const overall = Math.floor(Math.random() * 100);
+    const userIssuesLength = Object.keys(props.selected)
+      .filter(key => props.selected[key].alignedScore)
+      .length;
+
+    console.log('userIssueLength == ', userIssuesLength);
+
+    const overall = Math.floor(overallScore / userIssuesLength);
     const overallColor = overall >= 60 ? '#436F4D' : overall >= 50 ? '#898A40' : '#6F4343';
     const diff = 100 - overall;
     // yellow #898A40
@@ -75,7 +80,9 @@ const Overview = (props: SelectedCompany) => {
         </div>
         <div id="overview-right">
           {/* <h3>{name} ({ticker.split('.')[0]})</h3> */}
-          <div id="overview-logo"></div>
+          <div id="overview-logo">
+            {/* <img src={logo} /> */}
+          </div>
           <div id="overview-description-container">
             <p id="company-info">
               {descrip}

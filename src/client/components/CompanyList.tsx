@@ -12,6 +12,12 @@ const CompanyList = (props: any) => {
   const { companyList, sortListBy, userIssues } = props;
   const { issueMatcher } = issueMatch;
 
+  if (!companyList) {
+    return 
+  }
+
+  // console.log('props in cl: ', props);
+
   const companyNames: any = companyList
     .map((company: any, index: any) =>
       <Link id={index} className="company-names-list" to="#" onClick={props.selectCompany}>
@@ -41,7 +47,7 @@ const CompanyList = (props: any) => {
     if (companyList.length > 0) {
       for (let i = 0; i < companyList.length; i += 1) {
         userIssuesArray.forEach((issue: any) => {
-          if (issue.leaning.includes('dis'))
+          if (issue.leaning.includes('con'))
             score += companyList[i][issue.name].disagreeScore;
           else
             score += companyList[i][issue.name].agreeScore
@@ -75,7 +81,7 @@ const CompanyList = (props: any) => {
       for (let a = 0; a < Object.keys(userIssues).length; a += 1) {
         for (let i = 0; i < companyList.length; i += 1) {
 
-          if (userIssuesArray[a].leaning.includes('dis'))
+          if (userIssuesArray[a].leaning.includes('con'))
             score = companyList[i][userIssuesArray[a].name].disagreeScore;
           else
             score = companyList[i][userIssuesArray[a].name].agreeScore;
