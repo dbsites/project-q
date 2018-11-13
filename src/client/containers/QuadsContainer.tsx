@@ -30,12 +30,12 @@ class QuadsContainer extends React.Component<Props> {
 
   componentDidMount() {
     const {
-      // fetchCompanyList,
+      fetchCompanyList,
       getUserIssues,
     } = this.props;
 
-    // fetchCompanyList();
     getUserIssues();
+    fetchCompanyList();
   }
 
   render() {
