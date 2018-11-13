@@ -22,6 +22,7 @@ const mapStateToProps = (store: any): any => ({
     loginEmail: store.form.login.loginEmail,
     loginPassword: store.form.login.loginPassword,
     rememberMe: store.form.login.rememberMe,
+    loginError: store.form.login.loginError,
   },
   registerFields: {
     firstName: store.form.register.firstName,
@@ -30,6 +31,7 @@ const mapStateToProps = (store: any): any => ({
     registerPassword: store.form.register.registerPassword,
     confirmPassword: store.form.register.confirmPassword,
     agreeTerms: store.form.register.agreeTerms,
+    registerError: store.form.register.registerError,
   },
   isAuth: store.user.isAuth,
   userId: store.user.userId,

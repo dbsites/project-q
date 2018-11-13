@@ -403,6 +403,13 @@ body {
   color: #FFFFFF;
 }
 
+/* Form Error Styling */
+
+.form-error {
+  font-size: 1.2rem;
+  color: #dc3545;
+}
+
 /* Issue Dashboard - 84vh => 8vh/68vh/8vh */
 /* Issue Dashboard Container - 68vh (1p/66/1p) */
 .issue-dashboard-container {

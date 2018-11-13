@@ -7,6 +7,7 @@ import * as React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 
 import FormField from './FormField';
+import FormError from './FormError';
 // import FormError from './FormError';
 
 // TODO: Assign explicit type to props
@@ -25,6 +26,7 @@ const RegisterForm: any = (props: any) => {
     registerPassword,
     confirmPassword,
     agreeTerms,
+    registerError,
   } = registerFields;
 
   // Check for cookie - if present, log user in
@@ -38,6 +40,10 @@ const RegisterForm: any = (props: any) => {
     }
   }
 
+  const callFetchFormRequest = (registerFields: any): any => {
+    return fetchFormRequest('register', registerFields)
+  }
+
   return (
     <div className="login-register-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('register', registerFields)}} >
       <FormField autofocus={true} field={firstName} form="register" name="firstName" type="text" updateField={updateField} >First Name: </FormField>
@@ -46,8 +52,9 @@ const RegisterForm: any = (props: any) => {
       <FormField autofocus={false} field={registerPassword} form="register" name="registerPassword" type="password" updateField={updateField} >Password: </FormField>
       <FormField autofocus={false} field={confirmPassword} form="register" name="confirmPassword" type="password" updateField={updateField} >Confirm Password: </FormField>
       <FormField field={agreeTerms} form="register" name="agreeTerms" type="checkbox" updateField={updateField} >I have read and agree to the Terms of Service</FormField>
+      <FormError message={registerError} />
       <div className="submit-button-container">
-        <div className="submit-button" onClick={() => fetchFormRequest('register', registerFields)}>Create Account</div>
+        <div className="submit-button" onClick={() => callFetchFormRequest(registerFields)}>Create Account</div>
       </div>
       <div className="change-form-link">
         <Link to='/account/login'>Log In</Link>

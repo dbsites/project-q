@@ -12,6 +12,7 @@ const initialLoginState: LoginState = {
   emailValid: false,
   loginPassword: '',
   rememberMe: true,
+  loginError: '',
 };
 
 const initialRegisterState: RegisterState = {
@@ -22,6 +23,7 @@ const initialRegisterState: RegisterState = {
   registerPassword: '',
   confirmPassword: '',
   agreeTerms: false,
+  registerError: '',
 };
 
 const initialFormState: FormState = {

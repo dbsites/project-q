@@ -15,6 +15,7 @@ export interface LoginState {
   readonly emailValid: boolean,
   readonly loginPassword: string,
   readonly rememberMe: boolean,
+  readonly loginError: string,
 };
 
 export interface RegisterState {
@@ -25,6 +26,7 @@ export interface RegisterState {
   readonly registerPassword: string,
   readonly confirmPassword: string,
   readonly agreeTerms: boolean,
+  readonly registerError: string,
 };
 
 export interface FormState {

@@ -43,7 +43,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
 
 // THUNK - Fetch Form Request
 export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState) => (dispatch: Dispatch) => {
-  // Derive POST request URI from form to be submitted
+  // Derive POST request URI from form to be submitted and validate form fields
   let fetchURI: string = `${HOST}`;
   if (form === 'login') {
     fetchURI = fetchURI + '/login';
