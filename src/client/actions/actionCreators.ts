@@ -149,6 +149,9 @@ export const sortCompanyList = (event: any) => ({
 export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
   const fetchURI: string = `${HOST}/userIssues`;
   // Issue fetch request
+  dispatch({
+    type: actions.FETCH_SUBMIT_ISSUES_REQUEST,
+  });
   fetch(fetchURI, {
     method: 'POST',
     headers: {
@@ -209,6 +212,9 @@ export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   // Issue Fetch Request
   console.log('attempting to submit survey');
   console.log(surveyObj);
+  dispatch({
+    type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
+  });
   fetch(`${HOST}/userSurvey`, {
     method: 'POST',
     headers: {

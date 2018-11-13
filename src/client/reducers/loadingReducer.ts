@@ -9,7 +9,8 @@ import { LoadingState } from './types';
 // Define initial state
 const initialLoadingState: LoadingState = {
   authLoading: false,
-  issuesLoading: false
+  issuesLoading: false,
+  surveyLoading: false,
 };
 
 const loadingReducer = (state: LoadingState = initialLoadingState, action: any): LoadingState => {
@@ -17,26 +18,37 @@ const loadingReducer = (state: LoadingState = initialLoadingState, action: any):
     case actions.FETCH_AUTH_REQUEST:
       return {
         ...state,
-        authLoading: true
+        authLoading: true,
       };
 
     case actions.FETCH_ISSUES_REQUEST:
       return {
         ...state,
-        issuesLoading: true
+        issuesLoading: true,
+      };
+
+    case actions.FETCH_SUBMIT_ISSUES_REQUEST:
+      return {
+        ...state,
+        surveyLoading: true,
       };
 
     case actions.FETCH_AUTH_SUCCESS:
       return {
         ...state,
-        authLoading: false
+        authLoading: false,
       };
-
 
     case actions.FETCH_ISSUES_SUCCESS:
       return {
         ...state,
-        issuesLoading: false
+        issuesLoading: false,
+      };
+
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+      return {
+        ...state,
+        surveyLoading: false,
       };
 
     default:

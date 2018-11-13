@@ -35,7 +35,7 @@ export interface FormState {
 // Survey Object Types
 export interface QuestionState {
   readonly questionId: string,
-  readonly question: string,
+  readonly questionText: string,
   readonly agree: boolean | null,
   readonly position: string,
 };
@@ -73,6 +73,7 @@ export interface UserState {
 export interface LoadingState {
   readonly authLoading: boolean,
   readonly issuesLoading: boolean,
+  readonly surveyLoading: boolean,
 }
 
 // TODO: will update to appropriate types (GM)

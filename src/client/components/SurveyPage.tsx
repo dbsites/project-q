@@ -5,9 +5,26 @@
 
 import * as React from 'react';
 import Header from '../containers/HeaderContainer'
+import Loading from './Loading';
 
 const SurveyPage = (props: any) => {
-  const { headerText, surveyArray, leftButton, rightButton, footerBar } = props;
+  const { complete, headerText, surveyArray, leftButton, rightButton, footerBar } = props;
+  if (complete) {
+    return (<div className="main-dashboard">
+      <div className="header">
+        <Header />
+      </div>
+      <div className="dashboard-header" />
+      <div className="survey-dashboard-container">
+        <div className="dashboard-side" />
+        <div className="survey-dashboard-question-container"><Loading /></div>
+        <div className="dashboard-side" />
+      </div>
+      <div className="dashboard-footer">
+        {footerBar}
+      </div>
+    </div>);
+  }
   return (
     <div className="main-dashboard">
       <div className="header">

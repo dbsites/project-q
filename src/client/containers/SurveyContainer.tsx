@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/actionCreators';
 
 // Import Selector Functions
-import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition } from '../reducers/surveyReducer';
+import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition, getQuestionsList } from '../reducers/surveyReducer';
 import { getIssueName } from '../reducers/issuesReducer';
 
 // Import Componenets
@@ -24,9 +24,11 @@ import ProgressBar from '../components/ProgressBar';
 const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, updateIssue, updateIssuesSelected, prevPage,  // Actions
-    issues, issuesSelected, survey, surveyPage,                   // State
+    issues, survey, user,                                                       // State
   } = props;
 
+  const { issuesSelected, surveyPage, userId } = user;
+  
   // Initialize array to hold user's selected issues
   const issuesSelectedArray: string[] = Object.keys(issuesSelected)
   const issuesCount: number = issuesSelectedArray.length;
@@ -35,6 +37,28 @@ const SurveyContainer = (props: any): any => {
   // Initialize survey array to hold survey questions
   let surveyArray: JSX.Element[] = [];
 
+  // Generate progress bar
+  const footerBar = <ProgressBar surveyPage={surveyPage} issuesCount={issuesCount} />
+  console.log('Questions: ', getQuestionsList(survey));
+
+  // Short-circuit process if survey complete
+  if (surveyPage === issuesCount) {
+    // Assemble survey object
+    const surveyObj = {
+      issues: issuesSelected,
+      userId: userId,
+      questions: getQuestionsList(survey),
+    };
+    console.log('SurveyObj: ', surveyObj)
+    // submitSurvey(surveyObj);
+
+    return (
+      <SurveyPage
+        complete={true}
+        footerBar={footerBar}
+      />
+    )
+  }
   // Helper Function to populate survey
   const populateSurvey = (issueId: string): any => {
     // User function selecter to get survey questions from store for a given issue
@@ -51,7 +75,7 @@ const SurveyContainer = (props: any): any => {
           key={questionId}
           questionId={questionId}
           questionAgree={questionAgree}
-          questionText={questionsObject[questionId].question}
+          questionText={questionsObject[questionId].questionText}
         />,
       );
     });
@@ -69,8 +93,6 @@ const SurveyContainer = (props: any): any => {
     })
   }
 
-  console.log('Issues: ', issues);
-  console.log('CurrentIssueId: ', currentIssueId);
   const headerText: string = getIssueName(issues, currentIssueId);
 
   // Helper function that generates left buttons
@@ -111,10 +133,9 @@ const SurveyContainer = (props: any): any => {
   const leftButton = generateLeftButton();
   const rightButton = generateRightButton(currentIssueId);
 
-  const footerBar = <ProgressBar surveyPage={surveyPage} issuesCount={issuesCount} />
-
   return (
     <SurveyPage
+      complete={false}
       headerText={headerText}
       surveyArray={surveyArray}
       leftButton={leftButton}
@@ -126,9 +147,8 @@ const SurveyContainer = (props: any): any => {
 
 const mapStateToProps = (store: any): any => ({
   issues: store.issues,
-  issuesSelected: store.user.issuesSelected,
+  user: store.user,
   survey: store.survey,
-  surveyPage: store.user.surveyPage,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
