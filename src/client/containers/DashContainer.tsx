@@ -7,45 +7,25 @@ import * as React from 'react';
 
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
-import { submitSurvey } from '../actions/actionCreators';
+import QuadsContainer from './QuadsContainer';
+import Loading from '../components/loading/Loading';
 
 const DashContainer = (props: any): any => {
-  const { issues, survey, userId } = props.userState;
-  // CHeck if issues have already been selected - if not, serve IssuesContainer
-  if (!Object.keys(issues).length) return <IssuesContainer />
+  const {
+    issues, issuesComplete, loading, surveyComplete,
+    fetchIssues,
+  } = props.userState;
 
-  // Helper function to check if any issues are outstanding (value is null)
-  const countOutstandingIssues = (): number => {
-    const outstandingIssuesArray = Object.keys(issues).filter((issue) => issues[issue] === null)
-    return outstandingIssuesArray.length;
+  // Check if issues and survey are already complete
+  if (!issuesComplete || !surveyComplete) {
+    if (!Object.keys(issues).length || loading.issuesLoading || loading.surveyLoading) {
+      if (!loading.issuesLoading && !Object.keys(issues).length) fetchIssues();
+      return <Loading />
+    };
+    return issuesComplete ? <SurveyContainer /> : <IssuesContainer />;
   }
 
-  if (countOutstandingIssues()) return <SurveyContainer />
-
-  // If no outstanding issues, console.log props
-  const surveyObj: any = {
-    userId: userId,
-    issues: issues,
-    questions: {},
-  };
-  
-  const issueIdArray = Object.keys(survey);
-  issueIdArray.forEach((issueId) => {
-    const questionIdArray = Object.keys(survey[issueId]);
-    questionIdArray.forEach((questionId) => {
-      surveyObj.questions[questionId] = {};
-      surveyObj.questions[questionId].issueId = issueId;
-      surveyObj.questions[questionId].agree = survey[issueId][questionId].agree;
-    });
-  });
-
-  submitSurvey(surveyObj);
-
-  return (
-    <div>
-      <h1>User Dashboard</h1>
-    </div>
-  )
+  return <QuadsContainer />
 };
 
 export default DashContainer;

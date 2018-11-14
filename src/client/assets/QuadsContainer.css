@@ -1,0 +1,327 @@
+#quads-container {
+  /* background-color: white; */
+  /* border: 2px solid gold; */
+  display: grid;
+  grid-template-columns: minmax(400px, 600px) minmax(400px, 800px);
+  grid-template-rows: minmax(300px, 400px) minmax(300px, 400px);
+  max-width: 98%;
+  margin: 0 auto;
+}
+
+.quad {
+  /* overflow: auto; */
+  background-color: black;
+}
+
+#quad-overview {
+  overflow: auto;
+}
+
+/* QUAD CONTAINER - OVERVIEW */
+
+.overview-container {
+  border: 1px solid gold;
+  display: flex;
+  height: 99%;
+  margin: auto;
+  overflow: hidden;
+}
+
+.overview-container p {
+  color: #FFFFFF;
+  margin: auto;
+  text-align: center;
+}
+
+#overview-left {
+  display: inline-block;
+  width: 40%;
+  text-align: center;
+  margin-top: 15px;
+}
+
+#overview-left h2 {
+  color: white;
+  margin: 0;
+}
+/* #overview-left h1, 
+#overview-left h3,
+*/
+
+/* #overview-left p {
+  color: white;
+  padding: 5px 0;
+  margin: 0;
+}  */
+
+#overview-right {
+  display: inline-block;
+  width: 59%;
+  height: 100%;
+  line-height: 100%;
+  vertical-align: top;
+  margin-top: 15px;
+}
+#overview-right h3 {
+  padding-left: 10px;
+  margin-top: 15px;
+}
+
+#overview-right p {
+  font-family: 'Lato', serif; 
+  font-size: 0.9em;
+  padding-left: 15px;
+  padding-top: 5px;
+  color: #A5A8A6;
+  margin-bottom: 5px;
+} 
+
+#overview-right a {
+  padding-left: 15px;
+}
+
+#overview-description-container {
+  display: inline-block;
+  padding-left: 15px;
+  padding-top: 5px;
+  width: 95%;
+}
+
+#overview-description-container p {
+  text-align: left;
+
+  padding: 2px;
+}
+
+
+/* #company-info {
+  margin-bottom: 10px;
+}
+
+#company-info-more {
+  margin-top: 10px;
+} */
+
+#company-market-price {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8em;
+  color: #000000;
+  width: 81%;
+  background-color: white;
+  text-align: center;
+  margin: 10px auto 0;
+  padding: 10px 0;
+}
+
+#company-info-more {
+  margin: 0;
+  border-top: 1px solid black;
+}
+
+#company-info-found {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8em;
+  color: #000000;
+  display: inline-block;
+  width: 40%;
+  background-color: white;
+  text-align: center;
+  padding: 5px 0;
+  border-right: 1px solid black;
+}
+
+#company-info-employees {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8em;
+  color: #000000;
+  display: inline-block;
+  width: 40%;
+  background-color: white;
+  text-align: center;
+  padding: 5px 0;
+}
+
+#overview-right a {
+  padding-left: 0;
+}
+
+#overall-score-chart {
+  text-align: center;
+}
+
+#overall-score-chart text {
+  font-size: 20px;
+  fill: white;
+  margin: 10px;
+}
+
+#overview-logo {
+  border: 2px solid gold;
+  display: block;
+  margin: auto;
+  height: 50px;
+  width: auto;
+  max-width: 90%;
+  margin: 0 15px;
+  text-align: center;
+}
+
+#company-url-pre {
+  margin-top: 5px;
+}
+
+/**********************/
+#quad-stock {
+}
+
+#quad-issues {
+
+}
+
+
+
+.quad-container {
+  display: inline-block;
+  /* border: 2px solid gold; */
+  margin: 20px auto;
+  /* height: 200px; */
+  width: 100%;
+  text-align: center;
+  vertical-align: top;
+}
+.quad-container p {
+  color: #FFFFFF;
+}
+
+
+.quad h3 {
+  color: #FFFFFF;
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.divTable {
+  border: 1px solid gold;
+  background-color: #000000;
+  /* border: 2px solid gold; */
+  width: 100%;
+  overflow-x: scroll;
+}
+
+.divTableHead {
+  display: inline-block;
+  white-space: pre;
+  width: 100%;
+}
+
+#quad-box-cl {
+  /* border: 2px solid white; */
+  /* display: grid; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-height: 100%;
+  width: 100%;
+  /* overflow: scroll; */
+}
+
+.cl-category {
+  display: inline-block;
+  border: 2px solid black;
+  height: 100%;
+  overflow: auto;
+}
+
+.cl-header {
+  position: relative; 
+  color: red;
+  top: 2px;
+  margin-top: 5px;
+  padding-left: 5px;
+}
+
+#cl-category-name {
+  /* background-color: red; */
+  min-width: 100px;
+  max-width: 200px;
+  resize: horizontal;
+  overflow: hidden;
+}
+
+.cl-list {
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.cl-list a, .cl-list p {
+  color: #FFFFFF;
+}
+
+.company-names-list, .company-list{
+  display: block;
+  list-style-position: inside;
+  list-style-type: none; 
+  /* padding-left: 5px; */
+  white-space: nowrap;
+  margin: 0;
+}
+
+.company-list {
+  margin: 0;
+  padding: 0;
+}
+
+#img-stock-graph {
+  position: relative;
+  text-align: center;
+  height: 250px;
+  width: 100%;
+}
+
+#list-overview {
+  list-style-type: none; 
+  padding-left: 20px;
+}
+
+#list-overview h2, #list-overview em, #list-overview p{
+  color: #FFFFFF;
+}
+
+#overview-company-logo {
+  max-width: 400px;
+  max-height: 200px;
+}
+
+.stock-container {
+  border: 1px solid gold;
+  display: flex;
+  margin: auto;
+  width: 100%;
+  height: 99%
+}
+
+.stock-container iframe {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+.stock-container p {
+  margin: auto;
+  text-align: center;
+}
+
+.issues-container {
+  border: 1px solid gold;
+  display: flex;
+  height: 99%;
+  margin: auto;
+  overflow: hidden;
+}
+
+.issues-container p {
+  color: #FFFFFF;
+  margin: auto;
+  text-align: center;
+}
+

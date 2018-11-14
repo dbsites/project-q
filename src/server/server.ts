@@ -57,7 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
-app.get('/',
+app.get('/auth',
   Sessions.check,
   UserMethods.getAccountInfo,
   UserMethods.getIssues,
@@ -72,6 +72,7 @@ app.post('/register',
   UserMethods.createAccount,
   Sessions.create,
   (_: Request, res: Response) => {
+    console.log(res.locals.user);
     res.status(200).send(res.locals.user);
   }
 );
@@ -113,7 +114,7 @@ app.post('/userIssues',
   UserMethods.getQuestions,
   (_: Request, res: Response) => {
     // sending back user, issues, and question data in locals
-    res.status(200).send(res.locals.user);
+    res.status(200).send(res.locals.user.questions);
   }
 );
 
@@ -128,17 +129,20 @@ app.post('/userIssues',
 app.post('/userSurvey',
   UserMethods.updateIssuePositons,
   UserMethods.updateUserSurvey,
+  UserMethods.updateSurveyComplete,
+  DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.companyData);
   }
 );
 
 // end point for deliverying a list of companies on dashboard render
 app.get('/companyList',
+  DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.companyData);
   }
 );
 
@@ -178,7 +182,9 @@ app.get('/companyList',
     res.sendStatus(200);
   });
 ***********************************************************
-  app.post('/updateCompanyData',
+  // route to update company data  
+
+app.post('/updateCompanyData',
     CompanyDatabase.updateData,
     (_: Request, res: Response) => {
     res.sendStatus(200);

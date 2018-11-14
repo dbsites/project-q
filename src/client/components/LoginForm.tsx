@@ -39,12 +39,14 @@ const LoginForm: any = (props: any) => {
   return (
     <div className="login-register-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('login', loginFields)}}>
       
-      <FormField field={loginEmail} form="login" name="loginEmail" type="text" updateField={updateField} >Email: </FormField>
-      <FormField field={loginPassword} form="login" name="loginPassword" type="password" updateField={updateField} >Password: </FormField>
+      <FormField autofocus={true} field={loginEmail} form="login" name="loginEmail" type="text" updateField={updateField} >Email: </FormField>
+      <FormField autofocus={false} field={loginPassword} form="login" name="loginPassword" type="password" updateField={updateField} >Password: </FormField>
       <FormField field={rememberMe} form="login" name="rememberMe" type="checkbox" updateField={updateField} >Remember Me </FormField>
       <div className="submit-button-container">
-      <div className="submit-button" onClick={() => fetchFormRequest('login', loginFields)}>Log In</div>
-        <div className="change-form-link">Don't have an account? <Link to='/account/register'>Sign up</Link></div>
+        <div className="submit-button" onClick={() => fetchFormRequest('login', loginFields)}>Log In</div>
+      </div>
+      <div className="change-form-link">
+        <Link to='/account/register'>Sign up</Link>
       </div>
     </div>
   )

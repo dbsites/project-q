@@ -6,46 +6,63 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition } from '../reducers/surveyReducer';
+// Import Actions
+import * as actions from '../actions/actionCreators';
 
+// Import Selector Functions
+import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition, getQuestionsList } from '../reducers/surveyReducer';
+import { getIssueName } from '../reducers/issuesReducer';
+
+// Import Componenets
+import SurveyPage from '../components/SurveyPage';
 import SurveyQuestion from '../components/SurveyQuestion';
 
-import * as actions from '../actions/actionCreators';
-import { getOutstandingIssues } from '../reducers/userReducer';
-import { IssueQuestionsState } from '../reducers/types';
-import { getIssueName } from '../reducers/issuesReducer';
-import SurveyPage from '../components/SurveyPage';
-
-// interface SurveyContainerProps {
-//   answerQuestion: any; //TODO:
-//   updateIssue: any; //TODO:
-//   selectedIssues: UserIssues;
-//   survey: SurveyState;
-// }
+// Import Types
+import { IssueQuestionsState, SurveyState } from '../reducers/types';
+import ProgressBar from '../components/ProgressBar';
 
 const SurveyContainer = (props: any): any => {
   const {
-    answerQuestion, clearQuestions, updateIssue,
-    issues, selectedIssues, survey
+    answerQuestion, submitSurvey, updateIssue, updateIssuesSelected, prevPage,  // Actions
+    issues, survey, user,                                                       // State
   } = props;
+
+  const { issuesSelected, surveyPage, userId } = user;
   
   // Initialize array to hold user's selected issues
-  const selectedIssuesArray: string[] = Object.keys(selectedIssues)
-  const selectedIssueCount: number = selectedIssuesArray.length;
-  
-  // Initialize index at 0 and identify currentIssue
-  let issueIndex: number = 0;
-  let currentIssueId: string = selectedIssuesArray[issueIndex];
-  
+  const issuesSelectedArray: string[] = Object.keys(issuesSelected)
+  const issuesCount: number = issuesSelectedArray.length;
+  let currentIssueId: string = issuesSelectedArray[surveyPage];
+
   // Initialize survey array to hold survey questions
   let surveyArray: JSX.Element[] = [];
 
+  // Generate progress bar
+  const footerBar = <ProgressBar surveyPage={surveyPage} issuesCount={issuesCount} />
+
+  // Short-circuit process if survey complete
+  if (surveyPage === issuesCount) {
+    // Assemble survey object
+    const surveyObj = {
+      issues: issuesSelected,
+      userId: userId,
+      questions: getQuestionsList(survey),
+    };
+    submitSurvey(surveyObj);
+
+    return (
+      <SurveyPage
+        complete={true}
+        footerBar={footerBar}
+      />
+    )
+  }
   // Helper Function to populate survey
   const populateSurvey = (issueId: string): any => {
     // User function selecter to get survey questions from store for a given issue
     const questionsIdList: string[] = getQuestionIdList(survey, issueId);
     const questionsObject: IssueQuestionsState = getQuestionsObject(survey, issueId);
-        
+
     // For each question, push a SurveyQuestion component into surveyArray
     questionsIdList.forEach((questionId: string) => {
       const questionAgree = questionsObject[questionId].agree;
@@ -56,21 +73,14 @@ const SurveyContainer = (props: any): any => {
           key={questionId}
           questionId={questionId}
           questionAgree={questionAgree}
-          questionText={questionsObject[questionId].question}
+          questionText={questionsObject[questionId].questionText}
         />,
       );
     });
   };
 
-  // Assign currentIssue to next issue with value 'null' and call 'populateSurvey'
-  while (issueIndex < selectedIssueCount) {
-    currentIssueId = selectedIssuesArray[issueIndex];
-    if (!selectedIssues[currentIssueId]) {
-      populateSurvey(currentIssueId);
-      break;
-    }
-    issueIndex += 1;
-  }
+  // Populate survey with current issue id
+  populateSurvey(currentIssueId);
 
   // Helper function to update Issues if user clicks "Next Issue"
   const callUpdateIssue = () => {
@@ -81,85 +91,70 @@ const SurveyContainer = (props: any): any => {
     })
   }
 
-  // If no outstanding issues, complete survey
-  const outstandingIssueCount: number = getOutstandingIssues(selectedIssues).length
-  if (!outstandingIssueCount) return
-
   const headerText: string = getIssueName(issues, currentIssueId);
 
-  // Helper function that generates active or inactive footer buttons
-  const generateFooterButtons = (issueId: string) => {
-    if(getOutstandingQuestionsCount(survey, issueId) === 3) {
-      // If no questions answered, return invalid buttons
+  // Helper function that generates left buttons
+  const generateLeftButton = () => {
+    if (!surveyPage) {
       return (
-        <React.Fragment>
-          <div className="dashboard-footer-button invalid" >
-            Clear
-          </div>
-          <div className="dashboard-footer-button invalid" >
-            Next
-          </div>
-        </React.Fragment>
+        <div className="dashboard-side-button" onClick={updateIssuesSelected}>
+          {"< Back"}
+        </div>
       )
-    } else if (getOutstandingQuestionsCount(survey, issueId)) {
+    }
+    return (
+      <div className="dashboard-side-button" onClick={prevPage}>
+        {"< Back"}
+      </div>
+    )
+  }
+
+  // Helper function that generates left buttons
+  const generateRightButton = (issueId: string) => {
+    // If there are outstanding questions, return invalid button
+    if (getOutstandingQuestionsCount(survey, issueId)) {
       // If 1 or 2 questions answered, return clear button only
       return (
-        <React.Fragment>
-          <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
-            Clear
-          </div>
-          <div className="dashboard-footer-button invalid" >
-            Next
-          </div>
-        </React.Fragment>
-      )
-    } else if (outstandingIssueCount === 1) {
-      return (
-        // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
-        <React.Fragment>
-          <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
-            Clear
-          </div>
-          <div className="dashboard-footer-button" onClick={() => callUpdateIssue()}>
-            Complete
-          </div>
-        </React.Fragment>
+        <div className="dashboard-side-button invalid" >
+          {"Next >"}
+        </div>
       )
     }
     return (
       // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
-      <React.Fragment>
-        <div className="dashboard-footer-button" onClick={() => clearQuestions(issueId)}>
-          Clear
-        </div>
-        <div className="dashboard-footer-button" onClick={() => callUpdateIssue()}>
-          Next
-        </div>
-      </React.Fragment>
+      <div className="dashboard-side-button" onClick={() => callUpdateIssue()}>
+        {"Next >"}
+      </div>
     )
   }
 
-  const footerButtons = generateFooterButtons(currentIssueId);
-  
+  const leftButton = generateLeftButton();
+  const rightButton = generateRightButton(currentIssueId);
+
   return (
     <SurveyPage
+      complete={false}
       headerText={headerText}
       surveyArray={surveyArray}
-      footerButtons={footerButtons}
+      leftButton={leftButton}
+      rightButton={rightButton}
+      footerBar={footerBar}
     />
   )
 };
 
 const mapStateToProps = (store: any): any => ({
   issues: store.issues,
-  selectedIssues: store.user.issues,
+  user: store.user,
   survey: store.survey,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
   answerQuestion: (event: any) => dispatch(actions.answerQuestion(event)),
-  clearQuestions: (issueId: string) => dispatch(actions.clearQuestions(issueId)),
+  prevPage: () => dispatch(actions.prevPage()),
+  submitSurvey: (surveyObj: SurveyState) => dispatch(actions.submitSurvey(surveyObj)),
   updateIssue: (issue: any) => dispatch(actions.updateIssue(issue)),
+  updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SurveyContainer);

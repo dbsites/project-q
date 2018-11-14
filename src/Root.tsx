@@ -15,13 +15,13 @@ import './Root.css';
 const Root = (props: any) => (
   <Provider store={props.store} >
     <Router>
-        <div className="screen">
-          <Route exact path='/' component={App} />
-          <Route exact path='/account/:id' component={FormContainer} />
-          <Route exact path='/terms/:id' component={TermsContainer} />
-          <Route path='/' component={Footer} />
-        </div>
-      </Router>
+      <div className="screen">
+        <Route exact path='/' component={App} />
+        <Route exact path='/account/:id' component={FormContainer} />
+        <Route exact path='/terms/:id' component={TermsContainer} />
+        <Route path='/' component={Footer} />
+      </div>
+    </Router>
   </Provider >
 );
 

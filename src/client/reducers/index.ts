@@ -6,24 +6,24 @@
 import { combineReducers, Reducer } from 'redux';
 
 // Import all reducers
-// import loginReducer from './loginReducer';
-// import registerReducer from './registerReducer';
-import userReducer from './userReducer';
+import companyReducer from './companyReducer';
+import formReducer from './formReducer';
 import issuesReducer from './issuesReducer';
+import loadingReducer from './loadingReducer';
 import surveyReducer from './surveyReducer';
+import userReducer from './userReducer';
 
 // Import store type
 import { ApplicationState } from './types';
-import formReducer from './formReducer';
 
 // Combine reducers
 const reducers: Reducer = combineReducers<ApplicationState>({
-  // login: loginReducer,
-  // register: registerReducer,
+  company: companyReducer,
   form: formReducer,
-  user: userReducer,
   issues: issuesReducer,
+  loading: loadingReducer,
   survey: surveyReducer,
+  user: userReducer,
 });
 
 export default reducers;
