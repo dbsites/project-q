@@ -72,4 +72,8 @@ export class CompanyRepository {
   async getTickers() {
     return await this.db.query('SELECT ticker FROM companies;');
   }
+
+  storeRecentStockData(dataObject: any, stockSymbol: any) {
+    return this.db.none('INSERT INTO company_stock (id, company_id, timestamp, open, close, high, low, volume) VALUES ($1, (SELECT id FROM companies WHERE ticker = $2), $3, $4, $5, $6, $7, $8);', [v4(), stockSymbol, dataObject.date, dataObject.open, dataObject.close, dataObject.high, dataObject.low, dataObject.volume]);
+  }
 }

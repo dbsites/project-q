@@ -65,15 +65,23 @@ function getStockPrices() {
     if (startSymbol === 500) {
       clearInterval(stockInterval);
     }
-
-    function getStockData() {
+    
+    async function getStockData() {
       for (let currSymbol = startSymbol; currSymbol < 1; currSymbol += 1) {
         // make the api call
+        // set the date to a year ago
+        let oneYearAgo: any = Array.from(JSON.stringify(new Date()).substring(1,11)).map((item: any, index: any) => {
+          if (index === 3) {
+            return '7'
+          }
+          return item;
+        });
         
-        fetch(`https://api.intrinio.com/prices?identifier=${stockSymbols[currSymbol].ticker.split(".")[0]}&api_key=${<string>process.env.STOCK_API_KEY}`)
+        await fetch(`https://api.intrinio.com/prices?identifier=${stockSymbols[currSymbol].ticker.split(".")[0]}&start_date=${oneYearAgo.join("")}&frequency=monthly&api_key=${<string>process.env.STOCK_API_KEY}`)
         .then((response: any) => response.json())
         .then((response: any) => {
-          console.log(response);
+          console.log(response.data[0]);
+          CompanyDatabase.storeRecentStockData(response.data[0], stockSymbols[currSymbol].ticker);
         })
         .catch((err: any) => console.error(err));
         // store the data
@@ -83,10 +91,11 @@ function getStockPrices() {
     return true;
   })
   .catch(() => {
-
+    
   })
 }
 
+console.log(JSON.stringify(new Date()).substring(1,11));
 getStockPrices();
 
 
