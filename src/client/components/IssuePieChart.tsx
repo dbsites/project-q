@@ -1,5 +1,5 @@
 /**
- * @module IssuePieChart.jsx (YES, JSX)
+ * @module IssuePieChart.tsx
  * @description Single Issue Display Component
  */
 
@@ -22,7 +22,15 @@ const IssueDisplay = (props: any) => {
   return (
     <div className="issue-box">
       <PieChart
+        labels
         size={100}
+        styles={{
+          '.chart_text': {
+            fontFamily: 'serif',
+            fontSize: '1.2em',
+            fill: '#ffffff'
+          }
+        }}
         data={[
           { key: 'Agree', value: agreeScore, color: '#005005' },
           { key: 'Disagree', value: disagreeScore, color: '#8e0000' }
