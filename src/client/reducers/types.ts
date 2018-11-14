@@ -29,9 +29,19 @@ export interface RegisterState {
   readonly registerError: string,
 };
 
+export interface ResetPassState {
+  resetPass: boolean,
+  forgotPassEmail: string,
+  emailValid: boolean,
+  newPassword: string,
+  confirmNewPassword: string,
+  resetError: string,
+}
+
 export interface FormState {
   readonly login: LoginState,
   readonly register: RegisterState,
+  readonly reset: ResetPassState,
 }
 
 // Survey Object Types

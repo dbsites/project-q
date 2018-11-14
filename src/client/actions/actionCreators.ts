@@ -8,7 +8,7 @@ import actions from './actionTypes';
 
 // import types
 import { formFieldObject, updateFieldAction } from './types';
-import { LoginState, RegisterState } from '../reducers/types';
+import { LoginState, RegisterState, ResetPassState } from '../reducers/types';
 import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
@@ -41,14 +41,18 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
 }
 
 // THUNK - Fetch Form Request
-export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState) => (dispatch: Dispatch) => {
+export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState | ResetPassState) => (dispatch: Dispatch) => {
   // Derive POST request URI from form to be submitted and validate form fields
   let fetchURI: string = `${HOST}`;
   if (form === 'login') {
     fetchURI = fetchURI + '/login';
   } else if (form === 'register') {
     fetchURI = fetchURI + '/register';
-  } else throw new Error();
+  } else if (form === 'reset' && !(<ResetPassState>formFields).resetPass) {
+    fetchURI = fetchURI + '/forgot';
+  } else if (form === 'reset' && (<ResetPassState>formFields).resetPass) {
+    fetchURI = fetchURI + '/reset';
+  } else throw new Error('Something has gone wrong - please try again');
   // Issue fetch request
   fetch(fetchURI, {
     method: 'POST',
@@ -59,6 +63,7 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     body: JSON.stringify(formFields),
   })
     .then(response => {
+      console.log('pre-JSON response', response);
       if (response.status === 200) return response.json();
       if (response.status === 401) {
         dispatch({

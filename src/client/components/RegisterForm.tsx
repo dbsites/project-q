@@ -41,13 +41,15 @@ const RegisterForm: any = (props: any) => {
   }
 
   return (
-    <div className="login-register-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('register', registerFields)}} >
+    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('register', registerFields)}} >
       <FormField autofocus={true} field={firstName} form="register" name="firstName" type="text" updateField={updateField} >First Name: </FormField>
       <FormField autofocus={false} field={lastName} form="register" name="lastName" type="text" updateField={updateField} >Last Name: </FormField>
       <FormField autofocus={false} field={registerEmail} form="register" name="registerEmail" type="text" updateField={updateField} >Email: </FormField>
       <FormField autofocus={false} field={registerPassword} form="register" name="registerPassword" type="password" updateField={updateField} >Password: </FormField>
       <FormField autofocus={false} field={confirmPassword} form="register" name="confirmPassword" type="password" updateField={updateField} >Confirm Password: </FormField>
-      <FormField field={agreeTerms} form="register" name="agreeTerms" type="checkbox" updateField={updateField} >I have read and agree to the Terms of Service</FormField>
+      <div className="input-check-div">
+        <FormField field={agreeTerms} form="register" name="agreeTerms" type="checkbox" updateField={updateField} >I have read and agree to the Terms of Service</FormField>
+      </div>
       <FormError message={registerError} />
       <div className="submit-button-container">
         <div className="submit-button" onClick={() => callFetchFormRequest(registerFields)}>Create Account</div>

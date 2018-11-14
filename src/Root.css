@@ -257,14 +257,14 @@ body {
   justify-content: center;
 }
 
-.login-register-form {
+.input-form {
   box-sizing: content-box;
   padding: 24px;
   width: 45vw;
 }
 
 /* Login/Register Style - Input Form Fields */
-.login-register-form .input-div {
+.input-form .input-div {
   background: #000000;
   border-bottom: 1px solid #FFFFFF;
   font-size: 1.2rem;
@@ -273,7 +273,21 @@ body {
   display: flex;
 }
 
-.login-register-form .input-field-label {
+.input-form .input-form-header {
+  color: #FFFFFF;
+  font-size: 1.8rem;
+  margin-bottom: 3vh;
+  text-align: center;
+}
+
+.input-form .input-form-text {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  margin-bottom: 3vh;
+  text-align: center;
+}
+
+.input-form .input-field-label {
   color: #FFFFFF;
   display: inline-block;
   margin: 0 4px;
@@ -281,7 +295,7 @@ body {
   white-space: nowrap;
 }
 
-.login-register-form .input-field {
+.input-form .input-field {
   background: #000000;
   border: none;
   box-sizing: border-box;
@@ -293,22 +307,25 @@ body {
   width: 100%;
 }
 
-.login-register-form .input-field-name-wrapper {
+.input-form .input-field-name-wrapper {
   box-sizing: border-box;
   display: inline-block;
   width: 50%;
 }
 
-.login-register-form .input-field-name-wrapper:nth-of-type(1) {
+.input-form .input-field-name-wrapper:nth-of-type(1) {
   padding-right: 24px;
 }
 
 /* Login/Register Style - Input Form Check Box */
-.login-register-form .input-check-div {
+.input-form .input-check-div {
   margin: 0.5vh 0 2.5vh 0.2vw;
+
+  display: flex;
+  justify-content: space-between;
 }
 
-.login-register-form .input-check-label {
+.input-form .input-check-label {
   color: #FFFFFF;
   display: inline-block;
   position: relative;
@@ -317,7 +334,7 @@ body {
   cursor: pointer;
 }
 
-.login-register-form .input-check {
+.input-form .input-check {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -325,7 +342,7 @@ body {
   width: 0;
 }
 
-.login-register-form .checkmark {
+.input-form .checkmark {
   background-color: #666666;
   border: 0.1vh solid #666666;
   border-radius: 2px;
@@ -338,25 +355,25 @@ body {
   width: 2.1vh;
 }
 
-.login-register-form .input-check-label input:checked ~ .checkmark {
+.input-form .input-check-label input:checked ~ .checkmark {
   background-color: #FFFFFF;
   border: 1px solid #FFFFFF;
 }
 
 /* Create checkmark - hidden when not checked */
-.login-register-form .checkmark:after {
+.input-form .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
 
 /* Show checkmark when checked */
-.login-register-form .input-check-label input:checked ~ .checkmark:after {
+.input-form .input-check-label input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.login-register-form .checkmark:after {
+.input-form .checkmark:after {
   left: 0.6vh;
   top: 0.2vh;
   width: 0.5vh;
@@ -366,7 +383,7 @@ body {
   transform: rotate(45deg);
 }
 
-.login-register-form .submit-button-container {
+.input-form .submit-button-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -374,7 +391,7 @@ body {
   white-space: nowrap;
 }
 
-.login-register-form .submit-button {
+.input-form .submit-button {
   color: #666666;
   font-size: 2.0rem;
   font-weight: bold;
@@ -382,24 +399,24 @@ body {
   padding: 10px 24px;
 }
 
-.login-register-form .submit-button:hover {
+.input-form .submit-button:hover {
   color: #FFFFFF;
   cursor: pointer;
 }
 
-.login-register-form .change-form-link {
+.input-form .change-form-link {
   color: #666666;
   font-size: 1.4rem;
   text-align: center;
   width: 100%;
 }
 
-.login-register-form .change-form-link a {
+.input-form .change-form-link a {
   color: #666666;
   text-decoration: none;
 }
 
-.login-register-form .change-form-link a:hover {
+.input-form .change-form-link a:hover {
   color: #FFFFFF;
 }
 
@@ -589,4 +606,19 @@ body {
 
 .dashboard-footer-terms-button {
   margin: auto;
+}
+
+/* Forgot Password Link */
+.forgot-password {
+  margin: 1vh;
+}
+
+.forgot-password a {
+  color: #666666;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  color: #FFFFFF;
+  cursor: pointer;
 }

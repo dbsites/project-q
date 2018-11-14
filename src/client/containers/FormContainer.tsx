@@ -11,6 +11,8 @@ import * as actions from '../actions/actionCreators'
 
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
+import ForgotPass from '../components/ForgotPass'
+import ResetPass from '../components/ResetPass'; 
 import { formFieldObject } from '../actions/types';
 import { LoginState, RegisterState } from '../reducers/types';
 import FormHeader from '../components/FormHeader';
@@ -35,6 +37,13 @@ const mapStateToProps = (store: any): any => ({
     agreeTerms: store.form.register.agreeTerms,
     registerError: store.form.register.registerError,
   },
+  resetFields: {
+    resetPass: store.form.reset.resetPass,
+    forgotPassEmail: store.form.reset.forgotPassEmail,
+    newPassword: store.form.reset.newPassword,
+    confirmNewPassword: store.form.reset.confirmNewPassword,
+    resetError: store.form.reset.resetError,
+  },
   isAuth: store.user.isAuth,
   userId: store.user.userId,
 });
@@ -57,7 +66,7 @@ let FormContainer: any = (props: any) => {
   //Destructure form values and actions from props
   const {
     match, 
-    loginFields, registerFields,
+    loginFields, registerFields, resetFields,
     fetchFormFail, fetchFormRequest,
     updateField,
     fetchLogout,
@@ -78,20 +87,38 @@ let FormContainer: any = (props: any) => {
       updateField={updateField}
     />
 
+  const forgotPassForm = <ForgotPass
+    fetchFormFail={fetchFormFail}
+    fetchFormRequest={fetchFormRequest}
+    resetFields={resetFields}
+    updateField={updateField}
+  />
+
+  const resetPassForm = <ResetPass
+    fetchFormFail={fetchFormFail}
+    fetchFormRequest={fetchFormRequest}
+    resetFields={resetFields}
+    updateField={updateField}
+  />
+
   let displayForm;
   
-  if (match.params.id === 'logout') {
+  if (match.params.form === 'logout') {
     fetchLogout(userId);
     return <Redirect to='/account/login' />
   }
   
-  if (match.params.id === 'login') {
+  if (match.params.form === 'login') {
     displayForm = loginForm;
-  } else if (match.params.id === 'register') {
+  } else if (match.params.form === 'register') {
     displayForm = registerForm;
+  } else if (match.params.form === 'forgot') {
+    displayForm = forgotPassForm;
+  }else if (match.params.form === 'reset') {
+    displayForm = resetPassForm;
   }
 
-  // Redirect if user is authorized
+  // Redirect if user is authenticated
   const authRedirect = isAuth ? <Redirect to='/'/> : '';
 
   // Pass relevant field values and actions to Login and Registration Form Components
