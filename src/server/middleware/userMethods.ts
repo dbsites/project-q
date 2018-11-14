@@ -1,5 +1,5 @@
 /**
- * ***********************************
+ * ************************************
  *
  * @module  middleware/authenticate.ts
  * @author Team Quail
