@@ -26,7 +26,7 @@ const CompanyList = (props: any) => {
     const companyTickers: any = companyList
       .map((company: any, index: any) =>
         <p id={index.toString()} className="company-list">
-          {company.ticker}
+          {company.ticker.split('.')[0]}
         </p>
       );
 
@@ -92,6 +92,7 @@ const CompanyList = (props: any) => {
             score = 0;
           }
           const name = userIssuesArray[a].name.split(' ').join('=');
+          console.log('name in company list: ', name);
           companyScorePerIssueArray.push(
             // TODO specific ID for div
             <div className="cl-category" id="cl-category-issue">
@@ -113,6 +114,13 @@ const CompanyList = (props: any) => {
           <div className="divTableRow">
             <div className="divTableHead">
 
+              <div className="cl-category" id="cl-category-overall">
+                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVERALL</Link>
+                <div className="cl-list">
+                  {companyOverallScores()}
+                </div>
+              </div>
+
               <div className="cl-category" id="cl-category-name">
                 <Link to='#' className="cl-header" id='cl-header-name' onClick={sortListBy}>COMPANY</Link>
                 <div className="cl-list">
@@ -127,12 +135,6 @@ const CompanyList = (props: any) => {
                 </div>
               </div>
 
-              <div className="cl-category" id="cl-category-overall">
-                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVA</Link>
-                <div className="cl-list">
-                  {companyOverallScores()}
-                </div>
-              </div>
               {companyScoresPerIssue()}
             </div>
           </div>

@@ -34,15 +34,16 @@
 }
 
 #overview-left {
+  border-right: 1px solid white;
   display: inline-block;
   width: 40%;
   text-align: center;
-  margin-top: 15px;
+  /* margin-top: 15px; */
 }
 
 #overview-left h2 {
   color: white;
-  margin: 0;
+  margin: 15px 0 0;
 }
 /* #overview-left h1, 
 #overview-left h3,
@@ -60,7 +61,7 @@
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 #overview-right h3 {
   padding-left: 10px;
@@ -113,12 +114,7 @@
   padding: 10px 0;
 }
 
-#company-info-more {
-  margin: 0;
-  border-top: 1px solid black;
-}
-
-#company-info-found {
+#company-info-more p {
   font-family: 'Cinzel', serif;
   font-size: 0.8em;
   color: #000000;
@@ -128,9 +124,10 @@
   text-align: center;
   padding: 5px 0;
   border-right: 1px solid black;
+  margin-top: 5px;
 }
 
-#company-info-employees {
+#company-info-employees p {
   font-family: 'Cinzel', serif;
   font-size: 0.8em;
   color: #000000;
@@ -147,6 +144,7 @@
 
 #overall-score-chart {
   text-align: center;
+  margin-top: 5px;
 }
 
 #overall-score-chart text {
@@ -156,14 +154,21 @@
 }
 
 #overview-logo {
-  border: 2px solid gold;
-  display: block;
+  border: 2px dashed gold;
+  display: flex;
   margin: auto;
   height: 50px;
   width: auto;
   max-width: 90%;
   margin: 0 15px;
   text-align: center;
+}
+
+#overview-logo p {
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  margin: auto;
 }
 
 #company-url-pre {
@@ -229,6 +234,7 @@
   display: inline-block;
   border: 2px solid black;
   height: 100%;
+  margin-top: 10px;
   overflow: auto;
 }
 
@@ -238,6 +244,7 @@
   top: 2px;
   margin-top: 5px;
   padding-left: 5px;
+  text-align: center;
 }
 
 #cl-category-name {
@@ -246,6 +253,10 @@
   max-width: 200px;
   resize: horizontal;
   overflow: hidden;
+}
+
+#cl-category-overall {
+  margin: 0 15px;
 }
 
 .cl-list {
@@ -257,13 +268,23 @@
   color: #FFFFFF;
 }
 
-.company-names-list, .company-list{
+.company-names-list {
   display: block;
   list-style-position: inside;
   list-style-type: none; 
   /* padding-left: 5px; */
   white-space: nowrap;
   margin: 0;
+}
+
+.company-list{
+  display: block;
+  list-style-position: inside;
+  list-style-type: none; 
+  /* padding-left: 5px; */
+  white-space: nowrap;
+  margin: 0;
+  text-align: center;
 }
 
 .company-list {

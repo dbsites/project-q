@@ -11,6 +11,7 @@ import * as React from 'react';
 import IssuePieChart from './IssuePieChart';
 import * as issueMatch from '../issueMatcher';
 // import Issue from './Issue';
+// import Issue from './Issue';
 
 const IssuesCharts = (props: any) => {
   const {
@@ -38,9 +39,14 @@ const IssuesCharts = (props: any) => {
         const issueInfo = { name, leaning, agreeScore, disagreeScore };
         return <IssuePieChart info={issueInfo} />
       });
-  } else {
-    display = [];
-    while (display.length !== )
+  }
+  else {
+    display = userIssuesArray
+      .map((issueObj: any) => {
+        const { name } = issueObj;
+        const issueInfo = { name };
+        return <IssuePieChart info={issueInfo} />
+      });
   }
 
   return (
