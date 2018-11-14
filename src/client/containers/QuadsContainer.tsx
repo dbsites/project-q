@@ -16,6 +16,7 @@ import '../assets/QuadsContainer.css';
 interface Props {
   selectedCompany: any
   companyList: any
+  fetchCompanyList: any
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
@@ -30,12 +31,11 @@ class QuadsContainer extends React.Component<Props> {
   componentDidMount() {
     const {
       fetchCompanyList,
-      getUserIssues
-    } = this.props as any;
+      getUserIssues,
+    } = this.props;
 
-    fetchCompanyList();
     getUserIssues();
-    return;
+    fetchCompanyList();
   }
 
   render() {
@@ -46,6 +46,8 @@ class QuadsContainer extends React.Component<Props> {
       sortCompanyList,
       userIssues
     } = this.props;
+
+    console.log('in quadscontainer: companylist --> ', companyList);
 
     return (
       <div className="main-dashboard">

@@ -62,4 +62,26 @@ DatabaseMethods.getIssues = (_: Request, res: Response, next: NextFunction) => {
   });
 }
 
+// get issue abbreviated names
+DatabaseMethods.getIssueAbbrvs = (_: Request, res: Response, next: NextFunction) => {
+  // declare object to return to the front end
+  res.locals.issueAbbrvs = {};
+  // query db for issue data
+  db.data.getIssueAbbrvs()
+  .then((issueData: any[]) => {
+    // for each issue object, build out the response object
+    issueData.forEach((issueObject: any) => {
+      res.locals.issueAbbrvs[issueObject.issue_name] = issueObject.abbrv;
+    })
+    // move on to end response and deliver issues object
+    // res.locals.issues = {issueId: { issueId: string, issueName: string, issueBlurb: string}}
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT insertIssues IN addQuestionToDb', error);
+  });
+}
+
+
+
 export default DatabaseMethods;

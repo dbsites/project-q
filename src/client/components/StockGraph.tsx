@@ -4,25 +4,26 @@
  */
 
 import * as React from 'react';
-const stockGraphIMG = require('../assets/stock-graph.png')
 
 const StockGraph = (props: any) => {
-  let display: any = (<p>Click company for stock market performance</p>)
+  const { ticker } = props.selected;
+  let display: any;
 
-  if (props.selected) {
-    display = (<img src={stockGraphIMG} id="img-stock-graph" />);
+  if (!ticker) {
+    display = (<p>Click company for stock market performance</p>)
+  } else {
+    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=50EC4535F41E4734BC8AD78686377BAC&symbol=${ticker.split('.')[0]}&indices=SPX&days=30&palette=Financial-Light&grayscaleLogo=true&animate=true&googleFont=true`
+    display = (
+      <iframe frameBorder='0' scrolling='no' src={URI}>
+      </iframe >
+    );
   }
-  // if (!props.selected.id) {
-  //   display = (<p>Click a company to see their overview</p>);
-  // }
 
   return (
     <div className='quad' id="quad-stock">
-      <div className="issues-container">
+      <div className="stock-container">
         {display}
       </div>
-      {/* <h3>Stock Graph</h3> */}
-      {/* <img src={stockGraphIMG} id="img-stock-graph" /> */}
     </div>
   );
 }

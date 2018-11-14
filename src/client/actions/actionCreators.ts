@@ -101,7 +101,7 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
       'Content-Type': 'application/json',
     },
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify({userId: userId}),
+    body: JSON.stringify({ userId: userId }),
   })
     .then(response => response.json())
     .then((response: any) => {
@@ -118,7 +118,7 @@ export const fetchIssues = () => (dispatch: any) => {
   dispatch({
     type: actions.FETCH_ISSUES_REQUEST,
   });
-  fetch (`${HOST}/getIssues`)
+  fetch(`${HOST}/getIssues`)
     .then(response => response.json())
     .then((response: any) => {
       dispatch({
@@ -149,9 +149,10 @@ export const fetchCompanyList = () => (dispatch: any) => {
 
 export const getUserIssues = () => (dispatch: any, getState: any) => {
   const { user } = getState();
+  console.log('get user issues: ', user);
   dispatch({
     type: actions.GET_USER_ISSUES,
-    payload: user.issues,
+    payload: user.issuesSelected,
   })
 }
 
