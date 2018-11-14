@@ -142,8 +142,6 @@ app.get('/companyList',
   }
 );
 
-
-
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
   // end point for company data submission
