@@ -130,17 +130,19 @@ app.post('/userSurvey',
   UserMethods.updateIssuePositons,
   UserMethods.updateUserSurvey,
   UserMethods.updateSurveyComplete,
+  DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.companyDataArray);
+    res.status(200).send(res.locals.companyData);
   }
 );
 
 // end point for deliverying a list of companies on dashboard render
 app.get('/companyList',
+  DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.companyData);
   }
 );
 
