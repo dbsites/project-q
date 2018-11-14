@@ -37,10 +37,7 @@ const app: Application = express();
 const PORT = 6000;
 
 // define interval constant
-<<<<<<< HEAD
 // const twelveHours = 12 * 60 * 60 * 1000;
-=======
->>>>>>> master
 const fiveSeconds = 5000;
 
 // Allow CORS, credentials true expects  request to come with credentials and origin specifies where they should come from
@@ -62,7 +59,6 @@ function getStockPrices() {
 
   CompanyDatabase.getTickers()
   .then((stockSymbols: any[]) => {
-<<<<<<< HEAD
     stockSymbols.length;
 
     let startSymbol = 0;
@@ -109,47 +105,6 @@ function getStockPrices() {
 // console.log(stockInterval);
 getStockPrices()
 
-=======
-
-    let startSymbol = 0;
-    let stockInterval = setInterval(() => { getStockData() }, fiveSeconds)
-
-    if (startSymbol === 500) {
-      clearInterval(stockInterval);
-    }
-    
-    async function getStockData() {
-      for (let currSymbol = startSymbol; currSymbol < 1; currSymbol += 1) {
-        // make the api call
-        // set the date to a year ago
-        let oneYearAgo: any = Array.from(JSON.stringify(new Date()).substring(1,11)).map((item: any, index: any) => {
-          if (index === 3) {
-            return '7'
-          }
-          return item;
-        });
-        
-        await fetch(`https://api.intrinio.com/prices?identifier=${stockSymbols[currSymbol].ticker.split(".")[0]}&start_date=${oneYearAgo.join("")}&frequency=monthly&api_key=${<string>process.env.STOCK_API_KEY}`)
-        .then((response: any) => response.json())
-        .then((response: any) => {
-          console.log(response.data[0]);
-          CompanyDatabase.storeRecentStockData(response.data[0], stockSymbols[currSymbol].ticker);
-        })
-        .catch((err: any) => console.error(err));
-        // store the data
-        // update the currSymbol
-      }
-    }
-    return true;
-  })
-  .catch(() => {
-    
-  })
-}
-
-console.log(JSON.stringify(new Date()).substring(1,11));
-getStockPrices();
->>>>>>> master
 
 
 
