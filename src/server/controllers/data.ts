@@ -79,4 +79,8 @@ export class DatabaseRepository {
     return this.db.query('SELECT id, issue_name, description FROM issues;');
   } 
 
+  getIssueAbbrvs() {
+    return this.db.any('SELECT issue_name, abbrv FROM issues;');
+  }
+
 }
