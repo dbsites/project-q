@@ -146,15 +146,6 @@ app.get('/companyList',
   }
 );
 
-// app.post('/updateCompanyData',
-//     CompanyDatabase.updateData,
-//     (_: Request, res: Response) => {
-//       res.sendStatus(200);
-//     }
-//   );
-
-
-
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
   // end point for company data submission

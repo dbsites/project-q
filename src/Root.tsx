@@ -22,7 +22,7 @@ const Root = (props: any) => (
     <Router>
       <div className="screen">
         <Route exact path='/' component={App} />
-        <Route exact path='/account/:id' component={FormContainer} />
+        <Route exact path='/account/:form' component={FormContainer} />
         <Route exact path='/terms/:id' component={TermsContainer} />
         <Route path='/' component={Footer} />
       </div>

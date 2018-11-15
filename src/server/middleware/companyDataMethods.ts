@@ -93,4 +93,8 @@ CompanyDatabase.getTickers = () => {
   return db.companies.getTickers();
 }
 
+CompanyDatabase.storeRecentStockData = (dataObject: any, stockSymbol: any) => {
+  return db.companies.storeRecentStockData(dataObject, stockSymbol);
+}
+
 export default CompanyDatabase;
