@@ -62,54 +62,6 @@ function getStockPrices() {
 
   CompanyDatabase.getTickers()
   .then((stockSymbols: any[]) => {
-<<<<<<< HEAD
-    stockSymbols.length;
-
-    let startSymbol = 0;
-    // set the end date to a year ago for refereence in teh call to teh stock api
-    const oneYearAgo: any = Array.from(JSON.stringify(new Date()).substring(1,11)).map((item: any, index: any) => {
-      if (index === 3) {
-        return '7'
-      }
-      return item;
-    });
-
-    recurse(startSymbol);
-    
-    async function recurse (startSymbol: number)  {
-      
-      for (let currSymbol = startSymbol; currSymbol < startSymbol + 50; currSymbol += 1) {
-        // make the api call
-        
-        // base case
-          if (startSymbol > 500) {
-            return true;
-          }
-          await fetch(`https://api.intrinio.com/prices?identifier=${stockSymbols[currSymbol].ticker.split(".")[0]}&start_date=${oneYearAgo.join("")}&frequency=monthly&api_key=${<string>process.env.STOCK_API_KEY}`)
-          .then((response: any) => response.json())
-          .then((response: any) => {
-            console.log(response.data[0]);
-            CompanyDatabase.storeRecentStockData(response.data[0], stockSymbols[currSymbol].ticker);
-            startSymbol += 1;
-          })
-          .catch((err: any) => console.error(err));
-          
-        } 
-
-        startSymbol += 50;
-        return setTimeout(() => {  recurse(startSymbol); }, fiveSeconds);
-      }
-  })
-  .catch(() => {
-    return false;
-  })
-}
-
-// let stockInterval = setInterval(() => { getStockPrices() }, fiveSeconds);
-// console.log(stockInterval);
-getStockPrices()
-
-=======
 
     let startSymbol = 0;
     let stockInterval = setInterval(() => { getStockData() }, fiveSeconds)
@@ -149,7 +101,6 @@ getStockPrices()
 
 console.log(JSON.stringify(new Date()).substring(1,11));
 getStockPrices();
->>>>>>> master
 
 
 
