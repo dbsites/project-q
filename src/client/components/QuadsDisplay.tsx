@@ -28,6 +28,7 @@ const QuadsDisplay = (props: any) => {
         sortListBy={props.sort}
         selectCompany={props.select}
         userIssues={props.issues}
+        issueAbbrvs={props.abbrvs}
       />
     </React.Fragment>
   )
