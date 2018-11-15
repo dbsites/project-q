@@ -1,30 +1,99 @@
 /**
  * @module actionCreators.ts
- * @description Action Creators
+ * @description Synchronous and Asynchronous Action Creators
  */
 
-// import actionType constants
-import actions from './actionTypes';
+// Import actionType constants
+import types from './actionTypes';
 
-// import types
-import { formFieldObject, updateFieldAction } from './types';
-import { LoginState, RegisterState, ResetPassState } from '../reducers/types';
-import { Dispatch } from 'redux';
+// Import Redux Types
+import { Dispatch, Action } from 'redux';
 
-const HOST: string = 'http://localhost:3000';
+// Import Action Interfaces
+import { formFieldObject, toggleIssueAction, updateFieldAction } from './types';
 
-// Login and Registration Form Actions
+// --- Form Synchronous Action Creators --- //
 export const updateField = (fieldObject: formFieldObject): updateFieldAction => ({
-  type: actions.UPDATE_FIELD,
+  type: types.UPDATE_FIELD,
   payload: fieldObject,
 });
 
-// THUNK - Fetch Authorization
+// Fetch Form Request Fail
+export const fetchFormFail = (form: string, message: string) => ({
+  type: types.FETCH_FORM_FAILURE,
+  form: form,
+  message: message,
+})
+
+// --- Issue Synchronous Action Creators --- // --- UNIT TESTING 100% --- //
+export const addIssue = (issueId: string): toggleIssueAction => ({
+  type: types.ADD_ISSUE,
+  issueId,
+})
+
+export const removeIssue = (issueId: string): toggleIssueAction => ({
+  type: types.REMOVE_ISSUE,
+  issueId,
+})
+
+export const clearIssues = (): Action<string> => ({
+  type: types.CLEAR_ISSUES,
+});
+
+
+// --- User Synchronous Action Creators --- //
+export const updateIssue = (issue: any) => ({
+  type: types.UPDATE_ISSUE_POSITION,
+  payload: issue,
+})
+
+export const getUserIssues = () => (dispatch: any, getState: any) => {
+  const { user } = getState();
+  dispatch({
+    type: types.GET_USER_ISSUES,
+    payload: user.issuesSelected,
+  })
+}
+
+// --- Company Synchronous Action Creators --- //
+export const selectCompany = (event: any) => ({
+  type: types.SELECT_COMPANY,
+  payload: event
+})
+
+export const sortCompanyList = (event: any) => ({
+  type: types.SORT_COMPANY_LIST,
+  payload: event
+})
+
+export const updateIssuesSelected = () => ({
+  type: types.UPDATE_ISSUES_SELECTED,
+})
+
+// Survey Question Actions
+export const answerQuestion = (event: any) => ({
+  type: types.ANSWER_QUESTION,
+  payload: event,
+})
+
+export const prevPage = () => ({
+  type: types.PREV_PAGE,
+})
+
+// --- ASYNC --- //
+
+// Import Reducer State Interfaces
+import { LoginState, RegisterState, ResetPassState } from '../reducers/types';
+
+// Set HOST URL - TODO: Refactor
+const HOST: string = 'http://localhost:3000';
+
+// Fetch Authorization
 export const fetchAuth = () => (dispatch: Dispatch) => {
   const fetchURI: string = `${HOST}/auth`;
   // Issue fetch request
   dispatch({
-    type: actions.FETCH_AUTH_REQUEST,
+    type: types.FETCH_AUTH_REQUEST,
   });
   fetch(fetchURI, {
     method: 'GET',
@@ -33,7 +102,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
     .then(response => response.json())
     .then((response: any) => {
       dispatch({
-        type: actions.FETCH_AUTH_SUCCESS,
+        type: types.FETCH_AUTH_SUCCESS,
         response
       });
     })
@@ -67,14 +136,14 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
       if (response.status === 200) return response.json();
       if (response.status === 401) {
         dispatch({
-          type: actions.FETCH_FORM_FAILURE,
+          type: types.FETCH_FORM_FAILURE,
           form: form,
           message: 'Invalid email address or password',
         })
         throw new Error('Invalid email address or password')
       } else {
         dispatch({
-          type: actions.FETCH_FORM_FAILURE,
+          type: types.FETCH_FORM_FAILURE,
           form: form,
           message: 'Something has gone wrong - please try again',
         })
@@ -84,7 +153,7 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     // .then(response => response.json())
     .then((response: any) => {
       dispatch({
-        type: actions.FETCH_FORM_SUCCESS,
+        type: types.FETCH_FORM_SUCCESS,
         response,
       });
     })
@@ -106,7 +175,7 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
     .then(response => response.json())
     .then((response: any) => {
       dispatch({
-        type: actions.FETCH_LOGOUT_SUCCESS,
+        type: types.FETCH_LOGOUT_SUCCESS,
         response,
       });
     })
@@ -116,13 +185,13 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
 // THUNK - Fetch Issues to populate issues state (issueId, text, blurb)
 export const fetchIssues = () => (dispatch: any) => {
   dispatch({
-    type: actions.FETCH_ISSUES_REQUEST,
+    type: types.FETCH_ISSUES_REQUEST,
   });
   fetch(`${HOST}/getIssues`)
     .then(response => response.json())
     .then((response: any) => {
       dispatch({
-        type: actions.FETCH_ISSUES_SUCCESS,
+        type: types.FETCH_ISSUES_SUCCESS,
         response,
       })
     })
@@ -134,44 +203,25 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .then((response: any) => response.json())
     .then((data: any) => {
       dispatch({
-        type: actions.FETCH_COMPANY_LIST,
+        type: types.FETCH_COMPANY_LIST,
         data
       });
       dispatch({
-        type: actions.ADD_COMPANY_SCORE
+        type: types.ADD_COMPANY_SCORE
       });
       dispatch({
-        type: actions.MERGE_ISSUE_SCORES
+        type: types.MERGE_ISSUE_SCORES
       })
     })
     .catch((err: any) => console.error(err));
 }
-
-export const getUserIssues = () => (dispatch: any, getState: any) => {
-  const { user } = getState();
-  console.log('get user issues: ', user);
-  dispatch({
-    type: actions.GET_USER_ISSUES,
-    payload: user.issuesSelected,
-  })
-}
-
-export const selectCompany = (event: any) => ({
-  type: actions.SELECT_COMPANY,
-  payload: event
-})
-
-export const sortCompanyList = (event: any) => ({
-  type: actions.SORT_COMPANY_LIST,
-  payload: event
-})
 
 // THUNK - Fetch Submit User Issues
 export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
   const fetchURI: string = `${HOST}/userIssues`;
   // Issue fetch request
   dispatch({
-    type: actions.FETCH_SUBMIT_ISSUES_REQUEST,
+    type: types.FETCH_SUBMIT_ISSUES_REQUEST,
   });
   fetch(fetchURI, {
     method: 'POST',
@@ -187,7 +237,7 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
     .then(response => response.json())
     .then((response: any) => {
       dispatch({
-        type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
+        type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
         response,
       });
     })
@@ -197,7 +247,7 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   // Issue Fetch Request
   dispatch({
-    type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
+    type: types.FETCH_SUBMIT_SURVEY_REQUEST,
   });
   fetch(`${HOST}/userSurvey`, {
     method: 'POST',
@@ -210,50 +260,9 @@ export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
     .then(response => response.json())
     .then(response => {
       dispatch({
-        type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
+        type: types.FETCH_SUBMIT_SURVEY_SUCCESS,
         response,
       });
     })
     .catch(err => console.error(err))
 }
-
-export const updateIssue = (issue: any) => ({
-  type: actions.UPDATE_ISSUE_POSITION,
-  payload: issue,
-})
-
-// Issue Ranking Actions
-export const clearIssues = () => ({
-  type: actions.CLEAR_ISSUES,
-});
-
-export const addIssue = (issueId: string) => ({
-  type: actions.ADD_ISSUE,
-  issueId,
-})
-
-export const removeIssue = (issueId: string) => ({
-  type: actions.REMOVE_ISSUE,
-  issueId,
-})
-
-export const updateIssuesSelected = () => ({
-  type: actions.UPDATE_ISSUES_SELECTED,
-})
-
-// Survey Question Actions
-export const answerQuestion = (event: any) => ({
-  type: actions.ANSWER_QUESTION,
-  payload: event,
-})
-
-export const prevPage = () => ({
-  type: actions.PREV_PAGE,
-})
-
-// Fetch Form Request Fail
-export const fetchFormFail = (form: string, message: string) => ({
-  type: actions.FETCH_FORM_FAILURE,
-  form: form,
-  message: message,
-})

@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/Quail-CS/project-q#readme",
   "dependencies": {
-    
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
