@@ -88,12 +88,39 @@ export interface LoadingState {
   readonly surveyLoading: boolean,
 }
 
-// TODO: will update to appropriate types (GM)
+//***************************** */
+
 export interface CompanyState {
-  readonly selectedCompany: any
-  readonly companyList: any
+  readonly full_name: string | null
+  readonly short_name: string | null
+  readonly ticker: string | null
+  readonly description: string | null
+  readonly yearFounded: number | null
+  readonly numberEmployees: number | null
+  readonly url: number | null
+  readonly logo: string | null
 }
 
+export interface CompanyListState {
+  [serializedNumber: number]: CompanyState
+}
+
+export interface UserIssuesState {
+  [issueID: string]: string
+}
+
+export interface IssueAbbrvsState {
+  [issueName: string]: string
+}
+
+export interface CompanyDataState {
+  readonly selectedCompany: CompanyState | null
+  readonly companyList: CompanyListState
+  readonly userIssues: UserIssuesState
+  readonly issueAbbrvs: IssueAbbrvsState
+}
+
+//***************************** */
 export interface ApplicationState {
   readonly company: CompanyState,
   readonly form: FormState,
@@ -102,3 +129,4 @@ export interface ApplicationState {
   readonly survey: SurveyState,
   readonly user: UserState,
 };
+
