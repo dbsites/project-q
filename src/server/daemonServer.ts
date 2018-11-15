@@ -40,7 +40,7 @@ const PORT = 6000;
 const fiveSeconds = 5000;
 
 // Allow CORS, credentials true expects  request to come with credentials and origin specifies where they should come from
-app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
+app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
 
 //  protects from some well-known web vulnerabilities by setting HTTP headers appropriately.
 app.use(helmet());

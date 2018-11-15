@@ -56,7 +56,7 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
         companyData[item.full_name] = {};
         companyData[item.full_name].full_name = item.full_name;
         companyData[item.full_name].short_name = item.short_name;
-        companyData[item.full_name].ticker = item.ticker.split('.')[0];
+        companyData[item.full_name].ticker = item.ticker;
         companyData[item.full_name].description = item.description;
         companyData[item.full_name].yearFounded = item.year_founded;
         companyData[item.full_name].numberEmployees = item.number_employees;
@@ -95,6 +95,25 @@ CompanyDatabase.getTickers = () => {
 
 CompanyDatabase.storeRecentStockData = (dataObject: any, stockSymbol: any) => {
   return db.companies.storeRecentStockData(dataObject, stockSymbol);
+}
+
+CompanyDatabase.getStockData = (req: Request, res: Response, next: NextFunction) => {
+  res.locals.stockData = {};
+  db.companies.getStockData(req.body.ticker)
+  .then((stockDataObject: any) => {
+    console.log(stockDataObject);
+    res.locals.stockData.timestamp = stockDataObject.timestamp;
+    res.locals.stockData.open = stockDataObject.open;
+    res.locals.stockData.high = stockDataObject.high;
+    res.locals.stockData.low = stockDataObject.low;
+    res.locals.stockData.close = stockDataObject.close;
+    res.locals.stockData.volume = stockDataObject.volume;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getStockData IN companyDataMethods.ts', error);
+    res.status(500).send("SERVER FAILURE");
+  })
 }
 
 export default CompanyDatabase;
