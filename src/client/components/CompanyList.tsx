@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import Loading from './loading/Loading';
 
 const CompanyList = (props: any) => {
-  const { companyList, sortListBy, userIssues } = props;
+  const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
   const { issueMatcher } = issueMatch;
 
   if (companyList.length === 0) {
@@ -19,7 +19,7 @@ const CompanyList = (props: any) => {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
         <Link id={index} className="company-names-list" to="#" onClick={props.selectCompany}>
-          {company.name}
+          {company.short_name}
         </Link>
       );
 
@@ -92,11 +92,16 @@ const CompanyList = (props: any) => {
             score = 0;
           }
           const name = userIssuesArray[a].name.split(' ').join('=');
-          console.log('name in company list: ', name);
+
+          const abbrvSearchWord = name.slice(0, 2);
+
+          const issueWord: any = Object.keys(issueAbbrvs)
+            .filter((issueName: any) => issueName.includes(abbrvSearchWord));
+
           companyScorePerIssueArray.push(
             // TODO specific ID for div
             <div className="cl-category" id="cl-category-issue">
-              <Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>ISS</Link>
+              <Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>{issueAbbrvs[issueWord[0]]}</Link>
               <div className="cl-list">
                 {...issueScoresArray}
               </div>
@@ -115,7 +120,7 @@ const CompanyList = (props: any) => {
             <div className="divTableHead">
 
               <div className="cl-category" id="cl-category-overall">
-                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVERALL</Link>
+                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVL</Link>
                 <div className="cl-list">
                   {companyOverallScores()}
                 </div>
