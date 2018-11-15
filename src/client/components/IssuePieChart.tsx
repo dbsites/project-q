@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 
-import { PieChart } from 'react-easy-chart';
+import { PieChart } from 'recharts';
 
 import '../assets/IssueDisplay.css';
 
@@ -18,17 +18,20 @@ const IssueDisplay = (props: any) => {
   } = props.info;
 
   console.log('issue display:', name, agreeScore, disagreeScore)
-        
+
   return (
     <div className="issue-box">
       <PieChart
-        size={100}
+    
+        width={100} height={400} 
         data={[
-          { key: 'Agree', value: agreeScore, color: '#005005' },
+          onMouseEnter: { key: 'Agree', value: agreeScore, color: '#005005' },
           { key: 'Disagree', value: disagreeScore, color: '#8e0000' }
         ]
         }
-      />
+      >
+        {/* <onMouse /> */}
+      </PieChart>
       <p>{name}</p>
     </div>
   );

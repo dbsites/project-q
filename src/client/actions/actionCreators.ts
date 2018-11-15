@@ -61,6 +61,7 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Form Response: ', response);
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
@@ -79,10 +80,11 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
       'Content-Type': 'application/json',
     },
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify({userId: userId}),
+    body: JSON.stringify({ userId: userId }),
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Logout Response: ', response);
       dispatch({
         type: actions.FETCH_LOGOUT_SUCCESS,
         response,
@@ -96,9 +98,10 @@ export const fetchIssues = () => (dispatch: any) => {
   dispatch({
     type: actions.FETCH_ISSUES_REQUEST,
   });
-  fetch (`${HOST}/getIssues`)
+  fetch(`${HOST}/getIssues`)
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Issues Response: ', response);
       dispatch({
         type: actions.FETCH_ISSUES_SUCCESS,
         response,
@@ -111,6 +114,7 @@ export const fetchCompanyList = () => (dispatch: any) => {
   fetch(`${HOST}/companyList`)
     .then((response: any) => response.json())
     .then((data: any) => {
+      console.log('Fetch Company List Response: ', data);
       dispatch({
         type: actions.FETCH_COMPANY_LIST,
         data
@@ -127,9 +131,10 @@ export const fetchCompanyList = () => (dispatch: any) => {
 
 export const getUserIssues = () => (dispatch: any, getState: any) => {
   const { user } = getState();
+  console.log('get user issues: ', user);
   dispatch({
     type: actions.GET_USER_ISSUES,
-    payload: user.issues,
+    payload: user.issuesSelected,
   })
 }
 
@@ -163,6 +168,7 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('Fetch Submit Issues Response: ', response);
       dispatch({
         type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
         response,
@@ -220,6 +226,7 @@ export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   })
     .then(response => response.json())
     .then(response => {
+      console.log('Fetch Submit Survey Response: ', response);
       dispatch({
         type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
         response,
