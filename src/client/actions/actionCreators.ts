@@ -8,7 +8,7 @@ import actions from './actionTypes';
 
 // import types
 import { formFieldObject, updateFieldAction } from './types';
-import { LoginState, RegisterState } from '../reducers/types';
+import { LoginState, RegisterState, ResetPassState } from '../reducers/types';
 import { Dispatch } from 'redux';
 
 const HOST: string = 'http://localhost:3000';
@@ -32,7 +32,6 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Auth Response: ', response);
       dispatch({
         type: actions.FETCH_AUTH_SUCCESS,
         response
@@ -42,14 +41,18 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
 }
 
 // THUNK - Fetch Form Request
-export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState) => (dispatch: Dispatch) => {
-  // Derive POST request URI from form to be submitted
+export const fetchFormRequest = (form: string, formFields: LoginState | RegisterState | ResetPassState) => (dispatch: Dispatch) => {
+  // Derive POST request URI from form to be submitted and validate form fields
   let fetchURI: string = `${HOST}`;
   if (form === 'login') {
     fetchURI = fetchURI + '/login';
   } else if (form === 'register') {
     fetchURI = fetchURI + '/register';
-  } else throw new Error();
+  } else if (form === 'reset' && !(<ResetPassState>formFields).resetPass) {
+    fetchURI = fetchURI + '/forgot';
+  } else if (form === 'reset' && (<ResetPassState>formFields).resetPass) {
+    fetchURI = fetchURI + '/reset';
+  } else throw new Error('Something has gone wrong - please try again');
   // Issue fetch request
   fetch(fetchURI, {
     method: 'POST',
@@ -59,9 +62,27 @@ export const fetchFormRequest = (form: string, formFields: LoginState | Register
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
     body: JSON.stringify(formFields),
   })
-    .then(response => response.json())
+    .then(response => {
+      console.log('pre-JSON response', response);
+      if (response.status === 200) return response.json();
+      if (response.status === 401) {
+        dispatch({
+          type: actions.FETCH_FORM_FAILURE,
+          form: form,
+          message: 'Invalid email address or password',
+        })
+        throw new Error('Invalid email address or password')
+      } else {
+        dispatch({
+          type: actions.FETCH_FORM_FAILURE,
+          form: form,
+          message: 'Something has gone wrong - please try again',
+        })
+        throw new Error('Something has gone wrong - please try again')
+      }
+    })
+    // .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Form Response: ', response);
       dispatch({
         type: actions.FETCH_FORM_SUCCESS,
         response,
@@ -84,7 +105,6 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Logout Response: ', response);
       dispatch({
         type: actions.FETCH_LOGOUT_SUCCESS,
         response,
@@ -101,7 +121,6 @@ export const fetchIssues = () => (dispatch: any) => {
   fetch(`${HOST}/getIssues`)
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Issues Response: ', response);
       dispatch({
         type: actions.FETCH_ISSUES_SUCCESS,
         response,
@@ -114,7 +133,6 @@ export const fetchCompanyList = () => (dispatch: any) => {
   fetch(`${HOST}/companyList`)
     .then((response: any) => response.json())
     .then((data: any) => {
-      console.log('Fetch Company List Response: ', data);
       dispatch({
         type: actions.FETCH_COMPANY_LIST,
         data
@@ -168,7 +186,6 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('Fetch Submit Issues Response: ', response);
       dispatch({
         type: actions.FETCH_SUBMIT_ISSUES_SUCCESS,
         response,
@@ -176,6 +193,29 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
     })
     .catch((err: any) => console.error(err));
 };
+
+export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
+  // Issue Fetch Request
+  dispatch({
+    type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
+  });
+  fetch(`${HOST}/userSurvey`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    body: JSON.stringify(surveyObj),
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
+        response,
+      });
+    })
+    .catch(err => console.error(err))
+}
 
 export const updateIssue = (issue: any) => ({
   type: actions.UPDATE_ISSUE_POSITION,
@@ -211,26 +251,9 @@ export const prevPage = () => ({
   type: actions.PREV_PAGE,
 })
 
-export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
-  // Issue Fetch Request
-  dispatch({
-    type: actions.FETCH_SUBMIT_SURVEY_REQUEST,
-  });
-  fetch(`${HOST}/userSurvey`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify(surveyObj),
-  })
-    .then(response => response.json())
-    .then(response => {
-      console.log('Fetch Submit Survey Response: ', response);
-      dispatch({
-        type: actions.FETCH_SUBMIT_SURVEY_SUCCESS,
-        response,
-      });
-    })
-    .catch(err => console.error(err))
-}
+// Fetch Form Request Fail
+export const fetchFormFail = (form: string, message: string) => ({
+  type: actions.FETCH_FORM_FAILURE,
+  form: form,
+  message: message,
+})

@@ -4,7 +4,8 @@
  */
 
 import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import FormError from './FormError';
 import FormField from './FormField';
 
 // import FormError from './FormError';
@@ -15,35 +16,39 @@ const LoginForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     loginFields,
+    fetchFormFail,
     fetchFormRequest,
     updateField
   } = props;
 
   const {
+    loginError,
+    emailValid,
     loginEmail,
     loginPassword,
     rememberMe,
   } = loginFields;
 
-  // Check for cookie - if present, log user in
-  if (document.cookie) {
-    const cookieArray = document.cookie.split(';');
-    for (let item of cookieArray) {
-      let itemString = item.trim();
-      if(itemString.startsWith('key=')) {
-        return <Redirect to='/' />;
-      }
-    }
+  const callFetchFormRequest = (loginFields: any): any => {
+    if (!emailValid) return fetchFormFail('login', 'Please enter a valid email address');
+    if (loginPassword.length < 8) return fetchFormFail('login', 'Password must be at least 8 characters');
+    return fetchFormRequest('login', loginFields)
   }
 
   return (
-    <div className="login-register-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('login', loginFields)}}>
+    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('login', loginFields)}}>
       
       <FormField autofocus={true} field={loginEmail} form="login" name="loginEmail" type="text" updateField={updateField} >Email: </FormField>
       <FormField autofocus={false} field={loginPassword} form="login" name="loginPassword" type="password" updateField={updateField} >Password: </FormField>
-      <FormField field={rememberMe} form="login" name="rememberMe" type="checkbox" updateField={updateField} >Remember Me </FormField>
+      <div className="input-check-div">
+        <FormField field={rememberMe} form="login" name="rememberMe" type="checkbox" updateField={updateField} >Remember Me </FormField>
+        <div className="forgot-password">
+          <Link to='/account/forgot'>Forgot Your Password?</Link>
+        </div>
+      </div>
+      <FormError message={loginError} />
       <div className="submit-button-container">
-        <div className="submit-button" onClick={() => fetchFormRequest('login', loginFields)}>Log In</div>
+        <div className="submit-button" onClick={() => callFetchFormRequest(loginFields)}>Log In</div>
       </div>
       <div className="change-form-link">
         <Link to='/account/register'>Sign up</Link>

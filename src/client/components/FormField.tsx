@@ -25,14 +25,14 @@ const FormField = (props: any): any => {
 
   // Declare input field
   const input: JSX.Element = type !== 'checkbox' ?
-  <input autoFocus={autofocus} className="input-field" id={name} name={name} onChange={callUpdateField} type={type} value={field} /> :  
-  <input className="input-check" id={name} name={name} onChange={callUpdateField} type={type} checked={field} />;
+    <input autoFocus={autofocus} className="input-field" id={name} name={name} onChange={callUpdateField} type={type} value={field} /> :  
+    <input className="input-check" id={name} name={name} onChange={callUpdateField} type={type} checked={field} />;
 
 
   // Declare label and warpper
   let label = type !== 'checkbox' ?
-  <div className="input-div"><label className="input-field-label" htmlFor={name}>{children} </label> {input}</div>:  // case: default
-  <div className="input-check-div"><label className="input-check-label" htmlFor={name}>{children} {input} <span className="checkmark" /></label></div>; // case: checkbox
+    <div className="input-div"><label className="input-field-label" htmlFor={name}>{children} </label> {input}</div>:  // case: default
+    <label className="input-check-label" htmlFor={name}>{children} {input} <span className="checkmark" /></label>; // case: checkbox
 
   // Additional wrapping in case of name field
   if (name === 'firstName' || name === 'lastName') {

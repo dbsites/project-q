@@ -3,10 +3,18 @@
  * @description Login/Registration Form Error Presentation Component
  */
 
-// import React from 'react';
+import * as React from 'react';
 
-const FormError = () => {
-  return;
+export interface IFormErrorProps {
+  message: string;
+}
+
+const FormError = (props: IFormErrorProps): JSX.Element => {
+  const { message } = props;
+  if (message.length) {
+    return <div className="form-error">{message}</div>
+  }
+  return <div className="form-error"></div>
 }
 
 export default FormError;
