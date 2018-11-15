@@ -16,11 +16,12 @@ import '../assets/QuadsContainer.css';
 interface Props {
   selectedCompany: any
   companyList: any
+  userIssues: any
+  issueAbbrvs: any
   fetchCompanyList: any
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
-  userIssues: any
 }
 
 class QuadsContainer extends React.Component<Props> {
@@ -41,13 +42,12 @@ class QuadsContainer extends React.Component<Props> {
   render() {
     const {
       companyList,
+      issueAbbrvs,
       selectCompany,
       selectedCompany,
       sortCompanyList,
       userIssues
     } = this.props;
-
-    console.log('in quadscontainer: companylist --> ', companyList);
 
     return (
       <div className="main-dashboard">
@@ -61,6 +61,7 @@ class QuadsContainer extends React.Component<Props> {
             selected={selectedCompany}
             sort={sortCompanyList}
             issues={userIssues}
+            abbrvs={issueAbbrvs}
           />
         </div>
       </div>
@@ -72,6 +73,7 @@ const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
   selectedCompany: state.company.selectedCompany,
   userIssues: state.company.userIssues,
+  issueAbbrvs: state.company.issueAbbrvs,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({

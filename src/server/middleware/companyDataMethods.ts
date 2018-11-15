@@ -54,8 +54,9 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
       }
       else {
         companyData[item.full_name] = {};
-        companyData[item.full_name].name = item.full_name;
-        companyData[item.full_name].ticker = item.ticker;
+        companyData[item.full_name].full_name = item.full_name;
+        companyData[item.full_name].short_name = item.short_name;
+        companyData[item.full_name].ticker = item.ticker.split('.')[0];
         companyData[item.full_name].description = item.description;
         companyData[item.full_name].yearFounded = item.year_founded;
         companyData[item.full_name].numberEmployees = item.number_employees;
@@ -66,7 +67,9 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
         companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
       }
     })
-    res.locals.companyDataArray = companyData;
+    res.locals.companyData = {};
+    res.locals.companyData.companyDataArray = companyData;
+    res.locals.companyData.issueAbbrvs = res.locals.issueAbbrvs
     next();
   })
   .catch((error: any) => {
@@ -88,6 +91,10 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
 
 CompanyDatabase.getTickers = () => {
   return db.companies.getTickers();
+}
+
+CompanyDatabase.storeRecentStockData = (dataObject: any, stockSymbol: any) => {
+  return db.companies.storeRecentStockData(dataObject, stockSymbol);
 }
 
 export default CompanyDatabase;

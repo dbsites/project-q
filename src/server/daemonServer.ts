@@ -19,8 +19,13 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
+// import node-fetch to hit the finance api
+import fetch from 'node-fetch';
+// import the env files
+import * as dotenv from 'dotenv';
+dotenv.config();
 // import companyDb middleware
-// import CompanyDatabase from './middleware/companyDataMethods';
+import CompanyDatabase from './middleware/companyDataMethods';
 // import database middleware
 // import DatabaseMethods from './middleware/additionalDataMethods';
 
@@ -32,7 +37,7 @@ const app: Application = express();
 const PORT = 6000;
 
 // define interval constant
-// const interval = 60 * 1000;
+const fiveSeconds = 5000;
 
 // Allow CORS, credentials true expects  request to come with credentials and origin specifies where they should come from
 app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
@@ -49,19 +54,55 @@ app.use(bodyParser.json({limit: '10mb'}));
 // one call per stock ticker
 // -> query for tickers 
 
-// async function getStockPrices() {
-//   const stockSymbols: any = [];
-//   await CompanyDatabase.getTickers();
-// }
+function getStockPrices() {
 
-// function showSymbols() {
-//   return 
-// }
+  CompanyDatabase.getTickers()
+  .then((stockSymbols: any[]) => {
+    stockSymbols.length;
 
-// stockSymbols.forEach((item: any) => {
-//   console.log(item);
-// });
+    let startSymbol = 0;
+    // set the end date to a year ago for refereence in teh call to teh stock api
+    const oneYearAgo: any = Array.from(JSON.stringify(new Date()).substring(1,11)).map((item: any, index: any) => {
+      if (index === 3) {
+        return '7'
+      }
+      return item;
+    });
 
+    recurse(startSymbol);
+    
+    async function recurse (startSymbol: number)  {
+      
+      for (let currSymbol = startSymbol; currSymbol < startSymbol + 50; currSymbol += 1) {
+        // make the api call
+        
+        // base case
+          if (startSymbol > 500) {
+            return true;
+          }
+          await fetch(`https://api.intrinio.com/prices?identifier=${stockSymbols[currSymbol].ticker.split(".")[0]}&start_date=${oneYearAgo.join("")}&frequency=monthly&api_key=${<string>process.env.STOCK_API_KEY}`)
+          .then((response: any) => response.json())
+          .then((response: any) => {
+            console.log(response.data[0]);
+            CompanyDatabase.storeRecentStockData(response.data[0], stockSymbols[currSymbol].ticker);
+            startSymbol += 1;
+          })
+          .catch((err: any) => console.error(err));
+          
+        } 
+
+        startSymbol += 50;
+        return setTimeout(() => {  recurse(startSymbol); }, fiveSeconds);
+      }
+  })
+  .catch(() => {
+    return false;
+  })
+}
+
+// let stockInterval = setInterval(() => { getStockPrices() }, fiveSeconds);
+// console.log(stockInterval);
+getStockPrices()
 
 // iterate through the tickers 
 // hit the api with the ticker data

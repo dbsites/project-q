@@ -4,12 +4,14 @@
  */
 
 import actions from '../actions/actionTypes';
+import { CompanyDataState } from '../reducers/types';
 import * as issueMatch from '../issueMatcher';
 
-const initialCompanyState: any = {
-  selectedCompany: {},
+const initialCompanyState: CompanyDataState = {
+  selectedCompany: null,
   companyList: [],
   userIssues: {},
+  issueAbbrvs: {}
 };
 
 const { issueMatcher } = issueMatch;
@@ -22,6 +24,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         companyList: companyListArray,
+        issueAbbrvs: action.data.issueAbbrvs
       };
 
     case actions.GET_USER_ISSUES:
@@ -101,25 +104,23 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     case actions.SORT_COMPANY_LIST:
       const companyArray = state.companyList;
       const category = action.payload.field.split('-')[2];
-      console.log('sort category: ', category);
-
       let sortedList;
 
       /**
-       * Sort list by 'NAME'
+       * Sort list by 'COMPANY NAME'
        */
       if (category === 'name') {
-        const topListCompanyName = companyArray[0].name;
-        if (topListCompanyName[0] !== 'Z') {
+        const topListCompanyName = companyArray[0].short_name;
+        if (topListCompanyName[0] !== '2') {
           sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            if (a.name.toUpperCase() > b.name.toUpperCase()) return -1;
-            if (a.name.toUpperCase() < b.name.toUpperCase()) return 1;
+            if (a.short_name.toUpperCase() < b.short_name.toUpperCase()) return -1;
+            if (a.short_name.toUpperCase() > b.short_name.toUpperCase()) return 1;
             return 0;
           });
         } else {
           sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            if (a.name.toUpperCase() < b.name.toUpperCase()) return -1;
-            if (a.name.toUpperCase() > b.name.toUpperCase()) return 1;
+            if (a.short_name.toUpperCase() > b.short_name.toUpperCase()) return -1;
+            if (a.short_name.toUpperCase() < b.short_name.toUpperCase()) return 1;
             return 0;
           });
         }

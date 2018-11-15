@@ -1,0 +1,44 @@
+.issues-container {
+  /* margin-left: 5px; */
+  /* display: inline-block; */
+  /* border: 2px solid gold; */
+  /* margin: 20px auto; */
+  /* height: 200px; */
+  /* width: 100%; */
+  /* text-align: center; */
+  /* vertical-align: top; */
+}
+
+.issues-container p {
+  color: #FFFFFF;
+}
+
+.stock-container {
+  margin: 20px auto;
+}
+
+.stock-container p {
+
+  color: #FFFFFF;
+}
+
+.issue-box {
+  height: 49%;
+  width: 32.5%;
+  border: 2px solid red;
+  display: inline-block;
+  vertical-align: top; 
+}
+
+.issue-pie {
+  margin: 20px auto;
+  width: 100px;
+  height: 100px;
+}
+
+.issue-box p {
+  margin: 0;
+  color: #ffffff,
+}
+
+
