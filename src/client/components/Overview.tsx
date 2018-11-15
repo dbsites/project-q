@@ -5,7 +5,8 @@
 
 import * as React from 'react';
 
-import { PieChart } from 'react-easy-chart';
+import OverviewPie from './OverviewPie';
+// import { number } from 'prop-types';
 
 // interface CompanyInfo {
 //   readonly description: string,
@@ -23,14 +24,18 @@ const Overview = (props: any) => {
 
   let display;
 
-  if (!props.selected.ticker) {
+  if (!props.selected) {
+
     display = (<p>Click a company to see their overview</p>);
+
   } else {
+
     const {
       description,
       overallScore,
       yearFounded,
       numberEmployees,
+      full_name,
       url,
       /* logoticker */ } = props.selected;
 
@@ -38,39 +43,19 @@ const Overview = (props: any) => {
       .filter(key => props.selected[key].alignedScore)
       .length;
 
-    const overall = Math.floor(overallScore / userIssuesLength);
+    const overall = Math.round(overallScore / userIssuesLength);
 
-    const overallColor = overall >= 60 ? '#436F4D' : overall >= 50 ? '#898A40' : '#6F4343';
-    const diff = 100 - overall;
-
-    const descrip = description.slice(0, 450);
+    const descrip = description.slice(0, 500);
 
     display = (
       <React.Fragment>
         <div id="overview-left">
-          <h2>{overall}% Match</h2>
+          <h2>{full_name}</h2>
           <div id="overall-score-chart">
-            <PieChart
-              // labels
-              size={175}
-              styles={{
-                '.chart_text': {
-                  fontFamily: 'serif',
-                  fontSize: '30px',
-                  fill: '#FFF'
-                }
-              }}
-              data={[
-                { key: `${overall}`, value: overall/*overallScore*/, color: overallColor },
-                { key: '', value: diff, color: '#000000' }
-              ]}
-            />
+            <OverviewPie overall={overall} />
           </div>
           {/* <p id="company-market-price">Market Price: {ticker.split('.')[0]}</p> */}
-          <span id="company-info-more">
-            <p>Founded: <br />{yearFounded}</p>
-            <p>Employees: <br /> {numberEmployees}</p>
-          </span>
+          <h2>{overall}% Match</h2>
         </div>
         <div id="overview-right">
           {/* <h3>{name} ({ticker.split('.')[0]})</h3> */}
@@ -79,13 +64,18 @@ const Overview = (props: any) => {
             {/* <img src={logo} /> */}
           </div>
           <div id="overview-description-container">
+            <div id="company-info-more">
+              <ul>
+                <li><strong>Founded </strong>{yearFounded}</li>
+                <li><strong># of Employees </strong>{numberEmployees}</li>
+              </ul>
+            </div>
             <p id="company-info">
               {descrip}
             </p>
             <p id="company-url-pre">
-              More information at:
+              Learn more at: <a href={`http://${url}`} target="_blank">{url}</a>
             </p>
-            <a href={`http://${url}`} target="_blank">{url}</a>
           </div>
         </div>
       </React.Fragment>
