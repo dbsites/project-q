@@ -38,7 +38,10 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
       return nextState;
       
     case actions.UPDATE_ISSUE_POSITION:
-      nextState[action.payload.issue] = action.payload.position;
+      nextState[action.issueId] = action.position;
+      console.log('Action: ', action);
+      console.log('State: ', state);
+      console.log('Next State: ', nextState);
       return {
         ...state,
         ...nextState

@@ -13,7 +13,7 @@ import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';
 import ForgotPass from '../components/ForgotPass'
 import ResetPass from '../components/ResetPass'; 
-import { formFieldObject } from '../actions/types';
+import { IFormFieldObject } from '../actions/types';
 import { LoginState, RegisterState } from '../reducers/types';
 import FormHeader from '../components/FormHeader';
 
@@ -54,8 +54,8 @@ const mapStateToProps = (store: any): any => ({
 // Extract form update and submit actions from store to pass as props
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    updateField: (fieldObject: formFieldObject) => dispatch(actions.updateField(fieldObject)),
-    fetchFormFail: (form: string, message: string) => dispatch(actions.fetchFormFail(form, message)),
+    updateField: (fieldObject: IFormFieldObject) => dispatch(actions.updateField(fieldObject)),
+    fetchFormFailure: (form: string, message: string) => dispatch(actions.fetchFormFailure(form, message)),
     fetchFormRequest: (form: string, formFields: LoginState | RegisterState) => dispatch(actions.fetchFormRequest(form, formFields)),
     fetchLogout: (userId: string) => dispatch(actions.fetchLogout(userId)),
   }
@@ -67,7 +67,7 @@ let FormContainer: any = (props: any) => {
   const {
     match, 
     loginFields, registerFields, resetFields,
-    fetchFormFail, fetchFormRequest,
+    fetchFormFailure, fetchFormRequest,
     updateField,
     fetchLogout,
     isAuth, userId,
@@ -75,27 +75,27 @@ let FormContainer: any = (props: any) => {
 
   const loginForm = <LoginForm
       loginFields={loginFields}
-      fetchFormFail={fetchFormFail}
+      fetchFormFailure={fetchFormFailure}
       fetchFormRequest={fetchFormRequest}
       updateField={updateField}
     />;
 
   const registerForm = <RegisterForm
       registerFields={registerFields}
-      fetchFormFail={fetchFormFail}
+      fetchFormFailure={fetchFormFailure}
       fetchFormRequest={fetchFormRequest}
       updateField={updateField}
     />
 
   const forgotPassForm = <ForgotPass
-    fetchFormFail={fetchFormFail}
+    fetchFormFailure={fetchFormFailure}
     fetchFormRequest={fetchFormRequest}
     resetFields={resetFields}
     updateField={updateField}
   />
 
   const resetPassForm = <ResetPass
-    fetchFormFail={fetchFormFail}
+    fetchFormFailure={fetchFormFailure}
     fetchFormRequest={fetchFormRequest}
     resetFields={resetFields}
     updateField={updateField}

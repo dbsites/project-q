@@ -12,11 +12,11 @@ import FormField from './FormField';
 // TODO: Look into update form / htmlForm?
 const ResetPass: any = (props: any) => {
   // Destructure form values and actions from props
-  const { fetchFormFail, fetchFormRequest, resetFields, updateField } = props;
+  const { fetchFormFailure, fetchFormRequest, resetFields, updateField } = props;
   const { forgotPassEmail, emailValid, resetError } = resetFields;
 
   const callFetchFormRequest = (resetFields: any): any => {
-    if (!emailValid) return fetchFormFail('reset', 'Please enter a valid email address');
+    if (!emailValid) return fetchFormFailure('reset', 'Please enter a valid email address');
     return fetchFormRequest('reset', resetFields)
   }
 
