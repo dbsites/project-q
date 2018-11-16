@@ -120,6 +120,22 @@ export interface CompanyDataState {
   readonly issueAbbrvs: IssueAbbrvsState
 }
 
+// interface CompanyInfo {
+//   readonly description: string,
+//   readonly overallScore: number,
+//   readonly logo: string,
+//   readonly ticker: string,
+//   readonly name: string,
+//   readonly yearFounded: number,
+//   readonly numberEmployees: number,
+//   readonly full_name: string,
+//   readonly url: string
+// }
+
+// interface SelectedCompany {
+//   readonly selected: CompanyInfo
+// }
+
 //***************************** */
 export interface ApplicationState {
   readonly company: CompanyState,
