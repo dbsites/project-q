@@ -16,7 +16,7 @@ const CompanyList = (props: any) => {
 
   if (companyList.length === 0) {
     // return <Loading />
-    return <img src={loadingMovie} />
+    return <img src={loadingMovie} id="loading-movie" />
   } else {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
