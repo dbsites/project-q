@@ -1,15 +1,12 @@
 #quads-container {
-  /* background-color: white; */
-  /* border: 2px solid gold; */
   display: grid;
-  grid-template-columns: minmax(400px, 600px) minmax(400px, 800px);
-  grid-template-rows: minmax(300px, 400px) minmax(300px, 400px);
+  grid-template-columns: minmax(80vh, 80vh) minmax(80vh, 80vh);
+  grid-template-rows: minmax(20vw, 25vw) minmax(20vw, 25vw);
   max-width: 98%;
   margin: 0 auto;
 }
 
 .quad {
-  /* overflow: auto; */
   background-color: black;
 }
 
@@ -34,25 +31,16 @@
 }
 
 #overview-left {
+  border-right: 1px solid white;
   display: inline-block;
   width: 40%;
   text-align: center;
-  margin-top: 15px;
 }
 
 #overview-left h2 {
   color: white;
-  margin: 0;
+  margin: 20px auto 10px;
 }
-/* #overview-left h1, 
-#overview-left h3,
-*/
-
-/* #overview-left p {
-  color: white;
-  padding: 5px 0;
-  margin: 0;
-}  */
 
 #overview-right {
   display: inline-block;
@@ -60,7 +48,7 @@
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 #overview-right h3 {
   padding-left: 10px;
@@ -89,10 +77,13 @@
 
 #overview-description-container p {
   text-align: left;
-
+  /* margin-top: 5px; */
   padding: 2px;
 }
 
+#overview-description-container a:link {
+  color: #FFFFFF
+}
 
 /* #company-info {
   margin-bottom: 10px;
@@ -113,40 +104,46 @@
   padding: 10px 0;
 }
 
-#company-info-more {
-  margin: 0;
-  border-top: 1px solid black;
+#company-info-more ul {
+  width: 90%;
+  text-align: center;
+  margin: 0.5em 0;
 }
 
-#company-info-found {
+#company-info-more li {
   font-family: 'Cinzel', serif;
   font-size: 0.8em;
-  color: #000000;
+  color: #FFFFFF;
   display: inline-block;
-  width: 40%;
-  background-color: white;
+  /* width: 40%; */
+  /* background-color: white; */
   text-align: center;
-  padding: 5px 0;
+  /* padding: 5px 0; */
   border-right: 1px solid black;
+  margin-right: 10%;
+  margin-bottom: 0;
+  /* margin-top: 2px; */
 }
 
-#company-info-employees {
+/* #company-info-employees p {
   font-family: 'Cinzel', serif;
   font-size: 0.8em;
-  color: #000000;
+  color: #FFFFFF;
   display: inline-block;
   width: 40%;
   background-color: white;
   text-align: center;
   padding: 5px 0;
-}
+} */
 
 #overview-right a {
   padding-left: 0;
 }
 
 #overall-score-chart {
-  text-align: center;
+  margin: 10px auto;
+  width: 200px;
+  height: 200px;
 }
 
 #overall-score-chart text {
@@ -156,14 +153,21 @@
 }
 
 #overview-logo {
-  border: 2px solid gold;
-  display: block;
+  border: 2px dashed gold;
+  display: flex;
   margin: auto;
   height: 50px;
   width: auto;
   max-width: 90%;
   margin: 0 15px;
   text-align: center;
+}
+
+#overview-logo p {
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+  margin: auto;
 }
 
 #company-url-pre {
@@ -175,7 +179,7 @@
 }
 
 #quad-issues {
-
+  width: 100%;
 }
 
 
@@ -205,7 +209,7 @@
   background-color: #000000;
   /* border: 2px solid gold; */
   width: 100%;
-  overflow-x: scroll;
+  overflow: auto;
 }
 
 .divTableHead {
@@ -229,6 +233,7 @@
   display: inline-block;
   border: 2px solid black;
   height: 100%;
+  margin-top: 10px;
   overflow: auto;
 }
 
@@ -238,14 +243,17 @@
   top: 2px;
   margin-top: 5px;
   padding-left: 5px;
+  text-align: center;
 }
 
 #cl-category-name {
-  /* background-color: red; */
   min-width: 100px;
-  max-width: 200px;
-  resize: horizontal;
+  max-width: 225px;
   overflow: hidden;
+}
+
+#cl-category-overall {
+  margin: 0 15px;
 }
 
 .cl-list {
@@ -257,13 +265,23 @@
   color: #FFFFFF;
 }
 
-.company-names-list, .company-list{
+.company-names-list {
   display: block;
   list-style-position: inside;
   list-style-type: none; 
   /* padding-left: 5px; */
   white-space: nowrap;
   margin: 0;
+}
+
+.company-list{
+  display: block;
+  list-style-position: inside;
+  list-style-type: none; 
+  /* padding-left: 5px; */
+  white-space: nowrap;
+  margin: 0;
+  text-align: center;
 }
 
 .company-list {
@@ -313,7 +331,8 @@
 
 .issues-container {
   border: 1px solid gold;
-  display: flex;
+  /* display: flex; */
+  width: 100%;
   height: 99%;
   margin: auto;
   overflow: hidden;
