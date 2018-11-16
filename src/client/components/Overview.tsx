@@ -13,7 +13,7 @@ const Overview = (props: any) => {
 
   if (!props.selected) {
 
-    display = (<p>Click a company to see their overview</p>);
+    display = (<p>Select a company to see their overview</p>);
 
   } else {
 
@@ -22,10 +22,9 @@ const Overview = (props: any) => {
       overallScore,
       yearFounded,
       numberEmployees,
-      full_name,
       url,
-      // logo,
-      ticker } = props.selected;
+      logo,
+    } = props.selected;
 
     const userIssuesLength = Object.keys(props.selected)
       .filter(key => props.selected[key].alignedScore)
@@ -41,28 +40,36 @@ const Overview = (props: any) => {
       <React.Fragment>
         <div className="overview-left">
           <div className="overview-company-title">
-            <h3>{full_name} ({ticker.split('.')[0]})</h3>
+            {/* <h3>{full_name}</h3> */}
           </div>
           <div id="overall-score-chart">
             <OverviewPie overall={overall} />
           </div>
-          <h2>{scoreAlign}</h2>
+          <h3>{scoreAlign}</h3>
         </div>
 
         <div id="overview-right">
           <div id="overview-logo">
-            <p>INSERT COMPANY LOGO</p>
-            {/* <img src={logo} /> */}
+            <img src={logo} />
           </div>
           <div id="overview-description-container">
-            <div id="company-info-more">
-              <ul>
-                <li><strong>Founded </strong>{yearFounded}</li>
-                <li><strong># of Employees </strong>{numberEmployees}</li>
-              </ul>
-            </div>
             <p id="company-info">
               {descrip}
+            </p>
+            <p id="company-info-more">
+              <span><strong>Founded: </strong>{yearFounded}</span>
+              <span><strong># of Employees: </strong>{
+                numberEmployees
+                  .toString()
+                  .split('')
+                  .reverse()
+                  .reduce((numString: string, next: string, i: number) => {
+                    if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
+                    else numString = next + numString;
+                    return numString;
+                  }, '')
+              }
+              </span>
             </p>
             <p id="company-url-pre">
               Learn more at: <a href={`http://${url}`} target="_blank">{url}</a>
