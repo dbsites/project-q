@@ -1,0 +1,5 @@
+# install postgres 9.6.8
+FROM postgres:10.4
+
+# copy in psql-dump.sql if it exists.
+COPY /scripts/postgres-db/psql_dump.sql /docker-entrypoint-initdb.d/
