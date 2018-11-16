@@ -14,6 +14,20 @@
   overflow: auto;
 }
 
+#quad-company-list {
+  height: 99%;
+  width: 100%;
+}
+
+#quad-company-list img {
+  display: block;
+  position: relative;
+  margin: auto;
+  max-height: 85%;
+  max-width: 85%; 
+}
+
+
 /* * * * * * * * * * * * * * * *
  *          OVERVIEW           *  
  * * * * * * * * * * * * * * * */
@@ -37,7 +51,7 @@
   width: 90%;
 }
 .overview-left h3 {
-  margin: 10% 0 5%;
+  margin: 5% 0;
   color: #FFFFFF;
   text-align: center;
 }
@@ -54,34 +68,50 @@
   text-align: center;
 }
 
-
-/* .overview-left h2,
-.overview-left h3,
-.overview-left h4 {
-  color: white;
-  margin: 10px auto;
-} */
-
 #overview-right {
   display: inline-block;
   width: 59%;
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 25px;
+  margin-top: 2%;
 }
-#overview-right h3 {
-  padding-left: 10px;
-  margin-top: 15px;
+
+#company-info-more span {
+  display: block;
+  /* margin-right: 15%; */
+} 
+
+#company-info-more ul {
+  margin: 3% 0;
+  padding: 0;
+  text-align: center;
+  /* margin: 0.5em 0; */
+}
+
+#company-info-more li {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8em;
+  color: #FFFFFF;
+  display: inline-block;
+  text-align: center;
+  /* width: 40%; */
+  /* background-color: white; */
+  /* text-align: center; */
+  /* padding: 5px 0; */
+  /* border-right: 1px solid black; */
+  margin-right: 10%;
+  /* margin-bottom: 0; */
+  /* margin-top: 2px; */
 }
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.9em;
-  padding-left: 15px;
-  padding-top: 5px;
+  font-size: 0.65em;
+  /* padding-left: 15px; */
+  /* padding-top: 5px; */
   color: #A5A8A6;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 } 
 
 #overview-right a {
@@ -90,15 +120,17 @@
 
 #overview-description-container {
   display: inline-block;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 95%;
+  /* padding-left: 15px;
+  padding-top: 5px; */
+  width: 90%;
 }
 
 #overview-description-container p {
   text-align: left;
+  margin: 2% 0;
+  /* width: 90%; */
   /* margin-top: 5px; */
-  padding: 2px;
+  /* padding: 2px; */
 }
 
 #overview-description-container a:link {
@@ -108,10 +140,7 @@
 /* #company-info {
   margin-bottom: 10px;
 }
-
-#company-info-more {
-  margin-top: 10px;
-} */
+*/
 
 #company-market-price {
   font-family: 'Cinzel', serif;
@@ -124,44 +153,13 @@
   padding: 10px 0;
 }
 
-#company-info-more ul {
-  width: 90%;
-  text-align: center;
-  margin: 0.5em 0;
-}
-
-#company-info-more li {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  /* width: 40%; */
-  /* background-color: white; */
-  text-align: center;
-  /* padding: 5px 0; */
-  /* border-right: 1px solid black; */
-  margin-right: 10%;
-  margin-bottom: 0;
-  /* margin-top: 2px; */
-}
-
-/* #company-info-employees p {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  width: 40%;
-  background-color: white;
-  text-align: center;
-  padding: 5px 0;
-} */
 
 #overview-right a {
   padding-left: 0;
 }
 
 #overall-score-chart {
-  margin: 10px auto;
+  margin: 10% auto;
   width: 200px;
   height: 200px;
 }
@@ -182,21 +180,27 @@
 }
 
 #overview-logo {
-  border: 2px dashed gold;
-  display: flex;
-  margin: auto;
-  height: 50px;
-  width: auto;
-  max-width: 90%;
-  margin: 0 15px;
+  /* border: 2px dashed gold; */
+  /* display: inline-block; */
+  /* padding-left: 2%; */
+  position: relative;
+  /* display: flex; */
+  margin: 0;
+  /* height: auto; */
+  width: 80%;
+  /* max-height: 25%; */
+  /* max-width: 90%; */
+  /* margin: 0 15px; */
   text-align: center;
 }
 
-#overview-logo p {
-  color: white;
-  font-size: 16px;
-  font-weight: bolder;
+#overview-logo img {
+  /* display: inline-block; */
   margin: auto;
+  max-width: 250px;
+  min-height: 50px;
+  max-height: 50px;
+  height: auto;
 }
 
 #company-url-pre {
@@ -430,8 +434,3 @@
   margin: 2% auto;
 }
 
-#loading-movie {
-  display: relative;
-  height: auto;
-  width: 100%;
-}
