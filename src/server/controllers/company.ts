@@ -57,14 +57,14 @@ export class CompanyRepository {
 
   // query to get all companies out of the db
   getList() {
-    return this.db.any('SELECT * FROM companies INNER JOIN "companyIssues" ON companies.id = "companyIssues"."companyId";');
+    return this.db.any('SELECT * FROM companies INNER JOIN company_issues ON companies.id = company_issues.company_id;');
   }
 
   async updateData(data: any) {
     await data.forEach((item: any) => {
       // this.db.none('UPDATE "companyIssues" SET "agreeScore" = $1, "disagreeScore" = $2 WHERE "companyId" = $3 AND "issueId" = $4;', 
       //   [item.agreeScore, item.disagreeScore, item.companyId, item.issueId]);
-      this.db.none('UPDATE "companies" SET "description" = $1, "logo" = $2 WHERE "name" = $3;', 
+      this.db.none('UPDATE companies SET description = $1, logo = $2 WHERE name = $3;', 
         [item.description, item.logo, item.name]);
     })
   }
