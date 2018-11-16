@@ -102,18 +102,24 @@ CompanyDatabase.getStockData = (req: Request, res: Response, next: NextFunction)
   db.companies.getStockData(req.body.ticker)
   .then((stockDataObject: any) => {
     console.log(stockDataObject);
-    res.locals.stockData.timestamp = stockDataObject.timestamp;
-    res.locals.stockData.open = stockDataObject.open;
-    res.locals.stockData.high = stockDataObject.high;
-    res.locals.stockData.low = stockDataObject.low;
-    res.locals.stockData.close = stockDataObject.close;
-    res.locals.stockData.volume = stockDataObject.volume;
+    console.log(req.body.ticker);
+    res.locals.stockData.timestamp = stockDataObject[0].timestamp;
+    res.locals.stockData.open = stockDataObject[0].open;
+    res.locals.stockData.high = stockDataObject[0].high;
+    res.locals.stockData.low = stockDataObject[0].low;
+    res.locals.stockData.close = stockDataObject[0].close;
+    res.locals.stockData.volume = stockDataObject[0].volume;
+    console.log(res.locals);
     next();
   })
   .catch((error: any) => {
     console.log('ERROR AT getStockData IN companyDataMethods.ts', error);
     res.status(500).send("SERVER FAILURE");
   })
+}
+
+CompanyDatabase.emptyStockData = () => {
+  return db.companies.emptyStockData();
 }
 
 export default CompanyDatabase;

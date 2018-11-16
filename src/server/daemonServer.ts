@@ -20,7 +20,7 @@ import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
 // import node-fetch to hit the finance api
-import * as fetch from 'node-fetch';
+import fetch from 'node-fetch';
 // import the env files
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -55,6 +55,8 @@ app.use(bodyParser.json({limit: '10mb'}));
 // -> query for tickers 
 
 function getStockPrices() {
+
+  CompanyDatabase.emptyStockData();
 
   CompanyDatabase.getTickers()
   .then((stockSymbols: any[]) => {
@@ -103,6 +105,7 @@ function getStockPrices() {
 // let stockInterval = setInterval(() => { getStockPrices() }, fiveSeconds);
 // console.log(stockInterval);
 getStockPrices()
+console.log("Daemon Fed");
 
 // iterate through the tickers 
 // hit the api with the ticker data
