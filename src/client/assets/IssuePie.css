@@ -1,5 +1,7 @@
 #quad-issues {
-  display: inline;
+  /* display: inline; */
+  width: 100%;
+  height: 99%;
 }
 
 #issues-header {
