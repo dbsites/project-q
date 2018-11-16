@@ -30,10 +30,12 @@ class IssuePie extends Component<Props> {
             <Pie
               data={[{ name: name, value: 100 }]}
               outerRadius="100%"
+              innerRadius="70%"
               fill="#808080"
               dataKey="value"
               startAngle={90}
               endAngle={450}
+              paddingAngle={5}
             >
             </Pie>
           </PieChart>
