@@ -36,7 +36,7 @@ class OverviewPie extends Component<Props> {
 
     return (
       <ResponsiveContainer>
-        <PieChart width={400} height={400}>
+        <PieChart /*width={400} height={400}*/>
           <Pie
             data={DATA}
             outerRadius="100%"
