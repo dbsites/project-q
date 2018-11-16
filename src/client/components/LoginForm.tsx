@@ -16,7 +16,7 @@ const LoginForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     loginFields,
-    fetchFormFail,
+    fetchFormFailure,
     fetchFormRequest,
     updateField
   } = props;
@@ -30,8 +30,8 @@ const LoginForm: any = (props: any) => {
   } = loginFields;
 
   const callFetchFormRequest = (loginFields: any): any => {
-    if (!emailValid) return fetchFormFail('login', 'Please enter a valid email address');
-    if (loginPassword.length < 8) return fetchFormFail('login', 'Password must be at least 8 characters');
+    if (!emailValid) return fetchFormFailure('login', 'Please enter a valid email address');
+    if (loginPassword.length < 8) return fetchFormFailure('login', 'Password must be at least 8 characters');
     return fetchFormRequest('login', loginFields)
   }
 

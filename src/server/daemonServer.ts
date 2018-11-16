@@ -20,7 +20,7 @@ import * as cors from 'cors';
 // import helmet to increase app security
 import * as helmet from 'helmet';
 // import node-fetch to hit the finance api
-import fetch from 'node-fetch';
+import * as fetch from 'node-fetch';
 // import the env files
 import * as dotenv from 'dotenv';
 dotenv.config();

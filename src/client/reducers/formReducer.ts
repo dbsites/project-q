@@ -48,9 +48,9 @@ const resetReducer = (state: ResetPassState = initialResetState, action: any): R
     case actions.UPDATE_FIELD:
     // Email Validation
     let emailValid: boolean = state.emailValid;
-    if (action.payload.field === 'forgotPassEmail') {
-      if (action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-        emailValid = action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
+    if (action.formFieldObject.field === 'forgotPassEmail') {
+      if (action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+        emailValid = action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
       } else {
         emailValid = false;
       }
@@ -59,7 +59,7 @@ const resetReducer = (state: ResetPassState = initialResetState, action: any): R
     return {
       ...state,
       emailValid,
-      [action.payload.field]: action.payload.value,
+      [action.formFieldObject.field]: action.formFieldObject.value,
     };
 
     // FETCH_FORM_FAILURE - update form with error message
@@ -81,9 +81,9 @@ const loginReducer = (state: LoginState = initialLoginState, action: any): Login
     case actions.UPDATE_FIELD:
     // Email Validation
     let emailValid: boolean = state.emailValid;
-    if (action.payload.field === 'loginEmail') {
-      if (action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-        emailValid = action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
+    if (action.formFieldObject.field === 'loginEmail') {
+      if (action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+        emailValid = action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
       } else {
         emailValid = false;
       }
@@ -92,7 +92,7 @@ const loginReducer = (state: LoginState = initialLoginState, action: any): Login
     return {
       ...state,
       emailValid,
-      [action.payload.field]: action.payload.value,
+      [action.formFieldObject.field]: action.formFieldObject.value,
     };
 
     // FETCH_FORM_FAILURE - update form with error message
@@ -114,8 +114,8 @@ const registerReducer = (state: RegisterState = initialRegisterState, action: an
     case actions.UPDATE_FIELD:
       // Email Validation
       let emailValid: boolean = state.emailValid;
-      if (action.payload.field === 'registerEmail') {
-        if (action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+      if (action.formFieldObject.field === 'registerEmail') {
+        if (action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
           emailValid = action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
         } else {
           emailValid = false;
@@ -124,7 +124,7 @@ const registerReducer = (state: RegisterState = initialRegisterState, action: an
       return {
         ...state,
         emailValid,
-        [action.payload.field]: action.payload.value,
+        [action.formFieldObject.field]: action.formFieldObject.value,
       };
     
     // FETCH_FORM_FAILURE - update form with error message
@@ -143,17 +143,17 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
   switch (action.type) {
     // UPDATE_FIELD
     case actions.UPDATE_FIELD:
-    if (action.payload.form === 'login') {
+    if (action.formFieldObject.form === 'login') {
       return {
         ...state,
         login: loginReducer(state.login, action),
       }
-    } else if (action.payload.form === 'register') {
+    } else if (action.formFieldObject.form === 'register') {
       return {
         ...state,
         register: registerReducer(state.register, action),
       }
-    } else if (action.payload.form === 'reset') {
+    } else if (action.formFieldObject.form === 'reset') {
       return {
         ...state,
         reset: resetReducer(state.reset, action),

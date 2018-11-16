@@ -16,7 +16,7 @@ const RegisterForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     registerFields,
-    fetchFormFail,
+    fetchFormFailure,
     fetchFormRequest,
     updateField
   } = props;
@@ -32,11 +32,11 @@ const RegisterForm: any = (props: any) => {
   } = registerFields;
 
   const callFetchFormRequest = (registerFields: any): any => {
-    if (!firstName.length || !lastName.length) return fetchFormFail('register', 'Please enter your first and last name');
-    if (!emailValid) return fetchFormFail('register', 'Please enter a valid email address');
-    if (registerPassword.length < 8) return fetchFormFail('register', 'Password must be at least 8 characters');
-    if (registerPassword !== confirmPassword) return fetchFormFail('register', 'Passwords and Confirm Password must match');
-    if (!agreeTerms) return fetchFormFail('register', 'Please agree to the terms of service to continue');
+    if (!firstName.length || !lastName.length) return fetchFormFailure('register', 'Please enter your first and last name');
+    if (!emailValid) return fetchFormFailure('register', 'Please enter a valid email address');
+    if (registerPassword.length < 8) return fetchFormFailure('register', 'Password must be at least 8 characters');
+    if (registerPassword !== confirmPassword) return fetchFormFailure('register', 'Passwords and Confirm Password must match');
+    if (!agreeTerms) return fetchFormFailure('register', 'Please agree to the terms of service to continue');
     return fetchFormRequest('register', registerFields)
   }
 
