@@ -11,12 +11,12 @@ import FormField from './FormField';
 // TODO: Look into update form / htmlForm?
 const ResetPass: any = (props: any) => {
   // Destructure form values and actions from props
-  const { fetchFormFail, fetchFormRequest, resetFields, updateField } = props;
+  const { fetchFormFailure, fetchFormRequest, resetFields, updateField } = props;
   const { newPassword, confirmNewPassword, resetError } = resetFields;
 
   const callFetchFormRequest = (resetFields: any): any => {
-    if (newPassword.length < 8) return fetchFormFail('reset', 'Password must be at least 8 characters');
-    if (newPassword !== confirmNewPassword) return fetchFormFail('reset', 'Password must match Confirm Password');
+    if (newPassword.length < 8) return fetchFormFailure('reset', 'Password must be at least 8 characters');
+    if (newPassword !== confirmNewPassword) return fetchFormFailure('reset', 'Password must match Confirm Password');
     return fetchFormRequest('reset', resetFields)
   }
 
