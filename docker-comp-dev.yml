@@ -1,0 +1,45 @@
+# command to run:
+# docker-compose -f docker-comp-dev.yml up
+
+# This will start ethi q-dependencies & postgres db container with it's associated data volumes container
+# and run 'npm run dev'
+
+version: "3"
+services:
+
+  dev:
+    image: dbsites/ethiq-dependencies
+    container_name: "ethiq-dev"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    depends_on:
+      - postgres-db
+      - postgres-data
+    command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db", "${DATABASE_MIGRATIONS}", "dev", "${DATABASE_SCOPES}"]
+
+  postgres-db:
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=ethiqadmin
+      - POSTGRES_DB=ethiqdb
+    image: dbsites/ethiq-postgres
+    container_name: ethiq-postgres
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+      - ./scripts/postgres-db:/postgres-db
+    depends_on:
+      - postgres-data
+
+  postgres-data:
+    image: busybox
+    container_name: ethiq-dev-dbdata
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+
+# shared volumes for development
+volumes:
+  dev-db-volume:
+  node_modules:

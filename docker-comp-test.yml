@@ -1,0 +1,45 @@
+# command to run:
+# docker-compose -f docker-comp-test.yml up
+
+# This will start ethiq-dependencies & postgres db container with it's associated data volumes container
+# and run 'npm run test'
+
+version: "3"
+services:
+
+  test:
+    image: dbsites/ethiq-dependencies
+    container_name: "ethiq-test"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+      - node_modules_test:/usr/src/app/node_modules
+    depends_on:
+      - postgres-db-test
+      - postgres-data-test
+    command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db-test", "${DATABASE_MIGRATIONS}", "test-coverage", "${DATABASE_TEST_SCOPES}"]
+
+  postgres-db-test:
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=ethiqadmin
+      - POSTGRES_DB=ethiqdb
+    image: dbsites/ethiq-postgres
+    container_name: ethiq-test-postgres
+    volumes:
+      - test-db-volume:/var/lib/postgresql/data
+      - ./scripts/postgres-db:/postgres-db
+    depends_on:
+      - postgres-data-test
+
+  postgres-data-test:
+    image: busybox
+    container_name: ethiq-test-dbdata
+    volumes:
+      - test-db-volume:/var/lib/postgresql/data
+    command: tail -f /dev/null
+# shared volumes
+volumes:
+  test-db-volume:
+  node_modules_test:
