@@ -8,15 +8,18 @@ import * as issueMatch from '../issueMatcher';
 import { Link } from 'react-router-dom'
 
 const loadingMovie = require('../assets/loading-movie.gif');
-// import Loading from './loading/Loading';
 
 const CompanyList = (props: any) => {
+  console.log(props);
   const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
   const { issueMatcher } = issueMatch;
 
   if (companyList.length === 0) {
-    // return <Loading />
-    return <img src={loadingMovie} id="loading-movie" />
+    return (
+      <div className="quad" id="quad-company-list">
+        <img src={loadingMovie} id="loading-movie" />
+      </div>
+    )
   } else {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
