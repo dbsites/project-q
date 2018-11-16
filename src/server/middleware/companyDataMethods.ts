@@ -49,8 +49,8 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
     list.forEach((item:any) => {
       if (companyData[item.full_name]) {
         companyData[item.full_name][item.issue] = {};
-        companyData[item.full_name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
+        companyData[item.full_name][item.issue].agreeScore = item.agree_score;
+        companyData[item.full_name][item.issue].disagreeScore = item.disagree_score;
       }
       else {
         companyData[item.full_name] = {};
@@ -63,8 +63,8 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
         companyData[item.full_name].url = item.url;
         companyData[item.full_name].logo = item.logo;
         companyData[item.full_name][item.issue] = {};
-        companyData[item.full_name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
+        companyData[item.full_name][item.issue].agreeScore = item.agree_score;
+        companyData[item.full_name][item.issue].disagreeScore = item.disagree_score;
       }
     })
     res.locals.companyData = {};
