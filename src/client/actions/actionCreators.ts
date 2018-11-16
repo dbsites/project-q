@@ -10,43 +10,60 @@ import types from './actionTypes';
 import { Dispatch, Action } from 'redux';
 
 // Import Action Interfaces
-import { formFieldObject, toggleIssueAction, updateFieldAction } from './types';
+import {
+  IFormFieldObject, IFormFailureAction, IUpdateFieldAction, // Form Action Interfaces
+  IToggleIssueAction, IUpdateIssuePositionAction,           // User Action Interfaces
+} from './types';
 
-// --- Form Synchronous Action Creators --- //
-export const updateField = (fieldObject: formFieldObject): updateFieldAction => ({
+// --- Form Synchronous Action Creators --- // --- UNIT TESTING 100% --- //
+export const updateField = (formFieldObject: IFormFieldObject): IUpdateFieldAction => ({
   type: types.UPDATE_FIELD,
-  payload: fieldObject,
+  formFieldObject,
 });
 
-// Fetch Form Request Fail
-export const fetchFormFail = (form: string, message: string) => ({
+// Fetch Form Request Failure
+export const fetchFormFailure = (form: string, message: string): IFormFailureAction => ({
   type: types.FETCH_FORM_FAILURE,
   form: form,
   message: message,
 })
 
 // --- Issue Synchronous Action Creators --- // --- UNIT TESTING 100% --- //
-export const addIssue = (issueId: string): toggleIssueAction => ({
-  type: types.ADD_ISSUE,
-  issueId,
-})
-
-export const removeIssue = (issueId: string): toggleIssueAction => ({
-  type: types.REMOVE_ISSUE,
-  issueId,
-})
-
 export const clearIssues = (): Action<string> => ({
   type: types.CLEAR_ISSUES,
 });
 
-
-// --- User Synchronous Action Creators --- //
-export const updateIssue = (issue: any) => ({
-  type: types.UPDATE_ISSUE_POSITION,
-  payload: issue,
+export const addIssue = (issueId: string): IToggleIssueAction => ({
+  type: types.ADD_ISSUE,
+  issueId,
 })
 
+export const removeIssue = (issueId: string): IToggleIssueAction => ({
+  type: types.REMOVE_ISSUE,
+  issueId,
+})
+
+export const updateIssuesSelected = (): Action<string> => ({
+  type: types.UPDATE_ISSUES_SELECTED,
+})
+
+export const updateIssuePosition = (issueId: string, position: string): IUpdateIssuePositionAction => ({
+  type: types.UPDATE_ISSUE_POSITION,
+  issueId,
+  position,
+})
+
+// --- Survey Synchronous Action Creators --- // --- UNIT TESTING 0% --- // TODO: TESTING
+export const answerQuestion = (event: any) => ({
+  type: types.ANSWER_QUESTION,
+  payload: event,
+})
+
+export const prevPage = () => ({
+  type: types.PREV_PAGE,
+})
+
+// --- User Synchronous Action Creators --- // TODO: REFACTOR getUserIssues to function selector
 export const getUserIssues = () => (dispatch: any, getState: any) => {
   const { user } = getState();
   dispatch({
@@ -64,20 +81,6 @@ export const selectCompany = (event: any) => ({
 export const sortCompanyList = (event: any) => ({
   type: types.SORT_COMPANY_LIST,
   payload: event
-})
-
-export const updateIssuesSelected = () => ({
-  type: types.UPDATE_ISSUES_SELECTED,
-})
-
-// Survey Question Actions
-export const answerQuestion = (event: any) => ({
-  type: types.ANSWER_QUESTION,
-  payload: event,
-})
-
-export const prevPage = () => ({
-  type: types.PREV_PAGE,
 })
 
 // --- ASYNC --- //

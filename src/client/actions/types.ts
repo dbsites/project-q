@@ -1,20 +1,28 @@
 import { Action } from "redux";
 
-export interface formFieldObject {
+// Form Interfaces
+export interface IFormFieldObject {
   form: string,
   field: string,
   type: string,
   value: string,
 };
 
-// Issues - Update Selected Issue Actions
-export interface toggleIssueAction extends Action<string> {
+// Form Field Action
+export interface IUpdateFieldAction extends Action<string> {
+  formFieldObject: IFormFieldObject,
+};
+
+export interface IFormFailureAction extends Action<string> {
+  form: string,
+  message: string,
+}
+
+// User Actions
+export interface IToggleIssueAction extends Action<string> {
   issueId: string,
 }
 
-// Form - Update Form Field Action
-export interface updateFieldAction extends Action {
-  type: string,
-  payload: formFieldObject,
-};
-
+export interface IUpdateIssuePositionAction extends IToggleIssueAction {
+  position: string,
+}

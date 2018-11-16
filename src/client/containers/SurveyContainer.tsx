@@ -23,7 +23,7 @@ import ProgressBar from '../components/ProgressBar';
 
 const SurveyContainer = (props: any): any => {
   const {
-    answerQuestion, submitSurvey, updateIssue, updateIssuesSelected, prevPage,  // Actions
+    answerQuestion, submitSurvey, updateIssuePosition, updateIssuesSelected, prevPage,  // Actions
     issues, survey, user,                                                       // State
   } = props;
 
@@ -85,10 +85,7 @@ const SurveyContainer = (props: any): any => {
   // Helper function to update Issues if user clicks "Next Issue"
   const callUpdateIssue = () => {
     const position = getPosition(survey, currentIssueId);
-    return updateIssue({
-      issue: currentIssueId,
-      position: position,
-    })
+    return updateIssuePosition(currentIssueId, position)
   }
 
   const headerText: string = getIssueName(issues, currentIssueId);
@@ -153,7 +150,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   answerQuestion: (event: any) => dispatch(actions.answerQuestion(event)),
   prevPage: () => dispatch(actions.prevPage()),
   submitSurvey: (surveyObj: SurveyState) => dispatch(actions.submitSurvey(surveyObj)),
-  updateIssue: (issue: any) => dispatch(actions.updateIssue(issue)),
+  updateIssuePosition: (issueId: string, position: string) => dispatch(actions.updateIssuePosition(issueId, position)),
   updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
 });
 
