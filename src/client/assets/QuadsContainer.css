@@ -428,5 +428,10 @@
   width: auto;
   height: 80%;
   margin: 2% auto;
-  
+}
+
+#loading-movie {
+  display: relative;
+  height: auto;
+  width: 100%;
 }
