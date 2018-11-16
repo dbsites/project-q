@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 import { Component } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
 
 interface Props {
   overall: any
@@ -19,8 +19,8 @@ class OverviewPie extends Component<Props> {
     const { overall } = this.props;
     const diff = 100 - overall;
 
-    const COLORS: string[] = ['#000000', (
-      overall >= 70 ? '#436F4D' : overall >= 69 ? '#898A40' : '#6F4343'
+    const COLORS: string[] = ['#A5A8A6', (
+      overall >= 70 ? '#16C33F' : overall >= 40 ? '#FAEB00' : '#FA2929'
     )];
 
     const DATA: any = [
@@ -40,13 +40,16 @@ class OverviewPie extends Component<Props> {
           <Pie
             data={DATA}
             outerRadius="100%"
+            innerRadius="70%"
             fill="#ff0000"
             dataKey="value"
             startAngle={90}
-            endAngle={450}>
+            endAngle={450}
+            paddingAngle={5}>
             {
               DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
             }
+            <Label value={overall + '%'} position="center" fill="white" />
           </Pie>
         </PieChart>
       </ResponsiveContainer>
