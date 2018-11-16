@@ -6,6 +6,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import IssueDetail from './IssueDetail';
 
 
 
@@ -16,6 +17,7 @@ interface Props {
 }
 
 class IssuePie extends Component<Props> {
+  state:any ;
   constructor(props: any) {
     super(props);
     this.state = {
@@ -36,9 +38,7 @@ class IssuePie extends Component<Props> {
   render() {
     let detail = null;
     if (this.state.detailedView) {
-      detail = <div style={{backgroundColor: "white"}}>
-        This is how we do!
-      </div>
+      detail = <IssueDetail />
     }
     const { name, alignedScore } = this.props.info;
 
