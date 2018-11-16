@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 import { Component } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
 
 
 import '../assets/IssuePie.css';
@@ -33,15 +33,16 @@ class IssuePie extends Component<Props> {
               fill="#808080"
               dataKey="value"
               startAngle={90}
-              endAngle={450}>
+              endAngle={450}
+            >
             </Pie>
           </PieChart>
         </ResponsiveContainer>
       );
     } else {
       console.log('alignedScore: ', alignedScore);
-      const COLORS: string[] = ['#000000', (
-        alignedScore >= 60 ? '#436F4D' : alignedScore >= 50 ? '#898A40' : '#6F4343'
+      const COLORS: string[] = ['#A5A8A6', (
+        alignedScore >= 70 ? '#16C33F' : alignedScore >= 40 ? '#FAEB00' : '#FA2929'
       )];
 
       const DATA: any = [
@@ -55,19 +56,29 @@ class IssuePie extends Component<Props> {
         }
       ];
 
+      // const scoreLabel = (
+      //   <text x="180" y="180" style={{ fontSize: 1 }} fill="white" textAnchor="middle" dominantBaseline="middle">
+      //     {alignedScore}
+      //   </text>
+      // );
+
       display = (
         <ResponsiveContainer>
           <PieChart width={100} height={100}>
             <Pie
               data={DATA}
               outerRadius="100%"
+              innerRadius="70%"
               fill="#808080"
               dataKey="value"
+              // label={scoreLabel}
               startAngle={90}
-              endAngle={450}>
+              endAngle={450}
+              paddingAngle={5}>
               {
                 DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
               }
+              <Label value={alignedScore + '%'} position="center" fill="white" />
             </Pie>
           </PieChart>
         </ResponsiveContainer>
