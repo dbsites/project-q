@@ -49,22 +49,22 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
     list.forEach((item:any) => {
       if (companyData[item.full_name]) {
         companyData[item.full_name][item.issue] = {};
-        companyData[item.full_name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
+        companyData[item.full_name][item.issue].agreeScore = item.agree_score;
+        companyData[item.full_name][item.issue].disagreeScore = item.disagree_score;
       }
       else {
         companyData[item.full_name] = {};
         companyData[item.full_name].full_name = item.full_name;
         companyData[item.full_name].short_name = item.short_name;
-        companyData[item.full_name].ticker = item.ticker.split('.')[0];
+        companyData[item.full_name].ticker = item.ticker;
         companyData[item.full_name].description = item.description;
         companyData[item.full_name].yearFounded = item.year_founded;
         companyData[item.full_name].numberEmployees = item.number_employees;
         companyData[item.full_name].url = item.url;
         companyData[item.full_name].logo = item.logo;
         companyData[item.full_name][item.issue] = {};
-        companyData[item.full_name][item.issue].agreeScore = item.agreeScore;
-        companyData[item.full_name][item.issue].disagreeScore = item.disagreeScore;
+        companyData[item.full_name][item.issue].agreeScore = item.agree_score;
+        companyData[item.full_name][item.issue].disagreeScore = item.disagree_score;
       }
     })
     res.locals.companyData = {};
@@ -78,16 +78,16 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
   });
 }
 
-// CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => {
-//   // db.users accesses methods defined in company controller
-//   db.companies.updateData(req.body)
-//   .then(() => {
-//     next();
-//   })
-//   .catch((error: any) => {
-//     console.log('ERROR AT INSERT DATA IN addCompanyToDb', error);
-//   }); 
-// }
+CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => {
+  // db.users accesses methods defined in company controller
+  db.companies.updateData(req.body)
+  .then(() => {
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT INSERT DATA IN addCompanyToDb', error);
+  }); 
+}
 
 CompanyDatabase.getTickers = () => {
   return db.companies.getTickers();
@@ -95,6 +95,31 @@ CompanyDatabase.getTickers = () => {
 
 CompanyDatabase.storeRecentStockData = (dataObject: any, stockSymbol: any) => {
   return db.companies.storeRecentStockData(dataObject, stockSymbol);
+}
+
+CompanyDatabase.getStockData = (req: Request, res: Response, next: NextFunction) => {
+  res.locals.stockData = {};
+  db.companies.getStockData(req.body.ticker)
+  .then((stockDataObject: any) => {
+    console.log(stockDataObject);
+    console.log(req.body.ticker);
+    res.locals.stockData.timestamp = stockDataObject[0].timestamp;
+    res.locals.stockData.open = stockDataObject[0].open;
+    res.locals.stockData.high = stockDataObject[0].high;
+    res.locals.stockData.low = stockDataObject[0].low;
+    res.locals.stockData.close = stockDataObject[0].close;
+    res.locals.stockData.volume = stockDataObject[0].volume;
+    console.log(res.locals);
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getStockData IN companyDataMethods.ts', error);
+    res.status(500).send("SERVER FAILURE");
+  })
+}
+
+CompanyDatabase.emptyStockData = () => {
+  return db.companies.emptyStockData();
 }
 
 export default CompanyDatabase;
