@@ -1,24 +1,11 @@
 /**
  * @module Overview.tsx
- * @description 
+ * @description Overview Quad Component
  */
 
 import * as React from 'react';
 
 import OverviewPie from './OverviewPie';
-// import { number } from 'prop-types';
-
-// interface CompanyInfo {
-//   readonly description: string,
-//   readonly logo: string,
-//   readonly ticker: string,
-//   readonly name: string,
-//   readonly overallScore: number,
-// }
-
-// interface SelectedCompany {
-//   readonly selected: CompanyInfo
-// }
 
 const Overview = (props: any) => {
 
@@ -37,7 +24,8 @@ const Overview = (props: any) => {
       numberEmployees,
       full_name,
       url,
-      /* logoticker */ } = props.selected;
+      // logo,
+      ticker } = props.selected;
 
     const userIssuesLength = Object.keys(props.selected)
       .filter(key => props.selected[key].alignedScore)
@@ -45,20 +33,23 @@ const Overview = (props: any) => {
 
     const overall = Math.round(overallScore / userIssuesLength);
 
-    const descrip = description.slice(0, 500);
+    const descrip = description.slice(0, 450);
+
+    const scoreAlign = overall >= 70 ? 'Strong Match' : overall >= 40 ? 'Match' : 'Weak Match';
 
     display = (
       <React.Fragment>
-        <div id="overview-left">
-          <h2>{full_name}</h2>
+        <div className="overview-left">
+          <div className="overview-company-title">
+            <h3>{full_name} ({ticker.split('.')[0]})</h3>
+          </div>
           <div id="overall-score-chart">
             <OverviewPie overall={overall} />
           </div>
-          {/* <p id="company-market-price">Market Price: {ticker.split('.')[0]}</p> */}
-          <h2>{overall}% Match</h2>
+          <h2>{scoreAlign}</h2>
         </div>
+
         <div id="overview-right">
-          {/* <h3>{name} ({ticker.split('.')[0]})</h3> */}
           <div id="overview-logo">
             <p>INSERT COMPANY LOGO</p>
             {/* <img src={logo} /> */}
