@@ -8,6 +8,7 @@ import { Component } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 
+
 import '../assets/IssuePie.css';
 
 interface Props {
@@ -17,8 +18,28 @@ interface Props {
 class IssuePie extends Component<Props> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      detailedView: false
+    }
+    this.handleMouseEnter = this.handleMouseEnter.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
   }
+
+  handleMouseEnter() {
+    this.setState({detailedView: true})
+  }
+
+  handleMouseLeave() {
+    this.setState({detailedView: false})
+  }
+  
   render() {
+    let detail = null;
+    if (this.state.detailedView) {
+      detail = <div style={{backgroundColor: "white"}}>
+        This is how we do!
+      </div>
+    }
     const { name, alignedScore } = this.props.info;
 
     let display;
@@ -33,8 +54,11 @@ class IssuePie extends Component<Props> {
               fill="#808080"
               dataKey="value"
               startAngle={90}
-              endAngle={450}>
-            </Pie>
+              endAngle={450}
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+              />
+            {/* </Pie> */}
           </PieChart>
         </ResponsiveContainer>
       );
@@ -54,6 +78,7 @@ class IssuePie extends Component<Props> {
           value: alignedScore
         }
       ];
+    
 
       display = (
         <ResponsiveContainer>
@@ -64,10 +89,14 @@ class IssuePie extends Component<Props> {
               fill="#808080"
               dataKey="value"
               startAngle={90}
-              endAngle={450}>
+              endAngle={450}
+              onMouseEnter={this.handleMouseEnter}
+              onMouseLeave={this.handleMouseLeave}
+              >
               {
                 DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
               }
+              
             </Pie>
           </PieChart>
         </ResponsiveContainer>
@@ -78,6 +107,7 @@ class IssuePie extends Component<Props> {
       <div className="issue-box">
         <div className="issue-pie">
           {display}
+          {detail}
         </div>
         <p>{name}</p>
       </div>
