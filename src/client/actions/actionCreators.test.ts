@@ -88,7 +88,7 @@ describe('Functionality Test: Form Action Creators', () => {
     expect(actions.fetchFormFailure(stubForm, stubFormFetchErrorMessage)).toEqual(expectedAction);
   })
 
-  const matcherURL: string = 'http://localhost:3000/login';
+  const matcherURL: string = '/api/login';
   
   it('fetchForm, given a successful state, returns an action indicating a fetch request and fetch success', () => {
     fetchMock.postOnce(matcherURL, {
@@ -161,7 +161,7 @@ describe('Functionality Test: Issue Action Creators', () => {
     expect(actions.fetchIssuesFailure(stubIssueFetchErrorMessage)).toEqual(expectedAction);
   })
 
-  const matcherURL: string = 'http://localhost:3000/getIssues';
+  const matcherURL: string = '/api/getIssues';
 
   it('fetchIssues, given a successful state, returns an action indicating a fetch request and fetch success', () => {
     fetchMock.getOnce(matcherURL, {

@@ -6,9 +6,9 @@
   "scripts": {
     "build:dev": "NODE_ENV=development webpack --config ./webpack/dev.config.js",
     "build:prod": "NODE_ENV=production webpack --config ./webpack/prod.config.js",
-    "dev-server": "NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js --open",
+    "dev-server": "NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js --hot --open",
     "dev": "NODE_ENV=development ts-node ./src/server/server.ts",
-    "dev:hot": "NODE_ENV=development-hot nodemon --exec ts-node ./src/server/server.ts & NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js",
+    "dev:hot": "NODE_ENV=development-hot nodemon --exec ts-node ./src/server/server.ts & NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.js --hot",
     "start": "NODE_ENV=production ts-node ./src/server/server.ts",
     "server": "nodemon --exec ts-node ./src/server/server.ts",
     "daemon": "nodemon --exec ts-node ./src/server/daemonServer.ts",

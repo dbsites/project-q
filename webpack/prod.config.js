@@ -19,9 +19,9 @@ module.exports = {
   mode: 'production',
   entry: path.resolve(__dirname, '../src/index.tsx'),
   output: {
-    path: path.resolve(__dirname, '../dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
+    path: path.resolve(__dirname, '../dist'),             // Output bundle file to root/dist
+    filename: 'bundle.js',                                // Bundle file name
+    publicPath: '/',                                      // Specify base path for all assets as root
   },
   devtool: 'source-map',
   module: {
