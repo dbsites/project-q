@@ -85,8 +85,9 @@ export class DatabaseRepository {
 
   async insertPoliticianData(dataObject: any) {
     for (let i = 0; i < dataObject.array; i += 1) {
-      this.db.any('INSERT INTO politicians (id, company_id, recip_1, recip_1_amount, recip_1_img, recipt_2, recip_2_amount, recip_2_img, recipt_3, recip_3_amount, recip_3_img) VALUES ($1, $2, $4, $5, $6, $7, $8, $9, $10, $11);', [v4(), dataObject.comapny_id, dataObject.recipient_one_amount, ])
+      await this.db.none('INSERT INTO politicians (id, company_id, recip_1, recip_1_amount, recip_1_img, recipt_2, recip_2_amount, recip_2_img, recipt_3, recip_3_amount, recip_3_img) VALUES ($1, $2, $4, $5, $6, $7, $8, $9, $10, $11);', [v4(), dataObject.company_id, dataObject.recipient_one, dataObject.recipient_one_amount, dataObject.recipient_one_image, dataObject.recipient_two, dataObject.recipient_two_amount, dataObject.recipient_two_image, dataObject.recipient_three, dataObject.recipient_three_amount, dataObject.recipient_three_image]);
     }
   }
 
 }
+

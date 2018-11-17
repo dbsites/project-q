@@ -82,7 +82,7 @@ DatabaseMethods.getIssueAbbrvs = (_: Request, res: Response, next: NextFunction)
   });
 }
 
-DatabaseMethods.insertPoliticianData = (_: Request, res: Response, next: NextFunction) => {
+DatabaseMethods.insertPoliticianData = (req: Request, _: Response, next: NextFunction) => {
   db.data.insertPoliticianData(req.body)
   .then(() => {
     next();
