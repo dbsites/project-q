@@ -22,6 +22,7 @@ interface Props {
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
+  getCompanyInfo: any
 }
 
 class QuadsContainer extends React.Component<Props> {
@@ -42,6 +43,7 @@ class QuadsContainer extends React.Component<Props> {
   render() {
     const {
       companyList,
+      getCompanyInfo,
       issueAbbrvs,
       selectCompany,
       selectedCompany,
@@ -60,6 +62,7 @@ class QuadsContainer extends React.Component<Props> {
             select={selectCompany}
             selected={selectedCompany}
             sort={sortCompanyList}
+            info={getCompanyInfo}
             issues={userIssues}
             abbrvs={issueAbbrvs}
           />
@@ -87,6 +90,10 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.sortCompanyList({ field: event.target.id }));
   },
   getUserIssues: () => dispatch(actions.getUserIssues()),
+  getCompanyInfo: (event: any, ticker: string) => {
+    event.preventDefault();
+    dispatch(actions.getCompanyInfo(ticker));
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);
