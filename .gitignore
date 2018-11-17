@@ -10,10 +10,8 @@ node_modules/
 # Fake company data for testing
 companyData.json
 
-<<<<<<< HEAD
 # daemon
 daemonServer.ts
-=======
+
 # Database Dump
 ethiq.dump.sql
->>>>>>> master

@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
-app.get('/auth',
+app.get('/api/auth',
   Sessions.check,
   UserMethods.getAccountInfo,
   UserMethods.getIssues,
@@ -65,7 +65,7 @@ app.get('/auth',
 )
   
 // registration end point
-app.post('/register', 
+app.post('/api/register', 
   UserMethods.createAccount,
   Sessions.create,
   (_: Request, res: Response) => {
@@ -75,7 +75,7 @@ app.post('/register',
 );
 
 // login end point
-app.post('/login', 
+app.post('/api/login', 
   UserMethods.login,
   Sessions.create,
   UserMethods.getAccountInfo,
@@ -87,7 +87,7 @@ app.post('/login',
 );
 
 // route for logout which deletes sessions
-app.post('/logout', 
+app.post('/api/logout', 
   Sessions.end,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.user);
@@ -95,7 +95,7 @@ app.post('/logout',
 );
 
 // route for getting a list of issues for the front end
-app.get('/getIssues',
+app.get('/api/getIssues',
   DatabaseMethods.getIssues,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.issues);
@@ -103,7 +103,7 @@ app.get('/getIssues',
 );
 
 // route for storing user issues/
-app.post('/userIssues', 
+app.post('/api/userIssues', 
   UserMethods.addIssues,
   UserMethods.getIssues,
   UserMethods.updateIssuesComplete,
@@ -123,7 +123,7 @@ app.post('/userIssues',
 // );
 
 // route for storing user answers to questions
-app.post('/userSurvey',
+app.post('/api/userSurvey',
   UserMethods.updateIssuePositons,
   UserMethods.updateUserSurvey,
   UserMethods.updateSurveyComplete,
@@ -135,7 +135,7 @@ app.post('/userSurvey',
 );
 
 // end point for deliverying a list of companies on dashboard render
-app.get('/companyList',
+app.get('/api/companyList',
   DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
@@ -143,26 +143,30 @@ app.get('/companyList',
   }
 );
 
-app.post('/stockData',
+// app.post('/api/stockData',
+// CompanyDatabase.getStockData,
+// (_: Request, res: Response) => {
+//   res.status(200).send(res.locals.stockData);
+// }
+// );
+
+app.post('/api/companyModule',
+  CompanyDatabase.getCompanyModule,
+  DatabaseMethods.getPoliticianData,
   CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
-  res.status(200).send(res.locals.stockData);
+    res.status(200).send(res.locals);
   }
 );
-
-app.post('/updateCompanyData',
+app.post('/api/updateCompanyData',
     CompanyDatabase.updateData,
     (_: Request, res: Response) => {
-      res.sendStatus(200);
+    res.sendStatus(200);
     }
   );
 
-app.post('/politicianData',
-  DatabaseMethods.insertPoliticianData,
-  (_: Request, res: Response) => {
-    res.sendStatus(200);
-  }
-);
+
+module.exports = app;
 
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
@@ -209,6 +213,22 @@ app.post('/updateCompanyData',
     }
   );
 ***********************************************************
-*/
+  // route to update politician data  
 
-module.exports = app
+app.post('/politicianData',
+  DatabaseMethods.insertPoliticianData,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  }
+);
+***********************************************************
+  // route to update stock data  
+
+app.post('/politicianData',
+  DatabaseMethods.insertPoliticianData,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  }
+);
+***********************************************************
+*/

@@ -89,5 +89,8 @@ export class DatabaseRepository {
     }
   }
 
+  getPoliticianData(stockSymbol: string) {
+    return this.db.one('SELECT * FROM politicians WHERE company_id = (SELECT id FROM companies WHERE ticker = $1);', stockSymbol);
+  }
 }
 

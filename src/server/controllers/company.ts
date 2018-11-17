@@ -60,17 +60,18 @@ export class CompanyRepository {
     return this.db.any('SELECT * FROM companies INNER JOIN company_issues ON companies.id = company_issues.company_id;');
   }
 
-  async updateData(data: any) {
-    await data.forEach((item: any) => {
+  async updateData(data: any[]) {
+  
+      for (let i = 0 ; i < data.length; i += 1) {
       // update issues scores
       // this.db.none('UPDATE "companyIssues" SET "agreeScore" = $1, "disagreeScore" = $2 WHERE "companyId" = $3 AND "issueId" = $4;', 
       //   [item.agreeScore, item.disagreeScore, item.companyId, item.issueId]);
       // update modal scores
-      console.log(item);
-      if (item.women_managers === 'n/a') item.women_managers = 0;
-      if (item.salary_gap === 'n/a') item.salary_gap = 0;
-      this.db.none('INSERT INTO company_module (id, company_id, company_name, company_name_possessive, green_buildings, targets_emissions, human_rights, policy_board_diversity, women_managers, nra_score, brady_rating, tsr, salary_gap, community_score, charity_amount, yes_manchin, no_manchin, yes_repeal, no_repeal, yes_tax_cut, no_tax_cut, diversity_score, aila_score, fair_score, taxes_paid) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25);', 
-      [v4(), item.company_id, item.company_name, item.company_name_possessive, item.green_buildings, item.targets_emissions, item.human_rights, item.policy_board_diversity, item.women_managers, item.nra_score, item.brady_rating, item.tsr, item.salary_gap, item.community_score, item.charity_amount, item.yes_manchin, item.no_manchin, item.yes_repeal, item.no_repeal, item.yes_tax_cut, item.no_tax_cut, item.diversity_score, item.aila_score, item.fair_score, item.taxes_paid])
+      if (data[i].women_managers === 'n/a') data[i].women_managers = 0;
+      if (data[i].salary_gap === 'n/a') data[i].salary_gap = 0;
+
+      await this.db.none('INSERT INTO company_module (id, company_name, green_buildings, targets_emissions, human_rights, policy_board_diversity, women_managers, nra_score, brady_rating, tsr, salary_gap, community_score, charity_amount, yes_manchin, no_manchin, yes_repeal, no_repeal, yes_tax_cut, no_tax_cut, diversity_score, aila_score, fair_score, taxes_paid, company_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24);', 
+      [v4(), data[i].company_name, data[i].green_buildings, data[i].targets_emissions, data[i].human_rights, data[i].policy_board_diversity, data[i].women_managers, data[i].nra_score, data[i].brady_rating, data[i].tsr, data[i].salary_gap, data[i].community_score, data[i].charity_amount, data[i].yes_manchin, data[i].no_manchin, data[i].yes_repeal, data[i].no_repeal, data[i].yes_tax_cut, data[i].no_tax_cut, data[i].diversity_score, data[i].aila_score, data[i].fair_score, data[i].taxes_paid, data[i].id])
       .catch((err: any) => {
         console.log(err);
         return 0;
@@ -78,7 +79,7 @@ export class CompanyRepository {
       // update logo data
       // this.db.none('UPDATE companies SET logo = $1 WHERE id = $2;', 
       //   [item["Image Link"], item["Backend ID"]]);
-    })
+    }
     
   }
 
@@ -97,5 +98,9 @@ export class CompanyRepository {
 
   getStockData(stockSymbol: string) {
     return this.db.any('SELECT timestamp, open, high, low, close, volume FROM company_stock WHERE company_id = (SELECT id FROM companies WHERE ticker = $1);', stockSymbol);
+  }
+
+  getModuleData(stockSymbol: string) {
+    return this.db.one('SELECT * FROM company_module WHERE company_id = (SELECT id FROM companies WHERE ticker = $1);', stockSymbol);
   }
 }
