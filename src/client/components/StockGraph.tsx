@@ -16,8 +16,19 @@ const StockGraph = (props: any) => {
     const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=50EC4535F41E4734BC8AD78686377BAC&symbol=${ticker.split('.')[0]}&indices=SPX&includeCompetitors=true&palette=Relief&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
 
     display = (
-      <iframe frameBorder='0' scrolling='no' src={URI}>
-      </iframe >
+      <React.Fragment>
+        <iframe frameBorder='0' scrolling='no' src={URI}>
+        </iframe >
+        <div className="stock-container-info">
+          <ul>
+            <li>High: </li>
+            <li>Low: </li>
+            <li>Open: </li>
+            <li>Close: </li>
+            <li>Volume: </li>
+          </ul>
+        </div>
+      </React.Fragment>
     );
   }
 
