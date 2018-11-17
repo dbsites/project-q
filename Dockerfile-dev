@@ -1,0 +1,19 @@
+# ubuntu 16.04 with node 10.13.0
+FROM dbsites/ubuntu-ethiq
+
+# Install webpack dev server
+RUN npm install webpack -g
+
+# Install db-migrate
+RUN npm install db-migrate -g
+
+# Working directory for application
+WORKDIR /usr/src/app
+
+# npm install into /usr/src/app
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json /usr/src/app/
+RUN npm install
+
+# replace this with your application's default port
+EXPOSE 3000

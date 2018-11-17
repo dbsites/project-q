@@ -9,3 +9,6 @@ node_modules/
 
 # Fake company data for testing
 companyData.json
+
+# Database Dump
+ethiq.dump.sql

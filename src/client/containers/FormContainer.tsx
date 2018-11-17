@@ -14,7 +14,7 @@ import RegisterForm from '../components/RegisterForm';
 import ForgotPass from '../components/ForgotPass'
 import ResetPass from '../components/ResetPass'; 
 import { IFormFieldObject } from '../actions/types';
-import { LoginState, RegisterState } from '../reducers/types';
+import { LoginState, RegisterState, ForgotPassState, ResetPassState } from '../reducers/types';
 import FormHeader from '../components/FormHeader';
 
 // TODO: Assign explicit type to store
@@ -38,11 +38,13 @@ const mapStateToProps = (store: any): any => ({
     registerError: store.form.register.registerError,
   },
   resetFields: {
-    resetPass: store.form.reset.resetPass,
-    forgotPassEmail: store.form.reset.forgotPassEmail,
     newPassword: store.form.reset.newPassword,
     confirmNewPassword: store.form.reset.confirmNewPassword,
     resetError: store.form.reset.resetError,
+  },
+  forgotFields: {
+    forgotPassEmail: store.form.forgot.forgotPassEmail,
+    forgotError: store.form.forgot.forgotError,
   },
   isAuth: store.user.isAuth,
   userId: store.user.userId,
@@ -56,7 +58,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     updateField: (fieldObject: IFormFieldObject) => dispatch(actions.updateField(fieldObject)),
     fetchFormFailure: (form: string, message: string) => dispatch(actions.fetchFormFailure(form, message)),
-    fetchFormRequest: (form: string, formFields: LoginState | RegisterState) => dispatch(actions.fetchFormRequest(form, formFields)),
+    fetchForm: (form: string, formFields: LoginState | RegisterState | ForgotPassState | ResetPassState) => dispatch(actions.fetchForm(form, formFields)),
     fetchLogout: (userId: string) => dispatch(actions.fetchLogout(userId)),
   }
 }
@@ -66,8 +68,8 @@ let FormContainer: any = (props: any) => {
   //Destructure form values and actions from props
   const {
     match, 
-    loginFields, registerFields, resetFields,
-    fetchFormFailure, fetchFormRequest,
+    loginFields, registerFields, forgotFields, resetFields,
+    fetchForm, fetchFormFailure,
     updateField,
     fetchLogout,
     isAuth, userId,
@@ -76,27 +78,27 @@ let FormContainer: any = (props: any) => {
   const loginForm = <LoginForm
       loginFields={loginFields}
       fetchFormFailure={fetchFormFailure}
-      fetchFormRequest={fetchFormRequest}
+      fetchForm={fetchForm}
       updateField={updateField}
     />;
 
   const registerForm = <RegisterForm
       registerFields={registerFields}
       fetchFormFailure={fetchFormFailure}
-      fetchFormRequest={fetchFormRequest}
+      fetchForm={fetchForm}
       updateField={updateField}
     />
 
   const forgotPassForm = <ForgotPass
     fetchFormFailure={fetchFormFailure}
-    fetchFormRequest={fetchFormRequest}
-    resetFields={resetFields}
+    fetchForm={fetchForm}
+    forgotFields={forgotFields}
     updateField={updateField}
   />
 
   const resetPassForm = <ResetPass
     fetchFormFailure={fetchFormFailure}
-    fetchFormRequest={fetchFormRequest}
+    fetchForm={fetchForm}
     resetFields={resetFields}
     updateField={updateField}
   />

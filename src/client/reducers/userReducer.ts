@@ -39,9 +39,6 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
       
     case actions.UPDATE_ISSUE_POSITION:
       nextState[action.issueId] = action.position;
-      console.log('Action: ', action);
-      console.log('State: ', state);
-      console.log('Next State: ', nextState);
       return {
         ...state,
         ...nextState
@@ -66,7 +63,6 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       };
     
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      console.log(response);
       return {
         ...state,
         ...response,
