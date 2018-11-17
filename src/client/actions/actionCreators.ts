@@ -11,17 +11,21 @@ import { Action, Dispatch } from 'redux';
 
 // Import Action Interfaces
 import {
+  IFetchFailureAction,                                        // Fetch Failure Action Interface
   IFormFieldObject, IFormFetchSuccessResponseObject,          // Form Request and Response Interfaces
   IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, // Form Action Interfaces
   IToggleIssueAction, IUpdateIssuePositionAction,             // User Action Interfaces
-  IIssuesSuccessAction, IIssuesFailureAction,                 // Issue Action Interfaces
-  IIssuesFetchSuccessResponseObject,                          // Issues Resposne Interface
+  IIssuesSuccessAction,                                       // Issue Action Interfaces
+  IIssuesFetchSuccessResponseObject,
+  INoAuthObject,
+  IAuthSuccessAction,
+  ISubmitIssuesSuccessAction,                          // Issues Resposne Interface
 } from './types';
 
 // Import Reducer State Interfaces
 import {
   LoginState, RegisterState,
-  ForgotPassState, ResetPassState,
+  ForgotPassState, ResetPassState, SurveyState, UserIssuesSelected,
 } from '../reducers/types';
 
 // --- Form Action Creators --- // --- UNIT TESTING 100% --- //
@@ -55,7 +59,7 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    credentials: 'include',
     body: JSON.stringify(formFields),
   })
     .then((response: Response) => {
@@ -79,7 +83,7 @@ export const fetchIssuesSuccess = (response: IIssuesFetchSuccessResponseObject):
   response,
 })
 
-export const fetchIssuesFailure = (message: string): IIssuesFailureAction => ({
+export const fetchIssuesFailure = (message: string): IFetchFailureAction => ({
   type: types.FETCH_ISSUES_FAILURE,
   message: message,
 })
@@ -97,7 +101,7 @@ export const fetchIssues = () => (dispatch: any) => {
     .catch((error: Error) => dispatch(fetchIssuesFailure(error.message)));
 }
 
-// --- User Action Creators --- // --- UNIT TESTING 100% --- //
+// --- Sync User Action Creators --- // --- UNIT TESTING 100% --- //
 export const clearIssues = (): Action<string> => ({
   type: types.CLEAR_ISSUES,
 });
@@ -121,6 +125,103 @@ export const updateIssuePosition = (issueId: string, position: string): IUpdateI
   issueId,
   position,
 })
+
+// --- Async User Action Creators --- // --- UNIT TESTING 100% --- //
+// Description: Action Creators to populate user state following fetch request
+export const fetchAuthRequest = (): Action<string> => ({
+  type: types.FETCH_AUTH_REQUEST,
+})
+
+export const fetchAuthSuccess = (response: IFormFetchSuccessResponseObject): IAuthSuccessAction => ({
+  type: types.FETCH_AUTH_SUCCESS,
+  response,
+})
+
+export const fetchAuthFailure = (): Action<string> => ({
+  type: types.FETCH_AUTH_FAILURE,
+})
+
+export const fetchAuth = () => (dispatch: Dispatch) => {
+  dispatch(fetchAuthRequest());
+  // Issue fetch request
+  return fetch('/api/auth', {
+    method: 'GET',
+    credentials: 'include',
+  })
+    .then((response: Response) => response.json())
+    .then((response: IFormFetchSuccessResponseObject | INoAuthObject) => {
+      if (!response.isAuth) dispatch(fetchAuthFailure());
+      else dispatch(fetchAuthSuccess(response as IFormFetchSuccessResponseObject));
+    })
+    .catch(() => dispatch(fetchAuthFailure()));
+}
+
+// Description: Action Creators to reset user state following fetch request
+export const fetchLogoutRequest = (): Action<string> => ({
+  type: types.FETCH_LOGOUT_REQUEST,
+})
+
+export const fetchLogoutSuccess = (): Action<string> => ({
+  type: types.FETCH_LOGOUT_SUCCESS,
+})
+
+export const fetchLogoutFailure = ():  Action<string>  => ({
+  type: types.FETCH_LOGOUT_FAILURE,
+})
+
+export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
+  dispatch(fetchLogoutRequest())
+  // Issue fetch request
+  return fetch('/api/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ userId: userId }),
+  })
+    .then(() => dispatch(fetchLogoutSuccess()))
+    .catch(() => dispatch(fetchLogoutFailure()))
+}
+
+// --- Async Survey Action Creators --- // --- UNIT TESTING 100% --- //
+// Description: Action Creators to update survey following fetch request (note: Also updates user state)
+export const fetchSubmitIssuesRequest = (): Action<string> => ({
+  type: types.FETCH_SUBMIT_ISSUES_REQUEST,
+})
+
+export const fetchSubmitIssuesSuccess = (response: SurveyState): ISubmitIssuesSuccessAction => ({
+  type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
+  response,
+})
+
+export const fetchSubmitIssuesFailure = ():  Action<string>  => ({
+  type: types.FETCH_SUBMIT_ISSUES_FAILURE,
+})
+
+export const fetchSubmitIssues = (userId: string, selectedIssues: UserIssuesSelected) => (dispatch: Dispatch) => {
+  dispatch(fetchSubmitIssuesRequest());
+  // Issue fetch request
+  return fetch('/api/userIssues', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      userId: userId,
+      issues: selectedIssues,
+    }),
+  })
+    .then((response: Response) => response.json())
+    .then((response: SurveyState) => {
+      dispatch({
+        type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
+        response,
+      });
+    })
+    .catch(() => dispatch(fetchSubmitIssuesFailure()))
+};
 
 // --- Survey Synchronous Action Creators --- // --- UNIT TESTING 0% --- // TODO: TESTING
 export const answerQuestion = (event: any) => ({
@@ -153,47 +254,6 @@ export const sortCompanyList = (event: any) => ({
 })
 
 // --- ASYNC --- //
-// Fetch Authorization
-export const fetchAuth = () => (dispatch: Dispatch) => {
-  dispatch({
-    type: types.FETCH_AUTH_REQUEST,
-  });
-  // Issue fetch request
-  fetch('/api/auth', {
-    method: 'GET',
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-  })
-    .then(response => response.json())
-    .then((response: any) => {
-      dispatch({
-        type: types.FETCH_AUTH_SUCCESS,
-        response
-      });
-    })
-    .catch(err => console.error(err));
-}
-
-// THUNK - Fetch Logout User Request
-export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
-  // Issue fetch request
-  fetch('/api/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify({ userId: userId }),
-  })
-    .then(response => response.json())
-    .then((response: any) => {
-      dispatch({
-        type: types.FETCH_LOGOUT_SUCCESS,
-        response,
-      });
-    })
-    .catch(err => console.error(err));
-}
-
 export const fetchCompanyList = () => (dispatch: any) => {
   fetch('/api/companyList')
     .then((response: any) => response.json())
@@ -212,33 +272,6 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
-// THUNK - Fetch Submit User Issues
-export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
-  dispatch({
-    type: types.FETCH_SUBMIT_ISSUES_REQUEST,
-  });
-  // Issue fetch request
-  fetch('/api/userIssues', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
-    body: JSON.stringify({
-      userId: userId,
-      issues: selectedIssues,
-    }),
-  })
-    .then(response => response.json())
-    .then((response: any) => {
-      dispatch({
-        type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
-        response,
-      });
-    })
-    .catch((err: any) => console.error(err));
-};
-
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   dispatch({
     type: types.FETCH_SUBMIT_SURVEY_REQUEST,
@@ -249,7 +282,7 @@ export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
+    credentials: 'include',
     body: JSON.stringify(surveyObj),
   })
     .then(response => response.json())

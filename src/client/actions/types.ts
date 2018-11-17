@@ -1,6 +1,11 @@
 import { Action } from "redux";
 import { UserIssuesSelected, SurveyState } from "../reducers/types";
 
+// Fetch Failure Interface
+export interface IFetchFailureAction extends Action<string>{
+  message: string,
+}
+
 // Form Field Interfaces
 export interface IFormFieldObject {
   form: string,
@@ -30,9 +35,8 @@ export interface IFormSuccessAction extends Action<string> {
   response: IFormFetchSuccessResponseObject,
 }
 
-export interface IFormFailureAction extends Action<string> {
+export interface IFormFailureAction extends IFetchFailureAction {
   form: string,
-  message: string,
 }
 
 // Issue Fetch Success Response Interface
@@ -49,10 +53,6 @@ export interface IIssuesSuccessAction extends Action<string>{
   response: IIssuesFetchSuccessResponseObject,
 }
 
-export interface IIssuesFailureAction extends Action<string>{
-  message: string,
-}
-
 // User Action Interfaces
 export interface IToggleIssueAction extends Action<string> {
   issueId: string,
@@ -60,4 +60,17 @@ export interface IToggleIssueAction extends Action<string> {
 
 export interface IUpdateIssuePositionAction extends IToggleIssueAction {
   position: string,
+}
+
+export interface INoAuthObject {
+  isAuth: boolean,
+}
+
+export interface IAuthSuccessAction extends Action<string> {
+  response: IFormFetchSuccessResponseObject,
+}
+
+// Survey Action Interfaces
+export interface ISubmitIssuesSuccessAction extends Action<string>{
+  response: SurveyState,
 }

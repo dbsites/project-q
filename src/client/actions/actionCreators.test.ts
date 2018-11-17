@@ -9,11 +9,11 @@ import { Action, Middleware } from 'redux';
 // Import Action Creators, Types and Interfaces for testing
 import types from './actionTypes'
 import * as actions from './actionCreators';
-import { LoginState } from '../reducers/types';
+import { LoginState, SurveyState, UserIssuesSelected } from '../reducers/types';
 import {
   IToggleIssueAction, IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, 
   IFormFieldObject, IFormFetchSuccessResponseObject,
-  IIssuesSuccessAction, IIssuesFailureAction, IIssuesFetchSuccessResponseObject
+  IIssuesSuccessAction, IIssuesFetchSuccessResponseObject, IFetchFailureAction, IAuthSuccessAction, INoAuthObject, ISubmitIssuesSuccessAction
 } from './types';
 
 // Import Random ID generator
@@ -31,7 +31,7 @@ const stubFormFieldObject: IFormFieldObject = {
   field: 'loginEmail',
   type: 'text',
   value: 'test@test.com',
-}
+};
 const stubFormFetchRequestBody: LoginState = { 
   loginEmail: 'test@test.com',
   emailValid: true,
@@ -48,8 +48,10 @@ const stubFormFetchResponse: IFormFetchSuccessResponseObject = {
   surveyComplete: false,
   issuesSelected: {},
   questions: {},
-}
+};
 const stubFormFetchErrorMessage: string = 'Invalid email address or password';
+
+const stubUserId: string = v4();
 
 describe('Functionality Test: Form Action Creators', () => {
   afterEach(() => {
@@ -62,14 +64,14 @@ describe('Functionality Test: Form Action Creators', () => {
       formFieldObject: stubFormFieldObject,
     }
     expect(actions.updateField(stubFormFieldObject)).toEqual(expectedAction);
-  })
+  });
 
   it('fetchFormRequest returns an action indicating a request has been dispatched', () => {
     const expectedAction: Action<string> = {
       type: types.FETCH_FORM_REQUEST,
     }
     expect(actions.fetchFormRequest()).toEqual(expectedAction);
-  })
+  });
 
   it('fetchFormSuccess, given a server response, returns an action to update form and user state', () => {
     const expectedAction: IFormSuccessAction = {
@@ -77,7 +79,7 @@ describe('Functionality Test: Form Action Creators', () => {
       response: stubFormFetchResponse,
     }
     expect(actions.fetchFormSuccess(stubFormFetchResponse)).toEqual(expectedAction);
-  })
+  });
 
   it('fetchFormFailure, given a form and message, returns an action to update that form\'s error message', () => {
     const expectedAction: IFormFailureAction = {
@@ -86,7 +88,7 @@ describe('Functionality Test: Form Action Creators', () => {
       message: stubFormFetchErrorMessage,
     }
     expect(actions.fetchFormFailure(stubForm, stubFormFetchErrorMessage)).toEqual(expectedAction);
-  })
+  });
 
   const matcherURL: string = '/api/login';
   
@@ -104,7 +106,7 @@ describe('Functionality Test: Form Action Creators', () => {
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions)
       })
-  })
+  });
 
   it('fetchForm, given a failed state, returns an action indicating a fetch failure and an error message', () => {
     fetchMock.postOnce(matcherURL, {
@@ -119,7 +121,7 @@ describe('Functionality Test: Form Action Creators', () => {
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       })
-  })
+  });
 });
 
 // --- UNIT TESTS --- Issue Action Creators --- //
@@ -130,7 +132,7 @@ const stubIssuesFetchResponse: IIssuesFetchSuccessResponseObject = {
     issueName: 'Environment',
     issueBlurb: 'Lorem ipsum dolor sit amet',
   }
-}
+};
 const stubIssueFetchErrorMessage: string = 'Something has gone wrong - please try again';
 
 describe('Functionality Test: Issue Action Creators', () => {
@@ -143,7 +145,7 @@ describe('Functionality Test: Issue Action Creators', () => {
       type: types.FETCH_ISSUES_REQUEST,
     }
     expect(actions.fetchIssuesRequest()).toEqual(expectedAction);
-  })
+  });
 
   it('fetchIssuesSuccess, given a server response, returns an action to update Issues and user state', () => {
     const expectedAction: IIssuesSuccessAction = {
@@ -151,15 +153,15 @@ describe('Functionality Test: Issue Action Creators', () => {
       response: stubIssuesFetchResponse,
     }
     expect(actions.fetchIssuesSuccess(stubIssuesFetchResponse)).toEqual(expectedAction);
-  })
+  });
 
   it('fetchIssuesFailure, given a Issues and message, returns an action to update that Issues\'s error message', () => {
-    const expectedAction: IIssuesFailureAction = {
+    const expectedAction: IFetchFailureAction = {
       type: types.FETCH_ISSUES_FAILURE,
       message: stubIssueFetchErrorMessage,
     }
     expect(actions.fetchIssuesFailure(stubIssueFetchErrorMessage)).toEqual(expectedAction);
-  })
+  });
 
   const matcherURL: string = '/api/getIssues';
 
@@ -177,7 +179,7 @@ describe('Functionality Test: Issue Action Creators', () => {
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions)
       })
-  })
+  });
 
   it('fetchIssues, given a failed state, returns an action indicating a fetch failure and an error message', () => {
       fetchMock.getOnce(matcherURL, {
@@ -192,15 +194,14 @@ describe('Functionality Test: Issue Action Creators', () => {
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       })
-  })
+  });
 });
 
 // --- UNIT TESTS --- User Action Creators --- //
-// Define sample issueId
-const stubIssueId: string = v4();
-const stubPosition: string = 'strong pro';
-
-describe('Functionality Test: User Action Creators', () => {
+describe('Functionality Test: Synchronous User Action Creators', () => {
+  // Define sample issueId/position
+  const stubIssueId: string = v4();
+  const stubPosition: string = 'strong pro';
 
   it('clearIssues returns an action to clear all issues', () => {
     const expectedAction: Action<string> = {
@@ -239,6 +240,199 @@ describe('Functionality Test: User Action Creators', () => {
       position: stubPosition,
     };
     expect(actions.updateIssuePosition(stubIssueId, stubPosition)).toEqual(expectedAction);
+  });
+});
+
+describe('Functionality Test: Asynchronous User Action Creators', () => {
+  afterEach(() => {
+    fetchMock.restore();
+  });
+
+  // Define sample failed Auth Response
+  const stubNoAuthFetchResponse: INoAuthObject = { isAuth: false }
+
+  it('fetchAuthRequest returns an action indicating a request has been dispatched', () => {
+    const expectedAction: Action<string> = {
+      type: types.FETCH_AUTH_REQUEST,
+    }
+    expect(actions.fetchAuthRequest()).toEqual(expectedAction);
+  });
+
+  it('fetchAuthSuccess, given a server response, returns an action to update user state', () => {
+    const expectedAction: IAuthSuccessAction = {
+      type: types.FETCH_AUTH_SUCCESS,
+      response: stubFormFetchResponse,
+    }
+    expect(actions.fetchAuthSuccess(stubFormFetchResponse)).toEqual(expectedAction);
+  });
+
+  it('fetchAuthFailure returns an action to reset user state', () => {
+    const expectedAction: Action<string>= {
+      type: types.FETCH_AUTH_FAILURE,
+    }
+    expect(actions.fetchAuthFailure()).toEqual(expectedAction);
+  });
+
+  const matcherAuthURL: string = '/api/auth';
+
+  it('fetchAuth, with successful auth, returns an action indicating a auth request and fetch success to reset user state', () => {
+    fetchMock.getOnce(matcherAuthURL, {
+      status: 200,
+      body: stubFormFetchResponse
+    })
+    const expectedActions = [
+      { type: types.FETCH_AUTH_REQUEST },
+      { type: types.FETCH_AUTH_SUCCESS, response: stubFormFetchResponse },
+    ];
+    const store = mockStore({});
+    return store.dispatch(actions.fetchAuth() as any) // TODO: Refactor to precision
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  });
+
+  it('fetchAuth, without successful auth, returns an action indicating a fetch failure to reset user state', () => {
+    fetchMock.getOnce(matcherAuthURL, {
+    body: stubNoAuthFetchResponse,
   })
-  
-})
+  const expectedActions = [
+    { type: types.FETCH_AUTH_REQUEST },
+    { type: types.FETCH_AUTH_FAILURE },
+  ];
+  const store = mockStore({});
+  return store.dispatch(actions.fetchAuth() as any) // TODO: Refactor to precision
+    .then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    })
+  });
+
+  it('fetchLogoutRequest returns an action indicating a request has been dispatched', () => {
+    const expectedAction: Action<string> = {
+      type: types.FETCH_LOGOUT_REQUEST,
+    }
+    expect(actions.fetchLogoutRequest()).toEqual(expectedAction);
+  });
+
+  it('fetchLogoutSuccess, given a server response, returns an action to reset user state', () => {
+    const expectedAction: Action<string> = {
+      type: types.FETCH_LOGOUT_SUCCESS,
+    }
+    expect(actions.fetchLogoutSuccess()).toEqual(expectedAction);
+  });
+
+  it('fetchLogoutFailure, given a Issues and message, returns an action to reset user state', () => {
+    const expectedAction: Action<string> = {
+      type: types.FETCH_LOGOUT_FAILURE,
+    }
+    expect(actions.fetchLogoutFailure()).toEqual(expectedAction);
+  });
+
+  const matcherLogoutURL: string = '/api/logout';
+
+  it('fetchLogout, given a userId, returns an action indicating a logout request and logout success to reset user state', () => {
+    fetchMock.postOnce(matcherLogoutURL, {
+      status: 200,
+    })
+    const expectedActions = [
+      { type: types.FETCH_LOGOUT_REQUEST },
+      { type: types.FETCH_LOGOUT_SUCCESS },
+    ];
+    const store = mockStore({});
+    return store.dispatch(actions.fetchLogout(stubUserId) as any) // TODO: Refactor to precision
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  });
+
+  it('fetchLogout, if an error is thrown, returns an action indicating a fetch failure to reset user state', () => {
+    fetchMock.postOnce(matcherLogoutURL, {
+      throws: 'Logout Error',
+    })
+    const expectedActions = [
+      { type: types.FETCH_LOGOUT_REQUEST },
+      { type: types.FETCH_LOGOUT_FAILURE },
+    ];
+    const store = mockStore({});
+    return store.dispatch(actions.fetchLogout(stubUserId) as any) // TODO: Refactor to precision
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      })
+  });
+});
+
+// Define sample submit issues request and response
+const stubSubmitIssuesFetchRequest: UserIssuesSelected = {
+  '580600c8-c633-476b-98d2-9676c70c177d': null,
+};
+
+const stubSubmitIssuesFetchSuccessResponse: SurveyState = {
+  '580600c8-c633-476b-98d2-9676c70c177d': {
+    '7d2144fc-225b-4e5c-9d56-a0ecd4bbf8a0': {
+      agree: null,
+      position: 'pro',
+      questionId: '7d2144fc-225b-4e5c-9d56-a0ecd4bbf8a0',
+      questionText: 'Sample Question Text',
+    }
+  },
+};
+
+describe('Functionality Test: Asynchronous Survey Action Creators', () => {
+  afterEach(() => {
+    fetchMock.restore();
+  });
+
+  it('fetchSubmitIssuesRequest returns an action indicating a request has been dispatched', () => {
+    const expectedAction: Action<string> = {
+      type: types.FETCH_SUBMIT_ISSUES_REQUEST,
+    }
+    expect(actions.fetchSubmitIssuesRequest()).toEqual(expectedAction);
+  });
+
+  it('fetchSubmitIssuesSuccess, given a server response, returns an action to populate survey and update user state', () => {
+    const expectedAction: ISubmitIssuesSuccessAction = {
+      type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
+      response: stubSubmitIssuesFetchSuccessResponse,
+    }
+    expect(actions.fetchSubmitIssuesSuccess(stubSubmitIssuesFetchSuccessResponse)).toEqual(expectedAction);
+  });
+
+  it('fetchSubmitIssuesFailure returns an action to maintain issuesComplete state', () => {
+    const expectedAction: Action<string>= {
+      type: types.FETCH_SUBMIT_ISSUES_FAILURE,
+    }
+    expect(actions.fetchSubmitIssuesFailure()).toEqual(expectedAction);
+  });
+
+  const matcherSubmitIssuesURL: string = '/api/userIssues';
+
+  it('fetchSubmitIssues, given UserIssuesSelected, returns an action indicating a auth request and fetch success to populate survey', () => {
+    fetchMock.postOnce(matcherSubmitIssuesURL, {
+      status: 200,
+      body: stubSubmitIssuesFetchSuccessResponse
+    })
+    const expectedActions = [
+      { type: types.FETCH_SUBMIT_ISSUES_REQUEST },
+      { type: types.FETCH_SUBMIT_ISSUES_SUCCESS, response: stubSubmitIssuesFetchSuccessResponse },
+    ];
+    const store = mockStore({});
+    return store.dispatch(actions.fetchSubmitIssues(stubUserId, stubSubmitIssuesFetchRequest) as any) // TODO: Refactor to precision
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions)
+      })
+  });
+
+  it('fetchSubmitIssues, if an error is thrown, returns an action retaining issuesSelected as false', () => {
+    fetchMock.postOnce(matcherSubmitIssuesURL, {
+      throws: 'Submission Error',
+  })
+  const expectedActions = [
+    { type: types.FETCH_SUBMIT_ISSUES_REQUEST },
+    { type: types.FETCH_SUBMIT_ISSUES_FAILURE },
+  ];
+  const store = mockStore({});
+  return store.dispatch(actions.fetchSubmitIssues('wrongUserId', stubSubmitIssuesFetchRequest) as any) // TODO: Refactor to precision
+    .then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    })
+  });
+});

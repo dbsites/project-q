@@ -34,6 +34,7 @@ const loadingReducer = (state: LoadingState = initialLoadingState, action: any):
       };
 
     case actions.FETCH_AUTH_SUCCESS:
+    case actions.FETCH_AUTH_FAILURE:
       return {
         ...state,
         authLoading: false,

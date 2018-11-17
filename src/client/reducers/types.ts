@@ -57,7 +57,7 @@ export interface QuestionState {
 };
 
 export interface IssueQuestionsState {
-  [name: string]: QuestionState,
+  [questionId: string]: QuestionState,
 };
 
 export interface SurveyState {
