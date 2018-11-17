@@ -1,7 +1,7 @@
 #quads-container {
   display: grid;
-  grid-template-columns: minmax(80vh, 80vh) minmax(80vh, 80vh);
-  grid-template-rows: minmax(20vw, 25vw) minmax(20vw, 25vw);
+  grid-template-columns: minmax(80vh, 90vh) minmax(80vh, 90vh);
+  grid-template-rows: minmax(20vw, 25vw) minmax(22vw, 25vw);
   max-width: 98%;
   margin: 0 auto;
 }
@@ -14,14 +14,52 @@
   overflow: auto;
 }
 
-/* QUAD CONTAINER - OVERVIEW */
+#quad-company-list {
+  height: 99%;
+  width: 100%;
+}
+
+#quad-company-list img {
+  display: block;
+  position: relative;
+  margin: auto;
+  max-height: 85%;
+  max-width: 85%; 
+}
+
+
+/* * * * * * * * * * * * * * * *
+ *          OVERVIEW           *  
+ * * * * * * * * * * * * * * * */
 
 .overview-container {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   display: flex;
   height: 99%;
   margin: auto;
   overflow: hidden;
+}
+
+.overview-left {
+  /* border-right: 1px solid white;  */
+  width: 40%;
+}
+
+.overview-company-title {
+  /* border: 2px solid red; */
+  margin: auto;
+  width: 90%;
+}
+.overview-left h3 {
+  margin: 5% 0;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.overview-left h2 {
+  color: #FFFFFF;
+  margin: 5% 0;
+  text-align: center;
 }
 
 .overview-container p {
@@ -30,38 +68,50 @@
   text-align: center;
 }
 
-#overview-left {
-  border-right: 1px solid white;
-  display: inline-block;
-  width: 40%;
-  text-align: center;
-}
-
-#overview-left h2 {
-  color: white;
-  margin: 20px auto 10px;
-}
-
 #overview-right {
   display: inline-block;
   width: 59%;
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 25px;
+  margin-top: 2%;
 }
-#overview-right h3 {
-  padding-left: 10px;
-  margin-top: 15px;
+
+#company-info-more span {
+  display: block;
+  /* margin-right: 15%; */
+} 
+
+#company-info-more ul {
+  margin: 3% 0;
+  padding: 0;
+  text-align: center;
+  /* margin: 0.5em 0; */
+}
+
+#company-info-more li {
+  font-family: 'Cinzel', serif;
+  font-size: 0.8em;
+  color: #FFFFFF;
+  display: inline-block;
+  text-align: center;
+  /* width: 40%; */
+  /* background-color: white; */
+  /* text-align: center; */
+  /* padding: 5px 0; */
+  /* border-right: 1px solid black; */
+  margin-right: 10%;
+  /* margin-bottom: 0; */
+  /* margin-top: 2px; */
 }
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.9em;
-  padding-left: 15px;
-  padding-top: 5px;
+  font-size: 0.65em;
+  /* padding-left: 15px; */
+  /* padding-top: 5px; */
   color: #A5A8A6;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 } 
 
 #overview-right a {
@@ -70,15 +120,17 @@
 
 #overview-description-container {
   display: inline-block;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 95%;
+  /* padding-left: 15px;
+  padding-top: 5px; */
+  width: 90%;
 }
 
 #overview-description-container p {
   text-align: left;
+  margin: 2% 0;
+  /* width: 90%; */
   /* margin-top: 5px; */
-  padding: 2px;
+  /* padding: 2px; */
 }
 
 #overview-description-container a:link {
@@ -88,10 +140,7 @@
 /* #company-info {
   margin-bottom: 10px;
 }
-
-#company-info-more {
-  margin-top: 10px;
-} */
+*/
 
 #company-market-price {
   font-family: 'Cinzel', serif;
@@ -104,46 +153,19 @@
   padding: 10px 0;
 }
 
-#company-info-more ul {
-  width: 90%;
-  text-align: center;
-  margin: 0.5em 0;
-}
-
-#company-info-more li {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  /* width: 40%; */
-  /* background-color: white; */
-  text-align: center;
-  /* padding: 5px 0; */
-  border-right: 1px solid black;
-  margin-right: 10%;
-  margin-bottom: 0;
-  /* margin-top: 2px; */
-}
-
-/* #company-info-employees p {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  width: 40%;
-  background-color: white;
-  text-align: center;
-  padding: 5px 0;
-} */
 
 #overview-right a {
   padding-left: 0;
 }
 
 #overall-score-chart {
-  margin: 10px auto;
+  margin: 10% auto;
   width: 200px;
   height: 200px;
+}
+
+#overall-score-chart path{
+  stroke-width: 2.5;
 }
 
 #overall-score-chart text {
@@ -152,22 +174,33 @@
   margin: 10px;
 }
 
+#overall-score-chart tspan {
+  font-size: 2em;
+  font-weight: bolder;
+}
+
 #overview-logo {
-  border: 2px dashed gold;
-  display: flex;
-  margin: auto;
-  height: 50px;
-  width: auto;
-  max-width: 90%;
-  margin: 0 15px;
+  /* border: 2px dashed gold; */
+  /* display: inline-block; */
+  /* padding-left: 2%; */
+  position: relative;
+  /* display: flex; */
+  margin: 0;
+  /* height: auto; */
+  width: 80%;
+  /* max-height: 25%; */
+  /* max-width: 90%; */
+  /* margin: 0 15px; */
   text-align: center;
 }
 
-#overview-logo p {
-  color: white;
-  font-size: 16px;
-  font-weight: bolder;
+#overview-logo img {
+  /* display: inline-block; */
   margin: auto;
+  max-width: 250px;
+  min-height: 50px;
+  max-height: 50px;
+  height: auto;
 }
 
 #company-url-pre {
@@ -178,9 +211,7 @@
 #quad-stock {
 }
 
-#quad-issues {
-  width: 100%;
-}
+
 
 
 
@@ -198,14 +229,14 @@
 }
 
 
-.quad h3 {
+/* .quad h3 {
   color: #FFFFFF;
   margin: 10px 0;
   padding-left: 20px;
-}
+} */
 
 .divTable {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   background-color: #000000;
   /* border: 2px solid gold; */
   width: 100%;
@@ -231,57 +262,70 @@
 
 .cl-category {
   display: inline-block;
-  border: 2px solid black;
+  /* border: 2px solid black; */
   height: 100%;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   overflow: auto;
 }
 
 .cl-header {
-  position: relative; 
-  color: red;
-  top: 2px;
-  margin-top: 5px;
-  padding-left: 5px;
+  position: relative;
+  background-color: black; 
+  color: #FFFFFF;
+  font-size: 0.8em;
+  /* top: 2px; */
+  /* margin-top: 5px; */
+  padding-left: 15px;
   text-align: center;
 }
 
 #cl-category-name {
   min-width: 100px;
-  max-width: 225px;
+  max-width: 200px;
   overflow: hidden;
 }
 
-#cl-category-overall {
+/* #cl-category-overall {
   margin: 0 15px;
-}
+} */
 
 .cl-list {
-  padding-top: 5px;
-  padding-left: 5px;
+  padding-top: 10px;
+  padding-left: 15px;
 }
 
 .cl-list a, .cl-list p {
+  color: #A5A8A6;
+}
+
+.cl-list a:hover {
   color: #FFFFFF;
 }
 
 .company-names-list {
   display: block;
+  font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
   /* padding-left: 5px; */
+  text-decoration: none;
   white-space: nowrap;
   margin: 0;
 }
 
 .company-list{
   display: block;
+  font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
   /* padding-left: 5px; */
   white-space: nowrap;
   margin: 0;
   text-align: center;
+}
+
+#cl-category-overall p {
+  font-weight: bolder;
 }
 
 .company-list {
@@ -311,7 +355,7 @@
 }
 
 .stock-container {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   display: flex;
   margin: auto;
   width: 100%;
@@ -330,17 +374,63 @@
 }
 
 .issues-container {
-  border: 1px solid gold;
-  /* display: flex; */
-  width: 100%;
-  height: 99%;
+  display: inline-block;
+  position: relative;
   margin: auto;
+  width: 72%;
+  height: 99%;
   overflow: hidden;
 }
 
 .issues-container p {
   color: #FFFFFF;
+  font-size: 0.8em;
   margin: auto;
   text-align: center;
+}
+
+.issues-politicians {
+  /* border: 2px solid gold; */
+  display: inline-block;
+  vertical-align: top;
+  width: 27.5%;
+  height: 99%;
+}
+
+.polit-recip {
+  font-size: 0.8em;
+  margin: 0 0 2%;
+  text-align: center;
+  color: #A5A8A6;
+}
+
+.polit-info {
+  color: #A5A8A6;
+  font-size: 0.6em;
+  text-align: center;
+  margin: 0 0 2%;
+}
+
+.politician {
+  /* border: 2px dashed gold; */
+  margin: 0 auto;
+  width: 80%;
+  height: 25%;
+}
+
+.politician p {
+  font-size: 0.6em;
+  color: #FFFFFF;
+  margin: 0 auto;
+  position: relative;
+}
+
+.politician img {
+  /* border: 2px dashed gold; */
+  display: block;
+  position: relative;
+  width: auto;
+  height: 80%;
+  margin: 2% auto;
 }
 
