@@ -160,6 +160,13 @@ app.post('/updateCompanyData',
     }
   );
 
+app.post('/politicianData',
+  DatabaseMethods.insertPoliticianData,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  }
+);
+
 /* APPLICATION DATA SUBMISSION ROUTES
 ***********************************************************
   // end point for company data submission
