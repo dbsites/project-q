@@ -2,7 +2,6 @@
  * ************************************
  *
  * @module  webpack.config.js
- * @author Team Quail
  * @description Webpack Configuration
  *
  * ************************************
@@ -12,15 +11,15 @@ const HTMLWebpack = require('html-webpack-plugin');
 const path = require('path');
 
 const HTMLWebPackPlugin = new HTMLWebpack({
-  template: './src/index.html',
+  template: path.resolve(__dirname, '../src/index.html'),
   filename: './index.html',
 });
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.tsx',
+  entry: path.resolve(__dirname, '../src/index.tsx'),
   output: {
-    path: path.join(`${__dirname}/dist`),
+    path: path.resolve(__dirname, '../dist'),
     filename: 'bundle.js',
     publicPath: '/',
   },

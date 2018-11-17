@@ -49,7 +49,7 @@ export const fetchFormFailure = (form: string, message: string): IFormFailureAct
 export const fetchForm = (form: string, formFields: LoginState | RegisterState | ForgotPassState | ResetPassState) => (dispatch: Dispatch) => {
   dispatch(fetchFormRequest());
   // Derive POST request URI from form to be submitted and issue fetch request
-  const fetchURI: string = `${HOST}/${form}`;
+  const fetchURI: string = `/api/${form}`;
   return fetch(fetchURI, {
     method: 'POST',
     headers: {
@@ -86,9 +86,8 @@ export const fetchIssuesFailure = (message: string): IIssuesFailureAction => ({
 
 export const fetchIssues = () => (dispatch: any) => {
   dispatch(fetchIssuesRequest());
-  // Derive GET request URI and issue fetch request
-  const fetchURI: string = `${HOST}/getIssues`;
-  return fetch(fetchURI)
+  // Issue fetch request
+  return fetch('/api/getIssues')
     .then((response: Response) => {
       // If successful(200), return parsed response, otherwise dispatch failure and throw error
       if (response.status === 200) return response.json();
@@ -154,18 +153,13 @@ export const sortCompanyList = (event: any) => ({
 })
 
 // --- ASYNC --- //
-
-// Set HOST URL - TODO: Refactor
-const HOST: string = 'http://localhost:3000';
-
 // Fetch Authorization
 export const fetchAuth = () => (dispatch: Dispatch) => {
-  const fetchURI: string = `${HOST}/auth`;
-  // Issue fetch request
   dispatch({
     type: types.FETCH_AUTH_REQUEST,
   });
-  fetch(fetchURI, {
+  // Issue fetch request
+  fetch('/api/auth', {
     method: 'GET',
     credentials: 'include', // this line is necessary to tell the browser to hold onto cookies
   })
@@ -181,9 +175,8 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
 
 // THUNK - Fetch Logout User Request
 export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
-  const fetchURI: string = `${HOST}/logout`;
   // Issue fetch request
-  fetch(fetchURI, {
+  fetch('/api/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -202,7 +195,7 @@ export const fetchLogout = (userId: string) => (dispatch: Dispatch) => {
 }
 
 export const fetchCompanyList = () => (dispatch: any) => {
-  fetch(`${HOST}/companyList`)
+  fetch('/api/companyList')
     .then((response: any) => response.json())
     .then((data: any) => {
       dispatch({
@@ -221,12 +214,11 @@ export const fetchCompanyList = () => (dispatch: any) => {
 
 // THUNK - Fetch Submit User Issues
 export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
-  const fetchURI: string = `${HOST}/userIssues`;
-  // Issue fetch request
   dispatch({
     type: types.FETCH_SUBMIT_ISSUES_REQUEST,
   });
-  fetch(fetchURI, {
+  // Issue fetch request
+  fetch('/api/userIssues', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -248,11 +240,11 @@ export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) =>
 };
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
-  // Issue Fetch Request
   dispatch({
     type: types.FETCH_SUBMIT_SURVEY_REQUEST,
   });
-  fetch(`${HOST}/userSurvey`, {
+  // Issue Fetch Request
+  fetch('/api/userSurvey', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
