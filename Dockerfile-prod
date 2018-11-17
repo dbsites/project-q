@@ -1,4 +1,4 @@
-# ubuntu 16.04 with node 8.9.3
+# ubuntu 16.04 with node 10.13.0
 FROM dbsites/ubuntu-ethiq
 
 # Working directory for application
