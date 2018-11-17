@@ -219,6 +219,23 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
+export const getCompanyInfo = (ticker: any) => (/*dispatch: any*/) => {
+  fetch(`${HOST}/getStockData`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ticker
+    }),
+  })
+    .then(response => response.json())
+    .then((response: any) => {
+      console.log('response back from db: ', response);
+    })
+    .catch((err: any) => console.error(err));
+}
+
 // THUNK - Fetch Submit User Issues
 export const fetchSubmitIssuesRequest = (userId: string, selectedIssues: any) => (dispatch: Dispatch) => {
   const fetchURI: string = `${HOST}/userIssues`;
