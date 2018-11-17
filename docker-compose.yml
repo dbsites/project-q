@@ -1,0 +1,22 @@
+version: "3"
+services:
+  # To be run from Travis CI ->
+  # docker-compose run --rm --service-ports start-prod
+  start-prod:
+    image: dbsites/ethiq
+    ports:
+      - "3000:3000"
+    volumes:
+      - /usr/src/app
+    command: npm start
+  # Bash - allows for running scripts in container.
+  # docker-compose run --rm --service-ports bash
+  bash:
+    image: dbsites/ethiq-dependencies
+    container_name: "ethiq-dev"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    # command: '/bin/bash'

@@ -29,10 +29,13 @@ export interface RegisterState {
   readonly registerError: string,
 };
 
-export interface ResetPassState {
-  resetPass: boolean,
+export interface ForgotPassState {
   forgotPassEmail: string,
   emailValid: boolean,
+  forgotError: string,
+}
+
+export interface ResetPassState {
   newPassword: string,
   confirmNewPassword: string,
   resetError: string,
@@ -41,6 +44,7 @@ export interface ResetPassState {
 export interface FormState {
   readonly login: LoginState,
   readonly register: RegisterState,
+  readonly forgot: ForgotPassState,
   readonly reset: ResetPassState,
 }
 

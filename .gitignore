@@ -9,3 +9,9 @@ node_modules/
 
 # Fake company data for testing
 companyData.json
+
+# daemon
+daemonServer.ts
+
+# Database Dump
+ethiq.dump.sql
