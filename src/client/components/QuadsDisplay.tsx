@@ -25,6 +25,7 @@ const QuadsDisplay = (props: any) => {
       />
       <CompanyList
         companyList={props.list}
+        getCompanyInfo={props.info}
         sortListBy={props.sort}
         selectCompany={props.select}
         userIssues={props.issues}
