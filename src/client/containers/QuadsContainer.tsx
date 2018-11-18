@@ -15,6 +15,7 @@ import '../assets/QuadsContainer.css';
 
 interface Props {
   selectedCompany: any
+  selectedCompanyData: any
   companyList: any
   userIssues: any
   issueAbbrvs: any
@@ -47,6 +48,7 @@ class QuadsContainer extends React.Component<Props> {
       issueAbbrvs,
       selectCompany,
       selectedCompany,
+      selectedCompanyData,
       sortCompanyList,
       userIssues
     } = this.props;
@@ -61,6 +63,7 @@ class QuadsContainer extends React.Component<Props> {
             list={companyList}
             select={selectCompany}
             selected={selectedCompany}
+            selectedData={selectedCompanyData}
             sort={sortCompanyList}
             info={getCompanyInfo}
             issues={userIssues}
@@ -75,6 +78,7 @@ class QuadsContainer extends React.Component<Props> {
 const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
   selectedCompany: state.company.selectedCompany,
+  selectedCompanyData: state.company.selectedCompanyData,
   userIssues: state.company.userIssues,
   issueAbbrvs: state.company.issueAbbrvs,
 });
