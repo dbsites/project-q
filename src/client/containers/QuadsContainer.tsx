@@ -15,6 +15,7 @@ import '../assets/QuadsContainer.css';
 
 interface Props {
   selectedCompany: any
+  selectedCompanyData: any
   companyList: any
   userIssues: any
   issueAbbrvs: any
@@ -22,6 +23,7 @@ interface Props {
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
+  getCompanyInfo: any
 }
 
 class QuadsContainer extends React.Component<Props> {
@@ -42,9 +44,11 @@ class QuadsContainer extends React.Component<Props> {
   render() {
     const {
       companyList,
+      getCompanyInfo,
       issueAbbrvs,
       selectCompany,
       selectedCompany,
+      selectedCompanyData,
       sortCompanyList,
       userIssues
     } = this.props;
@@ -59,7 +63,9 @@ class QuadsContainer extends React.Component<Props> {
             list={companyList}
             select={selectCompany}
             selected={selectedCompany}
+            selectedData={selectedCompanyData}
             sort={sortCompanyList}
+            info={getCompanyInfo}
             issues={userIssues}
             abbrvs={issueAbbrvs}
           />
@@ -72,6 +78,7 @@ class QuadsContainer extends React.Component<Props> {
 const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
   selectedCompany: state.company.selectedCompany,
+  selectedCompanyData: state.company.selectedCompanyData,
   userIssues: state.company.userIssues,
   issueAbbrvs: state.company.issueAbbrvs,
 });
@@ -87,6 +94,10 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.sortCompanyList({ field: event.target.id }));
   },
   getUserIssues: () => dispatch(actions.getUserIssues()),
+  getCompanyInfo: (event: any, ticker: string) => {
+    event.preventDefault();
+    dispatch(actions.getCompanyInfo(ticker));
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);

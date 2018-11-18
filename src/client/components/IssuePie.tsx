@@ -12,6 +12,8 @@ import '../assets/IssuePie.css';
 
 interface Props {
   info: any
+  modal?: any
+  politician?: any
 }
 
 class IssuePie extends Component<Props> {
@@ -19,6 +21,10 @@ class IssuePie extends Component<Props> {
     super(props);
   }
   render() {
+    console.log('ISSUE INFO: ', this.props.info);
+    console.log('MODAL INFO: ', this.props.modal);
+    console.log('POLITICIAN INFO: ', this.props.politician);
+
     const { name, alignedScore } = this.props.info;
 
     let display;
@@ -42,7 +48,6 @@ class IssuePie extends Component<Props> {
         </ResponsiveContainer>
       );
     } else {
-      console.log('alignedScore: ', alignedScore);
       const COLORS: string[] = ['#A5A8A6', (
         alignedScore >= 70 ? '#16C33F' : alignedScore >= 40 ? '#FAEB00' : '#FA2929'
       )];

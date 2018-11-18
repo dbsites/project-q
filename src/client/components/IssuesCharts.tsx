@@ -16,11 +16,15 @@ const placeholderIMG2 = require('../assets/placehold_woman.png');
 */
 
 interface Props {
+  modalData?: any
+  politicianData?: any
   selectedCompany: any
+  selectedData: any
   userIssues: any
 }
 
 const IssuesCharts = (props: Props) => {
+  const { modalData, politicianData } = props.selectedData;
   const { selectedCompany, userIssues } = props;
   const { issueMatcher } = issueMatch;
 
@@ -42,7 +46,7 @@ const IssuesCharts = (props: Props) => {
         const { name, leaning } = issueObj;
         const { alignedScore } = selectedCompany[name];
         const issueInfo = { name, leaning, alignedScore };
-        return <IssuePie info={issueInfo} />
+        return <IssuePie info={issueInfo} modal={modalData} politician={politicianData} />
       });
   }
   else {
