@@ -7,18 +7,25 @@ import * as React from 'react';
 import * as issueMatch from '../issueMatcher';
 import { Link } from 'react-router-dom'
 
-import Loading from './loading/Loading';
+const loadingMovie = require('../assets/loading-movie.gif');
 
 const CompanyList = (props: any) => {
   const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
   const { issueMatcher } = issueMatch;
 
   if (companyList.length === 0) {
-    return <Loading />
+    return (
+      <div className="quad" id="quad-company-list">
+        <img src={loadingMovie} id="loading-movie" />
+      </div>
+    )
   } else {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
-        <Link id={index} className="company-names-list" to="#" onClick={props.selectCompany}>
+        <Link id={index} className="company-names-list" to="#" onClick={(e) => {
+          props.selectCompany(e);
+          props.getCompanyInfo(e, company.ticker);
+        }}>
           {company.short_name}
         </Link>
       );
@@ -50,9 +57,15 @@ const CompanyList = (props: any) => {
             else
               score += companyList[i][issue.name].agreeScore
           })
+
+          score = Math.round(score / userIssuesArray.length)
+          let color = {
+            color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
+          }
+
           companyOverallScoresArray.push(
-            <p className="company-list">
-              {Math.round(score / userIssuesArray.length)}
+            <p className="company-list" style={color}>
+              {score}
             </p>
           )
           score = 0;
@@ -84,8 +97,12 @@ const CompanyList = (props: any) => {
             else
               score = companyList[i][userIssuesArray[a].name].agreeScore;
 
+            let color = {
+              color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
+            }
+
             issueScoresArray.push(
-              <p className="company-list">
+              <p className="company-list" style={color}>
                 {score}
               </p>
             );
@@ -99,7 +116,6 @@ const CompanyList = (props: any) => {
             .filter((issueName: any) => issueName.includes(abbrvSearchWord));
 
           companyScorePerIssueArray.push(
-            // TODO specific ID for div
             <div className="cl-category" id="cl-category-issue">
               <Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>{issueAbbrvs[issueWord[0]]}</Link>
               <div className="cl-list">
@@ -114,17 +130,10 @@ const CompanyList = (props: any) => {
     };
 
     return (
-      <div className="divTable">
+      <div className="divTable" id="quad-company-list">
         <div className="divTableBody">
           <div className="divTableRow">
             <div className="divTableHead">
-
-              <div className="cl-category" id="cl-category-overall">
-                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVL</Link>
-                <div className="cl-list">
-                  {companyOverallScores()}
-                </div>
-              </div>
 
               <div className="cl-category" id="cl-category-name">
                 <Link to='#' className="cl-header" id='cl-header-name' onClick={sortListBy}>COMPANY</Link>
@@ -137,6 +146,13 @@ const CompanyList = (props: any) => {
                 <Link to='#' className="cl-header" id='cl-header-ticker' onClick={props.sortListBy}>TICKER</Link>
                 <div className="cl-list">
                   {companyTickers}
+                </div>
+              </div>
+
+              <div className="cl-category" id="cl-category-overall">
+                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVL</Link>
+                <div className="cl-list">
+                  {companyOverallScores()}
                 </div>
               </div>
 

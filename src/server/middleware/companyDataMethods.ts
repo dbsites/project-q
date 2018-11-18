@@ -122,4 +122,16 @@ CompanyDatabase.emptyStockData = () => {
   return db.companies.emptyStockData();
 }
 
+CompanyDatabase.getCompanyModule = (req: Request, res: Response, next: NextFunction) => {
+  db.companies.getModuleData(req.body.ticker)
+  .then((companyData:any) => {
+    res.locals.moduleData = companyData;
+    next();
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT getCompanyModule IN companyDataMethods.ts', error);
+    res.status(500).send('SERVER FAILURE');
+  })
+}
+
 export default CompanyDatabase;

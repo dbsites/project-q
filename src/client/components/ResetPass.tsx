@@ -11,31 +11,22 @@ import FormField from './FormField';
 // TODO: Look into update form / htmlForm?
 const ResetPass: any = (props: any) => {
   // Destructure form values and actions from props
-  const { fetchFormFailure, fetchFormRequest, resetFields, updateField } = props;
+  const { fetchFormFailure, fetchForm, resetFields, updateField } = props;
   const { newPassword, confirmNewPassword, resetError } = resetFields;
 
-  const callFetchFormRequest = (resetFields: any): any => {
+  const callFetchForm = (resetFields: any): any => {
     if (newPassword.length < 8) return fetchFormFailure('reset', 'Password must be at least 8 characters');
     if (newPassword !== confirmNewPassword) return fetchFormFailure('reset', 'Password must match Confirm Password');
-    return fetchFormRequest('reset', resetFields)
+    return fetchForm('reset', resetFields)
   }
 
-  if (!resetFields.resetPass) {
-    updateField({
-      form: "reset",
-      field: "resetPass",
-      type: "text",
-      value: true,
-    });
-  }
-  
   return (
-    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('login', resetFields)}}>
+    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchForm('login', resetFields)}}>
       <FormField autofocus={true} field={newPassword} form="reset" name="newPassword" type="password" updateField={updateField} >Password: </FormField>
       <FormField autofocus={false} field={confirmNewPassword} form="reset" name="confirmNewPassword" type="password" updateField={updateField} >Confirm Password: </FormField>
       <FormError message={resetError} />
       <div className="submit-button-container">
-        <div className="submit-button" onClick={() => callFetchFormRequest(resetFields)}>Reset Password</div>
+        <div className="submit-button" onClick={() => callFetchForm(resetFields)}>Reset Password</div>
       </div>
     </div>
   )

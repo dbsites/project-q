@@ -16,8 +16,8 @@ const LoginForm: any = (props: any) => {
   // Destructure form values and actions from props
   const {
     loginFields,
+    fetchForm,
     fetchFormFailure,
-    fetchFormRequest,
     updateField
   } = props;
 
@@ -29,14 +29,14 @@ const LoginForm: any = (props: any) => {
     rememberMe,
   } = loginFields;
 
-  const callFetchFormRequest = (loginFields: any): any => {
+  const callFetchForm = (loginFields: any): any => {
     if (!emailValid) return fetchFormFailure('login', 'Please enter a valid email address');
     if (loginPassword.length < 8) return fetchFormFailure('login', 'Password must be at least 8 characters');
-    return fetchFormRequest('login', loginFields)
+    return fetchForm('login', loginFields)
   }
 
   return (
-    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('login', loginFields)}}>
+    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchForm('login', loginFields)}}>
       
       <FormField autofocus={true} field={loginEmail} form="login" name="loginEmail" type="text" updateField={updateField} >Email: </FormField>
       <FormField autofocus={false} field={loginPassword} form="login" name="loginPassword" type="password" updateField={updateField} >Password: </FormField>
@@ -48,7 +48,7 @@ const LoginForm: any = (props: any) => {
       </div>
       <FormError message={loginError} />
       <div className="submit-button-container">
-        <div className="submit-button" onClick={() => callFetchFormRequest(loginFields)}>Log In</div>
+        <div className="submit-button" onClick={() => callFetchForm(loginFields)}>Log In</div>
       </div>
       <div className="change-form-link">
         <Link to='/account/register'>Sign up</Link>

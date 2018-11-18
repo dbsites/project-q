@@ -82,6 +82,21 @@ DatabaseMethods.getIssueAbbrvs = (_: Request, res: Response, next: NextFunction)
   });
 }
 
+DatabaseMethods.insertPoliticianData = (req: Request, _: Response, next: NextFunction) => {
+  db.data.insertPoliticianData(req.body)
+  .then(() => {
+    next();
+  })
+}
+
+DatabaseMethods.getPoliticianData = (req: Request, res: Response, next: NextFunction) => {
+  db.data.getPoliticianData(req.body.ticker)
+  .then((politicianData: any) => {
+    res.locals.politicianData = politicianData;
+    next();
+  })
+}
+
 
 
 export default DatabaseMethods;

@@ -17,6 +17,7 @@ const HTMLWebPackPlugin = new HTMLWebpack({
 });
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.tsx',
   output: {
     path: path.join(`${__dirname}/dist`),

@@ -1,24 +1,11 @@
 /**
  * @module Overview.tsx
- * @description 
+ * @description Overview Quad Component
  */
 
 import * as React from 'react';
 
 import OverviewPie from './OverviewPie';
-// import { number } from 'prop-types';
-
-// interface CompanyInfo {
-//   readonly description: string,
-//   readonly logo: string,
-//   readonly ticker: string,
-//   readonly name: string,
-//   readonly overallScore: number,
-// }
-
-// interface SelectedCompany {
-//   readonly selected: CompanyInfo
-// }
 
 const Overview = (props: any) => {
 
@@ -26,7 +13,7 @@ const Overview = (props: any) => {
 
   if (!props.selected) {
 
-    display = (<p>Click a company to see their overview</p>);
+    display = (<p>Select a company to see their overview</p>);
 
   } else {
 
@@ -35,9 +22,9 @@ const Overview = (props: any) => {
       overallScore,
       yearFounded,
       numberEmployees,
-      full_name,
       url,
-      /* logoticker */ } = props.selected;
+      logo,
+    } = props.selected;
 
     const userIssuesLength = Object.keys(props.selected)
       .filter(key => props.selected[key].alignedScore)
@@ -45,34 +32,42 @@ const Overview = (props: any) => {
 
     const overall = Math.round(overallScore / userIssuesLength);
 
-    const descrip = description.slice(0, 500);
+    const descrip = description.slice(0, 450);
+
+    const scoreAlign = overall >= 70 ? 'Strong Match' : overall >= 40 ? 'Match' : 'Weak Match';
 
     display = (
       <React.Fragment>
         <div id="overview-left">
-          <h2>{full_name}</h2>
           <div id="overall-score-chart">
             <OverviewPie overall={overall} />
           </div>
-          {/* <p id="company-market-price">Market Price: {ticker.split('.')[0]}</p> */}
-          <h2>{overall}% Match</h2>
+          <h3>{scoreAlign}</h3>
         </div>
+
         <div id="overview-right">
-          {/* <h3>{name} ({ticker.split('.')[0]})</h3> */}
           <div id="overview-logo">
-            <p>INSERT COMPANY LOGO</p>
-            {/* <img src={logo} /> */}
+            <img src={logo} />
           </div>
           <div id="overview-description-container">
-            <div id="company-info-more">
-              <ul>
-                <li><strong>Founded </strong>{yearFounded}</li>
-                <li><strong># of Employees </strong>{numberEmployees}</li>
-              </ul>
-            </div>
             <p id="company-info">
               {descrip}
             </p>
+            <div id="company-info-more">
+              <p><strong>Founded: </strong>{yearFounded}</p>
+              <p><strong># of Employees: </strong>{
+                numberEmployees
+                  .toString()
+                  .split('')
+                  .reverse()
+                  .reduce((numString: string, next: string, i: number) => {
+                    if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
+                    else numString = next + numString;
+                    return numString;
+                  }, '')
+              }
+              </p>
+            </div>
             <p id="company-url-pre">
               Learn more at: <a href={`http://${url}`} target="_blank">{url}</a>
             </p>

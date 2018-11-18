@@ -1,7 +1,15 @@
+::-webkit-scrollbar {
+  background: #A5A8A6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+}
+
 #quads-container {
   display: grid;
-  grid-template-columns: minmax(80vh, 80vh) minmax(80vh, 80vh);
-  grid-template-rows: minmax(20vw, 25vw) minmax(20vw, 25vw);
+  grid-template-columns: minmax(80vh, 90vh) minmax(80vh, 90vh);
+  grid-template-rows: minmax(20vw, 25vw) minmax(22vw, 25vw);
   max-width: 98%;
   margin: 0 auto;
 }
@@ -10,36 +18,44 @@
   background-color: black;
 }
 
-#quad-overview {
-  overflow: auto;
-}
-
-/* QUAD CONTAINER - OVERVIEW */
+/* * * * * * * * * * * * * * * *
+ *          OVERVIEW           *  
+ * * * * * * * * * * * * * * * */
 
 .overview-container {
-  border: 1px solid gold;
   display: flex;
   height: 99%;
   margin: auto;
   overflow: hidden;
 }
 
-.overview-container p {
-  color: #FFFFFF;
-  margin: auto;
-  text-align: center;
-}
-
 #overview-left {
-  border-right: 1px solid white;
-  display: inline-block;
   width: 40%;
+}
+
+#overview-left h3 {
+  margin: 0;
+  color: #FFFFFF;
   text-align: center;
 }
 
-#overview-left h2 {
-  color: white;
-  margin: 20px auto 10px;
+#overall-score-chart {
+  margin: 15% auto 5%;
+  width: 100%;
+  height: 50%;
+}
+
+#overall-score-chart path{
+  stroke-width: 2.5;
+}
+
+#overall-score-chart text {
+  fill: white;
+}
+
+#overall-score-chart tspan {
+  font-size: 2em;
+  font-weight: bolder;
 }
 
 #overview-right {
@@ -48,166 +64,113 @@
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 25px;
-}
-#overview-right h3 {
-  padding-left: 10px;
-  margin-top: 15px;
+  margin-top: 5%;
 }
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.9em;
-  padding-left: 15px;
-  padding-top: 5px;
+  font-size: 0.65em;
   color: #A5A8A6;
-  margin-bottom: 5px;
 } 
 
-#overview-right a {
-  padding-left: 15px;
+#overview-logo {
+  position: relative;
+  margin: 0;
+  width: 80%;
+  text-align: center;
+}
+
+#overview-logo img {
+  height: auto;
+  margin: 0;
+  max-width: 250px;
+  max-height: 50px;
+  min-height: 50px;
 }
 
 #overview-description-container {
-  display: inline-block;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 95%;
+  display: block;
+  width: 80%;
 }
 
-#overview-description-container p {
+#company-info {
   text-align: left;
-  /* margin-top: 5px; */
-  padding: 2px;
+  margin-left: 5%;
+  margin-top: 2.5%;
+  width: 100%;
 }
 
-#overview-description-container a:link {
-  color: #FFFFFF
-}
-
-/* #company-info {
-  margin-bottom: 10px;
-}
-
-#company-info-more {
-  margin-top: 10px;
-} */
-
-#company-market-price {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #000000;
-  width: 81%;
-  background-color: white;
-  text-align: center;
-  margin: 10px auto 0;
-  padding: 10px 0;
-}
-
-#company-info-more ul {
-  width: 90%;
-  text-align: center;
-  margin: 0.5em 0;
-}
-
-#company-info-more li {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  /* width: 40%; */
-  /* background-color: white; */
-  text-align: center;
-  /* padding: 5px 0; */
-  border-right: 1px solid black;
-  margin-right: 10%;
-  margin-bottom: 0;
-  /* margin-top: 2px; */
-}
-
-/* #company-info-employees p {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  width: 40%;
-  background-color: white;
-  text-align: center;
-  padding: 5px 0;
-} */
-
-#overview-right a {
-  padding-left: 0;
-}
-
-#overall-score-chart {
-  margin: 10px auto;
-  width: 200px;
-  height: 200px;
-}
-
-#overall-score-chart text {
-  font-size: 20px;
-  fill: white;
-  margin: 10px;
-}
-
-#overview-logo {
-  border: 2px dashed gold;
-  display: flex;
-  margin: auto;
-  height: 50px;
-  width: auto;
-  max-width: 90%;
-  margin: 0 15px;
-  text-align: center;
-}
-
-#overview-logo p {
-  color: white;
-  font-size: 16px;
-  font-weight: bolder;
-  margin: auto;
+#company-info-more p {
+  margin: 0 5%;
 }
 
 #company-url-pre {
-  margin-top: 5px;
+  margin-left: 5%;
 }
 
-/**********************/
-#quad-stock {
+#company-url-pre a:link {
+  color: #FFFFFF;
 }
 
-#quad-issues {
+/* * * * * * * * * * * * * * * *
+ *            STOCK            *  
+ * * * * * * * * * * * * * * * */
+
+ .stock-container {
+  display: block;
+  margin: auto;
   width: 100%;
+  height: 99%
 }
 
-
-
-.quad-container {
-  display: inline-block;
-  /* border: 2px solid gold; */
-  margin: 20px auto;
-  /* height: 200px; */
-  width: 100%;
+.stock-container p {
+  margin: auto;
   text-align: center;
-  vertical-align: top;
-}
-.quad-container p {
-  color: #FFFFFF;
 }
 
+.stock-container iframe {
+  width: 100%;
+  height: 85%;
+  background-color: black;
+}
 
-.quad h3 {
-  color: #FFFFFF;
-  margin: 10px 0;
-  padding-left: 20px;
+.stock-container-info {
+  border: 2px solid gold;
+  margin: 0;
+  max-height: 14%;
+}
+
+.stock-container-info ul {
+  margin: 0;
+  color: white;
+}
+
+.stock-container-info li {
+  color: white;
+  display: inline;
+  font-size: 0.8em;
+  margin: 0;
+}
+
+/* * * * * * * * * * * * * * * *
+ *        COMPANY LIST         *  
+ * * * * * * * * * * * * * * * */
+
+#quad-company-list {
+  height: 99%;
+  width: 100%;
+}
+
+#quad-company-list img {
+  display: block;
+  position: relative;
+  margin: auto;
+  max-height: 85%;
+  max-width: 85%; 
 }
 
 .divTable {
-  border: 1px solid gold;
   background-color: #000000;
-  /* border: 2px solid gold; */
   width: 100%;
   overflow: auto;
 }
@@ -218,70 +181,82 @@
   width: 100%;
 }
 
-#quad-box-cl {
-  /* border: 2px solid white; */
-  /* display: grid; */
-  position: absolute;
-  top: 0;
-  left: 0;
-  max-height: 100%;
-  width: 100%;
-  /* overflow: scroll; */
-}
-
 .cl-category {
   display: inline-block;
-  border: 2px solid black;
   height: 100%;
-  margin-top: 10px;
   overflow: auto;
 }
 
-.cl-header {
-  position: relative; 
-  color: red;
-  top: 2px;
-  margin-top: 5px;
-  padding-left: 5px;
-  text-align: center;
+/* #cl-header-overall {
+  padding-right: 10%;
+} */
+
+#cl-header-name {
+  padding-left: 5%;
 }
 
+.cl-header {
+  position: relative;
+  background-color: black; 
+  color: #FFFFFF;
+  font-size: 0.8em;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 10%;
+  padding-right: 10%;
+  text-align: center;
+}
+/**********************/
+
+
+
 #cl-category-name {
-  min-width: 100px;
-  max-width: 225px;
+  min-width: 30%;
+  max-width: 50%;
   overflow: hidden;
 }
 
-#cl-category-overall {
+/* #cl-category-overall {
   margin: 0 15px;
-}
+} */
 
 .cl-list {
-  padding-top: 5px;
-  padding-left: 5px;
+  padding-top: 2%;
+  padding-left: 5%;
 }
 
 .cl-list a, .cl-list p {
+  color: #A5A8A6;
+}
+
+.cl-list a:hover {
   color: #FFFFFF;
 }
 
 .company-names-list {
   display: block;
+  font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
   /* padding-left: 5px; */
+  text-decoration: none;
   white-space: nowrap;
   margin: 0;
 }
 
 .company-list{
   display: block;
+  font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
   /* padding-left: 5px; */
   white-space: nowrap;
   margin: 0;
   text-align: center;
+}
+
+#cl-category-overall p {
+  font-weight: bolder;
 }
 
 .company-list {
@@ -310,37 +285,66 @@
   max-height: 200px;
 }
 
-.stock-container {
-  border: 1px solid gold;
-  display: flex;
-  margin: auto;
-  width: 100%;
-  height: 99%
-}
 
-.stock-container iframe {
-  width: 100%;
-  height: 100%;
-  background-color: black;
-}
-
-.stock-container p {
-  margin: auto;
-  text-align: center;
-}
 
 .issues-container {
-  border: 1px solid gold;
-  /* display: flex; */
-  width: 100%;
-  height: 99%;
+  display: inline-block;
+  position: relative;
   margin: auto;
+  width: 72%;
+  height: 99%;
   overflow: hidden;
 }
 
 .issues-container p {
   color: #FFFFFF;
+  font-size: 0.8em;
   margin: auto;
   text-align: center;
+}
+
+.issues-politicians {
+  /* border: 2px solid gold; */
+  display: inline-block;
+  vertical-align: top;
+  width: 27.5%;
+  height: 99%;
+}
+
+.polit-recip {
+  font-size: 0.8em;
+  margin: 0 0 2%;
+  text-align: center;
+  color: #A5A8A6;
+}
+
+.polit-info {
+  color: #A5A8A6;
+  font-size: 0.6em;
+  text-align: center;
+  margin: 0 0 2%;
+}
+
+.politician {
+  /* border: 2px dashed gold; */
+  margin: 0 auto;
+  width: 80%;
+  height: 25%;
+}
+
+.politician p {
+  font-size: 0.6em;
+  color: #FFFFFF;
+  margin: 0 auto;
+  position: relative;
+}
+
+.politician img {
+  /* border: 2px dashed gold; */
+  display: block;
+  position: relative;
+  width: auto;
+  height: 80%;
+  margin: 2% auto;
 }
 

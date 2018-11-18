@@ -29,10 +29,13 @@ export interface RegisterState {
   readonly registerError: string,
 };
 
-export interface ResetPassState {
-  resetPass: boolean,
+export interface ForgotPassState {
   forgotPassEmail: string,
   emailValid: boolean,
+  forgotError: string,
+}
+
+export interface ResetPassState {
   newPassword: string,
   confirmNewPassword: string,
   resetError: string,
@@ -41,6 +44,7 @@ export interface ResetPassState {
 export interface FormState {
   readonly login: LoginState,
   readonly register: RegisterState,
+  readonly forgot: ForgotPassState,
   readonly reset: ResetPassState,
 }
 
@@ -119,6 +123,22 @@ export interface CompanyDataState {
   readonly userIssues: UserIssuesState
   readonly issueAbbrvs: IssueAbbrvsState
 }
+
+// interface CompanyInfo {
+//   readonly description: string,
+//   readonly overallScore: number,
+//   readonly logo: string,
+//   readonly ticker: string,
+//   readonly name: string,
+//   readonly yearFounded: number,
+//   readonly numberEmployees: number,
+//   readonly full_name: string,
+//   readonly url: string
+// }
+
+// interface SelectedCompany {
+//   readonly selected: CompanyInfo
+// }
 
 //***************************** */
 export interface ApplicationState {
