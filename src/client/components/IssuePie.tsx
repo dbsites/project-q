@@ -19,6 +19,7 @@ interface Props {
 class IssuePie extends Component<Props> {
   state:any ;
   constructor(props: any) {
+    console.log(props)
     super(props);
     this.state = {
       detailedView: false
@@ -36,10 +37,6 @@ class IssuePie extends Component<Props> {
   }
   
   render() {
-    let detail = null;
-    if (this.state.detailedView) {
-      detail = <IssueDetail />
-    }
     const { name, alignedScore } = this.props.info;
 
     let display;
@@ -56,7 +53,7 @@ class IssuePie extends Component<Props> {
               startAngle={90}
               endAngle={450}
               onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
+              
               />
             {/* </Pie> */}
           </PieChart>
@@ -91,7 +88,6 @@ class IssuePie extends Component<Props> {
               startAngle={90}
               endAngle={450}
               onMouseEnter={this.handleMouseEnter}
-              onMouseLeave={this.handleMouseLeave}
               >
               {
                 DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
@@ -107,7 +103,7 @@ class IssuePie extends Component<Props> {
       <div className="issue-box">
         <div className="issue-pie">
           {display}
-          {detail}
+          {this.state.detailedView && <IssueDetail handleMouseLeave={this.handleMouseLeave}/>}
         </div>
         <p>{name}</p>
       </div>

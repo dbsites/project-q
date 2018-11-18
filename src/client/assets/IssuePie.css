@@ -38,7 +38,38 @@
 
 .issue-box p {
   margin: 0;
-  color: #ffffff,
+  color: #ffffff;
 }
 
+.issue-detail {
+  border-width: 4px 1.25em;
+  border-color: #3f3f3f;
+  border-style: solid;
+  position: fixed;
+  height: 90%;
+  width: 75%;
+  top: 5%;
+  left: 12.5%;
+  background-color: black;
+  z-index: 7;
+  color: white
+}
+
+
+.issue-detail > * {
+  text-align: center;
+}
+
+.images {
+  border: 2px solid gold;
+  position: relative;
+  margin: auto;
+  height: 30%;
+  width: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
 
