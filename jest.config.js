@@ -14,4 +14,7 @@ module.exports = {
     'json',
     'node',
   ],
+  moduleNameMapper: {
+    '\\.(css|scss)$': 'identity-obj-proxy', // ES6 Proxy to mock CSS Modules
+  },
 };
