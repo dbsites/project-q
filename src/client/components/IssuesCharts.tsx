@@ -4,16 +4,15 @@
  */
 
 import * as React from 'react';
+
+// Import IssueID -> IssueName table for conversion
 import * as issueMatch from '../issueMatcher';
 
+// Import Components
 import IssuePie from './IssuePie';
 import Recipients from './Recipients';
 
-
-/** 
- * Interface for IssueCharts Props
-*/
-
+// TODO: move this props in types.ts and export in
 interface Props {
   modalData?: any
   politicianData?: any

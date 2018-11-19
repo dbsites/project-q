@@ -4,21 +4,28 @@
  */
 
 import * as React from 'react';
+
+// Import IssueID -> IssueName table for conversion
 import * as issueMatch from '../issueMatcher';
+
+// Import navigational links for company names
 import { Link } from 'react-router-dom'
 
+// Import loading GIF 
 const loadingMovie = require('../assets/loading-movie.gif');
 
 const CompanyList = (props: any) => {
   const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
   const { issueMatcher } = issueMatch;
 
+  // Load movie while fetching company list 
   if (companyList.length === 0) {
     return (
       <div className="quad" id="quad-company-list">
         <img src={loadingMovie} id="loading-movie" />
       </div>
     )
+    // Clicking company name will fetch stockData etc.
   } else {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
@@ -30,17 +37,20 @@ const CompanyList = (props: any) => {
         </Link>
       );
 
+    // Company stock ticker names
     const companyTickers: any = companyList
       .map((company: any, index: any) =>
         <p id={index.toString()} className="company-list">
           {company.ticker.split('.')[0]}
         </p>
       );
-
+    
+    // Company overall scores
     const companyOverallScores = () => {
       const companyOverallScoresArray = [];
       let score: number = 0;
 
+      // Create array of user issue objects with converted name
       const userIssuesArray = Object.keys(userIssues)
         .map((issueID: any) => {
           return {
@@ -49,6 +59,7 @@ const CompanyList = (props: any) => {
           }
         });
 
+      // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
           userIssuesArray.forEach((issue: any) => {
@@ -58,11 +69,13 @@ const CompanyList = (props: any) => {
               score += companyList[i][issue.name].agreeScore
           })
 
+          // Color match based off of score
           score = Math.round(score / userIssuesArray.length)
           let color = {
             color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
           }
 
+          // Add 
           companyOverallScoresArray.push(
             <p className="company-list" style={color}>
               {score}

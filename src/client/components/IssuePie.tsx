@@ -17,11 +17,6 @@ interface Props {
 class IssuePie extends Component<Props> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      issueData: this.props.info,
-      modalData: this.props.modal,
-      politicianData: this.props.politician,
-    }
   }
   render() {
 

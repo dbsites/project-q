@@ -13,9 +13,10 @@ import * as actions from '../actions/actionCreators'
 import Header from '../containers/HeaderContainer';
 import QuadsDisplay from '../components/QuadsDisplay';
 
-// Import 
+// Import CSS
 import '../assets/QuadsContainer.css';
 
+// TODO when store structure finalized
 interface Props {
   selectedCompany: any
   selectedCompanyData: any
@@ -40,11 +41,14 @@ class QuadsContainer extends React.Component<Props> {
       getUserIssues,
     } = this.props;
 
+    // Grabs user issues from user store and adds to company store
     getUserIssues();
+    // Fetch company list from db and adds to company store
     fetchCompanyList();
   }
 
   render() {
+    // Extract state to props
     const {
       companyList,
       getCompanyInfo,

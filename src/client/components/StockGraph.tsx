@@ -7,7 +7,7 @@ import * as React from 'react';
 
 const StockGraph = (props: any) => {
 
-  let display: any;
+  let display;
 
   if (!props.selected) {
     display = (<p>Select a company for stock market performance</p>)
@@ -15,6 +15,7 @@ const StockGraph = (props: any) => {
     const { ticker } = props.selected;
     let high, low, open, close, volume;
 
+    // Before stock data retrieval, set defaults to 0
     if (!props.selectedData.stockData) {
       high = 0; low = 0; open = 0; close = 0; volume = 0;
     } else {
@@ -25,6 +26,7 @@ const StockGraph = (props: any) => {
       volume = props.selectedData.stockData.volume;
     }
 
+    // StockDIO API
     const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=50EC4535F41E4734BC8AD78686377BAC&symbol=${ticker.split('.')[0]}&indices=SPX&includeCompetitors=true&palette=Relief&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
 
     display = (
