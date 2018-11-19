@@ -38,10 +38,7 @@ const Overview = (props: any) => {
 
     display = (
       <React.Fragment>
-        <div className="overview-left">
-          <div className="overview-company-title">
-            {/* <h3>{full_name}</h3> */}
-          </div>
+        <div id="overview-left">
           <div id="overall-score-chart">
             <OverviewPie overall={overall} />
           </div>
@@ -56,9 +53,9 @@ const Overview = (props: any) => {
             <p id="company-info">
               {descrip}
             </p>
-            <p id="company-info-more">
-              <span><strong>Founded: </strong>{yearFounded}</span>
-              <span><strong># of Employees: </strong>{
+            <div id="company-info-more">
+              <p><strong>Founded: </strong>{yearFounded}</p>
+              <p><strong># of Employees: </strong>{
                 numberEmployees
                   .toString()
                   .split('')
@@ -69,8 +66,8 @@ const Overview = (props: any) => {
                     return numString;
                   }, '')
               }
-              </span>
-            </p>
+              </p>
+            </div>
             <p id="company-url-pre">
               Learn more at: <a href={`http://${url}`} target="_blank">{url}</a>
             </p>

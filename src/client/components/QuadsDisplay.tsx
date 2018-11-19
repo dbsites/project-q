@@ -18,13 +18,16 @@ const QuadsDisplay = (props: any) => {
       />
       <StockGraph
         selected={props.selected}
+        selectedData={props.selectedData}
       />
       <IssuesCharts
         selectedCompany={props.selected}
+        selectedData={props.selectedData}
         userIssues={props.issues}
       />
       <CompanyList
         companyList={props.list}
+        getCompanyInfo={props.info}
         sortListBy={props.sort}
         selectCompany={props.select}
         userIssues={props.issues}

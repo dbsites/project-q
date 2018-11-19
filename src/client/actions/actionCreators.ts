@@ -53,7 +53,9 @@ export const fetchFormFailure = (form: string, message: string): IFormFailureAct
 export const fetchForm = (form: string, formFields: LoginState | RegisterState | ForgotPassState | ResetPassState) => (dispatch: Dispatch) => {
   dispatch(fetchFormRequest());
   // Derive POST request URI from form to be submitted and issue fetch request
+
   const fetchURI: string = `/api/${form}`;
+
   return fetch(fetchURI, {
     method: 'POST',
     headers: {
@@ -90,6 +92,7 @@ export const fetchIssuesFailure = (message: string): IFetchFailureAction => ({
 
 export const fetchIssues = () => (dispatch: any) => {
   dispatch(fetchIssuesRequest());
+
   // Issue fetch request
   return fetch('/api/getIssues')
     .then((response: Response) => {
@@ -267,6 +270,29 @@ export const fetchCompanyList = () => (dispatch: any) => {
       });
       dispatch({
         type: types.MERGE_ISSUE_SCORES
+      })
+    })
+    .catch((err: any) => console.error(err));
+}
+
+export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
+  fetch(`${HOST}/api/companyModule`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ticker }),
+  })
+    .then(response => response.json())
+    .then((response: any) => {
+      console.log('response back from db: ', response);
+      dispatch({
+        type: types.ADD_COMPANY_INFO,
+        payload: {
+          modalData: response.moduleData,
+          politicianData: response.politicianData,
+          stockData: response.stockData,
+        }
       })
     })
     .catch((err: any) => console.error(err));

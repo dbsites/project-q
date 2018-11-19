@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom'
 const loadingMovie = require('../assets/loading-movie.gif');
 
 const CompanyList = (props: any) => {
-  console.log(props);
   const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
   const { issueMatcher } = issueMatch;
 
@@ -23,7 +22,10 @@ const CompanyList = (props: any) => {
   } else {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
-        <Link id={index} className="company-names-list" to="#" onClick={props.selectCompany}>
+        <Link id={index} className="company-names-list" to="#" onClick={(e) => {
+          props.selectCompany(e);
+          props.getCompanyInfo(e, company.ticker);
+        }}>
           {company.short_name}
         </Link>
       );
@@ -114,7 +116,6 @@ const CompanyList = (props: any) => {
             .filter((issueName: any) => issueName.includes(abbrvSearchWord));
 
           companyScorePerIssueArray.push(
-            // TODO specific ID for div
             <div className="cl-category" id="cl-category-issue">
               <Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>{issueAbbrvs[issueWord[0]]}</Link>
               <div className="cl-list">
@@ -129,7 +130,7 @@ const CompanyList = (props: any) => {
     };
 
     return (
-      <div className="divTable">
+      <div className="divTable" id="quad-company-list">
         <div className="divTableBody">
           <div className="divTableRow">
             <div className="divTableHead">
