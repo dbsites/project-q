@@ -168,7 +168,7 @@ export const fetchLogoutSuccess = (): Action<string> => ({
   type: types.FETCH_LOGOUT_SUCCESS,
 })
 
-export const fetchLogoutFailure = ():  Action<string>  => ({
+export const fetchLogoutFailure = (): Action<string> => ({
   type: types.FETCH_LOGOUT_FAILURE,
 })
 
@@ -198,7 +198,7 @@ export const fetchSubmitIssuesSuccess = (response: SurveyState): ISubmitIssuesSu
   response,
 })
 
-export const fetchSubmitIssuesFailure = ():  Action<string>  => ({
+export const fetchSubmitIssuesFailure = (): Action<string> => ({
   type: types.FETCH_SUBMIT_ISSUES_FAILURE,
 })
 
@@ -276,7 +276,7 @@ export const fetchCompanyList = () => (dispatch: any) => {
 }
 
 export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
-  fetch(`${HOST}/api/companyModule`, {
+  fetch('/api/companyModule', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
