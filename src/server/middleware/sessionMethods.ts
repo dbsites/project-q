@@ -160,7 +160,7 @@ Sessions.forgot = async (req: Request, res: Response, next: NextFunction) => {
 
 Sessions.reset = async (req: Request, res: Response, next: NextFunction) => {
   // check if the session exists
-  await redisClient.get(req.body.secret, (error: any, userId: any) => {
+  await redisClient.get(req.body.resetId, (error: any, userId: any) => {
     if(error) {
       console.log('ERROR AT reset IN sessionMethods', error);
     }
