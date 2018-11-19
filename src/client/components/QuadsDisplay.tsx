@@ -7,7 +7,7 @@ import * as React from 'react';
 
 // Import Components
 import Overview from '../components/Overview';
-import StockGraph from '../components/StockGraph';
+// import StockGraph from '../components/StockGraph';
 import IssuesCharts from '../components/IssuesCharts';
 import CompanyList from '../components/CompanyList';
 
@@ -17,10 +17,10 @@ const QuadsDisplay = (props: any) => {
       <Overview
         selected={props.selected}
       />
-      <StockGraph
+      {/* <StockGraph
         selected={props.selected}
         selectedData={props.selectedData}
-      />
+      /> */}
       <IssuesCharts
         selectedCompany={props.selected}
         selectedData={props.selectedData}
@@ -29,6 +29,7 @@ const QuadsDisplay = (props: any) => {
       <CompanyList
         companyList={props.list}
         getCompanyInfo={props.info}
+        getStockData = {props.stock}
         sortListBy={props.sort}
         selectCompany={props.select}
         userIssues={props.issues}
