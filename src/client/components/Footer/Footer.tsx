@@ -1,21 +1,29 @@
 /**
  * @module Footer.tsx
  * @description Application Footer Presentation Component
+ * UNIT TEST COVERAGE - 100%
  */
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import Disclaimer from './Disclaimer';
+import FooterLink from './FooterLink';
 
 import './Footer.css';
+
+// TODO: REFACTOR
+const footerLinkArray: JSX.Element[] = [];
+export const footerLinkData: string[][] = [
+  ['privacy-policy', '/terms/privacy', 'PRIVACY POLICY'],
+  ['terms-of-service', '/terms/service', 'TERMS AND CONDITIONS'],
+  ['frequently-asked-questions', '/terms/faq', 'FAQ'],
+];
+footerLinkData.forEach(data => footerLinkArray.push(<FooterLink key={data[0]} linkKey={data[0]} link={data[1]} text={data[2]} />))
 
 const Footer = () => {
   return (
     <div className="footer">
       <ul className="footer-links">
-        <li key="privacy-policy"><Link to='/terms/privacy'>PRIVACY POLICY</Link></li>
-        <li key="terms-of-service"><Link to='/terms/service'>TERMS AND CONDITIONS</Link></li>
-        <li key="frequently-asked-questions"><Link to='/terms/faq'>FAQ</Link></li>
+        {footerLinkArray}
       </ul>
       <Disclaimer />
     </div>

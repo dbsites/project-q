@@ -12,7 +12,7 @@ describe('Disclaimer Component: ', () => {
     const tree: Renderer.ReactTestRendererJSON = Renderer.create(<Disclaimer />).toJSON() as Renderer.ReactTestRendererJSON;
     expect(tree).toMatchSnapshot();
   })
-  it('renders a <div> with class disclaimer', () => {
+  it('renders a <div> with class "disclaimer"', () => {
     const disclaimerWrapper: Enzyme.ShallowWrapper = Enzyme.shallow(<Disclaimer />);
     expect(disclaimerWrapper.hasClass('disclaimer')).toEqual(true);
     expect(disclaimerWrapper.type()).toEqual('div');

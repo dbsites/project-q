@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Disclaimer Component:  matches the snapshot 1`] = `
+exports[`Footer Component:  matches the snapshot 1`] = `
 <div
   className="footer"
 >

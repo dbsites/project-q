@@ -12,7 +12,7 @@
     "start": "NODE_ENV=production ts-node ./src/server/server.ts",
     "server": "nodemon --exec ts-node ./src/server/server.ts",
     "daemon": "nodemon --exec ts-node ./src/server/daemonServer.ts",
-    "test": "NODE_ENV=test jest --watch",
+    "test": "NODE_ENV=test jest",
     "test-coverage": "NODE_ENV=test jest --coverage",
     "test-watch": "NODE_ENV=test jest --watch",
     "test-updateSnapshot": "NODE_ENV=development jest --updateSnapshot",

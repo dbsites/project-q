@@ -544,7 +544,8 @@ body {
   box-sizing: border-box;
   color: #666666;
   padding: 4vh 6vw;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .terms-dashboard-container a {
