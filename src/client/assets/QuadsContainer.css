@@ -130,7 +130,7 @@
 .stock-container p {
   margin: auto;
   text-align: center;
-  color: #FFFFFF;
+  color: #A5A8A6;
 }
 
 .stock-container iframe {
@@ -150,7 +150,7 @@
 }
 
 .stock-container-info li {
-  color: white;
+  color:#A5A8A6;
   display: inline-block;
   font-size: 0.65em;
   margin: 15%;

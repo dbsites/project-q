@@ -21,7 +21,7 @@ class IssuePie extends Component<Props> {
   render() {
 
     const { name, alignedScore } = this.props.info;
-
+    console.log('aligned score: ', alignedScore);
     let display;
 
     if (!alignedScore) {
@@ -73,7 +73,7 @@ class IssuePie extends Component<Props> {
               {
                 DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
               }
-              <Label value={alignedScore + '%'} position="center" fill="white" />
+              <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
             </Pie>
           </PieChart>
         </ResponsiveContainer>

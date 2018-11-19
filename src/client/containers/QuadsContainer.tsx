@@ -21,14 +21,16 @@ interface Props {
   selectedCompany: any
   selectedCompanyData: any
   companyList: any
+  currentCompanyStockData: any
   userIssues: any
   issueAbbrvs: any
   fetchCompanyList: any
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
-  // getCompanyInfo: any
+  getCompanyInfo: any
   getStockData: any
+  getSelectedCompanyInfo: any
 }
 
 class QuadsContainer extends React.Component<Props> {
@@ -40,19 +42,23 @@ class QuadsContainer extends React.Component<Props> {
     const {
       fetchCompanyList,
       getUserIssues,
+      getCompanyInfo,
     } = this.props;
 
     // Grabs user issues from user store and adds to company store
     getUserIssues();
     // Fetch company list from db and adds to company store
     fetchCompanyList();
+    // Grab all companies modal and politician info
+    getCompanyInfo();
   }
 
   render() {
     // Extract state to props
     const {
       companyList,
-      // getCompanyInfo,
+      currentCompanyStockData,
+      getSelectedCompanyInfo,
       getStockData,
       issueAbbrvs,
       selectCompany,
@@ -69,13 +75,14 @@ class QuadsContainer extends React.Component<Props> {
         </div>
         <div id="quads-container">
           <QuadsDisplay
+            getInfo={getSelectedCompanyInfo}
             list={companyList}
             select={selectCompany}
             selected={selectedCompany}
             selectedData={selectedCompanyData}
             sort={sortCompanyList}
-            // info={getCompanyInfo}
             stock={getStockData}
+            stockData={currentCompanyStockData}
             issues={userIssues}
             abbrvs={issueAbbrvs}
           />
@@ -87,6 +94,7 @@ class QuadsContainer extends React.Component<Props> {
 
 const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
+  currentCompanyStockData: state.company.currentCompanyStockData,
   selectedCompany: state.company.selectedCompany,
   selectedCompanyData: state.company.selectedCompanyData,
   userIssues: state.company.userIssues,
@@ -104,15 +112,15 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.sortCompanyList({ field: event.target.id }));
   },
   getUserIssues: () => dispatch(actions.getUserIssues()),
-  // getCompanyInfo: (event: any, ticker: string) => {
-  //   event.preventDefault();
-  //   dispatch(actions.getCompanyInfo(ticker));
-  // },
-  getStockData: (/*event: any,*/ ticker: string) => {
-    console.log('hello');
-    // event.preventDefault();
+  getCompanyInfo: () => {
+    dispatch(actions.getCompanyInfo());
+  },
+  getStockData: (ticker: string) => {
     dispatch(actions.getStockData(ticker));
   },
+  // getSelectedCompanyInfo: (ticker: string) => {
+  //   dispatch(actions.getSelectedCompanyInfo(ticker));
+  // },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);

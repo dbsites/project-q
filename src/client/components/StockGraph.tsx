@@ -5,6 +5,18 @@
 
 import * as React from 'react';
 
+const commafy = (value: number) => {
+  return value
+    .toString()
+    .split('')
+    .reverse()
+    .reduce((numString: string, next: string, i: number) => {
+      if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
+      else numString = next + numString;
+      return numString;
+    }, '')
+}
+
 const StockGraph = (props: any) => {
 
   let display;
@@ -16,14 +28,14 @@ const StockGraph = (props: any) => {
     let high, low, open, close, volume;
 
     // Before stock data retrieval, set defaults to 0
-    if (!props.selectedData.stockData) {
+    if (!props.stockData.high) {
       high = 0; low = 0; open = 0; close = 0; volume = 0;
     } else {
-      high = props.selectedData.stockData.high;
-      low = props.selectedData.stockData.low;
-      open = props.selectedData.stockData.open;
-      close = props.selectedData.stockData.close;
-      volume = props.selectedData.stockData.volume;
+      high = commafy(props.stockData.high);
+      low = commafy(props.stockData.low);
+      open = commafy(props.stockData.open);
+      close = commafy(props.stockData.close);
+      volume = commafy(props.stockData.volume);
     }
 
     // StockDIO API
@@ -39,15 +51,7 @@ const StockGraph = (props: any) => {
             <li>Low<span>{low}</span></li>
             <li>Open<span>{open}</span></li>
             <li>Close<span>{close}</span></li>
-            <li>Volume<span>{volume
-              .toString()
-              .split('')
-              .reverse()
-              .reduce((numString: string, next: string, i: number) => {
-                if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
-                else numString = next + numString;
-                return numString;
-              }, '')}</span></li>
+            <li>Volume<span>{volume}</span></li>
           </ul>
         </div>
       </React.Fragment>

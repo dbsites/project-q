@@ -276,8 +276,8 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
-export const getStockData = (ticker: string) => (/*dispatch: any*/) => {
-  console.log('hello again');
+export const getStockData = (ticker: string) => (dispatch: any) => {
+  console.log('hello again, ticker = ', ticker);
   fetch('/api/stockData', {
     method: 'POST',
     headers: {
@@ -286,32 +286,32 @@ export const getStockData = (ticker: string) => (/*dispatch: any*/) => {
     body: JSON.stringify({ ticker }),
   })
     .then(response => response.json())
-    .then((response: any) => {
-      console.log('get stock data response: ', response);
+    .then((data: any) => {
+      dispatch({
+        type: types.GET_STOCK_INFO,
+        payload: data,
+      })
     })
     .catch((err: any) => console.error(err));
 }
 
-// export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
-//   fetch('/api/moduleData', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ ticker }),
-//   })
-//     .then(response => response.json())
-//     .then((response: any) => {
-//       dispatch({
-//         type: types.ADD_COMPANY_INFO,
-//         payload: {
-//           modalData: response.moduleData,
-//           politicianData: response.politicianData,
-//           stockData: response.stockData,
-//         }
-//       })
-//     })
-//     .catch((err: any) => console.error(err));
+export const getCompanyInfo = () => (dispatch: any) => {
+  fetch('/api/moduleData')
+    .then(response => response.json())
+    .then((response: any) => {
+      dispatch({
+        type: types.GET_COMPANY_INFO,
+        payload: {
+          modalData: response.moduleData,
+          politicianData: response.politicianData,
+        }
+      })
+    })
+    .catch((err: any) => console.error(err));
+}
+
+// export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
+
 // }
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {

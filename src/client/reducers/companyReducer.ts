@@ -11,6 +11,7 @@ import * as issueMatch from '../issueMatcher';
 
 const initialCompanyState: /*CompanyDataState*/any = {
   selectedCompany: null,
+  currentCompanyStockData: {},
   // selectedCompanyData: {},
   companyList: [],
   companyListModal: [],
@@ -67,6 +68,11 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         companyList: updatedCompanyList
       }
 
+    case actions.GET_STOCK_INFO:
+      return {
+        ...state,
+        currentCompanyStockData: Object.assign({}, action.payload.stockData),
+      }
     // case actions.ADD_COMPANY_INFO:
     //   const { modalData, politicianData, stockData } = action.payload;
     //   return {
