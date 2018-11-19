@@ -89,8 +89,15 @@ export class DatabaseRepository {
     }
   }
 
-  getPoliticianData(stockSymbol: string) {
-    return this.db.one('SELECT * FROM politicians WHERE company_id = (SELECT id FROM companies WHERE ticker = $1);', stockSymbol);
+  async getPoliticianData(companyData: any[]) {
+    let politicanData: any = {};
+    for (let i = 0; i < companyData.length; i += 1) {
+      await this.db.any('SELECT * FROM politicians WHERE company_id = $1;', companyData[i].id)
+      .then((data: any) => {
+        politicanData[companyData[i].full_name] = data;
+      })
+    }
+    return politicanData;
   }
 }
 
