@@ -57,7 +57,7 @@ export interface QuestionState {
 };
 
 export interface IssueQuestionsState {
-  [name: string]: QuestionState,
+  [questionId: string]: QuestionState,
 };
 
 export interface SurveyState {
@@ -87,9 +87,7 @@ export interface UserState {
 };
 
 export interface LoadingState {
-  readonly authLoading: boolean,
-  readonly issuesLoading: boolean,
-  readonly surveyLoading: boolean,
+  [nameLoading: string]: boolean
 }
 
 //***************************** */

@@ -105,7 +105,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   clearIssues: () => dispatch(actions.clearIssues()),
   addIssue: (issueId: string) => dispatch(actions.addIssue(issueId)),
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
-  submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssuesRequest(userId, issuesSelected)),
+  submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssues(userId, issuesSelected)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);
