@@ -73,8 +73,8 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
     res.locals.companyData = {};
     res.locals.companyData.companyDataArray = companyData;
     res.locals.companyData.issueAbbrvs = res.locals.issueAbbrvs;
-    res.locals.companyData.moduleData = res.locals.moduleData; 
-    res.locals.companyData.politicianData = res.locals.politicianData;
+    // res.locals.companyData.moduleData = res.locals.moduleData; 
+    // res.locals.companyData.politicianData = res.locals.politicianData;
     next();
   })
   .catch((error: any) => {
@@ -131,6 +131,7 @@ CompanyDatabase.emptyStockData = () => {
 CompanyDatabase.getCompanyModule = async (_: Request, res: Response, next: NextFunction) => {
 
   const companyData = await CompanyDatabase.getInfo();
+  res.locals.companyData = companyData;
 
   db.companies.getModuleData(companyData)
   .then((companyData:any) => {
