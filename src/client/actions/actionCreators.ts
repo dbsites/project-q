@@ -229,7 +229,6 @@ export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('response back from db: ', response);
       dispatch({
         type: types.ADD_COMPANY_INFO,
         payload: {
