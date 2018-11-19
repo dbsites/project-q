@@ -7,10 +7,9 @@ import * as React from 'react';
 import * as issueMatch from '../issueMatcher';
 
 import IssuePie from './IssuePie';
+import Recipients from './Recipients';
 
-const placeholderIMG1 = require('../assets/placehold_man.png');
 
-const placeholderIMG2 = require('../assets/placehold_woman.png');
 /** 
  * Interface for IssueCharts Props
 */
@@ -46,7 +45,11 @@ const IssuesCharts = (props: Props) => {
         const { name, leaning } = issueObj;
         const { alignedScore } = selectedCompany[name];
         const issueInfo = { name, leaning, alignedScore };
-        return <IssuePie info={issueInfo} modal={modalData} politician={politicianData} />
+        return <IssuePie
+          info={issueInfo}
+          modal={modalData}
+          politician={politicianData}
+        />
       });
   }
   else {
@@ -66,21 +69,7 @@ const IssuesCharts = (props: Props) => {
         <p id="issues-header">{msg}</p>
         {display}
       </div>
-      <div className="issues-politicians">
-        <p className="polit-recip">Top Recipients</p>
-        <div className="politician">
-          <img src={placeholderIMG1} />
-        </div>
-        <p className="polit-info">POLITICIAN NAME</p>
-        <div className="politician">
-          <img src={placeholderIMG2} />
-        </div>
-        <p className="polit-info">POLITICIAN NAME</p>
-        <div className="politician">
-          <img src={placeholderIMG1} />
-        </div>
-        <p className="polit-info">POLITICIAN NAME</p>
-      </div>
+      <Recipients data={politicianData} />
     </div>
   );
 }
