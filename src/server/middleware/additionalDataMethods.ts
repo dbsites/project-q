@@ -12,8 +12,6 @@
 import { Request, Response, NextFunction } from 'express';
 // import db and db functionality from modular files to access db methods
 import db from '../index';
-// import companyDb middleware
-import CompanyDatabase from './companyDataMethods';
 
 const DatabaseMethods: any = {};
 
@@ -96,11 +94,12 @@ DatabaseMethods.insertPoliticianData = (req: Request, _: Response, next: NextFun
 
 DatabaseMethods.getPoliticianData = async (_: Request, res: Response, next: NextFunction) => {
 
-  const companyData = await CompanyDatabase.getInfo();
 
-  db.data.getPoliticianData(companyData)
+  db.data.getPoliticianData(res.locals.companyData)
   .then((politicianData: any) => {
-    res.locals.politicianData = politicianData;
+    res.locals.modules = {};
+    res.locals.modules.politicianData = politicianData;
+    res.locals.modules.moduleData = res.locals.moduleData
     next();
   })
 }
