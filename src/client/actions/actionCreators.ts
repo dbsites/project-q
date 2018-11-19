@@ -276,8 +276,9 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
-export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
-  fetch('/api/companyModule', {
+export const getStockData = (ticker: string) => (/*dispatch: any*/) => {
+  console.log('hello again');
+  fetch('/api/stockData', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -286,17 +287,32 @@ export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      dispatch({
-        type: types.ADD_COMPANY_INFO,
-        payload: {
-          modalData: response.moduleData,
-          politicianData: response.politicianData,
-          stockData: response.stockData,
-        }
-      })
+      console.log('get stock data response: ', response);
     })
     .catch((err: any) => console.error(err));
 }
+
+// export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
+//   fetch('/api/moduleData', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({ ticker }),
+//   })
+//     .then(response => response.json())
+//     .then((response: any) => {
+//       dispatch({
+//         type: types.ADD_COMPANY_INFO,
+//         payload: {
+//           modalData: response.moduleData,
+//           politicianData: response.politicianData,
+//           stockData: response.stockData,
+//         }
+//       })
+//     })
+//     .catch((err: any) => console.error(err));
+// }
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   dispatch({
