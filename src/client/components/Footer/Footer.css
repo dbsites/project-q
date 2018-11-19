@@ -1,0 +1,40 @@
+/* Footer - 4vh + 4vh = 8vh */
+.footer {
+  color: #666666;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Footer Links */
+.footer-links {
+  letter-spacing: 1.5px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+}
+
+.footer-links li a {
+  color: inherit;
+  font-size: 0.8rem;
+  padding: 4px 20px;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #FFFFFF;
+}
+
+/* Disclaimer */
+.disclaimer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disclaimer-text {
+  font-size: 0.6rem;
+  text-align: center;
+}

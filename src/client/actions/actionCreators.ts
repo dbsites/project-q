@@ -276,7 +276,7 @@ export const fetchCompanyList = () => (dispatch: any) => {
 }
 
 export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
-  fetch(`${HOST}/api/companyModule`, {
+  fetch('/api/companyModule', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
