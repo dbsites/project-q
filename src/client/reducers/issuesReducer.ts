@@ -1,6 +1,7 @@
 /**
  * @module issueReducer
  * @description Reducer for Issues Object
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';

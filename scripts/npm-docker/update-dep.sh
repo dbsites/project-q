@@ -8,3 +8,4 @@ docker image rm dbsites/ethiq-dependencies --force
 echo -e "\033[1;36mRebuilding image with updated package.json...\033[0m"
 docker build -t dbsites/ethiq-dependencies -f Dockerfile-dev .
 echo -e "\033[1;32mDone!\033[0m"
+echo -e "\033[1;33mREMINDER: 'docker push dbsites/ethiq-dependencies' once you're satisfied with the new dependencies. This will push your image to DockerCloud for everyone else to use.\033[0m"

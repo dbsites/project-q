@@ -9,50 +9,26 @@ import { Action, Middleware } from 'redux';
 // Import Action Creators, Types and Interfaces for testing
 import types from './actionTypes'
 import * as actions from './actionCreators';
-import { LoginState, SurveyState, UserIssuesSelected } from '../reducers/types';
 import {
   IToggleIssueAction, IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, 
-  IFormFieldObject, IFormFetchSuccessResponseObject,
-  IIssuesSuccessAction, IIssuesFetchSuccessResponseObject, IFetchFailureAction, IAuthSuccessAction, INoAuthObject, ISubmitIssuesSuccessAction
+  IIssuesSuccessAction, IFetchFailureAction, IAuthSuccessAction, ISubmitIssuesSuccessAction
 } from './types';
 
-// Import Random ID generator
-import { v4 } from 'uuid';
+// Import Templates for Testing
+import {
+  stubUserId, stubFormName,
+  stubFormFieldObject,
+  stubFormFetchRequestBody, stubFormFetchSuccessResponse, stubNoAuthFetchResponse, stubFormFetchErrorMessage,
+  stubIssueId, stubPosition,
+  stubIssuesFetchSuccessResponse, stubIssueFetchErrorMessage,
+  stubSubmitIssuesFetchRequest, stubSubmitIssuesFetchSuccessResponse,
+} from './templates';
 
 // Configure Mocks (store and error logging)
 const middleware: Middleware[] = [thunk];
 const mockStore = configureMockStore(middleware);
 
 // --- UNIT TESTS --- Form Action Creators --- //
-// Define sample fetch form, form field, form fetch request body, and form fetch response
-const stubForm: string = 'login';
-const stubFormFieldObject: IFormFieldObject = {
-  form: stubForm,
-  field: 'loginEmail',
-  type: 'text',
-  value: 'test@test.com',
-};
-const stubFormFetchRequestBody: LoginState = { 
-  loginEmail: 'test@test.com',
-  emailValid: true,
-  loginPassword: 's3cretp@ss',
-  rememberMe: true,
-  loginError: '',
-};
-const stubFormFetchResponse: IFormFetchSuccessResponseObject = {
-  isAuth: true,
-  firstName: 'test',
-  lastName: 'test',
-  userId: v4(),
-  issuesComplete: false,
-  surveyComplete: false,
-  issuesSelected: {},
-  questions: {},
-};
-const stubFormFetchErrorMessage: string = 'Invalid email address or password';
-
-const stubUserId: string = v4();
-
 describe('Functionality Test: Form Action Creators', () => {
   afterEach(() => {
     fetchMock.restore();
@@ -76,33 +52,33 @@ describe('Functionality Test: Form Action Creators', () => {
   it('fetchFormSuccess, given a server response, returns an action to update form and user state', () => {
     const expectedAction: IFormSuccessAction = {
       type: types.FETCH_FORM_SUCCESS,
-      response: stubFormFetchResponse,
+      response: stubFormFetchSuccessResponse,
     }
-    expect(actions.fetchFormSuccess(stubFormFetchResponse)).toEqual(expectedAction);
+    expect(actions.fetchFormSuccess(stubFormFetchSuccessResponse)).toEqual(expectedAction);
   });
 
   it('fetchFormFailure, given a form and message, returns an action to update that form\'s error message', () => {
     const expectedAction: IFormFailureAction = {
       type: types.FETCH_FORM_FAILURE,
-      form: stubForm,
+      form: stubFormName,
       message: stubFormFetchErrorMessage,
     }
-    expect(actions.fetchFormFailure(stubForm, stubFormFetchErrorMessage)).toEqual(expectedAction);
+    expect(actions.fetchFormFailure(stubFormName, stubFormFetchErrorMessage)).toEqual(expectedAction);
   });
 
   const matcherURL: string = '/api/login';
   
   it('fetchForm, given a successful state, returns an action indicating a fetch request and fetch success', () => {
     fetchMock.postOnce(matcherURL, {
-      body: stubFormFetchResponse,
+      body: stubFormFetchSuccessResponse,
       status: 200,
     })
     const expectedActions = [
       { type: types.FETCH_FORM_REQUEST },
-      { type: types.FETCH_FORM_SUCCESS, response: stubFormFetchResponse },
+      { type: types.FETCH_FORM_SUCCESS, response: stubFormFetchSuccessResponse },
     ];
     const store = mockStore({});
-    return store.dispatch(actions.fetchForm(stubForm, stubFormFetchRequestBody) as any) // TODO: Refactor to precision
+    return store.dispatch(actions.fetchForm(stubFormName, stubFormFetchRequestBody) as any) // TODO: Refactor to precision
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions)
       })
@@ -114,10 +90,10 @@ describe('Functionality Test: Form Action Creators', () => {
     })
     const expectedActions = [
       { type: types.FETCH_FORM_REQUEST },
-      { type: types.FETCH_FORM_FAILURE, form: stubForm, message: stubFormFetchErrorMessage },
+      { type: types.FETCH_FORM_FAILURE, form: stubFormName, message: stubFormFetchErrorMessage },
     ];
     const store = mockStore({});
-    return store.dispatch(actions.fetchForm(stubForm, stubFormFetchRequestBody) as any) // TODO: Refactor to precision
+    return store.dispatch(actions.fetchForm(stubFormName, stubFormFetchRequestBody) as any) // TODO: Refactor to precision
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       })
@@ -125,16 +101,6 @@ describe('Functionality Test: Form Action Creators', () => {
 });
 
 // --- UNIT TESTS --- Issue Action Creators --- //
-// Define sample issue fetch response and error message
-const stubIssuesFetchResponse: IIssuesFetchSuccessResponseObject = {
-  '580600c8-c633-476b-98d2-9676c70c177d': {
-    issueId: '580600c8-c633-476b-98d2-9676c70c177d',
-    issueName: 'Environment',
-    issueBlurb: 'Lorem ipsum dolor sit amet',
-  }
-};
-const stubIssueFetchErrorMessage: string = 'Something has gone wrong - please try again';
-
 describe('Functionality Test: Issue Action Creators', () => {
   afterEach(() => {
     fetchMock.restore();
@@ -150,9 +116,9 @@ describe('Functionality Test: Issue Action Creators', () => {
   it('fetchIssuesSuccess, given a server response, returns an action to update Issues and user state', () => {
     const expectedAction: IIssuesSuccessAction = {
       type: types.FETCH_ISSUES_SUCCESS,
-      response: stubIssuesFetchResponse,
+      response: stubIssuesFetchSuccessResponse,
     }
-    expect(actions.fetchIssuesSuccess(stubIssuesFetchResponse)).toEqual(expectedAction);
+    expect(actions.fetchIssuesSuccess(stubIssuesFetchSuccessResponse)).toEqual(expectedAction);
   });
 
   it('fetchIssuesFailure, given a Issues and message, returns an action to update that Issues\'s error message', () => {
@@ -168,11 +134,11 @@ describe('Functionality Test: Issue Action Creators', () => {
   it('fetchIssues, given a successful state, returns an action indicating a fetch request and fetch success', () => {
     fetchMock.getOnce(matcherURL, {
       status: 200,
-      body: stubIssuesFetchResponse
+      body: stubIssuesFetchSuccessResponse
     })
     const expectedActions = [
       { type: types.FETCH_ISSUES_REQUEST },
-      { type: types.FETCH_ISSUES_SUCCESS, response: stubIssuesFetchResponse },
+      { type: types.FETCH_ISSUES_SUCCESS, response: stubIssuesFetchSuccessResponse },
     ];
     const store = mockStore({});
     return store.dispatch(actions.fetchIssues() as any) // TODO: Refactor to precision
@@ -199,10 +165,6 @@ describe('Functionality Test: Issue Action Creators', () => {
 
 // --- UNIT TESTS --- User Action Creators --- //
 describe('Functionality Test: Synchronous User Action Creators', () => {
-  // Define sample issueId/position
-  const stubIssueId: string = v4();
-  const stubPosition: string = 'strong pro';
-
   it('clearIssues returns an action to clear all issues', () => {
     const expectedAction: Action<string> = {
       type: types.CLEAR_ISSUES,
@@ -248,9 +210,6 @@ describe('Functionality Test: Asynchronous User Action Creators', () => {
     fetchMock.restore();
   });
 
-  // Define sample failed Auth Response
-  const stubNoAuthFetchResponse: INoAuthObject = { isAuth: false }
-
   it('fetchAuthRequest returns an action indicating a request has been dispatched', () => {
     const expectedAction: Action<string> = {
       type: types.FETCH_AUTH_REQUEST,
@@ -261,9 +220,9 @@ describe('Functionality Test: Asynchronous User Action Creators', () => {
   it('fetchAuthSuccess, given a server response, returns an action to update user state', () => {
     const expectedAction: IAuthSuccessAction = {
       type: types.FETCH_AUTH_SUCCESS,
-      response: stubFormFetchResponse,
+      response: stubFormFetchSuccessResponse,
     }
-    expect(actions.fetchAuthSuccess(stubFormFetchResponse)).toEqual(expectedAction);
+    expect(actions.fetchAuthSuccess(stubFormFetchSuccessResponse)).toEqual(expectedAction);
   });
 
   it('fetchAuthFailure returns an action to reset user state', () => {
@@ -278,11 +237,11 @@ describe('Functionality Test: Asynchronous User Action Creators', () => {
   it('fetchAuth, with successful auth, returns an action indicating a auth request and fetch success to reset user state', () => {
     fetchMock.getOnce(matcherAuthURL, {
       status: 200,
-      body: stubFormFetchResponse
+      body: stubFormFetchSuccessResponse
     })
     const expectedActions = [
       { type: types.FETCH_AUTH_REQUEST },
-      { type: types.FETCH_AUTH_SUCCESS, response: stubFormFetchResponse },
+      { type: types.FETCH_AUTH_SUCCESS, response: stubFormFetchSuccessResponse },
     ];
     const store = mockStore({});
     return store.dispatch(actions.fetchAuth() as any) // TODO: Refactor to precision
@@ -361,21 +320,6 @@ describe('Functionality Test: Asynchronous User Action Creators', () => {
 });
 
 // Define sample submit issues request and response
-const stubSubmitIssuesFetchRequest: UserIssuesSelected = {
-  '580600c8-c633-476b-98d2-9676c70c177d': null,
-};
-
-const stubSubmitIssuesFetchSuccessResponse: SurveyState = {
-  '580600c8-c633-476b-98d2-9676c70c177d': {
-    '7d2144fc-225b-4e5c-9d56-a0ecd4bbf8a0': {
-      agree: null,
-      position: 'pro',
-      questionId: '7d2144fc-225b-4e5c-9d56-a0ecd4bbf8a0',
-      questionText: 'Sample Question Text',
-    }
-  },
-};
-
 describe('Functionality Test: Asynchronous Survey Action Creators', () => {
   afterEach(() => {
     fetchMock.restore();

@@ -87,9 +87,7 @@ export interface UserState {
 };
 
 export interface LoadingState {
-  readonly authLoading: boolean,
-  readonly issuesLoading: boolean,
-  readonly surveyLoading: boolean,
+  [nameLoading: string]: boolean
 }
 
 //***************************** */

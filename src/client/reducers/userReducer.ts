@@ -1,6 +1,7 @@
 /**
  * @module userReducer
  * @description Reducer for User Object
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';
