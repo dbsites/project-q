@@ -127,8 +127,6 @@ app.post('/api/userSurvey',
   UserMethods.updateUserSurvey,
   UserMethods.updateSurveyComplete,
   DatabaseMethods.getIssueAbbrvs,
-  CompanyDatabase.getCompanyModule,
-  DatabaseMethods.getPoliticianData,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     if (res.locals.status === 500) {
@@ -143,11 +141,17 @@ app.post('/api/userSurvey',
 // end point for deliverying a list of companies on dashboard render
 app.get('/api/companyList',
   DatabaseMethods.getIssueAbbrvs,
-  CompanyDatabase.getCompanyModule,
-  DatabaseMethods.getPoliticianData,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.companyData);
+  }
+);
+
+app.get('/api/moduleData',
+  CompanyDatabase.getCompanyModule,
+  DatabaseMethods.getPoliticianData,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.modules);
   }
 );
 
