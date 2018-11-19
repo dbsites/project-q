@@ -8,8 +8,6 @@ import { Component } from 'react';
 import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
 
 
-import '../assets/IssuePie.css';
-
 interface Props {
   info: any
   modal?: any
@@ -19,11 +17,13 @@ interface Props {
 class IssuePie extends Component<Props> {
   constructor(props: any) {
     super(props);
+    this.state = {
+      issueData: this.props.info,
+      modalData: this.props.modal,
+      politicianData: this.props.politician,
+    }
   }
   render() {
-    console.log('ISSUE INFO: ', this.props.info);
-    console.log('MODAL INFO: ', this.props.modal);
-    console.log('POLITICIAN INFO: ', this.props.politician);
 
     const { name, alignedScore } = this.props.info;
 
@@ -58,16 +58,10 @@ class IssuePie extends Component<Props> {
           value: 100 - alignedScore
         },
         {
-          name: "Aligned",
+          name: name,
           value: alignedScore
         }
       ];
-
-      // const scoreLabel = (
-      //   <text x="180" y="180" style={{ fontSize: 1 }} fill="white" textAnchor="middle" dominantBaseline="middle">
-      //     {alignedScore}
-      //   </text>
-      // );
 
       display = (
         <ResponsiveContainer>
@@ -78,7 +72,6 @@ class IssuePie extends Component<Props> {
               innerRadius="70%"
               fill="#808080"
               dataKey="value"
-              // label={scoreLabel}
               startAngle={90}
               endAngle={450}
               paddingAngle={5}>
@@ -94,10 +87,10 @@ class IssuePie extends Component<Props> {
 
     return (
       <div className="issue-box">
-        <div className="issue-pie">
+        <div className="issue-pie" id={name}>
           {display}
+          <p>{name}</p>
         </div>
-        <p>{name}</p>
       </div>
     );
   }
