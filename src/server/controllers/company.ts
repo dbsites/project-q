@@ -116,4 +116,9 @@ export class CompanyRepository {
     }
     return moduleData;
   }
+
+  getCompanyModuleData(stockSymbol: string) {
+    return this.db.one('SELECT * FROM company_module WHERE company_id = (SELECT id FROM companies WHERE ticker = $1);', stockSymbol);
+  }
+  
 }

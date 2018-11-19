@@ -104,6 +104,14 @@ DatabaseMethods.getPoliticianData = async (_: Request, res: Response, next: Next
   })
 }
 
+DatabaseMethods.getSinglePoliticianData = (req: Request, res: Response, next: NextFunction) => {
+  db.data.getSinglePoliticianData(req.body.ticker)
+  .then((politicianData: any) => {
+    res.locals.politicianData = politicianData;
+    next();
+  })
+}
+
 
 
 export default DatabaseMethods;
