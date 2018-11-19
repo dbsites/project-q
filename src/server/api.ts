@@ -138,6 +138,15 @@ app.post('/api/userSurvey',
   }
 );
 
+// end point for deliverying a list of companies on dashboard render
+app.get('/api/companyList',
+  DatabaseMethods.getIssueAbbrvs,
+  CompanyDatabase.getCompanyList,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.companyData);
+  }
+);
+
 app.post('/api/companyModule',
   CompanyDatabase.getCompanyModule,
   DatabaseMethods.getPoliticianData,
