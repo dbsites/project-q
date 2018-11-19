@@ -55,6 +55,11 @@
     rememberUser (email: string, remember: boolean) {
       return this.db.none('UPDATE users SET remember = $1 WHERE email = $2', [remember, email]);
     }
+    
+    // reset password
+    resetPassword(newPassword: string, userId: string) {
+      return this.db.none('UPDATE users SET password = $1 WHERE id = $2', [newPassword, userId]);
+    }
 
     // get account data for user
     getAccountData (user: string) {

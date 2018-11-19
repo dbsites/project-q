@@ -116,6 +116,29 @@ UserMethods.login = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
+UserMethods.resetPassword = (req: Request, res: Response, next: NextFunction) => {
+  // resetpassword
+    bcrypt.hash(req.body.newPassword, 10, (error: any, encrypted: any) => {
+      // if the hashing fails, respond with a server failure
+      if (error) {
+        console.log('ERROR IN authenticate.ts for Encryption', error);
+        res.status(500).send('SERVER ERROR');
+      }
+      else {
+        // db.users accesses methods defined in users repo
+        db.users.resetPassword(encrypted, res.locals.userId)
+        .then(() => {
+          next();
+        })
+        .catch((error: any) => {
+            console.log('ERROR AT resetPassowrd IN userMethods.ts', error);
+            res.status(500).send('SERVER FAILURE');
+        });
+      }
+    });
+}
+
+
 // method for getting a users account information
 UserMethods.getAccountInfo = (req: Request, res: Response, next: NextFunction) => {
   //res.locals.user = { userId: string, isAuth: boolean }
@@ -365,9 +388,23 @@ UserMethods.deleteUser = (email: string) => {
 UserMethods.getId = (email: string) => {
   return db.users.getId(email);
 }
-    
 
-
- 
+UserMethods.findByEmail = (req: Request, res: Response, next: NextFunction) => {
+  db.users.getId(req.body.email)
+  .then((userId: string) => {
+    if (userId) {
+      res.locals.userId = userId;
+      next();
+    }
+    else {
+      res.status(401).send('INVALID REQUEST');
+      console.log('USER NOT FOUND');
+    }
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT findbyEmail in userMethods', error);
+    res.status(500).send('SERVER FAILURE');
+  })
+}
 
 export default UserMethods;
