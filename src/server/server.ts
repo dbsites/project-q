@@ -8,3 +8,5 @@ const app: any = require('./api')
 app.listen(PORT, () => {
     console.log(`He is beginning to believe. Port: ${PORT}`);
 })
+
+module.exports = app;
