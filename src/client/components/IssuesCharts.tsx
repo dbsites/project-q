@@ -10,7 +10,7 @@ import * as issueMatch from '../issueMatcher';
 
 // Import Components
 import IssuePie from './IssuePie';
-import Recipients from './Recipients';
+// import Recipients from './Recipients';
 
 // TODO: move this props in types.ts and export in
 interface Props {
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const IssuesCharts = (props: Props) => {
-  const { modalData, politicianData } = props.selectedData;
+  // const { modalData, politicianData } = props.selectedData;
   const { selectedCompany, userIssues } = props;
   const { issueMatcher } = issueMatch;
 
@@ -46,8 +46,8 @@ const IssuesCharts = (props: Props) => {
         const issueInfo = { name, leaning, alignedScore };
         return <IssuePie
           info={issueInfo}
-          modal={modalData}
-          politician={politicianData}
+          // modal={modalData}
+          // politician={politicianData}
         />
       });
   }
@@ -68,7 +68,7 @@ const IssuesCharts = (props: Props) => {
         <p id="issues-header">{msg}</p>
         {display}
       </div>
-      <Recipients data={politicianData} />
+      {/* <Recipients data={politicianData} /> */}
     </div>
   );
 }
