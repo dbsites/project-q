@@ -147,19 +147,18 @@ app.get('/api/companyList',
   }
 );
 
-app.post('/api/companyModule',
+app.get('/api/moduleData',
   CompanyDatabase.getCompanyModule,
   DatabaseMethods.getPoliticianData,
-  CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
+    res.status(200).send(res.locals.modules);
   }
 );
 
-app.post('/politicianData',
-  DatabaseMethods.insertPoliticianData,
+app.post('/api/stockData',
+  CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
-    res.sendStatus(200);
+    res.status(200).send(res.locals);
   }
 );
 

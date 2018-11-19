@@ -92,10 +92,14 @@ DatabaseMethods.insertPoliticianData = (req: Request, _: Response, next: NextFun
   })
 }
 
-DatabaseMethods.getPoliticianData = (req: Request, res: Response, next: NextFunction) => {
-  db.data.getPoliticianData(req.body.ticker)
+DatabaseMethods.getPoliticianData = async (_: Request, res: Response, next: NextFunction) => {
+
+
+  db.data.getPoliticianData(res.locals.companyData)
   .then((politicianData: any) => {
-    res.locals.politicianData = politicianData;
+    res.locals.modules = {};
+    res.locals.modules.politicianData = politicianData;
+    res.locals.modules.moduleData = res.locals.moduleData
     next();
   })
 }

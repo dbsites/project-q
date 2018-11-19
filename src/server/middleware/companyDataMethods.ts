@@ -72,7 +72,9 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
     })
     res.locals.companyData = {};
     res.locals.companyData.companyDataArray = companyData;
-    res.locals.companyData.issueAbbrvs = res.locals.issueAbbrvs
+    res.locals.companyData.issueAbbrvs = res.locals.issueAbbrvs;
+    // res.locals.companyData.moduleData = res.locals.moduleData; 
+    // res.locals.companyData.politicianData = res.locals.politicianData;
     next();
   })
   .catch((error: any) => {
@@ -94,6 +96,10 @@ CompanyDatabase.updateData = (req: Request, _: Response, next: NextFunction) => 
 
 CompanyDatabase.getTickers = () => {
   return db.companies.getTickers();
+}
+
+CompanyDatabase.getInfo = () => {
+  return db.companies.getInfo();
 }
 
 CompanyDatabase.storeRecentStockData = (dataObject: any, stockSymbol: any) => {
@@ -122,11 +128,12 @@ CompanyDatabase.emptyStockData = () => {
   return db.companies.emptyStockData();
 }
 
-CompanyDatabase.getCompanyModule = (req: Request, res: Response, next: NextFunction) => {
-  // if empty request object
-  if (!req.body.ticker) res.status(500).send('INVALID TICKER');
+CompanyDatabase.getCompanyModule = async (_: Request, res: Response, next: NextFunction) => {
 
-  db.companies.getModuleData(req.body.ticker)
+  const companyData = await CompanyDatabase.getInfo();
+  res.locals.companyData = companyData;
+
+  db.companies.getModuleData(companyData)
   .then((companyData:any) => {
     res.locals.moduleData = companyData;
     next();
