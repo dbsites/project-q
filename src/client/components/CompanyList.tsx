@@ -31,7 +31,8 @@ const CompanyList = (props: any) => {
       .map((company: any, index: any) =>
         <Link id={index} className="company-names-list" to="#" onClick={(e) => {
           props.selectCompany(e);
-          props.getCompanyInfo(e, company.ticker);
+          props.getStockData(e, company.ticker);
+          // props.getCompanyInfo(e, company.ticker);
         }}>
           {company.short_name}
         </Link>
