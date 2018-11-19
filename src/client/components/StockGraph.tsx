@@ -32,12 +32,20 @@ const StockGraph = (props: any) => {
         <iframe frameBorder='0' scrolling='no' src={URI}>
         </iframe >
         <div className="stock-container-info">
-          <ul>
-            <li>High: {high}</li>
-            <li>Low: {low}</li>
-            <li>Open: {open}</li>
-            <li>Close: {close}</li>
-            <li>Volume: {volume}</li>
+          <ul className="stock-info-list">
+            <li>High<span>{high}</span></li>
+            <li>Low<span>{low}</span></li>
+            <li>Open<span>{open}</span></li>
+            <li>Close<span>{close}</span></li>
+            <li>Volume<span>{volume
+              .toString()
+              .split('')
+              .reverse()
+              .reduce((numString: string, next: string, i: number) => {
+                if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
+                else numString = next + numString;
+                return numString;
+              }, '')}</span></li>
           </ul>
         </div>
       </React.Fragment>
