@@ -69,7 +69,6 @@ app.post('/api/register',
   UserMethods.createAccount,
   Sessions.create,
   (_: Request, res: Response) => {
-    console.log(res.locals.user);
     res.status(200).send(res.locals.user);
   }
 );
@@ -130,25 +129,14 @@ app.post('/api/userSurvey',
   DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.companyData);
+    if (res.locals.status === 500) {
+      res.status(500).send('SERVER FAILURE');
+    }
+    else {
+      res.status(200).send(res.locals.companyData);
+    }
   }
 );
-
-// end point for deliverying a list of companies on dashboard render
-app.get('/api/companyList',
-  DatabaseMethods.getIssueAbbrvs,
-  CompanyDatabase.getCompanyList,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.companyData);
-  }
-);
-
-// app.post('/api/stockData',
-// CompanyDatabase.getStockData,
-// (_: Request, res: Response) => {
-//   res.status(200).send(res.locals.stockData);
-// }
-// );
 
 app.post('/api/companyModule',
   CompanyDatabase.getCompanyModule,
@@ -158,13 +146,13 @@ app.post('/api/companyModule',
     res.status(200).send(res.locals);
   }
 );
-app.post('/api/updateCompanyData',
-    CompanyDatabase.updateData,
-    (_: Request, res: Response) => {
-    res.sendStatus(200);
-    }
-  );
 
+app.post('/politicianData',
+  DatabaseMethods.insertPoliticianData,
+  (_: Request, res: Response) => {
+    res.sendStatus(200);
+  }
+);
 
 module.exports = app;
 

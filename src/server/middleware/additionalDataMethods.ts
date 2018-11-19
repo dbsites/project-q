@@ -64,6 +64,9 @@ DatabaseMethods.getIssues = (_: Request, res: Response, next: NextFunction) => {
 
 // get issue abbreviated names
 DatabaseMethods.getIssueAbbrvs = (_: Request, res: Response, next: NextFunction) => {
+  // if request has failed in prior middleware
+  if (res.locals.status === 500) next();
+  
   // declare object to return to the front end
   res.locals.issueAbbrvs = {};
   // query db for issue data
