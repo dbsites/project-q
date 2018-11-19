@@ -93,6 +93,22 @@ app.post('/api/logout',
   }
 );
 
+app.post('/api/forgot',
+  UserMethods.findByEmail,
+  Sessions.forgot,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
+  }
+);
+
+app.post('/api/reset',
+  Sessions.reset,
+  UserMethods.resetPassword,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.user);
+  }
+);
+
 // route for getting a list of issues for the front end
 app.get('/api/getIssues',
   DatabaseMethods.getIssues,
@@ -152,6 +168,15 @@ app.get('/api/moduleData',
   DatabaseMethods.getPoliticianData,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.modules);
+  }
+);
+
+app.post('/api/companyModule',
+  CompanyDatabase.getCompanyModuleData,
+  DatabaseMethods.getSinglePoliticianData,
+  CompanyDatabase.getStockData,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
   }
 );
 
