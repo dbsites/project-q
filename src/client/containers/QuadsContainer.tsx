@@ -6,11 +6,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
+// Import Actions
 import * as actions from '../actions/actionCreators'
 
+// Import Components
 import Header from '../containers/HeaderContainer';
 import QuadsDisplay from '../components/QuadsDisplay';
 
+// Import 
 import '../assets/QuadsContainer.css';
 
 interface Props {

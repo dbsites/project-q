@@ -94,6 +94,19 @@ export interface LoadingState {
 
 //***************************** */
 
+export interface QuadsProps {
+  readonly selectedCompany: CompanyState | null
+  selectedCompanyData: any
+  companyList: any
+  userIssues: any
+  issueAbbrvs: any
+  fetchCompanyList: any
+  sortCompanyList: any
+  selectCompany: any
+  getUserIssues: any
+  getCompanyInfo: any
+}
+
 export interface CompanyState {
   readonly full_name: string | null
   readonly short_name: string | null
