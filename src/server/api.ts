@@ -155,17 +155,10 @@ app.get('/api/moduleData',
   }
 );
 
-app.get('/api/stockData',
+app.post('/api/stockData',
   CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
-  }
-);
-
-app.post('/politicianData',
-  DatabaseMethods.insertPoliticianData,
-  (_: Request, res: Response) => {
-    res.sendStatus(200);
   }
 );
 
