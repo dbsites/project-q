@@ -1,6 +1,7 @@
 /**
  * @module formReducer
  * @description Reducer for Login and Registration Forms
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';

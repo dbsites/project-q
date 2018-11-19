@@ -1,6 +1,7 @@
 /**
  * @module companyReducer
  * @description Reducer for User Dashboard
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';
