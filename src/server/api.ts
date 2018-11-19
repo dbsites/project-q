@@ -171,6 +171,15 @@ app.get('/api/moduleData',
   }
 );
 
+app.post('/api/companyModule',
+  CompanyDatabase.getCompanyModuleData,
+  DatabaseMethods.getSinglePoliticianData,
+  CompanyDatabase.getStockData,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
+  }
+);
+
 app.post('/api/stockData',
   CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
