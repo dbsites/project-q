@@ -11,8 +11,9 @@ import * as issueMatch from '../issueMatcher';
 
 const initialCompanyState: /*CompanyDataState*/any = {
   selectedCompany: null,
-  selectedCompanyData: {},
+  // selectedCompanyData: {},
   companyList: [],
+  companyListModal: [],
   userIssues: {},
   issueAbbrvs: {}
 };
@@ -66,12 +67,12 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         companyList: updatedCompanyList
       }
 
-    case actions.ADD_COMPANY_INFO:
-      const { modalData, politicianData, stockData } = action.payload;
-      return {
-        ...state,
-        selectedCompanyData: { modalData, politicianData, stockData }
-      };
+    // case actions.ADD_COMPANY_INFO:
+    //   const { modalData, politicianData, stockData } = action.payload;
+    //   return {
+    //     ...state,
+    //     selectedCompanyData: { modalData, politicianData, stockData }
+    //   };
 
     case actions.MERGE_ISSUE_SCORES:
       const newCompanyList = state.companyList.slice(0);
