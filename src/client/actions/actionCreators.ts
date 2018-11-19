@@ -261,6 +261,7 @@ export const fetchCompanyList = () => (dispatch: any) => {
   fetch('/api/companyList')
     .then((response: any) => response.json())
     .then((data: any) => {
+      console.log('data returned from fetchCompanyList: ', data);
       dispatch({
         type: types.FETCH_COMPANY_LIST,
         data

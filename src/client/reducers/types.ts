@@ -105,6 +105,12 @@ export interface QuadsProps {
   getCompanyInfo: any
 }
 
+export interface IssueScore {
+  readonly agreeScore: number
+  readonly disagreeScore: number
+  readonly alignedScore?: number
+}
+
 export interface CompanyState {
   readonly full_name: string | null
   readonly short_name: string | null
@@ -114,6 +120,18 @@ export interface CompanyState {
   readonly numberEmployees: number | null
   readonly url: number | null
   readonly logo: string | null
+  readonly "2nd Amendment": IssueScore
+  readonly "Civil/Women's Rights": IssueScore
+  readonly "Corporate Philanthropy": IssueScore
+  readonly "Drug Legalization": IssueScore
+  readonly "Economy and Jobs": IssueScore
+  readonly "Environment": IssueScore
+  readonly "Executive Compensation": IssueScore
+  readonly "Health Care": IssueScore
+  readonly "Immigration": IssueScore
+  readonly "Money and Politics": IssueScore
+  readonly "Presidential Support": IssueScore
+  readonly "Taxes": IssueScore
 }
 
 export interface CompanyListState {
