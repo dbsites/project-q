@@ -11,7 +11,7 @@ import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
 
-import Loading from './components/loading/Loading'
+import Loading from './components/Loading/Loading'
 
 // Import Types
 import { SurveyState, LoadingState } from './reducers/types';
@@ -43,6 +43,10 @@ class App extends React.Component<Props> {
   render() {
     // Destructure auth status from props
     const { isAuth, fetchAuth, loading } = this.props;
+    
+    // Check for non-desktop device
+    if (window.innerWidth <= 1024) console.log('Mobile Device Detected!');
+
     if (loading.authLoading === true) {
       return <Loading />
     }

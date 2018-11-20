@@ -11,6 +11,7 @@ import { LoginState, SurveyState, UserIssuesSelected } from '../reducers/types';
 // Stubs for Updating Forms (and Auth)
 export const stubUserId: string = v4();
 export const stubFormName: string = 'login';
+export const stubErrorMessage: string = 'Something has gone wrong - please try again';
 
 export const stubFormFieldObject: IFormFieldObject = {
   form: stubFormName,

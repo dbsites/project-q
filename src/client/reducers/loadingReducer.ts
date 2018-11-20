@@ -10,6 +10,7 @@ import { LoadingState } from './types';
 // Define initial state
 export const initialLoadingState: LoadingState = {
   authLoading: false,
+  formLoading: false,
   issuesLoading: false,
   logoutLoading: false,
   surveyLoading: false,
@@ -28,6 +29,19 @@ const loadingReducer = (state: LoadingState = initialLoadingState, action: any):
       return {
         ...state,
         authLoading: false,
+      };
+
+    case actions.FETCH_FORM_REQUEST:
+      return {
+        ...state,
+        formLoading: true,
+      };
+      
+    case actions.FETCH_FORM_SUCCESS:
+    case actions.FETCH_FORM_FAILURE:
+      return {
+        ...state,
+        formLoading: false,
       };
 
     case actions.FETCH_ISSUES_REQUEST:

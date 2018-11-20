@@ -1,0 +1,24 @@
+services:
+- docker
+script:
+- docker-compose -f docker-comp-test.yml up --abort-on-container-exit
+before_deploy:
+- pip install --user awscli
+- pip install --user awsebcli
+- export PATH=$PATH:$HOME/.local/bin
+deploy:
+- provider: script
+  script: sh $TRAVIS_BUILD_DIR/scripts/deploy.sh
+  on:
+    branch: master
+  skip_cleanup: true
+- provider: script
+  script: sh $TRAVIS_BUILD_DIR/scripts/staging.sh
+  on:
+    branch: staging
+  skip_cleanup: true
+env:
+  global:
+  - secure: BkbicnBCrJMXeXOsxgEfHilVkdWHmXhSybF+u7lfLj90YyQ2Ouv2uIKKbQaJzj4Y/rACEgcmqQ59fCeF9/97YoMEihUkm6HeUH/7Mi9kh+CdoE/h/aK0wJd8/jCcCDvYQUp+NDtWXYVsUBNTwQxdQxeo9pcs7wIMceXfbWVqbrIOIdKaylMFiKzRXmqBe8i+QMv2IREUU6rSVErtY4kFBRBL7NTvzkRADBeInE1LhORadSP731AeLJODW6VdrEzLn8s/ONrJyLQFvqjw6JBjMepHCqG0VM1Rp/88NGQvNORwWeLKdRTS1tQ96WySoVIEHhzoaj1TI0LbQCejlZcVPA2pvCFU/NO0S8RX/mxnldXDL/Jr8pAJZ3n9rGIAb/4/P8j0rTDkn4oPII6sxmpBJjqlrTcarFJS4kfskyNetatGhoKGojl6y+jlR6Y9LCrl0821zUh2NE1k6REcbGx1JX02lQh+Zztzy0WdyuDfVExyNR6xjmOL0HZDFBKmiWXU2uLX1oVS2CmA+yhTW+91FwQfnQ3xcbzdb9pq10dWiw4//V0ZvzhhORZj/4GAg0BRKda27TlwScG1jf1k3TGGpPiycGEtA7VIS4vBxl7SASeynzdLQfQFxFS83Muy5AY69hE12vscuoiBmoF94b+uB0K9xLOCf8NvfCQP8r/Gk4M=
+  - secure: SpXhV5Nk1hNjEKRHUEz2AAaW2fR7rODPfM5aGhIGCxSMhazcDU9qCEK2qSK9Q/7CsBmORrRkeuMId04YxkknAjLk/bptyY7EcayeDPWINnePUarB2rJPF7SXou0Om2rJUed1VtWNPKVXg+uZ8A5qOAkLxznn4dQ5UZ4Yvf4eAG54H1PlX7dhXxM8pNkS+Fo0NaQyMrNL1iJLfYhAJ02Z30UkWsESOHqCXMC5r6nY8Pti1vMUmBjD38b65wMipVTXbxL3bu7yuRWaR39MA014msomqLL5g8b4azkAQ5AdGq0CeQfpmmHiI9BXNMyU8lqH8GIxTZBm2uPhdi6B0YOloS+2oIQ1pNsu5HlW7/VV1SAkrv5fiPjyi6JniX04hDQXCwLFT7BAe/I0KqcSCEvQB8Kmwa4zhQcJdI9kE4QT7fkzmfiehjUjEkPhOAiFBQASLVvj4NfpFZnzVez8pg4G+57eU3TggPeKF+RVtQLmbgGqIn8Tn/wBU191sRUe+NiKd/ErP3A8XdQsMEXuFtrFaR/Jey2IsakJDlV1blEEeRmXZN7hL66EAQkpAtf/BMhM+eU4hj+HYNohrO6+uAZmaoCVxWQ4DjoXNQzv0gK/m2TLx2KuExauZ+IHdafZkJUzXISl9vYJaRMHDkN2Kcn8MocmF6rEZDkt+zkQuKYgkqQ=
+  
