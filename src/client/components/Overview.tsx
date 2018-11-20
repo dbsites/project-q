@@ -5,18 +5,21 @@
 
 import * as React from 'react';
 
+// Import Component
 import OverviewPie from './OverviewPie';
+
+// import { CompanyDataState } from '../reducers/types';
 
 const Overview = (props: any) => {
 
   let display;
 
+  // Once dashboard loads before selection
   if (!props.selected) {
 
     display = (<p>Select a company to see their overview</p>);
 
   } else {
-
     const {
       description,
       overallScore,
@@ -26,14 +29,18 @@ const Overview = (props: any) => {
       logo,
     } = props.selected;
 
+    // Get number of user-selected issues (length)
     const userIssuesLength = Object.keys(props.selected)
       .filter(key => props.selected[key].alignedScore)
       .length;
 
+    // Get overall company score based off user issues
     const overall = Math.round(overallScore / userIssuesLength);
 
+    // Limit company description to first 450 characters;
     const descrip = description.slice(0, 450);
 
+    // Declare 'match' outcome based off overall score
     const scoreAlign = overall >= 70 ? 'Strong Match' : overall >= 40 ? 'Match' : 'Weak Match';
 
     display = (

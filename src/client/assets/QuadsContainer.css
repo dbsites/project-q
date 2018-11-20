@@ -1,5 +1,9 @@
+/* * * * * * * * * * * * * * * *
+ *           WINDOW            *  
+ * * * * * * * * * * * * * * * */
+
 ::-webkit-scrollbar {
-  background: #A5A8A6;
+  background: #282828;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -27,6 +31,11 @@
   height: 99%;
   margin: auto;
   overflow: hidden;
+}
+
+.overview-container p {
+  color: #FFFFFF;
+  margin: auto;
 }
 
 #overview-left {
@@ -64,26 +73,24 @@
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 5%;
 }
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.65em;
+  font-size: 0.7em;
   color: #A5A8A6;
 } 
 
 #overview-logo {
   position: relative;
-  margin: 0;
-  width: 80%;
   text-align: center;
+  width: 80%;
 }
 
 #overview-logo img {
   height: auto;
-  margin: 0;
-  max-width: 250px;
+  margin-top: 10%;
+  max-width: 275px;
   max-height: 50px;
   min-height: 50px;
 }
@@ -95,20 +102,17 @@
 
 #company-info {
   text-align: left;
-  margin-left: 5%;
   margin-top: 2.5%;
+  margin-bottom: 2.5%;
   width: 100%;
 }
 
-#company-info-more p {
-  margin: 0 5%;
-}
-
 #company-url-pre {
-  margin-left: 5%;
+  margin-top: 2.5%;
 }
 
-#company-url-pre a:link {
+#company-url-pre a,
+#company-url-pre a:visited {
   color: #FFFFFF;
 }
 
@@ -117,7 +121,7 @@
  * * * * * * * * * * * * * * * */
 
  .stock-container {
-  display: block;
+  display: flex;
   margin: auto;
   width: 100%;
   height: 99%
@@ -126,16 +130,16 @@
 .stock-container p {
   margin: auto;
   text-align: center;
+  color: #A5A8A6;
 }
 
 .stock-container iframe {
   width: 100%;
-  height: 85%;
+  height: 95%;
   background-color: black;
 }
 
 .stock-container-info {
-  border: 2px solid gold;
   margin: 0;
   max-height: 14%;
 }
@@ -146,10 +150,126 @@
 }
 
 .stock-container-info li {
-  color: white;
-  display: inline;
+  color:#A5A8A6;
+  display: inline-block;
+  font-size: 0.65em;
+  margin: 15%;
+}
+
+.stock-container-info span {
+  display: block;
+}
+
+.stock-container-info {
+  width: 10%;
+}
+
+.stock-info-list {
+  padding: 0;
+}
+
+.stock-info-list span {
+  /* animation: blinker 1s linear infinite; */
+  /* border: 1px solid gold; */
+}
+
+/* * * * * * * * * * * * * * * *
+ *           ISSUES            *  
+ * * * * * * * * * * * * * * * */
+ 
+#quad-issues {
+  width: 100%;
+  height: 99%;
+}
+
+#issues-header {
+  margin: 0;
+  color: #A5A8A6;
+}
+
+.issues-container {
+  display: inline-block;
+  width: 75%;
+  height: 99%;
+}
+
+.issues-container p {
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.issue-box {
+  height: 48%;
+  width: 32.5%;
+  display: inline-block;
+  vertical-align: top; 
+}
+
+.issue-pie {
+  margin: 5% 5%;
+  width: 100%;
+  height: 80%;
+}
+
+.issue-pie tspan {
+  font-size: 1.25em;
+  position: relative;
+  height: 100%
+}
+
+.issue-pie path {
+  stroke-width: 2.5;
+}
+
+.issue-box p {
+  display: block;
+  font-size: 0.8em;
+  margin: 5% auto;
+  color: #ffffff,
+}
+
+.issues-politicians {
+  display: inline-block;
+  vertical-align: top;
+  width: 25%;
+  height: 99%;
+}
+
+.polit-recip {
   font-size: 0.8em;
   margin: 0;
+  text-align: center;
+  text-decoration: underline;
+  color: #A5A8A6;
+}
+
+.polit-info {
+  color: #A5A8A6;
+  font-size: 0.6em;
+  text-align: center;
+  margin: 0;
+}
+
+.politician {
+  margin: 5% auto 0;
+  width: 80%;
+  height: 25%;
+}
+
+.politician p {
+  font-size: 0.6em;
+  color: #FFFFFF;
+  margin: 0 auto;
+  position: relative;
+}
+
+.politician img {
+  /* border: 2px dashed gold; */
+  display: block;
+  position: relative;
+  width: auto;
+  height: 80%;
+  margin: 2% auto;
 }
 
 /* * * * * * * * * * * * * * * *
@@ -161,6 +281,7 @@
   width: 100%;
 }
 
+/* loading video */
 #quad-company-list img {
   display: block;
   position: relative;
@@ -185,44 +306,20 @@
   display: inline-block;
   height: 100%;
   overflow: auto;
-}
-
-/* #cl-header-overall {
-  padding-right: 10%;
-} */
-
-#cl-header-name {
-  padding-left: 5%;
+  margin-right: 2.5%;
 }
 
 .cl-header {
-  position: relative;
   background-color: black; 
   color: #FFFFFF;
   font-size: 0.8em;
-  margin-left: 5%;
-  margin-right: 5%;
-  padding-left: 10%;
-  padding-right: 10%;
   text-align: center;
 }
-/**********************/
-
-
 
 #cl-category-name {
   min-width: 30%;
   max-width: 50%;
   overflow: hidden;
-}
-
-/* #cl-category-overall {
-  margin: 0 15px;
-} */
-
-.cl-list {
-  padding-top: 2%;
-  padding-left: 5%;
 }
 
 .cl-list a, .cl-list p {
@@ -238,18 +335,16 @@
   font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
-  /* padding-left: 5px; */
   text-decoration: none;
   white-space: nowrap;
   margin: 0;
 }
 
-.company-list{
+.company-list {
   display: block;
   font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
-  /* padding-left: 5px; */
   white-space: nowrap;
   margin: 0;
   text-align: center;
@@ -258,93 +353,3 @@
 #cl-category-overall p {
   font-weight: bolder;
 }
-
-.company-list {
-  margin: 0;
-  padding: 0;
-}
-
-#img-stock-graph {
-  position: relative;
-  text-align: center;
-  height: 250px;
-  width: 100%;
-}
-
-#list-overview {
-  list-style-type: none; 
-  padding-left: 20px;
-}
-
-#list-overview h2, #list-overview em, #list-overview p{
-  color: #FFFFFF;
-}
-
-#overview-company-logo {
-  max-width: 400px;
-  max-height: 200px;
-}
-
-
-
-.issues-container {
-  display: inline-block;
-  position: relative;
-  margin: auto;
-  width: 72%;
-  height: 99%;
-  overflow: hidden;
-}
-
-.issues-container p {
-  color: #FFFFFF;
-  font-size: 0.8em;
-  margin: auto;
-  text-align: center;
-}
-
-.issues-politicians {
-  /* border: 2px solid gold; */
-  display: inline-block;
-  vertical-align: top;
-  width: 27.5%;
-  height: 99%;
-}
-
-.polit-recip {
-  font-size: 0.8em;
-  margin: 0 0 2%;
-  text-align: center;
-  color: #A5A8A6;
-}
-
-.polit-info {
-  color: #A5A8A6;
-  font-size: 0.6em;
-  text-align: center;
-  margin: 0 0 2%;
-}
-
-.politician {
-  /* border: 2px dashed gold; */
-  margin: 0 auto;
-  width: 80%;
-  height: 25%;
-}
-
-.politician p {
-  font-size: 0.6em;
-  color: #FFFFFF;
-  margin: 0 auto;
-  position: relative;
-}
-
-.politician img {
-  /* border: 2px dashed gold; */
-  display: block;
-  position: relative;
-  width: auto;
-  height: 80%;
-  margin: 2% auto;
-}
-

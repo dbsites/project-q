@@ -168,7 +168,7 @@ export const fetchLogoutSuccess = (): Action<string> => ({
   type: types.FETCH_LOGOUT_SUCCESS,
 })
 
-export const fetchLogoutFailure = ():  Action<string>  => ({
+export const fetchLogoutFailure = (): Action<string> => ({
   type: types.FETCH_LOGOUT_FAILURE,
 })
 
@@ -198,7 +198,7 @@ export const fetchSubmitIssuesSuccess = (response: SurveyState): ISubmitIssuesSu
   response,
 })
 
-export const fetchSubmitIssuesFailure = ():  Action<string>  => ({
+export const fetchSubmitIssuesFailure = (): Action<string> => ({
   type: types.FETCH_SUBMIT_ISSUES_FAILURE,
 })
 
@@ -261,6 +261,7 @@ export const fetchCompanyList = () => (dispatch: any) => {
   fetch('/api/companyList')
     .then((response: any) => response.json())
     .then((data: any) => {
+      console.log('data returned from fetchCompanyList: ', data);
       dispatch({
         type: types.FETCH_COMPANY_LIST,
         data
@@ -275,8 +276,42 @@ export const fetchCompanyList = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
-export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
-  fetch(`${HOST}/api/companyModule`, {
+export const getStockData = (ticker: string) => (dispatch: any) => {
+  console.log('hello again, ticker = ', ticker);
+  fetch('/api/stockData', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ticker }),
+  })
+    .then(response => response.json())
+    .then((data: any) => {
+      dispatch({
+        type: types.GET_STOCK_INFO,
+        payload: data,
+      })
+    })
+    .catch((err: any) => console.error(err));
+}
+
+export const getAllCompanyInfo = () => (dispatch: any) => {
+  fetch('/api/moduleData')
+    .then(response => response.json())
+    .then((response: any) => {
+      dispatch({
+        type: types.GET_ALL_COMPANY_INFO,
+        payload: {
+          modalData: response.moduleData,
+          politicianData: response.politicianData,
+        }
+      })
+    })
+    .catch((err: any) => console.error(err));
+}
+
+export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
+  fetch('/api/companyModule', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -285,17 +320,16 @@ export const getCompanyInfo = (ticker: any) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('response back from db: ', response);
       dispatch({
-        type: types.ADD_COMPANY_INFO,
+        type: types.GET_SELECTED_COMPANY_INFO,
         payload: {
-          modalData: response.moduleData,
-          politicianData: response.politicianData,
-          stockData: response.stockData,
+          moduleData: response.moduleData,
+          politData: response.politicianData
         }
       })
     })
     .catch((err: any) => console.error(err));
+
 }
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
