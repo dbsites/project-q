@@ -5,6 +5,7 @@
 
 import * as React from 'react';
 
+// Import Components
 import Overview from '../components/Overview';
 import StockGraph from '../components/StockGraph';
 import IssuesCharts from '../components/IssuesCharts';
@@ -18,7 +19,7 @@ const QuadsDisplay = (props: any) => {
       />
       <StockGraph
         selected={props.selected}
-        selectedData={props.selectedData}
+        stockData={props.stockData}
       />
       <IssuesCharts
         selectedCompany={props.selected}
@@ -27,7 +28,8 @@ const QuadsDisplay = (props: any) => {
       />
       <CompanyList
         companyList={props.list}
-        getCompanyInfo={props.info}
+        getSelectedCompanyInfo={props.info}
+        getStockData={props.stock}
         sortListBy={props.sort}
         selectCompany={props.select}
         userIssues={props.issues}

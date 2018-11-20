@@ -4,32 +4,41 @@
  */
 
 import * as React from 'react';
+
+// Import IssueID -> IssueName table for conversion
 import * as issueMatch from '../issueMatcher';
+
+// Import navigational links for company names
 import { Link } from 'react-router-dom'
 
+// Import loading GIF 
 const loadingMovie = require('../assets/loading-movie.gif');
 
 const CompanyList = (props: any) => {
   const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
   const { issueMatcher } = issueMatch;
 
+  // Load movie while fetching company list 
   if (companyList.length === 0) {
     return (
       <div className="quad" id="quad-company-list">
         <img src={loadingMovie} id="loading-movie" />
       </div>
     )
+    // Clicking company name will fetch stockData etc.
   } else {
     const companyNames: any = companyList
       .map((company: any, index: any) =>
         <Link id={index} className="company-names-list" to="#" onClick={(e) => {
           props.selectCompany(e);
-          props.getCompanyInfo(e, company.ticker);
+          props.getStockData(company.ticker);
+          props.getSelectedCompanyInfo(company.ticker);
         }}>
           {company.short_name}
         </Link>
       );
 
+    // Company stock ticker names
     const companyTickers: any = companyList
       .map((company: any, index: any) =>
         <p id={index.toString()} className="company-list">
@@ -37,10 +46,12 @@ const CompanyList = (props: any) => {
         </p>
       );
 
+    // Company overall scores
     const companyOverallScores = () => {
       const companyOverallScoresArray = [];
       let score: number = 0;
 
+      // Create array of user issue objects with converted name
       const userIssuesArray = Object.keys(userIssues)
         .map((issueID: any) => {
           return {
@@ -49,6 +60,7 @@ const CompanyList = (props: any) => {
           }
         });
 
+      // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
           userIssuesArray.forEach((issue: any) => {
@@ -58,11 +70,13 @@ const CompanyList = (props: any) => {
               score += companyList[i][issue.name].agreeScore
           })
 
+          // Color match based off of score
           score = Math.round(score / userIssuesArray.length)
           let color = {
             color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
           }
 
+          // Add each score to company scores array
           companyOverallScoresArray.push(
             <p className="company-list" style={color}>
               {score}
@@ -74,12 +88,13 @@ const CompanyList = (props: any) => {
       return companyOverallScoresArray;
     }
 
-
+    // Company scores per user-selected issue
     const companyScoresPerIssue = () => {
       const companyScorePerIssueArray = [];
       let issueScoresArray = [];
       let score: number = 0;
 
+      // Create array of user issue objects with converted name
       const userIssuesArray = Object.keys(userIssues)
         .map((issueID: any) => {
           return {
@@ -88,6 +103,7 @@ const CompanyList = (props: any) => {
           }
         });
 
+      // Calculate issue score and color coordinate
       if (companyList.length > 0) {
         for (let a = 0; a < Object.keys(userIssues).length; a += 1) {
           for (let i = 0; i < companyList.length; i += 1) {
@@ -101,6 +117,7 @@ const CompanyList = (props: any) => {
               color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
             }
 
+            // Push company's issue score into array
             issueScoresArray.push(
               <p className="company-list" style={color}>
                 {score}
@@ -108,6 +125,8 @@ const CompanyList = (props: any) => {
             );
             score = 0;
           }
+
+          // Find name of specific issue...
           const name = userIssuesArray[a].name.split(' ').join('=');
 
           const abbrvSearchWord = name.slice(0, 2);
@@ -115,6 +134,9 @@ const CompanyList = (props: any) => {
           const issueWord: any = Object.keys(issueAbbrvs)
             .filter((issueName: any) => issueName.includes(abbrvSearchWord));
 
+          // Add name to element for sorting purposes
+          // Add onClick sorting functionality
+          // Spread all scores to issue list
           companyScorePerIssueArray.push(
             <div className="cl-category" id="cl-category-issue">
               <Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>{issueAbbrvs[issueWord[0]]}</Link>
