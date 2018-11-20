@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Enzyme from 'enzyme';
 import * as Adapter from 'enzyme-adapter-react-16';
-import * as renderer from 'react-test-renderer';
+import * as Renderer from 'react-test-renderer';
 
 import Loading from './Loading';
 
@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('Loading Component: ', () => {
   it('matches the snapshot', () => {
-    const tree = renderer.create(<Loading />).toJSON();
+    const tree = Renderer.create(<Loading />).toJSON();
     expect(tree).toMatchSnapshot();
   })
   it('renders a <div> with class .loading-container', () => {
@@ -33,9 +33,14 @@ describe('Loading Component: ', () => {
     expect(loadingContainer.find('.loading__ball')).toHaveLength(1);
     expect(loadingContainer.find('.loading__ball').type()).toEqual('div');
   })
-  it('the H1 has text "Loading"', () => {
+  it('the H1 has text "Loading" by default', () => {
     const loadingWrapper: Enzyme.ShallowWrapper = Enzyme.shallow(<Loading />);
     const loadingH1Text: string = loadingWrapper.find('h1').text();
     expect(loadingH1Text).toEqual('Loading');
+  })
+  it('the H1 has text takes whatever text is passed in the loadingMessage prop ', () => {
+    const loadingWrapper: Enzyme.ShallowWrapper = Enzyme.shallow(<Loading loadingMessage="Calculating" />);
+    const loadingH1Text: string = loadingWrapper.find('h1').text();
+    expect(loadingH1Text).toEqual('Calculating');
   })
 });

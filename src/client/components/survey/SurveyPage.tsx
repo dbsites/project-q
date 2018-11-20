@@ -4,8 +4,8 @@
  */
 
 import * as React from 'react';
-import Header from '../containers/HeaderContainer'
-import Loading from './loading/Loading';
+import Header from '../../containers/HeaderContainer'
+import Loading from '../loading/Loading';
 
 const SurveyPage = (props: any) => {
   const { complete, headerText, surveyArray, leftButton, rightButton, footerBar } = props;

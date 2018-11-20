@@ -12,7 +12,6 @@ interface LoadingProps {
 }
 
 const Loading = (props: LoadingProps): JSX.Element => {
-  console.log('Loading props: ', props);
   const loadingMessage = props.loadingMessage ? props.loadingMessage : 'Loading';
   return (
     <div className="loading-container">

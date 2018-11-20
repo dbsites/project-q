@@ -6,7 +6,7 @@
 import * as React from 'react';
 
 import IssuesContainer from './IssuesContainer';
-import SurveyContainer from './SurveyContainer';
+import SurveyContainer from '../components/survey/SurveyContainer';
 import QuadsContainer from './QuadsContainer';
 import Loading from '../components/loading/Loading';
 
