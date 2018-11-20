@@ -69,7 +69,6 @@ app.post('/api/register',
   UserMethods.createAccount,
   Sessions.create,
   (_: Request, res: Response) => {
-    console.log(res.locals.user);
     res.status(200).send(res.locals.user);
   }
 );
@@ -89,6 +88,22 @@ app.post('/api/login',
 // route for logout which deletes sessions
 app.post('/api/logout', 
   Sessions.end,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.user);
+  }
+);
+
+app.post('/api/forgot',
+  UserMethods.findByEmail,
+  Sessions.forgot,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
+  }
+);
+
+app.post('/api/reset',
+  Sessions.reset,
+  UserMethods.resetPassword,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.user);
   }
@@ -130,7 +145,12 @@ app.post('/api/userSurvey',
   DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.companyData);
+    if (res.locals.status === 500) {
+      res.status(500).send('SERVER FAILURE');
+    }
+    else {
+      res.status(200).send(res.locals.companyData);
+    }
   }
 );
 
@@ -143,28 +163,29 @@ app.get('/api/companyList',
   }
 );
 
-// app.post('/api/stockData',
-// CompanyDatabase.getStockData,
-// (_: Request, res: Response) => {
-//   res.status(200).send(res.locals.stockData);
-// }
-// );
-
-app.post('/api/companyModule',
+app.get('/api/moduleData',
   CompanyDatabase.getCompanyModule,
   DatabaseMethods.getPoliticianData,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals.modules);
+  }
+);
+
+app.post('/api/companyModule',
+  CompanyDatabase.getCompanyModuleData,
+  DatabaseMethods.getSinglePoliticianData,
   CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }
 );
-app.post('/api/updateCompanyData',
-    CompanyDatabase.updateData,
-    (_: Request, res: Response) => {
-    res.sendStatus(200);
-    }
-  );
 
+app.post('/api/stockData',
+  CompanyDatabase.getStockData,
+  (_: Request, res: Response) => {
+    res.status(200).send(res.locals);
+  }
+);
 
 module.exports = app;
 

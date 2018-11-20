@@ -22,87 +22,122 @@ const UserMethods: any =  {};
 
 // account creation and password hashing
 UserMethods.createAccount = (req: Request, res: Response, next: NextFunction) => {
-  // hash the user password using bcrypt
-  return bcrypt.hash(req.body.confirmPassword, 10, (error: any, encrypted: any) => {
-    // if the hashing fails, respond with a server failure
-    if (error) {
-      console.log('ERROR IN authenticate.ts for Encryption', error);
-      res.status(500).send('SERVER ERROR');
-    }
-    else {
-      // db.users accesses methods defined in users repo
-      db.users.add(req.body, encrypted)
-      .then((userObject: any) => {
-        
-        // translate data into user response object
-        res.locals.user = {};
-        res.locals.user.userId = userObject.id;
-        res.locals.user.surveyComplete = false;
-        res.locals.user.issuesComplete = false;
-        res.locals.user.firstName = req.body.firstName;
-        res.locals.user.lastName = req.body.lastName;
-
-        // call next middleware, Sessions.start
-        // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
-        next();
-      })
-      .catch((error: any) => {
-        if (error.code === '23505') {
-          console.log('***ACCOUNT ALREADY EXISTS***', error.error);
-          res.status(401).send('REGISTRATION FAILURE');
-        }
-        else {
-          console.log('ERROR AT createAccount IN userMethods.ts', error.error);
-          res.status(500).send('SERVER FAILURE');
-        }
-      });
-    }
-  })
+  // if req.body is empty, send back a failure
+  if(!req.body.confirmPassword) {
+    res.status(401).send('REGISTRATION FAILURE, EMPTY BODY');
+    return 0;
+  }
+  else {
+    // hash the user password using bcrypt
+    return bcrypt.hash(req.body.confirmPassword, 10, (error: any, encrypted: any) => {
+      // if the hashing fails, respond with a server failure
+      if (error) {
+        console.log('ERROR IN authenticate.ts for Encryption', error);
+        res.status(500).send('SERVER ERROR');
+      }
+      else {
+        // db.users accesses methods defined in users repo
+        db.users.add(req.body, encrypted)
+        .then((userObject: any) => {
+          
+          // translate data into user response object
+          res.locals.user = {};
+          res.locals.user.userId = userObject.id;
+          res.locals.user.surveyComplete = false;
+          res.locals.user.issuesComplete = false;
+          res.locals.user.firstName = req.body.firstName;
+          res.locals.user.lastName = req.body.lastName;
+  
+          // call next middleware, Sessions.start
+          // res.locals.user = {userId: string, rememberMe: bool, surveyComplete: bool, issuesComplete: bool, firstName: string, lastName: string }
+          next();
+        })
+        .catch((error: any) => {
+          if (error.code === '23505') {
+            console.log('***ACCOUNT ALREADY EXISTS***', error.error);
+            res.status(401).send('REGISTRATION FAILURE');
+          }
+          else {
+            console.log('ERROR AT createAccount IN userMethods.ts', error.error);
+            res.status(500).send('SERVER FAILURE');
+          }
+        });
+      }
+    })
+  }
 }
 
 // login route, user plaint text pw is compared against the hash, if correct the middleware moves along,
 //  if the password is incorrect middleware chain breaks and the front recieves and incorrect password response
 UserMethods.login = async (req: Request, res: Response, next: NextFunction) => {
-  // update the users remember me option
-  if (req.body.rememberMe !== undefined) {
-    await db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
-    .catch((error: any) => {
-      console.log('ERROR AT rememberUser IN authenticate.ts', error);
-    })
+  if (!req.body.loginEmail) {
+    res.status(401).send('LOGIN FAILURE, NO CREDENTIALS');
   }
-  // db.users accesses methods defined in the users controller
-  db.users.findByEmail(req.body.loginEmail)
-  .then((data: userDataFromDb) => {
-    // if user does not exist
-    if (!data) {
-      res.status(401).send('INVALID CREDENTIALS');
-    }
-    else {
-      // user bcrypt to compate the plaintext password to the encrypted hash
-      bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
-        if (match) {
-          // builds the desired front end user object
-          res.locals.user = {};
-          res.locals.user.userId = data.id;
-          // call next to advance to Session.create
-          // res.locals.user = {userId: string, remember: boolean }
-          next();
-        }
-        else if (!match) {
-          res.status(401).send('Incorrect Credentials');
-        }
-        else {
-          console.log('ERROR AT COMPARE IN userMethods.ts', error);
-          res.sendStatus(500);
-        }
+  else {
+    // update the users remember me option
+    if (req.body.rememberMe !== undefined) {
+      await db.users.rememberUser(req.body.loginEmail, req.body.rememberMe)
+      .catch((error: any) => {
+        console.log('ERROR AT rememberUser IN authenticate.ts', error);
       })
     }
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT USER FIND BY EMAIL IN userMethods.ts', error);
-    res.sendStatus(500);
-  });
+    // db.users accesses methods defined in the users controller
+    db.users.findByEmail(req.body.loginEmail)
+    .then((data: userDataFromDb) => {
+      // if user does not exist
+      if (!data) {
+        res.status(401).send('INVALID CREDENTIALS');
+      }
+      else {
+        // user bcrypt to compate the plaintext password to the encrypted hash
+        bcrypt.compare(req.body.loginPassword, data.password, (error: Error, match: boolean) => {
+          if (match) {
+            // builds the desired front end user object
+            res.locals.user = {};
+            res.locals.user.userId = data.id;
+            // call next to advance to Session.create
+            // res.locals.user = {userId: string, remember: boolean }
+            next();
+          }
+          else if (!match) {
+            res.status(401).send('Incorrect Credentials');
+          }
+          else {
+            console.log('ERROR AT COMPARE IN userMethods.ts', error);
+            res.sendStatus(500);
+          }
+        })
+      }
+    })
+    .catch((error: any) => {
+      console.log('ERROR AT USER FIND BY EMAIL IN userMethods.ts', error);
+      res.sendStatus(500);
+    });
+  }
 }
+
+UserMethods.resetPassword = (req: Request, res: Response, next: NextFunction) => {
+  // resetpassword
+    bcrypt.hash(req.body.newPassword, 10, (error: any, encrypted: any) => {
+      // if the hashing fails, respond with a server failure
+      if (error) {
+        console.log('ERROR IN authenticate.ts for Encryption', error);
+        res.status(500).send('SERVER ERROR');
+      }
+      else {
+        // db.users accesses methods defined in users repo
+        db.users.resetPassword(encrypted, res.locals.userId)
+        .then(() => {
+          next();
+        })
+        .catch((error: any) => {
+            console.log('ERROR AT resetPassowrd IN userMethods.ts', error);
+            res.status(500).send('SERVER FAILURE');
+        });
+      }
+    });
+}
+
 
 // method for getting a users account information
 UserMethods.getAccountInfo = (req: Request, res: Response, next: NextFunction) => {
@@ -132,26 +167,38 @@ UserMethods.getAccountInfo = (req: Request, res: Response, next: NextFunction) =
 
 // method for storing user issues in the db
 UserMethods.addIssues = (req: Request, res: Response, next: NextFunction) => {
-  // instantiate the user response object
-  res.locals.user = {};
-  res.locals.user.userId = req.body.userId;
-
-  // array of issueIds
-  const arrayOfIssueIds = Object.keys(req.body.issues);
-  res.locals.arrayOfIssueIds = arrayOfIssueIds;
-
-  // query the db to insert issues for a user sent in from the front end
-  db.users.addIssues(req.body.userId, req.body.issues, arrayOfIssueIds)
-  .then(() => {
-    // now move on to create issues object for front end response object in UserMethods.getIssues
-    // add this to locals for control flow through the questions middleware
-    res.locals.user.issuesComplete = true;
-    // res.locals.user.issues = { userId: string, issuesComplete: bool }
-    next();
-  })
-  .catch((error: any) => {
-    console.log('ERROR AT addIssues IN userMethods.ts', error);
-  });
+  if (!req.body.userId) {
+    res.status(500).send('SERVER FAILURE');
+    console.log('user id not sent with request');
+  }
+  else {
+    // instantiate the user response object
+    res.locals.user = {};
+    res.locals.user.userId = req.body.userId;
+  
+    // array of issueIds
+    const arrayOfIssueIds = Object.keys(req.body.issues);
+    res.locals.arrayOfIssueIds = arrayOfIssueIds;
+  
+    // query the db to insert issues for a user sent in from the front end
+    db.users.addIssues(req.body.userId, req.body.issues, arrayOfIssueIds)
+    .then(() => {
+      // now move on to create issues object for front end response object in UserMethods.getIssues
+      // add this to locals for control flow through the questions middleware
+      res.locals.user.issuesComplete = true;
+      // res.locals.user.issues = { userId: string, issuesComplete: bool }
+      next();
+    })
+    .catch((error: any) => {
+      if (error.code === '23503') {
+        res.status(500).send('SERVER FAILURE');
+        console.log('USER ID NOT FOUND');
+      }
+      else {
+        console.log('ERROR AT addIssues IN userMethods.ts', error);
+      }
+    });
+  }
 }
 
 // method for getting a users issues out of the db
@@ -251,19 +298,28 @@ UserMethods.getQuestions = (_: Request, res: Response, next: NextFunction) => {
 }
 
 // method for storing the user response to the survey
-UserMethods.updateIssuePositons = async (req: Request, _: Response, next: NextFunction) => {
-  
-  // build an array of issue Ids
-  const issueIds = Object.keys(req.body.issues);
-  
-  // for each id update the user_issues table
-  for (let i = 0; i < issueIds.length; i += 1) {
-    await db.users.updateIssuePosition(req.body.userId, issueIds[i],req.body.issues[issueIds[i]])
+UserMethods.updateIssuePositons = async (req: Request, res: Response, next: NextFunction) => {
+
+  if (!req.body.userId) {
+    res.status(500).send('SERVER FAILURE');
+    console.log('no user id sent in user?survey object');
   }
-  
-  // call next middleware to update user answers table
-  // no res.locals
-  next();
+  else {
+    // build an array of issue Ids
+    const issueIds = Object.keys(req.body.issues);
+    
+    // for each id update the user_issues table
+    for (let i = 0; i < issueIds.length; i += 1) {
+      await db.users.updateIssuePosition(req.body.userId, issueIds[i],req.body.issues[issueIds[i]])
+      .catch((error: any) => {
+        console.log('ERROR AT updateIssuesPositons IN userMethods.ts', error);
+      });
+    }
+    // call next middleware to update user answers table
+    // no res.locals
+    next();
+  }
+
 }
 
 UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunction) => {
@@ -280,6 +336,8 @@ UserMethods.updateIssuesComplete = (req: Request, res: Response, next: NextFunct
 }
 
 UserMethods.updateSurveyComplete = (req: Request, res: Response, next: NextFunction) => {
+  // if the request has failed in a previous middleware
+  if(res.locals.status == 500) next()
   db.users.updateSurveyComplete(req.body.userId, res.locals.user.surveyComplete)
   .then(() => {
     // move on to get company data for the dashboard
@@ -301,7 +359,17 @@ UserMethods.updateUserSurvey = async (req: Request, res: Response, next: NextFun
   
   // iterate through the questions ids to update the user answers
   for (let i = 0; i < questionIds.length; i += 1) {
-    await db.users.updateUserSurvey(req.body.userId, questionIds[i], req.body.questions[questionIds[i]]);
+    await db.users.updateUserSurvey(req.body.userId, questionIds[i], req.body.questions[questionIds[i]])
+    .catch((error: any) => {
+      if (error.code = "23503") {
+        res.locals.status = 500;
+        console.log('INVALID USER ID');
+        next();
+      }
+      else {
+        console.log('ERROR AT updateUserSurvey IN userMethods.ts', error);
+      }
+    });
   }
 
   // update locals to reflect survey complete to pass into the next middleware
@@ -312,9 +380,31 @@ UserMethods.updateUserSurvey = async (req: Request, res: Response, next: NextFun
   // res.locals.user = { surveyComplete: true }
   next();
 }
-    
 
+UserMethods.deleteUser = (email: string) => {
+  return db.users.remove(email);
+}
 
- 
+UserMethods.getId = (email: string) => {
+  return db.users.getId(email);
+}
+
+UserMethods.findByEmail = (req: Request, res: Response, next: NextFunction) => {
+  db.users.getId(req.body.forgotPassEmail)
+  .then((userId: string) => {
+    if (userId) {
+      res.locals.userId = userId;
+      next();
+    }
+    else {
+      res.status(401).send('INVALID REQUEST');
+      console.log('USER NOT FOUND');
+    }
+  })
+  .catch((error: any) => {
+    console.log('ERROR AT findbyEmail in userMethods', error);
+    res.status(500).send('SERVER FAILURE');
+  })
+}
 
 export default UserMethods;

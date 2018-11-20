@@ -4,29 +4,29 @@
  */
 
 import * as React from 'react';
+
+// Import IssueID -> IssueName table for conversion
 import * as issueMatch from '../issueMatcher';
 
+// Import Components
 import IssuePie from './IssuePie';
+import Recipients from './Recipients';
 
-const placeholderIMG1 = require('../assets/placehold_man.png');
-
-const placeholderIMG2 = require('../assets/placehold_woman.png');
-/** 
- * Interface for IssueCharts Props
-*/
-
+// TODO: move this props in types.ts and export in
 interface Props {
-  modalData?: any
-  politicianData?: any
+  moduleData?: any
+  politData?: any
   selectedCompany: any
   selectedData: any
   userIssues: any
 }
 
 const IssuesCharts = (props: Props) => {
-  const { modalData, politicianData } = props.selectedData;
+  const { moduleData, politData } = props.selectedData;
   const { selectedCompany, userIssues } = props;
   const { issueMatcher } = issueMatch;
+
+  // console.log('issuescharts props: ', props.selectedData);
 
   let msg, display: JSX.Element[];
 
@@ -34,7 +34,6 @@ const IssuesCharts = (props: Props) => {
     .map((issueID: any) => {
       return {
         name: issueMatcher[issueID],
-        leaning: userIssues[issueID]
       }
     });
 
@@ -43,10 +42,14 @@ const IssuesCharts = (props: Props) => {
 
     display = userIssuesArray
       .map((issueObj: any) => {
-        const { name, leaning } = issueObj;
+        const { name } = issueObj;
         const { alignedScore } = selectedCompany[name];
-        const issueInfo = { name, leaning, alignedScore };
-        return <IssuePie info={issueInfo} modal={modalData} politician={politicianData} />
+        const issueInfo = { name, alignedScore };
+        return <IssuePie
+          info={issueInfo}
+          modal={moduleData}
+          polit={politData}
+        />
       });
   }
   else {
@@ -66,21 +69,7 @@ const IssuesCharts = (props: Props) => {
         <p id="issues-header">{msg}</p>
         {display}
       </div>
-      <div className="issues-politicians">
-        <p className="polit-recip">Top Recipients</p>
-        <div className="politician">
-          <img src={placeholderIMG1} />
-        </div>
-        <p className="polit-info">POLITICIAN NAME</p>
-        <div className="politician">
-          <img src={placeholderIMG2} />
-        </div>
-        <p className="polit-info">POLITICIAN NAME</p>
-        <div className="politician">
-          <img src={placeholderIMG1} />
-        </div>
-        <p className="polit-info">POLITICIAN NAME</p>
-      </div>
+      <Recipients data={politData} />
     </div>
   );
 }

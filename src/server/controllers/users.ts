@@ -11,7 +11,6 @@
 
 // import pg-promise types and sql statements 
  import { IDatabase } from 'pg-promise';
- import { IResult } from 'pg-promise/typescript/pg-subset';
  import { userData } from './index';
  // import unique user id creation library
  import { v4 } from 'uuid';
@@ -34,7 +33,7 @@
 
     //delete a user from the database and returns the number of records deleted
     remove (email: string) {
-      return this.db.result('DELETE FROM users WHERE email = $1', email, (r: IResult) => r.rowCount);
+      return this.db.none('DELETE FROM users WHERE email = $1', email);
     }
 
     // find user by id
@@ -47,9 +46,19 @@
       return this.db.oneOrNone('SELECT id, password, remember FROM users WHERE email = $1', email);
     }
 
+    // find user by email
+    getId (email: string) {
+      return this.db.oneOrNone('SELECT id FROM users WHERE email = $1', email);
+    }
+
     // update user to remembered or not
     rememberUser (email: string, remember: boolean) {
       return this.db.none('UPDATE users SET remember = $1 WHERE email = $2', [remember, email]);
+    }
+    
+    // reset password
+    resetPassword(newPassword: string, userId: string) {
+      return this.db.none('UPDATE users SET password = $1 WHERE id = $2', [newPassword, userId]);
     }
 
     // get account data for user

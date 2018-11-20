@@ -17,6 +17,8 @@ import redisClient from '../redis';
 import { v4 } from 'uuid';
 // import constants
 import { THIRTY_DAYS, TWENTY_MINUTES } from '../constants/constants'
+// import the email client
+import * as SparkPost from 'sparkpost';
 // import the env files
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -117,6 +119,57 @@ Sessions.end = async (req: Request, res: Response, next: NextFunction) => {
   // move on to end the response
   // res.locals.user = { isAuth: false }
   next();
+}
+
+Sessions.forgot = async (req: Request, res: Response, next: NextFunction) => {
+  // declare for key with v4()
+  const forgotKey = v4();
+  // create new redis entry with forgot key and userId
+  await redisClient.set(forgotKey, res.locals.userId);
+  redisClient.expire(forgotKey, TWENTY_MINUTES);
+
+  // send the email
+  // Connect to SparkPost using API key to generate client
+  const sparkPostClient = new SparkPost(process.env.SPARK_POST_KEY);
+  const resetUrl = `http://localhost:3000/api/reset/${forgotKey}`;
+
+  const sendEmail = async (recipient: string, url: string) => {
+    // Send e-mail to recipient with a link to passed in URL
+    await sparkPostClient.transmissions.send({
+      recipients: [{ address: recipient }],
+      content: {
+        from: 'support@sparkpostbox.com',
+        subject: 'Confirm Email',
+        html:
+          `<html>
+            <body>
+              <p>Please <a href='${url}'>click here</a> to reset your password.</p>
+            </body>
+          </html>`,
+      },
+      options: {
+        sandbox: true,
+      },
+    });
+  };
+
+  sendEmail(req.body.email, resetUrl);
+
+  next();
+}
+
+Sessions.reset = async (req: Request, res: Response, next: NextFunction) => {
+  // check if the session exists
+  await redisClient.get(req.body.resetId, (error: any, userId: any) => {
+    if(error) {
+      console.log('ERROR AT reset IN sessionMethods', error);
+    }
+    else {
+      // if it does pass user id into the next function
+      res.locals.userId = userId;
+      next();
+    }
+  });
 }
 
 export default Sessions;

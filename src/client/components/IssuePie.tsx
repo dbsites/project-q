@@ -9,13 +9,12 @@ import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
 import IssueDetail from './IssueDetail';
 
 
-
-import '../assets/IssuePie.css';
+import IssueScripts from '../IssueScripts';
 
 interface Props {
   info: any
   modal?: any
-  politician?: any
+  polit?: any
 }
 
 class IssuePie extends Component<Props> {
@@ -38,14 +37,91 @@ class IssuePie extends Component<Props> {
     this.setState({detailedView: false})
   }
   
+
   render() {
-    console.log('ISSUE INFO: ', this.props.info);
-    console.log('MODAL INFO: ', this.props.modal);
-    console.log('POLITICIAN INFO: ', this.props.politician);
-
     const { name, alignedScore } = this.props.info;
+    let blurb, display;
 
-    let display;
+    if (this.props.modal) {
+
+      const {
+        aggregate_amount,
+        recip_1,
+        recip_1_amount,
+        recip_2,
+        recip_2_amount,
+        recip_3,
+        recip_3_amount
+      } = this.props.polit;
+
+      const {
+        green_buildings,
+        targets_emissions,
+        human_rights,
+        policy_board_diversity,
+        women_managers,
+        nra_score,
+        brady_rating,
+        tsr,
+        salary_gap,
+        community_score,
+        charity_amount,
+        yes_manchin,
+        no_manchin,
+        yes_repeal,
+        no_repeal,
+        yes_tax_cut,
+        no_tax_cut,
+        diversity_score,
+        aila_score,
+        fair_score,
+        taxes_paid,
+        trump_alignment,
+        norml_score,
+        company_name,
+      } = this.props.modal;
+
+      const searchName = name.split(' ')[0].toUpperCase();
+
+      switch (searchName) {
+        case "MONEY":
+          blurb = IssueScripts[name](company_name, alignedScore, name, aggregate_amount, recip_1, recip_1_amount, recip_2, recip_2_amount, recip_3, recip_3_amount);
+          break;
+        case "ENVIRONMENT":
+          blurb = IssueScripts[name](company_name, alignedScore, name, green_buildings, targets_emissions);
+          break
+        case "CIVIL/WOMEN'S":
+          blurb = IssueScripts[name](company_name, alignedScore, name, human_rights, policy_board_diversity, women_managers);
+          break;
+        case "2ND":
+          blurb = IssueScripts[name](company_name, alignedScore, name, nra_score, brady_rating, yes_manchin, no_manchin);
+          break;
+        case "EXECUTIVE":
+          blurb = IssueScripts[name](company_name, alignedScore, name, tsr, salary_gap);
+          break;
+        case "CORPORATE":
+          blurb = IssueScripts[name](company_name, alignedScore, name, community_score, charity_amount);
+          break;
+        case "DRUG":
+          blurb = IssueScripts[name](company_name, alignedScore, name, norml_score);
+          break;
+        case "HEALTH":
+          blurb = IssueScripts[name](company_name, alignedScore, name, yes_repeal, no_repeal);
+          break;
+        case "IMMIGRATION":
+          blurb = IssueScripts[name](company_name, alignedScore, name, diversity_score, aila_score, fair_score);
+          break;
+        case "TAXES":
+          blurb = IssueScripts[name](company_name, alignedScore, name, yes_tax_cut, no_tax_cut);
+          break;
+        case "PRESIDENTIAL":
+          blurb = IssueScripts[name](company_name, alignedScore, name, trump_alignment);
+          break;
+        case "ECONOMY":
+          blurb = IssueScripts[name](company_name, alignedScore, name, taxes_paid);
+          break;
+      }
+    }
 
     if (!alignedScore) {
       display = (
@@ -76,17 +152,13 @@ class IssuePie extends Component<Props> {
           value: 100 - alignedScore
         },
         {
-          name: "Aligned",
+          name: name,
           value: alignedScore
         }
       ];
     
 
-      // const scoreLabel = (
-      //   <text x="180" y="180" style={{ fontSize: 1 }} fill="white" textAnchor="middle" dominantBaseline="middle">
-      //     {alignedScore}
-      //   </text>
-      // );
+      console.log('blurb = ', blurb);
 
       display = (
         <ResponsiveContainer>
@@ -97,7 +169,6 @@ class IssuePie extends Component<Props> {
               innerRadius="70%"
               fill="#808080"
               dataKey="value"
-              // label={scoreLabel}
               startAngle={90}
               endAngle={450}
               onMouseEnter={this.handleMouseEnter}
@@ -106,7 +177,7 @@ class IssuePie extends Component<Props> {
               {
                 DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
               }
-              <Label value={alignedScore + '%'} position="center" fill="white" />
+              <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
             </Pie>
           </PieChart>
         </ResponsiveContainer>
@@ -115,11 +186,11 @@ class IssuePie extends Component<Props> {
 
     return (
       <div className="issue-box">
-        <div className="issue-pie">
+        <div className="issue-pie" id={name}>
           {display}
           {this.state.detailedView && <IssueDetail name={name} score={alignedScore} handleMouseLeave={this.handleMouseLeave}/>}
+          <p>{name}</p>
         </div>
-        <p>{name}</p>
       </div>
     );
   }
