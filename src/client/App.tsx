@@ -11,7 +11,7 @@ import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
 
-import Loading from './components/Loading/Loading'
+import Loading from './components/loading/Loading'
 
 // Import Types
 import { SurveyState, LoadingState } from './reducers/types';
