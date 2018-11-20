@@ -53,13 +53,15 @@
   border-color: #3f3f3f;
   border-style: solid;
   position: fixed;
-  height: 90%;
-  width: 75%;
+  height: 70%;
+  width: 45%;
   top: 5%;
-  left: 12.5%;
+  left: 27.5%;
   background-color: black;
   z-index: 7;
-  color: white
+  color: white;
+  opacity: .92;
+  font-size: 10px;
 }
 
 
@@ -69,14 +71,35 @@
 
 .images {
   border: 2px solid gold;
-  position: relative;
-  margin: auto;
-  height: 30%;
-  width: auto;
+  height: 80px;
+  margin: 0px 20px 10px;
 }
 
 .row {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+}
+
+.inline {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  padding: 5px;        
+  background-color: black;
+  position: center;
+}
+
+.pie-detail {
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.issue-detail > .issue-description {
+  font-family: 'Lato';
+  font-size: 12px;
+  padding: 20px 40px 0;
+  text-align: left;
 }
 

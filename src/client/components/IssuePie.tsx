@@ -5,7 +5,7 @@
 
 import * as React from 'react';
 import { Component } from 'react';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
 import IssueDetail from './IssueDetail';
 
 
@@ -59,16 +59,9 @@ class IssuePie extends Component<Props> {
               dataKey="value"
               startAngle={90}
               endAngle={450}
-<<<<<<< HEAD
               onMouseEnter={this.handleMouseEnter}
-              
-              />
-            {/* </Pie> */}
-=======
               paddingAngle={5}
-            >
-            </Pie>
->>>>>>> master
+              />
           </PieChart>
         </ResponsiveContainer>
       );
@@ -107,20 +100,13 @@ class IssuePie extends Component<Props> {
               // label={scoreLabel}
               startAngle={90}
               endAngle={450}
-<<<<<<< HEAD
               onMouseEnter={this.handleMouseEnter}
-              >
-              {
-                DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
-              }
-              
-=======
               paddingAngle={5}>
+              
               {
                 DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
               }
               <Label value={alignedScore + '%'} position="center" fill="white" />
->>>>>>> master
             </Pie>
           </PieChart>
         </ResponsiveContainer>
@@ -131,7 +117,7 @@ class IssuePie extends Component<Props> {
       <div className="issue-box">
         <div className="issue-pie">
           {display}
-          {this.state.detailedView && <IssueDetail handleMouseLeave={this.handleMouseLeave}/>}
+          {this.state.detailedView && <IssueDetail name={name} score={alignedScore} handleMouseLeave={this.handleMouseLeave}/>}
         </div>
         <p>{name}</p>
       </div>
