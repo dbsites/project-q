@@ -4,7 +4,6 @@
  */
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import Header from '../containers/HeaderContainer';
 
@@ -80,11 +79,6 @@ const FAQ = () => {
         <p>
           Ethiq welcomes your feedback! Please email us at <a href="mailto:info@ethiq.org">info@ethiq.org</a> or use the feedback form on our main page.
         </p>
-      </div>
-      <div className="dashboard-footer">
-        <div className="dashboard-footer-button dashboard-footer-terms-button">
-          <Link to='/account/register'>Create an Account</Link>
-        </div>
       </div>
     </div>
   )

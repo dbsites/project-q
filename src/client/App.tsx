@@ -48,11 +48,11 @@ class App extends React.Component<Props> {
     if (window.innerWidth <= 1024) console.log('Mobile Device Detected!');
 
     if (loading.authLoading === true) {
-      return <Loading />
+      return <Loading loadingMessage="Calculating" />
     }
     if (isAuth === null) {
       fetchAuth();
-      return <Loading />
+      return <Loading loadingMessage="Calculating" />
     } 
     if (isAuth === false) {
       // If user hasn't been authenticated, redirect to Registration

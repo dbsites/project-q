@@ -20,7 +20,7 @@ const DashContainer = (props: any): any => {
   if (!issuesComplete || !surveyComplete) {
     if (!Object.keys(issues).length || loading.issuesLoading || loading.surveyLoading) {
       if (!loading.issuesLoading && !Object.keys(issues).length) fetchIssues();
-      return <Loading />
+      return <Loading loadingMessage="Calculating" />
     };
     return issuesComplete ? <SurveyContainer /> : <IssuesContainer />;
   }

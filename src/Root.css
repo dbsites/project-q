@@ -143,7 +143,7 @@ body {
 }
 
 .dashboard-side-button {
-  color: #666666;
+  color: #888888;
   margin: 1vh auto;
   width: 100%;
 
@@ -155,8 +155,8 @@ body {
 }
 
 .dashboard-side-button:hover {
-  color: #FFFFFF;
   cursor: pointer;
+  color: #FFFFFF;
 }
 
 .dashboard-side > .invalid {
@@ -259,6 +259,7 @@ body {
   color: #FFFFFF;
   font-family: 'Cinzel', serif;
   font-size: 1.2rem;
+  font-weight: bold;
   outline: none;
   padding: 1vh 0.1vw;
   width: 100%;
@@ -452,7 +453,7 @@ body {
 }
 
 .survey-question-box {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   height: 18vh;
   margin: 0 2vw;
 
@@ -474,7 +475,7 @@ body {
 
 .survey-question-hr {
   margin-bottom: 1vh;
-  width: 40vw;
+  width: 30vw;
 }
 
 .survey-question-hr hr {
@@ -493,7 +494,7 @@ body {
 .survey-button {
   border: none;
   box-sizing: border-box;
-  color: #666666;
+  color: #888888;
   font-size: 1.5rem;
   margin: 0 10vw;
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
@@ -546,6 +547,10 @@ body {
   padding: 4vh 6vw;
   overflow-y: scroll;
   overflow-x: hidden;
+
+  grid-row-start: 3;
+  grid-row-end: 5;
+  margin-bottom: 2vh;
 }
 
 .terms-dashboard-container a {
@@ -559,7 +564,9 @@ body {
 }
 
 .terms-header {
+  color: #888888;
   font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .dashboard-footer-terms-button {

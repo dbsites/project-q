@@ -17,7 +17,7 @@ const SurveyPage = (props: any) => {
       <div className="dashboard-header" />
       <div className="survey-dashboard-container">
         <div className="dashboard-side" />
-        <div className="survey-dashboard-question-container"><Loading /></div>
+        <div className="survey-dashboard-question-container"><Loading loadingMessage="Calculating" /></div>
         <div className="dashboard-side" />
       </div>
       <div className="dashboard-footer">
