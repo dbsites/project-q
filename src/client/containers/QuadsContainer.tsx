@@ -28,7 +28,7 @@ interface Props {
   sortCompanyList: any
   selectCompany: any
   getUserIssues: any
-  getCompanyInfo: any
+  getAllCompanyInfo: any
   getStockData: any
   getSelectedCompanyInfo: any
 }
@@ -42,7 +42,7 @@ class QuadsContainer extends React.Component<Props> {
     const {
       fetchCompanyList,
       getUserIssues,
-      getCompanyInfo,
+      getAllCompanyInfo,
     } = this.props;
 
     // Grabs user issues from user store and adds to company store
@@ -50,7 +50,7 @@ class QuadsContainer extends React.Component<Props> {
     // Fetch company list from db and adds to company store
     fetchCompanyList();
     // Grab all companies modal and politician info
-    getCompanyInfo();
+    getAllCompanyInfo();
   }
 
   render() {
@@ -75,7 +75,7 @@ class QuadsContainer extends React.Component<Props> {
         </div>
         <div id="quads-container">
           <QuadsDisplay
-            getInfo={getSelectedCompanyInfo}
+            info={getSelectedCompanyInfo}
             list={companyList}
             select={selectCompany}
             selected={selectedCompany}
@@ -112,15 +112,15 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.sortCompanyList({ field: event.target.id }));
   },
   getUserIssues: () => dispatch(actions.getUserIssues()),
-  getCompanyInfo: () => {
-    dispatch(actions.getCompanyInfo());
+  getAllCompanyInfo: () => {
+    dispatch(actions.getAllCompanyInfo());
   },
   getStockData: (ticker: string) => {
     dispatch(actions.getStockData(ticker));
   },
-  // getSelectedCompanyInfo: (ticker: string) => {
-  //   dispatch(actions.getSelectedCompanyInfo(ticker));
-  // },
+  getSelectedCompanyInfo: (ticker: string) => {
+    dispatch(actions.getSelectedCompanyInfo(ticker));
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);
