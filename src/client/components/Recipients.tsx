@@ -1,9 +1,8 @@
 import * as React from 'react';
 
 const Recipients = (props: any) => {
-  const p1: any[] = [];
-  const p2: any[] = [];
-  const p3: any[] = [];
+
+  let display;
 
   if (props.data) {
     const {
@@ -18,30 +17,33 @@ const Recipients = (props: any) => {
       recip_3_img
     } = props.data;
 
-    p1.push(recip_1, recip_1_amount, recip_1_img);
-    p2.push(recip_2, recip_2_amount, recip_2_img);
-    p3.push(recip_3, recip_3_amount, recip_3_img);
+    display = (
+      <React.Fragment>
+        <p className="polit-recip">Top Recipients</p>
+        <div className="politician" key="recip-1">
+          <img src={recip_1_img} />
+        </div>
+        <p className="polit-info">{`${recip_1} ${recip_1_amount}`}</p>
+        <div className="politician">
+          <img src={recip_2_img} />
+        </div>
+        <p className="polit-info">{`${recip_2} ${recip_2_amount}`}</p>
+        <div className="politician">
+          <img src={recip_3_img} />
+        </div>
+        <p className="polit-info">{`${recip_3} ${recip_3_amount}`}</p>
+      </React.Fragment>
+    );
+
   } else {
-    return (
+    display = (
       <div className="issues-politicians"></div>
     );
   }
 
   return (
     <div className="issues-politicians">
-      <p className="polit-recip">Top Recipients</p>
-      <div className="politician" key="recip-1">
-        <img src={p1[2]} />
-      </div>
-      <p className="polit-info">{`${p1[0]} ${p1[1]}`}</p>
-      <div className="politician">
-        <img src={p2[2]} />
-      </div>
-      <p className="polit-info">{`${p2[0]} ${p2[1]}`}</p>
-      <div className="politician">
-        <img src={p3[2]} />
-      </div>
-      <p className="polit-info">{`${p3[0]} ${p3[1]}`}</p>
+      {display}
     </div>
   );
 }
