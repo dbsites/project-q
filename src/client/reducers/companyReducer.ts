@@ -79,8 +79,8 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     case actions.GET_SELECTED_COMPANY_INFO:
       //check if it exists in fullCompanyModal/fullCompanyPolit first!!!!!!
       const { moduleData, politData } = action.payload;
-      console.log('module data: ', moduleData);
-      console.log('polit data: ', politData);
+      // console.log('module data: ', moduleData);
+      // console.log('polit data: ', politData);
       return {
         ...state,
         selectedCompanyData: {
