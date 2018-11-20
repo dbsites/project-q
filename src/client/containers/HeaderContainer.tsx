@@ -7,7 +7,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const eTradeLogo = require('../assets/eTrade.png')
+const brandingLogo = require('../assets/brandingLogo.png')
 
 let Header = (props: any) => {
 
@@ -15,6 +15,7 @@ let Header = (props: any) => {
   const headerRight = [];
   if (props.isAuth) {
     headerRight.push(<li className="header-right" key="logout"><Link to='/account/logout'>LOGOUT</Link></li>);
+    headerRight.push(<li className="header-right" key="reset"><Link to='/account/reset'>RESET</Link></li>);
   } else {
     headerRight.push(<li className="header-right" key="register"><Link to='/account/register'>REGISTER</Link></li>);
     headerRight.push(<li className="header-right" key="login"><Link to='/account/login'>LOGIN</Link></li>);
@@ -25,7 +26,7 @@ let Header = (props: any) => {
       <ul className="header">
         <li className="header-left">
           <Link to='/'>
-            <img alt="Welcome to eTrade powered by Ethiq" className="header-logo-image" src={eTradeLogo} />
+            <img alt="Welcome to eTrade powered by Ethiq" className="header-logo-image" src={brandingLogo} />
           </Link>
         </li>
         {headerRight}

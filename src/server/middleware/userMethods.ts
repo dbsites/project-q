@@ -391,9 +391,9 @@ UserMethods.getId = (email: string) => {
 
 UserMethods.findByEmail = (req: Request, res: Response, next: NextFunction) => {
   db.users.getId(req.body.forgotPassEmail)
-  .then((userId: string) => {
+  .then((userId: any) => {
     if (userId) {
-      res.locals.userId = userId;
+      res.locals.userId = userId.id;
       next();
     }
     else {

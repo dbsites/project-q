@@ -1,21 +1,22 @@
 /**
  * @module Loading.tsx
  * @description Placeholder Loading Component
+ * UNIT TEST COVERAGE - 100%
  */
 
 import * as React from 'react';
 import './Loading.scss';
 
-const Loading = () => {
+const Loading = (): JSX.Element => {
   return (
-    <div className="loader-container">
-      <div className="loader">
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__bar"></div>
-        <div className="loader__ball"></div>
+    <div className="loading-container">
+      <div className="loading">
+        <div className="loading__bar"></div>
+        <div className="loading__bar"></div>
+        <div className="loading__bar"></div>
+        <div className="loading__bar"></div>
+        <div className="loading__bar"></div>
+        <div className="loading__ball"></div>
     </div>
     <h1>Loading</h1>
   </div>

@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Footer from './client/components/Footer';
+import Footer from './client/components/Footer/Footer';
 
 import FormContainer from './client/containers/FormContainer';
 import TermsContainer from './client/containers/TermsContainer';
@@ -22,7 +22,7 @@ const Root = (props: any) => (
     <Router>
       <div className="screen">
         <Route exact path='/' component={App} />
-        <Route exact path='/account/:form' component={FormContainer} />
+        <Route exact path='/account/:form/:id?' component={FormContainer} />
         <Route exact path='/terms/:id' component={TermsContainer} />
         <Route path='/' component={Footer} />
       </div>
