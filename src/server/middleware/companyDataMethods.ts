@@ -149,4 +149,25 @@ CompanyDatabase.getCompanyModule = async (_: Request, res: Response, next: NextF
   })
 }
 
+CompanyDatabase.getCompanyModuleData = (req: Request, res: Response, next: NextFunction) => {
+  // if empty request object
+  if (!req.body.ticker) res.status(500).send('INVALID TICKER');
+
+  db.companies.getCompanyModuleData(req.body.ticker)
+  .then((companyData:any) => {
+    res.locals.moduleData = companyData;
+    next();
+  })
+  .catch((error: any) => {
+    if (error.received === 0) {
+      res.status(500).send('INVALID TICKER');
+    }
+    else {
+      console.log('ERROR AT getCompanyModule IN companyDataMethods.ts', error);
+      res.status(500).send('SERVER FAILURE');
+    }
+  })
+}
+
+
 export default CompanyDatabase;
