@@ -10,21 +10,23 @@ import * as issueMatch from '../issueMatcher';
 
 // Import Components
 import IssuePie from './IssuePie';
-// import Recipients from './Recipients';
+import Recipients from './Recipients';
 
 // TODO: move this props in types.ts and export in
 interface Props {
-  modalData?: any
-  politicianData?: any
+  moduleData?: any
+  politData?: any
   selectedCompany: any
   selectedData: any
   userIssues: any
 }
 
 const IssuesCharts = (props: Props) => {
-  // const { modalData, politicianData } = props.selectedData;
+  const { moduleData, politData } = props.selectedData;
   const { selectedCompany, userIssues } = props;
   const { issueMatcher } = issueMatch;
+
+  // console.log('issuescharts props: ', props.selectedData);
 
   let msg, display: JSX.Element[];
 
@@ -32,7 +34,6 @@ const IssuesCharts = (props: Props) => {
     .map((issueID: any) => {
       return {
         name: issueMatcher[issueID],
-        leaning: userIssues[issueID]
       }
     });
 
@@ -41,13 +42,13 @@ const IssuesCharts = (props: Props) => {
 
     display = userIssuesArray
       .map((issueObj: any) => {
-        const { name, leaning } = issueObj;
+        const { name } = issueObj;
         const { alignedScore } = selectedCompany[name];
-        const issueInfo = { name, leaning, alignedScore };
+        const issueInfo = { name, alignedScore };
         return <IssuePie
           info={issueInfo}
-          // modal={modalData}
-          // politician={politicianData}
+          modal={moduleData}
+          polit={politData}
         />
       });
   }
@@ -68,7 +69,7 @@ const IssuesCharts = (props: Props) => {
         <p id="issues-header">{msg}</p>
         {display}
       </div>
-      {/* <Recipients data={politicianData} /> */}
+      <Recipients data={politData} />
     </div>
   );
 }
