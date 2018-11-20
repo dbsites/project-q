@@ -187,6 +187,13 @@ app.post('/api/stockData',
   }
 );
 
+app.post('/updateCompanyData',
+    CompanyDatabase.updateData,
+    (_: Request, res: Response) => {
+    res.sendStatus(200);
+    }
+  );
+
 module.exports = app;
 
 /* APPLICATION DATA SUBMISSION ROUTES

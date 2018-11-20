@@ -136,7 +136,9 @@
     }
 
     // update a users survey answers
-    updateUserSurvey(user: string, questionId: string, agree: boolean) {
+    async updateUserSurvey(user: string, questionId: string, agree: boolean) {
+      // delete user_issues for user
+      await this.db.none('DELETE FROM user_answers WHERE user_id = $1', user);
       return this.db.none('INSERT INTO user_answers (id, user_id, question_id, agree) VALUES ($1, $2, $3, $4);', [v4(), user, questionId, agree]);
     }
  }

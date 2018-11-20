@@ -60,9 +60,10 @@ export class CompanyRepository {
     return this.db.any('SELECT * FROM companies INNER JOIN company_issues ON companies.id = company_issues.company_id;');
   }
 
-  async updateData(data: any[]) {
+  async updateData(data: any) {
   
       for (let i = 0 ; i < data.length; i += 1) {
+        await this.db.none('UPDATE company_module SET norml_score = $1 WHERE company_id = $2', [data[i].norml_score, data[i].company_id])
       // update issues scores
         // this.db.none('UPDATE company_module SET trump_alignment = $1 WHERE company_id = $2', [data[i].trump, data[i].id]);
       // this.db.none('UPDATE "companyIssues" SET "agreeScore" = $1, "disagreeScore" = $2 WHERE "companyId" = $3 AND "issueId" = $4;', 
