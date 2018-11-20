@@ -38,6 +38,7 @@ export interface ForgotPassState {
 export interface ResetPassState {
   newPassword: string,
   confirmNewPassword: string,
+  resetId: string,
   resetError: string,
 }
 

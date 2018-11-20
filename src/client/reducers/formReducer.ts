@@ -21,6 +21,7 @@ const initialForgotState: ForgotPassState = {
 const initialResetState: ResetPassState = {
   newPassword: '',
   confirmNewPassword: '',
+  resetId: '',
   resetError: '',
 }
 

@@ -41,10 +41,12 @@ const mapStateToProps = (store: any): any => ({
     newPassword: store.form.reset.newPassword,
     confirmNewPassword: store.form.reset.confirmNewPassword,
     resetError: store.form.reset.resetError,
+    resetId: store.form.reset.resetId,
   },
   forgotFields: {
     forgotPassEmail: store.form.forgot.forgotPassEmail,
     forgotError: store.form.forgot.forgotError,
+    emailValid: store.form.forgot.emailValid,
   },
   isAuth: store.user.isAuth,
   userId: store.user.userId,
@@ -76,18 +78,18 @@ let FormContainer: any = (props: any) => {
   } = props;
 
   const loginForm = <LoginForm
-      loginFields={loginFields}
-      fetchFormFailure={fetchFormFailure}
-      fetchForm={fetchForm}
-      updateField={updateField}
-    />;
+    loginFields={loginFields}
+    fetchFormFailure={fetchFormFailure}
+    fetchForm={fetchForm}
+    updateField={updateField}
+  />;
 
   const registerForm = <RegisterForm
-      registerFields={registerFields}
-      fetchFormFailure={fetchFormFailure}
-      fetchForm={fetchForm}
-      updateField={updateField}
-    />
+    registerFields={registerFields}
+    fetchFormFailure={fetchFormFailure}
+    fetchForm={fetchForm}
+    updateField={updateField}
+  />
 
   const forgotPassForm = <ForgotPass
     fetchFormFailure={fetchFormFailure}
@@ -116,7 +118,8 @@ let FormContainer: any = (props: any) => {
     displayForm = registerForm;
   } else if (match.params.form === 'forgot') {
     displayForm = forgotPassForm;
-  }else if (match.params.form === 'reset') {
+  } else if (match.params.form === 'reset') {
+    if (!resetFields.resetId) updateField({ form: 'reset', field: 'resetId', type: 'text', value: match.params.id });
     displayForm = resetPassForm;
   }
 

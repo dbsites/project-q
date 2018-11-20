@@ -55,6 +55,7 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
   // Derive POST request URI from form to be submitted and issue fetch request
 
   const fetchURI: string = `/api/${form}`;
+  console.log(formFields);
 
   return fetch(fetchURI, {
     method: 'POST',
@@ -62,9 +63,10 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify(formFields),
+    body: JSON.stringify({formFields}),
   })
     .then((response: Response) => {
+      console.log(response);
       // If successful(200), return parsed response, otherwise dispatch failure and throw error
       if (response.status === 200) return response.json();
       if (response.status === 401) throw new Error('Invalid email address or password');
