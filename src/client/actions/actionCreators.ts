@@ -295,12 +295,12 @@ export const getStockData = (ticker: string) => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
-export const getCompanyInfo = () => (dispatch: any) => {
+export const getAllCompanyInfo = () => (dispatch: any) => {
   fetch('/api/moduleData')
     .then(response => response.json())
     .then((response: any) => {
       dispatch({
-        type: types.GET_COMPANY_INFO,
+        type: types.GET_ALL_COMPANY_INFO,
         payload: {
           modalData: response.moduleData,
           politicianData: response.politicianData,
@@ -310,9 +310,27 @@ export const getCompanyInfo = () => (dispatch: any) => {
     .catch((err: any) => console.error(err));
 }
 
-// export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
+export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
+  fetch('/api/companyModule', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ticker }),
+  })
+    .then(response => response.json())
+    .then((response: any) => {
+      dispatch({
+        type: types.GET_SELECTED_COMPANY_INFO,
+        payload: {
+          moduleData: response.moduleData,
+          politData: response.politicianData
+        }
+      })
+    })
+    .catch((err: any) => console.error(err));
 
-// }
+}
 
 export const submitSurvey = (surveyObj: any) => (dispatch: Dispatch) => {
   dispatch({
