@@ -11,8 +11,10 @@ import * as issueMatch from '../issueMatcher';
 
 const initialCompanyState: /*CompanyDataState*/any = {
   selectedCompany: null,
+  fullCompanyModal: null,
+  fullCompanyPolit: null,
+  selectedCompanyData: {},
   currentCompanyStockData: {},
-  // selectedCompanyData: {},
   companyList: [],
   companyListModal: [],
   userIssues: {},
@@ -73,12 +75,26 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         ...state,
         currentCompanyStockData: Object.assign({}, action.payload.stockData),
       }
-    // case actions.ADD_COMPANY_INFO:
-    //   const { modalData, politicianData, stockData } = action.payload;
-    //   return {
-    //     ...state,
-    //     selectedCompanyData: { modalData, politicianData, stockData }
-    //   };
+
+    case actions.GET_SELECTED_COMPANY_INFO:
+      //check if it exists in fullCompanyModal/fullCompanyPolit first!!!!!!
+      const { moduleData, politData } = action.payload;
+      console.log('module data: ', moduleData);
+      console.log('polit data: ', politData);
+      return {
+        ...state,
+        selectedCompanyData: {
+          moduleData, politData
+        }
+      }
+
+    case actions.GET_ALL_COMPANY_INFO:
+      const { modalData, politicianData } = action.payload;
+      return {
+        ...state,
+        fullCompanyModal: modalData,
+        fullCompanyPolit: politicianData
+      };
 
     case actions.MERGE_ISSUE_SCORES:
       const newCompanyList = state.companyList.slice(0);
