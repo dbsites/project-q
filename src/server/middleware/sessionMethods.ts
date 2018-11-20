@@ -139,11 +139,11 @@ Sessions.forgot = async (req: Request, res: Response, next: NextFunction) => {
       recipients: [{ address: recipient }],
       content: {
         from: 'support@sparkpostbox.com',
-        subject: 'Confirm Email',
+        subject: 'Password Reset from Ethiq',
         html:
           `<html>
             <body>
-              <p>Please <a href='${url}'>click here</a> to reset your password.</p>
+              <p>Please <a href='${url}'>click here</a> to set a new password for your Ethiq account.</p>
             </body>
           </html>`,
       },

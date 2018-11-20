@@ -7,7 +7,12 @@
 import * as React from 'react';
 import './Loading.scss';
 
-const Loading = (): JSX.Element => {
+interface LoadingProps {
+  loadingMessage?: string,
+}
+
+const Loading = (props: LoadingProps): JSX.Element => {
+  const loadingMessage = props.loadingMessage ? props.loadingMessage : 'Loading';
   return (
     <div className="loading-container">
       <div className="loading">
@@ -18,7 +23,7 @@ const Loading = (): JSX.Element => {
         <div className="loading__bar"></div>
         <div className="loading__ball"></div>
     </div>
-    <h1>Loading</h1>
+    <h1>{loadingMessage}</h1>
   </div>
   )
 };

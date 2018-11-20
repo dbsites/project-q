@@ -4,7 +4,6 @@
  */
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import Header from '../containers/HeaderContainer';
 
@@ -56,6 +55,7 @@ const FAQ = () => {
         <p>
           True. Although certain states allow corporations to give money directly to candidates and incumbents, this is not allowed at the federal level. Ties between corporations and federal officeholders are made via a company’s associated Political Action Committees (PACs) and executive-level employees.
         </p>
+        <div className="terms-header">
           When can I download the Ethiq app?
         </div>
         <p>
@@ -67,11 +67,6 @@ const FAQ = () => {
         <p>
           Ethiq welcomes your feedback! Please email us at <a href="mailto:info@ethiq.org">info@ethiq.org</a> or use the feedback form on our main page.
         </p>
-      </div>
-      <div className="dashboard-footer">
-        <div className="dashboard-footer-button dashboard-footer-terms-button">
-          <Link to='/account/register'>Create an Account</Link>
-        </div>
       </div>
     </div>
   )
