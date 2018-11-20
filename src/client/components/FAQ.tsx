@@ -55,6 +55,7 @@ const FAQ = () => {
         <p>
           True. Although certain states allow corporations to give money directly to candidates and incumbents, this is not allowed at the federal level. Ties between corporations and federal officeholders are made via a company’s associated Political Action Committees (PACs) and executive-level employees.
         </p>
+        <div className="terms-header">
           When can I download the Ethiq app?
         </div>
         <p>
