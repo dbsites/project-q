@@ -32,6 +32,7 @@ const CompanyList = (props: any) => {
         <Link id={index} className="company-names-list" to="#" onClick={(e) => {
           props.selectCompany(e);
           props.getStockData(company.ticker);
+          props.getSelectedCompanyInfo(company.ticker);
         }}>
           {company.short_name}
         </Link>
