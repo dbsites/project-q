@@ -7,7 +7,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Footer from './client/components/Footer/Footer';
+import Footer from './client/components/footer/Footer';
 
 import FormContainer from './client/containers/FormContainer';
 import TermsContainer from './client/containers/TermsContainer';

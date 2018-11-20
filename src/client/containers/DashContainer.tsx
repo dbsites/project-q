@@ -8,7 +8,7 @@ import * as React from 'react';
 import IssuesContainer from './IssuesContainer';
 import SurveyContainer from './SurveyContainer';
 import QuadsContainer from './QuadsContainer';
-import Loading from '../components/Loading/Loading';
+import Loading from '../components/loading/Loading';
 
 const DashContainer = (props: any): any => {
   const {
