@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+const blurPolitOne = require('../assets/blur-polit-1.jpg');
+const blurPolitTwo = require('../assets/blur-polit-2.jpg');
+const blurPolitThree = require('../assets/blur-polit-3.jpg');
+
 const Recipients = (props: any) => {
 
   let display;
@@ -37,10 +41,26 @@ const Recipients = (props: any) => {
         <p className="polit-info">{`${recip_3_amount}`}</p>
       </React.Fragment>
     );
-
   } else {
     display = (
-      <div className="issues-politicians"></div>
+      <React.Fragment>
+        <p className="polit-recip">Loading Recipients...</p>
+        <div className="politician" key="recip-1">
+          <img src={blurPolitOne} />
+        </div>
+        <p className="polit-info-name">No Recipients</p>
+        <p className="polit-info">$-</p>
+        <div className="politician">
+          <img src={blurPolitTwo} />
+        </div>
+        <p className="polit-info-name">No Recipients</p>
+        <p className="polit-info">$-</p>
+        <div className="politician">
+          <img src={blurPolitThree} />
+        </div>
+        <p className="polit-info-name">No Recipients</p>
+        <p className="polit-info">$-</p>
+      </React.Fragment>
     );
   }
 
