@@ -18,6 +18,6 @@
   # Upload zip file to s3 bucket
   aws s3 cp ethiq-staging-deploy.zip s3://$EB_BUCKET/ethiq-staging-deploy.zip
   # Create a new application version with new Dockerrun
-  aws elasticbeanstalk create-application-version --application-name codesmith-dashboard --version-label staging-$TRAVIS_COMMIT --source-bundle S3Bucket=$EB_BUCKET,S3Key=ethiq-staging-deploy.zip
+  aws elasticbeanstalk create-application-version --application-name ethiq --version-label staging-$TRAVIS_COMMIT --source-bundle S3Bucket=$EB_BUCKET,S3Key=ethiq-staging-deploy.zip
   # Update environment to use new version number
   aws elasticbeanstalk update-environment --environment-name ethiq-staging --version-label staging-$TRAVIS_COMMIT
