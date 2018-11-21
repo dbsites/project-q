@@ -18,26 +18,6 @@ interface Props {
 }
 
 class IssuePie extends Component<Props> {
-  state:any ;
-  constructor(props: any) {
-    console.log(props)
-    super(props);
-    this.state = {
-      detailedView: false
-    }
-    this.handleMouseEnter = this.handleMouseEnter.bind(this)
-    this.handleMouseLeave = this.handleMouseLeave.bind(this)
-  }
-
-  handleMouseEnter() {
-    this.setState({detailedView: true})
-  }
-
-  handleMouseLeave() {
-    this.setState({detailedView: false})
-  }
-  
-
   render() {
     const { name, alignedScore } = this.props.info;
     let blurb, display;
@@ -51,7 +31,7 @@ class IssuePie extends Component<Props> {
         recip_2,
         recip_2_amount,
         recip_3,
-        recip_3_amount
+        recip_3_amount, 
       } = this.props.polit;
 
       const {
@@ -89,7 +69,7 @@ class IssuePie extends Component<Props> {
           break;
         case "ENVIRONMENT":
           blurb = IssueScripts[name](company_name, alignedScore, name, green_buildings, targets_emissions);
-          break
+          break;
         case "CIVIL/WOMEN'S":
           blurb = IssueScripts[name](company_name, alignedScore, name, human_rights, policy_board_diversity, women_managers);
           break;
@@ -121,9 +101,56 @@ class IssuePie extends Component<Props> {
           blurb = IssueScripts[name](company_name, alignedScore, name, taxes_paid);
           break;
       }
+      
+      const COLORS: string[] = ['#A5A8A6', (
+        alignedScore >= 70 ? '#16C33F' : alignedScore >= 40 ? '#FAEB00' : '#FA2929'
+      )];
+
+      const DATA: any = [
+        {
+          name: "",
+          value: 100 - alignedScore
+        },
+        {
+          name: name,
+          value: alignedScore
+        }
+      ];
+    
+      display = (
+        <React.Fragment>
+          <ResponsiveContainer>
+            <PieChart width={100} height={100}>
+              <Pie
+                data={DATA}
+                outerRadius="100%"
+                innerRadius="70%"
+                fill="#808080"
+                dataKey="value"
+                startAngle={90}
+                endAngle={450}
+                onMouseEnter={this.props.handleMouseEnter}
+                paddingAngle={5}>
+                {
+                  DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
+                }
+                <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          {this.props.detailedView && <IssueDetail
+            polit={this.props.polit}
+            company={company_name}
+            blurb={blurb}
+            name={name}
+            score={alignedScore}
+            handleMouseLeave={this.props.handleMouseLeave}
+          />}
+        </React.Fragment>
+      );
     }
 
-    if (!alignedScore) {
+    else {
       display = (
         <ResponsiveContainer>
           <PieChart width={100} height={100}>
@@ -141,54 +168,12 @@ class IssuePie extends Component<Props> {
           </PieChart>
         </ResponsiveContainer>
       );
-    } else {
-      const COLORS: string[] = ['#A5A8A6', (
-        alignedScore >= 70 ? '#16C33F' : alignedScore >= 40 ? '#FAEB00' : '#FA2929'
-      )];
-
-      const DATA: any = [
-        {
-          name: "",
-          value: 100 - alignedScore
-        },
-        {
-          name: name,
-          value: alignedScore
-        }
-      ];
-    
-
-      console.log('blurb = ', blurb);
-
-      display = (
-        <ResponsiveContainer>
-          <PieChart width={100} height={100}>
-            <Pie
-              data={DATA}
-              outerRadius="100%"
-              innerRadius="70%"
-              fill="#808080"
-              dataKey="value"
-              startAngle={90}
-              endAngle={450}
-              onMouseEnter={this.handleMouseEnter}
-              paddingAngle={5}>
-              
-              {
-                DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
-              }
-              <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      );
-    }
+    } 
 
     return (
       <div className="issue-box">
         <div className="issue-pie" id={name}>
           {display}
-          {this.state.detailedView && <IssueDetail name={name} score={alignedScore} handleMouseLeave={this.handleMouseLeave}/>}
           <p>{name}</p>
         </div>
       </div>

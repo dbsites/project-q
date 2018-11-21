@@ -69,6 +69,11 @@
   text-align: center;
 }
 
+.issue-detail h1,
+.issue-detail h3 {
+  margin: 2% 0;
+}
+
 .images {
   border: 2px solid gold;
   height: 80px;
@@ -84,7 +89,7 @@
 .inline {
   display: inline-block;
   width: 100px;
-  height: 100px;
+  /* height: 100px; */
   padding: 5px;        
   background-color: black;
   position: center;
@@ -98,8 +103,8 @@
 
 .issue-detail > .issue-description {
   font-family: 'Lato';
-  font-size: 12px;
-  padding: 20px 40px 0;
+  font-size: 1.2em;
+  padding: 0 4% 0;
   text-align: left;
 }
 
