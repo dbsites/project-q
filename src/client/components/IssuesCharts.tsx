@@ -26,8 +26,6 @@ const IssuesCharts = (props: Props) => {
   const { selectedCompany, userIssues } = props;
   const { issueMatcher } = issueMatch;
 
-  // console.log('issuescharts props: ', props.selectedData);
-
   let msg, display: JSX.Element[];
 
   const userIssuesArray = Object.keys(userIssues)
@@ -37,19 +35,30 @@ const IssuesCharts = (props: Props) => {
       }
     });
 
+  while (userIssuesArray.length !== 6) {
+    userIssuesArray.push({ name: 'No Issue Selected' });
+  }
+
   if (selectedCompany) {
     msg = 'Hover over charts below for detailed descriptions';
 
     display = userIssuesArray
       .map((issueObj: any) => {
         const { name } = issueObj;
-        const { alignedScore } = selectedCompany[name];
-        const issueInfo = { name, alignedScore };
-        return <IssuePie
-          info={issueInfo}
-          modal={moduleData}
-          polit={politData}
-        />
+        if (name !== 'No Issue Selected') {
+          const { alignedScore } = selectedCompany[name];
+          const issueInfo = { name, alignedScore };
+          return <IssuePie
+            info={issueInfo}
+            modal={moduleData}
+            polit={politData}
+          />
+        } else {
+          const issueInfo = { name };
+          return <IssuePie
+            info={issueInfo}
+          />
+        }
       });
   }
   else {

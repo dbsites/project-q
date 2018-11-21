@@ -19,7 +19,7 @@ class OverviewPie extends Component<Props> {
     const { overall } = this.props;
     const diff = 100 - overall;
 
-    const COLORS: string[] = ['#A5A8A6', (
+    const COLORS: string[] = ['#3A3A3A', (
       overall >= 70 ? '#16C33F' : overall >= 40 ? '#FAEB00' : '#FA2929'
     )];
 
@@ -36,7 +36,7 @@ class OverviewPie extends Component<Props> {
 
     return (
       <ResponsiveContainer>
-        <PieChart /*width={400} height={400}*/>
+        <PieChart>
           <Pie
             data={DATA}
             outerRadius="100%"
@@ -45,7 +45,12 @@ class OverviewPie extends Component<Props> {
             dataKey="value"
             startAngle={90}
             endAngle={450}
-            paddingAngle={5}>
+            paddingAngle={5}
+            isAnimationActive={true}
+            isUpdateAnimationActive={true}
+            // animationDuration={2000}
+            animationEasing={'ease'}
+          >
             {
               DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
             }

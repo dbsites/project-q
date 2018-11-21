@@ -42,6 +42,8 @@ class QuadsContainer extends React.Component<Props> {
     const {
       fetchCompanyList,
       getUserIssues,
+      getStockData,
+      getSelectedCompanyInfo,
       getAllCompanyInfo,
     } = this.props;
 
@@ -49,6 +51,9 @@ class QuadsContainer extends React.Component<Props> {
     getUserIssues();
     // Fetch company list from db and adds to company store
     fetchCompanyList();
+
+    getStockData('MMM.N');
+    setTimeout(() => { getSelectedCompanyInfo('MMM.N'); }, 4000);
     // Grab all companies modal and politician info
     getAllCompanyInfo();
   }
@@ -121,6 +126,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   getSelectedCompanyInfo: (ticker: string) => {
     dispatch(actions.getSelectedCompanyInfo(ticker));
   },
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(QuadsContainer);
