@@ -6,6 +6,8 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
+import IssueDetail from './IssueDetail';
+
 
 import IssueScripts from '../IssueScripts';
 
@@ -13,16 +15,16 @@ interface Props {
   info: any
   modal?: any
   polit?: any
+  detailedView?: any
+  handleMouseEnter?: any
+  handleMouseLeave?: any
 }
 
 class IssuePie extends Component<Props> {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     const { name, alignedScore } = this.props.info;
-    let blurb, display;
+    const { handleMouseEnter, handleMouseLeave, detailedView } = this.props;
+    let blurb, display, companyName;
 
     if (this.props.modal) {
 
@@ -33,7 +35,7 @@ class IssuePie extends Component<Props> {
         recip_2,
         recip_2_amount,
         recip_3,
-        recip_3_amount
+        recip_3_amount, 
       } = this.props.polit;
 
       const {
@@ -63,6 +65,8 @@ class IssuePie extends Component<Props> {
         company_name,
       } = this.props.modal;
 
+      companyName = this.props.modal.company_name;
+
       const searchName = name.split(' ')[0].toUpperCase();
 
       switch (searchName) {
@@ -71,7 +75,7 @@ class IssuePie extends Component<Props> {
           break;
         case "ENVIRONMENT":
           blurb = IssueScripts[name](company_name, alignedScore, name, green_buildings, targets_emissions);
-          break
+          break;
         case "CIVIL/WOMEN'S":
           blurb = IssueScripts[name](company_name, alignedScore, name, human_rights, policy_board_diversity, women_managers);
           break;
@@ -113,13 +117,13 @@ class IssuePie extends Component<Props> {
               data={[{ name: name, value: 100 }]}
               outerRadius="100%"
               innerRadius="70%"
-              fill="#3A3A3A"
+              fill="#808080"
               dataKey="value"
               startAngle={90}
               endAngle={450}
+              onMouseEnter={handleMouseEnter}
               paddingAngle={5}
-            >
-            </Pie>
+              />
           </PieChart>
         </ResponsiveContainer>
       );
@@ -138,28 +142,38 @@ class IssuePie extends Component<Props> {
           value: alignedScore
         }
       ];
-
-      console.log('blurb = ', blurb);
-
+    
       display = (
-        <ResponsiveContainer>
-          <PieChart width={100} height={100}>
-            <Pie
-              data={DATA}
-              outerRadius="100%"
-              innerRadius="70%"
-              fill="#808080"
-              dataKey="value"
-              startAngle={90}
-              endAngle={450}
-              paddingAngle={5}>
-              {
-                DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
-              }
-              <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
+        <React.Fragment>
+          <ResponsiveContainer>
+            <PieChart width={100} height={100}>
+              <Pie
+                data={DATA}
+                outerRadius="100%"
+                innerRadius="70%"
+                fill="#808080"
+                dataKey="value"
+                startAngle={90}
+                endAngle={450}
+                onMouseEnter={handleMouseEnter}
+                paddingAngle={5}>
+                {
+                  DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
+                }
+                <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+          {detailedView && 
+          <IssueDetail
+            polit={this.props.polit}
+            company={companyName}
+            blurb={blurb}
+            name={name}
+            score={alignedScore}
+            handleMouseLeave={handleMouseLeave}
+          />}
+        </React.Fragment>
       );
     }
 

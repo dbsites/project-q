@@ -1,0 +1,110 @@
+#quad-issues {
+  /* display: inline; */
+  width: 100%;
+  height: 99%;
+}
+
+#issues-header {
+  color: #A5A8A6;
+}
+
+.issues-container p {
+  color: #FFFFFF;
+}
+
+.stock-container {
+  margin: 20px auto;
+}
+
+.stock-container p {
+  color: #FFFFFF;
+}
+
+.issue-box {
+  height: 48%;
+  width: 32.5%;
+  /* border: 2px solid red; */
+  display: inline-block;
+  vertical-align: top; 
+}
+
+.issue-pie {
+  margin: 10% 20%;
+  width: 120px;
+  height: 120px;
+}
+
+.issue-pie tspan {
+  position: relative;
+  height: 100%
+}
+
+.issue-pie path {
+  stroke-width: 2.5;
+}
+
+.issue-box p {
+  font-size: 0.5em;
+  color: #ffffff,
+}
+
+.issue-detail {
+  border-width: 4px 1.25em;
+  border-color: #3f3f3f;
+  border-style: solid;
+  position: fixed;
+  height: 70%;
+  width: 45%;
+  top: 5%;
+  left: 27.5%;
+  background-color: black;
+  z-index: 7;
+  color: white;
+  opacity: .92;
+  font-size: 10px;
+}
+
+
+.issue-detail > * {
+  text-align: center;
+}
+
+.issue-detail h1,
+.issue-detail h3 {
+  margin: 2% 0;
+}
+
+.images {
+  border: 2px solid gold;
+  height: 80px;
+  margin: 0px 20px 10px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.inline {
+  display: inline-block;
+  width: 100px;
+  /* height: 100px; */
+  padding: 5px;        
+  background-color: black;
+  position: center;
+}
+
+.pie-detail {
+  width: 100%;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.issue-detail > .issue-description {
+  font-family: 'Lato';
+  font-size: 1.2em;
+  padding: 0 4% 0;
+  text-align: left;
+}
+
