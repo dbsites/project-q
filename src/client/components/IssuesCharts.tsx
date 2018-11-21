@@ -21,7 +21,7 @@ interface Props {
   selectedCompany: any
   selectedData: any
   userIssues: any
-  displayDetail: any
+  displayDetail?: any
 }
 
 class IssuesCharts extends Component<Props> {
@@ -31,7 +31,7 @@ class IssuesCharts extends Component<Props> {
 
     this.state = {
       pieIndex: 0,
-      displayDetail: true
+      displayDetail: false
     }
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
@@ -69,7 +69,7 @@ class IssuesCharts extends Component<Props> {
         msg = 'Hover over charts below for detailed descriptions';
     
         display = userIssuesArray
-          .map((issueObj: any) => {
+          .map((issueObj: any, index: number) => {
             const { name } = issueObj;
             if (name !== 'No Issue Selected') {
               const { alignedScore } = selectedCompany[name];
@@ -79,7 +79,7 @@ class IssuesCharts extends Component<Props> {
                 modal={moduleData}
                 polit={politData}
                 displayDetail={this.state.displayDetail}
-                handleMouseEnter={() => this.handleMouseEnter(this.state.index)}
+                handleMouseEnter={() => this.handleMouseEnter(index)}
                 handleMouseLeave={this.handleMouseLeave}
               />
             } else {

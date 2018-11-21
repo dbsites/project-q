@@ -23,7 +23,8 @@ interface Props {
 class IssuePie extends Component<Props> {
   render() {
     const { name, alignedScore } = this.props.info;
-    let blurb, display;
+    const { handleMouseEnter, handleMouseLeave, displayDetail } = this.props;
+    let blurb, display, companyName;
 
     if (this.props.modal) {
 
@@ -63,6 +64,8 @@ class IssuePie extends Component<Props> {
         norml_score,
         company_name,
       } = this.props.modal;
+
+      companyName = this.props.modal.company_name;
 
       const searchName = name.split(' ')[0].toUpperCase();
 
@@ -118,7 +121,7 @@ class IssuePie extends Component<Props> {
               dataKey="value"
               startAngle={90}
               endAngle={450}
-              onMouseEnter={this.handleMouseEnter}
+              onMouseEnter={handleMouseEnter}
               paddingAngle={5}
               />
           </PieChart>
@@ -152,7 +155,7 @@ class IssuePie extends Component<Props> {
                 dataKey="value"
                 startAngle={90}
                 endAngle={450}
-                onMouseEnter={this.props.handleMouseEnter}
+                onMouseEnter={handleMouseEnter}
                 paddingAngle={5}>
                 {
                   DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
@@ -161,13 +164,14 @@ class IssuePie extends Component<Props> {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          {this.props.detailedView && <IssueDetail
+          {displayDetail && 
+          <IssueDetail
             polit={this.props.polit}
-            company={company_name}
+            company={companyName}
             blurb={blurb}
             name={name}
             score={alignedScore}
-            handleMouseLeave={this.props.handleMouseLeave}
+            handleMouseLeave={handleMouseLeave}
           />}
         </React.Fragment>
       );
