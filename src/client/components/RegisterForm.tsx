@@ -17,7 +17,7 @@ const RegisterForm: any = (props: any) => {
   const {
     registerFields,
     fetchFormFailure,
-    fetchFormRequest,
+    fetchForm,
     updateField
   } = props;
   const {
@@ -31,17 +31,17 @@ const RegisterForm: any = (props: any) => {
     registerError,
   } = registerFields;
 
-  const callFetchFormRequest = (registerFields: any): any => {
+  const callFetchForm = (registerFields: any): any => {
     if (!firstName.length || !lastName.length) return fetchFormFailure('register', 'Please enter your first and last name');
     if (!emailValid) return fetchFormFailure('register', 'Please enter a valid email address');
     if (registerPassword.length < 8) return fetchFormFailure('register', 'Password must be at least 8 characters');
     if (registerPassword !== confirmPassword) return fetchFormFailure('register', 'Passwords and Confirm Password must match');
     if (!agreeTerms) return fetchFormFailure('register', 'Please agree to the terms of service to continue');
-    return fetchFormRequest('register', registerFields)
+    return fetchForm('register', registerFields)
   }
 
   return (
-    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchFormRequest('register', registerFields)}} >
+    <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchForm('register', registerFields)}} >
       <FormField autofocus={true} field={firstName} form="register" name="firstName" type="text" updateField={updateField} >First Name: </FormField>
       <FormField autofocus={false} field={lastName} form="register" name="lastName" type="text" updateField={updateField} >Last Name: </FormField>
       <FormField autofocus={false} field={registerEmail} form="register" name="registerEmail" type="text" updateField={updateField} >Email: </FormField>
@@ -52,7 +52,7 @@ const RegisterForm: any = (props: any) => {
       </div>
       <FormError message={registerError} />
       <div className="submit-button-container">
-        <div className="submit-button" onClick={() => callFetchFormRequest(registerFields)}>Create Account</div>
+        <div className="submit-button" onClick={() => callFetchForm(registerFields)}>Create Account</div>
       </div>
       <div className="change-form-link">
         <Link to='/account/login'>Log In</Link>

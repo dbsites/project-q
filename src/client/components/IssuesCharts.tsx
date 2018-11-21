@@ -4,44 +4,57 @@
  */
 
 import * as React from 'react';
+
+// Import IssueID -> IssueName table for conversion
 import * as issueMatch from '../issueMatcher';
 
+// Import Components
 import IssuePie from './IssuePie';
+import Recipients from './Recipients';
 
-/** 
- * Interface for IssueCharts Props
-*/
-
+// TODO: move this props in types.ts and export in
 interface Props {
+  moduleData?: any
+  politData?: any
   selectedCompany: any
+  selectedData: any
   userIssues: any
 }
 
 const IssuesCharts = (props: Props) => {
+  const { moduleData, politData } = props.selectedData;
   const { selectedCompany, userIssues } = props;
   const { issueMatcher } = issueMatch;
 
-  let display: JSX.Element[];
+  // console.log('issuescharts props: ', props.selectedData);
+
+  let msg, display: JSX.Element[];
 
   const userIssuesArray = Object.keys(userIssues)
     .map((issueID: any) => {
       return {
         name: issueMatcher[issueID],
-        leaning: userIssues[issueID]
       }
     });
 
   if (selectedCompany) {
+    msg = 'Hover over charts below for detailed descriptions';
 
     display = userIssuesArray
       .map((issueObj: any) => {
-        const { name, leaning } = issueObj;
+        const { name } = issueObj;
         const { alignedScore } = selectedCompany[name];
-        const issueInfo = { name, leaning, alignedScore };
-        return <IssuePie info={issueInfo} />
+        const issueInfo = { name, alignedScore };
+        return <IssuePie
+          info={issueInfo}
+          modal={moduleData}
+          polit={politData}
+        />
       });
   }
   else {
+    msg = 'Select a company to view their issues scores';
+
     display = userIssuesArray
       .map((issueObj: any) => {
         const { name } = issueObj;
@@ -53,8 +66,10 @@ const IssuesCharts = (props: Props) => {
   return (
     <div className='quad' id="quad-issues">
       <div className="issues-container">
+        <p id="issues-header">{msg}</p>
         {display}
       </div>
+      <Recipients data={politData} />
     </div>
   );
 }

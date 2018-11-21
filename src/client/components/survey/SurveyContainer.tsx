@@ -3,28 +3,30 @@
  * @description Survey Question Container - User Onboarding
  */
 
+import './Survey.css';
+
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 // Import Actions
-import * as actions from '../actions/actionCreators';
+import * as actions from '../../actions/actionCreators';
 
 // Import Selector Functions
-import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition, getQuestionsList } from '../reducers/surveyReducer';
-import { getIssueName } from '../reducers/issuesReducer';
+import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition, getQuestionsList } from '../../reducers/surveyReducer';
+import { getIssueName } from '../../reducers/issuesReducer';
 
 // Import Componenets
-import SurveyPage from '../components/SurveyPage';
-import SurveyQuestion from '../components/SurveyQuestion';
+import SurveyPage from './SurveyPage';
+import SurveyQuestion from './SurveyQuestion';
 
 // Import Types
-import { IssueQuestionsState, SurveyState } from '../reducers/types';
-import ProgressBar from '../components/ProgressBar';
+import { IssueQuestionsState, SurveyState } from '../../reducers/types';
+import ProgressBar from './ProgressBar';
 
 const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, submitSurvey, updateIssuePosition, updateIssuesSelected, prevPage,  // Actions
-    issues, survey, user,                                                       // State
+    issues, survey, user,                                                               // State
   } = props;
 
   const { issuesSelected, surveyPage, userId } = user;

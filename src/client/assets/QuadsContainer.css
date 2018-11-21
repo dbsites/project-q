@@ -1,7 +1,19 @@
+/* * * * * * * * * * * * * * * *
+ *           WINDOW            *  
+ * * * * * * * * * * * * * * * */
+
+::-webkit-scrollbar {
+  background: #282828;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFFFFF;
+}
+
 #quads-container {
   display: grid;
-  grid-template-columns: minmax(80vh, 80vh) minmax(80vh, 80vh);
-  grid-template-rows: minmax(20vw, 25vw) minmax(20vw, 25vw);
+  grid-template-columns: minmax(80vh, 90vh) minmax(80vh, 90vh);
+  grid-template-rows: minmax(20vw, 25vw) minmax(22vw, 25vw);
   max-width: 98%;
   margin: 0 auto;
 }
@@ -10,14 +22,11 @@
   background-color: black;
 }
 
-#quad-overview {
-  overflow: auto;
-}
-
-/* QUAD CONTAINER - OVERVIEW */
+/* * * * * * * * * * * * * * * *
+ *          OVERVIEW           *  
+ * * * * * * * * * * * * * * * */
 
 .overview-container {
-  border: 1px solid gold;
   display: flex;
   height: 99%;
   margin: auto;
@@ -27,19 +36,35 @@
 .overview-container p {
   color: #FFFFFF;
   margin: auto;
-  text-align: center;
 }
 
 #overview-left {
-  border-right: 1px solid white;
-  display: inline-block;
   width: 40%;
+}
+
+#overview-left h3 {
+  margin: 0;
+  color: #FFFFFF;
   text-align: center;
 }
 
-#overview-left h2 {
-  color: white;
-  margin: 20px auto 10px;
+#overall-score-chart {
+  margin: 15% auto 5%;
+  width: 100%;
+  height: 50%;
+}
+
+#overall-score-chart path{
+  stroke-width: 2.5;
+}
+
+#overall-score-chart text {
+  fill: white;
+}
+
+#overall-score-chart tspan {
+  font-size: 2em;
+  font-weight: bolder;
 }
 
 #overview-right {
@@ -48,166 +73,225 @@
   height: 100%;
   line-height: 100%;
   vertical-align: top;
-  margin-top: 25px;
-}
-#overview-right h3 {
-  padding-left: 10px;
-  margin-top: 15px;
 }
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.9em;
-  padding-left: 15px;
-  padding-top: 5px;
+  font-size: 0.7em;
   color: #A5A8A6;
-  margin-bottom: 5px;
 } 
 
-#overview-right a {
-  padding-left: 15px;
+#overview-logo {
+  position: relative;
+  text-align: center;
+  width: 80%;
+}
+
+#overview-logo img {
+  height: auto;
+  margin-top: 10%;
+  max-width: 275px;
+  max-height: 50px;
+  min-height: 50px;
 }
 
 #overview-description-container {
-  display: inline-block;
-  padding-left: 15px;
-  padding-top: 5px;
-  width: 95%;
+  display: block;
+  width: 80%;
 }
 
-#overview-description-container p {
+#company-info {
   text-align: left;
-  /* margin-top: 5px; */
-  padding: 2px;
-}
-
-#overview-description-container a:link {
-  color: #FFFFFF
-}
-
-/* #company-info {
-  margin-bottom: 10px;
-}
-
-#company-info-more {
-  margin-top: 10px;
-} */
-
-#company-market-price {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #000000;
-  width: 81%;
-  background-color: white;
-  text-align: center;
-  margin: 10px auto 0;
-  padding: 10px 0;
-}
-
-#company-info-more ul {
-  width: 90%;
-  text-align: center;
-  margin: 0.5em 0;
-}
-
-#company-info-more li {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  /* width: 40%; */
-  /* background-color: white; */
-  text-align: center;
-  /* padding: 5px 0; */
-  border-right: 1px solid black;
-  margin-right: 10%;
-  margin-bottom: 0;
-  /* margin-top: 2px; */
-}
-
-/* #company-info-employees p {
-  font-family: 'Cinzel', serif;
-  font-size: 0.8em;
-  color: #FFFFFF;
-  display: inline-block;
-  width: 40%;
-  background-color: white;
-  text-align: center;
-  padding: 5px 0;
-} */
-
-#overview-right a {
-  padding-left: 0;
-}
-
-#overall-score-chart {
-  margin: 10px auto;
-  width: 200px;
-  height: 200px;
-}
-
-#overall-score-chart text {
-  font-size: 20px;
-  fill: white;
-  margin: 10px;
-}
-
-#overview-logo {
-  border: 2px dashed gold;
-  display: flex;
-  margin: auto;
-  height: 50px;
-  width: auto;
-  max-width: 90%;
-  margin: 0 15px;
-  text-align: center;
-}
-
-#overview-logo p {
-  color: white;
-  font-size: 16px;
-  font-weight: bolder;
-  margin: auto;
+  margin-top: 2.5%;
+  margin-bottom: 2.5%;
+  width: 100%;
 }
 
 #company-url-pre {
-  margin-top: 5px;
+  margin-top: 2.5%;
 }
 
-/**********************/
-#quad-stock {
+#company-url-pre a,
+#company-url-pre a:visited {
+  color: #FFFFFF;
 }
 
+/* * * * * * * * * * * * * * * *
+ *            STOCK            *  
+ * * * * * * * * * * * * * * * */
+
+ .stock-container {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  height: 99%
+}
+
+.stock-container p {
+  margin: auto;
+  text-align: center;
+  color: #A5A8A6;
+}
+
+.stock-container iframe {
+  width: 100%;
+  height: 95%;
+  background-color: black;
+}
+
+.stock-container-info {
+  margin: 0;
+  max-height: 14%;
+}
+
+.stock-container-info ul {
+  margin: 0;
+  color: white;
+}
+
+.stock-container-info li {
+  color:#A5A8A6;
+  display: inline-block;
+  font-size: 0.65em;
+  margin: 15%;
+}
+
+.stock-container-info span {
+  display: block;
+}
+
+.stock-container-info {
+  width: 10%;
+}
+
+.stock-info-list {
+  padding: 0;
+}
+
+.stock-info-list span {
+  /* animation: blinker 1s linear infinite; */
+  /* border: 1px solid gold; */
+}
+
+/* * * * * * * * * * * * * * * *
+ *           ISSUES            *  
+ * * * * * * * * * * * * * * * */
+ 
 #quad-issues {
   width: 100%;
+  height: 99%;
 }
 
+#issues-header {
+  margin: 0;
+  color: #A5A8A6;
+}
 
-
-.quad-container {
+.issues-container {
   display: inline-block;
-  /* border: 2px solid gold; */
-  margin: 20px auto;
-  /* height: 200px; */
-  width: 100%;
+  width: 75%;
+  height: 99%;
+}
+
+.issues-container p {
   text-align: center;
+  color: #FFFFFF;
+}
+
+.issue-box {
+  height: 48%;
+  width: 32.5%;
+  display: inline-block;
+  vertical-align: top; 
+}
+
+.issue-pie {
+  margin: 5% 5%;
+  width: 100%;
+  height: 80%;
+}
+
+.issue-pie tspan {
+  font-size: 1.25em;
+  position: relative;
+  height: 100%
+}
+
+.issue-pie path {
+  stroke-width: 2.5;
+}
+
+.issue-box p {
+  display: block;
+  font-size: 0.8em;
+  margin: 5% auto;
+  color: #ffffff,
+}
+
+.issues-politicians {
+  display: inline-block;
   vertical-align: top;
-}
-.quad-container p {
-  color: #FFFFFF;
+  width: 25%;
+  height: 99%;
 }
 
+.polit-recip {
+  font-size: 0.8em;
+  margin: 0;
+  text-align: center;
+  text-decoration: underline;
+  color: #A5A8A6;
+}
 
-.quad h3 {
+.polit-info {
+  color: #A5A8A6;
+  font-size: 0.6em;
+  text-align: center;
+  margin: 0;
+}
+
+.politician {
+  margin: 5% auto 0;
+  width: 80%;
+  height: 25%;
+}
+
+.politician p {
+  font-size: 0.6em;
   color: #FFFFFF;
-  margin: 10px 0;
-  padding-left: 20px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.politician img {
+  /* border: 2px dashed gold; */
+  display: block;
+  position: relative;
+  width: auto;
+  height: 80%;
+  margin: 2% auto;
+}
+
+/* * * * * * * * * * * * * * * *
+ *        COMPANY LIST         *  
+ * * * * * * * * * * * * * * * */
+
+#quad-company-list {
+  height: 99%;
+  width: 100%;
+}
+
+/* loading video */
+#quad-company-list img {
+  display: block;
+  position: relative;
+  margin: auto;
+  max-height: 85%;
+  max-width: 85%; 
 }
 
 .divTable {
-  border: 1px solid gold;
   background-color: #000000;
-  /* border: 2px solid gold; */
   width: 100%;
   overflow: auto;
 }
@@ -218,129 +302,54 @@
   width: 100%;
 }
 
-#quad-box-cl {
-  /* border: 2px solid white; */
-  /* display: grid; */
-  position: absolute;
-  top: 0;
-  left: 0;
-  max-height: 100%;
-  width: 100%;
-  /* overflow: scroll; */
-}
-
 .cl-category {
   display: inline-block;
-  border: 2px solid black;
   height: 100%;
-  margin-top: 10px;
   overflow: auto;
+  margin-right: 2.5%;
 }
 
 .cl-header {
-  position: relative; 
-  color: red;
-  top: 2px;
-  margin-top: 5px;
-  padding-left: 5px;
+  background-color: black; 
+  color: #FFFFFF;
+  font-size: 0.8em;
   text-align: center;
 }
 
 #cl-category-name {
-  min-width: 100px;
-  max-width: 225px;
+  min-width: 30%;
+  max-width: 50%;
   overflow: hidden;
 }
 
-#cl-category-overall {
-  margin: 0 15px;
-}
-
-.cl-list {
-  padding-top: 5px;
-  padding-left: 5px;
-}
-
 .cl-list a, .cl-list p {
+  color: #A5A8A6;
+}
+
+.cl-list a:hover {
   color: #FFFFFF;
 }
 
 .company-names-list {
   display: block;
+  font-size: 0.8em;
   list-style-position: inside;
   list-style-type: none; 
-  /* padding-left: 5px; */
+  text-decoration: none;
   white-space: nowrap;
   margin: 0;
-}
-
-.company-list{
-  display: block;
-  list-style-position: inside;
-  list-style-type: none; 
-  /* padding-left: 5px; */
-  white-space: nowrap;
-  margin: 0;
-  text-align: center;
 }
 
 .company-list {
-  margin: 0;
-  padding: 0;
-}
-
-#img-stock-graph {
-  position: relative;
-  text-align: center;
-  height: 250px;
-  width: 100%;
-}
-
-#list-overview {
+  display: block;
+  font-size: 0.8em;
+  list-style-position: inside;
   list-style-type: none; 
-  padding-left: 20px;
-}
-
-#list-overview h2, #list-overview em, #list-overview p{
-  color: #FFFFFF;
-}
-
-#overview-company-logo {
-  max-width: 400px;
-  max-height: 200px;
-}
-
-.stock-container {
-  border: 1px solid gold;
-  display: flex;
-  margin: auto;
-  width: 100%;
-  height: 99%
-}
-
-.stock-container iframe {
-  width: 100%;
-  height: 100%;
-  background-color: black;
-}
-
-.stock-container p {
-  margin: auto;
+  white-space: nowrap;
+  margin: 0;
   text-align: center;
 }
 
-.issues-container {
-  border: 1px solid gold;
-  /* display: flex; */
-  width: 100%;
-  height: 99%;
-  margin: auto;
-  overflow: hidden;
+#cl-category-overall p {
+  font-weight: bolder;
 }
-
-.issues-container p {
-  color: #FFFFFF;
-  margin: auto;
-  text-align: center;
-}
-

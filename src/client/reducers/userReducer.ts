@@ -1,6 +1,7 @@
 /**
  * @module userReducer
  * @description Reducer for User Object
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';
@@ -39,9 +40,6 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
       
     case actions.UPDATE_ISSUE_POSITION:
       nextState[action.issueId] = action.position;
-      console.log('Action: ', action);
-      console.log('State: ', state);
-      console.log('Next State: ', nextState);
       return {
         ...state,
         ...nextState
@@ -57,26 +55,44 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
   const {response} = action;
   switch (action.type) {
   
+    case actions.FETCH_LOGOUT_SUCCESS:
+    case actions.FETCH_LOGOUT_FAILURE:
+    case actions.FETCH_AUTH_FAILURE:
+      return {
+        ...initialUserState,
+        isAuth: false,
+      };
+
     case actions.FETCH_AUTH_SUCCESS:
     case actions.FETCH_FORM_SUCCESS:
-    case actions.FETCH_LOGOUT_SUCCESS:
       return {
         ...initialUserState,
         ...response,
       };
     
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      console.log(response);
       return {
         ...state,
-        ...response,
         issuesComplete: true,
+      };
+
+    case actions.FETCH_SUBMIT_ISSUES_FAILURE:
+      return {
+        ...state,
+        issuesComplete: false,
       };
 
     case actions.FETCH_SUBMIT_SURVEY_SUCCESS:
       return {
         ...state,
         surveyComplete: true,
+      };
+
+      case actions.FETCH_SUBMIT_SURVEY_FAILURE:
+      return {
+        ...state,
+        surveyComplete: false,
+        surveyPage: 0,
       };
 
     case actions.UPDATE_ISSUE_POSITION:
@@ -98,6 +114,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       return {
         ...state,
         issuesComplete: false,
+        surveyComplete: false,
         surveyPage: 0,
       }
 

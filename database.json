@@ -1,0 +1,35 @@
+{
+    "dev": {
+        "driver": "pg",
+        "host": "localhost",
+        "user": "ethiqadmin",
+        "password": "admin",
+        "database": "ethiqdb"
+    },
+
+    "postgres-db": {
+        "driver": "pg",
+        "host": "postgres-db",
+        "user": "ethiqadmin",
+        "password": "admin",
+        "database": "ethiqdb"
+    },
+
+    "postgres-db-test": {
+        "driver": "pg",
+        "host": "postgres-db-test",
+        "user": "ethiqadmin",
+        "password": "admin",
+        "database": "ethiqdb"
+    },
+
+    "rds": {
+        "driver": "pg",
+        "host": { "ENV": "RDS_HOSTNAME" },
+        "user": { "ENV": "RDS_USERNAME" },
+        "password": { "ENV": "RDS_PASSWORD" },
+        "database": { "ENV": "RDS_DB_NAME" }
+    },
+
+    "sql-file": true
+}

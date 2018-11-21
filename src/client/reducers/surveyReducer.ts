@@ -1,6 +1,7 @@
 /**
  * @module surveyReducer
  * @description Reducer for Survey Object
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';

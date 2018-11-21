@@ -64,6 +64,9 @@ DatabaseMethods.getIssues = (_: Request, res: Response, next: NextFunction) => {
 
 // get issue abbreviated names
 DatabaseMethods.getIssueAbbrvs = (_: Request, res: Response, next: NextFunction) => {
+  // if request has failed in prior middleware
+  if (res.locals.status === 500) next();
+  
   // declare object to return to the front end
   res.locals.issueAbbrvs = {};
   // query db for issue data
@@ -80,6 +83,33 @@ DatabaseMethods.getIssueAbbrvs = (_: Request, res: Response, next: NextFunction)
   .catch((error: any) => {
     console.log('ERROR AT insertIssues IN addQuestionToDb', error);
   });
+}
+
+DatabaseMethods.insertPoliticianData = (req: Request, _: Response, next: NextFunction) => {
+  db.data.insertPoliticianData(req.body)
+  .then(() => {
+    next();
+  })
+}
+
+DatabaseMethods.getPoliticianData = async (_: Request, res: Response, next: NextFunction) => {
+
+
+  db.data.getPoliticianData(res.locals.companyData)
+  .then((politicianData: any) => {
+    res.locals.modules = {};
+    res.locals.modules.politicianData = politicianData;
+    res.locals.modules.moduleData = res.locals.moduleData
+    next();
+  })
+}
+
+DatabaseMethods.getSinglePoliticianData = (req: Request, res: Response, next: NextFunction) => {
+  db.data.getSinglePoliticianData(req.body.ticker)
+  .then((politicianData: any) => {
+    res.locals.politicianData = politicianData;
+    next();
+  })
 }
 
 

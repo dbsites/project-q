@@ -1,18 +1,27 @@
 /**
  * @module formReducer
  * @description Reducer for Login and Registration Forms
+ * UNIT TEST COVERAGE - 0%
  */
 
 import actions from '../actions/actionTypes';
-import { FormState, LoginState, RegisterState, ResetPassState } from './types';
+import {
+  FormState,
+  LoginState, RegisterState,
+  ForgotPassState, ResetPassState,
+} from './types';
 
 // Define initial state
-const initialResetState: ResetPassState = {
-  resetPass: false,
+const initialForgotState: ForgotPassState = {
   forgotPassEmail: '',
   emailValid: false,
+  forgotError: '',
+}
+
+const initialResetState: ResetPassState = {
   newPassword: '',
   confirmNewPassword: '',
+  resetId: '',
   resetError: '',
 }
 
@@ -38,36 +47,57 @@ const initialRegisterState: RegisterState = {
 const initialFormState: FormState = {
   login: initialLoginState,
   register: initialRegisterState,
+  forgot: initialForgotState,
   reset: initialResetState,
 }
 
-const resetReducer = (state: ResetPassState = initialResetState, action: any): ResetPassState => {
+const forgotReducer = (state: ForgotPassState = initialForgotState, action: any): ForgotPassState => {
   switch (action.type) {
-
     // UPDATE_FIELD - update input field (or checkbox) to value
     case actions.UPDATE_FIELD:
-    // Email Validation
-    let emailValid: boolean = state.emailValid;
-    if (action.formFieldObject.field === 'forgotPassEmail') {
-      if (action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-        emailValid = action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
-      } else {
-        emailValid = false;
+      // Email Validation
+      let emailValid: boolean = state.emailValid;
+      if (action.formFieldObject.field === 'forgotPassEmail') {
+        if (action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
+          emailValid = action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
+        } else {
+          emailValid = false;
+        }
       }
-    }
 
-    return {
-      ...state,
-      emailValid,
-      [action.formFieldObject.field]: action.formFieldObject.value,
-    };
+      return {
+        ...state,
+        emailValid,
+        [action.formFieldObject.field]: action.formFieldObject.value,
+      };
 
     // FETCH_FORM_FAILURE - update form with error message
     case actions.FETCH_FORM_FAILURE:
-    return {
-      ...state,
-      resetError: action.message,
-    }
+      return {
+        ...state,
+        forgotError: action.message,
+      }
+
+    default:
+      return state;
+  }
+};
+
+const resetReducer = (state: ResetPassState = initialResetState, action: any): ResetPassState => {
+  switch (action.type) {
+    // UPDATE_FIELD - update input field (or checkbox) to value
+    case actions.UPDATE_FIELD:
+      return {
+        ...state,
+        [action.formFieldObject.field]: action.formFieldObject.value,
+      };
+
+    // FETCH_FORM_FAILURE - update form with error message
+    case actions.FETCH_FORM_FAILURE:
+      return {
+        ...state,
+        resetError: action.message,
+      }
 
     default:
       return state;
@@ -76,7 +106,6 @@ const resetReducer = (state: ResetPassState = initialResetState, action: any): R
 
 const loginReducer = (state: LoginState = initialLoginState, action: any): LoginState => {
   switch (action.type) {
-
     // UPDATE_FIELD - update input field (or checkbox) to value
     case actions.UPDATE_FIELD:
     // Email Validation
@@ -109,14 +138,13 @@ const loginReducer = (state: LoginState = initialLoginState, action: any): Login
 
 const registerReducer = (state: RegisterState = initialRegisterState, action: any): RegisterState => {
   switch (action.type) {
-
     // UPDATE_FIELD - update input field (or checkbox) to value
     case actions.UPDATE_FIELD:
       // Email Validation
       let emailValid: boolean = state.emailValid;
       if (action.formFieldObject.field === 'registerEmail') {
         if (action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)) {
-          emailValid = action.payload.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
+          emailValid = action.formFieldObject.value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i).length === 4;
         } else {
           emailValid = false;
         }
@@ -153,6 +181,11 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
         ...state,
         register: registerReducer(state.register, action),
       }
+    } else if (action.formFieldObject.form === 'forgot') {
+      return {
+        ...state,
+        forgot: forgotReducer(state.forgot, action),
+      }
     } else if (action.formFieldObject.form === 'reset') {
       return {
         ...state,
@@ -166,6 +199,8 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
         ...state,
         login: initialLoginState,
         register: initialRegisterState,
+        forgot: initialForgotState,
+        reset: initialResetState,
       };
 
     //  FETCH_FORM_FAILURE - Update form with error message
@@ -180,6 +215,12 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
         return {
           ...state,
           login: loginReducer(state.login, action),
+        };
+      }
+      if (action.form === 'forgot') {
+        return {
+          ...state,
+          forgot: forgotReducer(state.forgot, action),
         };
       }
       if (action.form === 'reset') {

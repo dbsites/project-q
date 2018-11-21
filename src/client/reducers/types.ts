@@ -29,18 +29,23 @@ export interface RegisterState {
   readonly registerError: string,
 };
 
-export interface ResetPassState {
-  resetPass: boolean,
+export interface ForgotPassState {
   forgotPassEmail: string,
   emailValid: boolean,
+  forgotError: string,
+}
+
+export interface ResetPassState {
   newPassword: string,
   confirmNewPassword: string,
+  resetId: string,
   resetError: string,
 }
 
 export interface FormState {
   readonly login: LoginState,
   readonly register: RegisterState,
+  readonly forgot: ForgotPassState,
   readonly reset: ResetPassState,
 }
 
@@ -53,7 +58,7 @@ export interface QuestionState {
 };
 
 export interface IssueQuestionsState {
-  [name: string]: QuestionState,
+  [questionId: string]: QuestionState,
 };
 
 export interface SurveyState {
@@ -83,12 +88,29 @@ export interface UserState {
 };
 
 export interface LoadingState {
-  readonly authLoading: boolean,
-  readonly issuesLoading: boolean,
-  readonly surveyLoading: boolean,
+  [nameLoading: string]: boolean
 }
 
 //***************************** */
+
+export interface QuadsProps {
+  readonly selectedCompany: CompanyState | null
+  selectedCompanyData: any
+  companyList: any
+  userIssues: any
+  issueAbbrvs: any
+  fetchCompanyList: any
+  sortCompanyList: any
+  selectCompany: any
+  getUserIssues: any
+  getCompanyInfo: any
+}
+
+export interface IssueScore {
+  readonly agreeScore: number
+  readonly disagreeScore: number
+  readonly alignedScore?: number
+}
 
 export interface CompanyState {
   readonly full_name: string | null
@@ -99,6 +121,18 @@ export interface CompanyState {
   readonly numberEmployees: number | null
   readonly url: number | null
   readonly logo: string | null
+  readonly "2nd Amendment": IssueScore
+  readonly "Civil/Women's Rights": IssueScore
+  readonly "Corporate Philanthropy": IssueScore
+  readonly "Drug Legalization": IssueScore
+  readonly "Economy and Jobs": IssueScore
+  readonly "Environment": IssueScore
+  readonly "Executive Compensation": IssueScore
+  readonly "Health Care": IssueScore
+  readonly "Immigration": IssueScore
+  readonly "Money and Politics": IssueScore
+  readonly "Presidential Support": IssueScore
+  readonly "Taxes": IssueScore
 }
 
 export interface CompanyListState {
@@ -119,6 +153,22 @@ export interface CompanyDataState {
   readonly userIssues: UserIssuesState
   readonly issueAbbrvs: IssueAbbrvsState
 }
+
+// interface CompanyInfo {
+//   readonly description: string,
+//   readonly overallScore: number,
+//   readonly logo: string,
+//   readonly ticker: string,
+//   readonly name: string,
+//   readonly yearFounded: number,
+//   readonly numberEmployees: number,
+//   readonly full_name: string,
+//   readonly url: string
+// }
+
+// interface SelectedCompany {
+//   readonly selected: CompanyInfo
+// }
 
 //***************************** */
 export interface ApplicationState {
