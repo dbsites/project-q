@@ -17,7 +17,7 @@ const Overview = (props: any) => {
   // Once dashboard loads before selection
   if (!props.selected) {
 
-    display = (<p>Select a company to see their overview</p>);
+    display = (<p>Loading . . . </p>);
 
   } else {
     const {

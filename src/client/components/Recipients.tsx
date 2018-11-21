@@ -23,15 +23,18 @@ const Recipients = (props: any) => {
         <div className="politician" key="recip-1">
           <img src={recip_1_img} />
         </div>
-        <p className="polit-info">{`${recip_1} ${recip_1_amount}`}</p>
+        <p className="polit-info-name">{`${recip_1}`}</p>
+        <p className="polit-info">{`${recip_1_amount}`}</p>
         <div className="politician">
           <img src={recip_2_img} />
         </div>
-        <p className="polit-info">{`${recip_2} ${recip_2_amount}`}</p>
+        <p className="polit-info-name">{`${recip_2}`}</p>
+        <p className="polit-info">{`${recip_2_amount}`}</p>
         <div className="politician">
           <img src={recip_3_img} />
         </div>
-        <p className="polit-info">{`${recip_3} ${recip_3_amount}`}</p>
+        <p className="polit-info-name">{`${recip_3}`}</p>
+        <p className="polit-info">{`${recip_3_amount}`}</p>
       </React.Fragment>
     );
 
