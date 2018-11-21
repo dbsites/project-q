@@ -4,7 +4,6 @@
  */
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 
 import Header from '../containers/HeaderContainer';
 
@@ -190,11 +189,6 @@ const PrivacyPolicy = () => {
         <p>
           This Privacy Policy may be amended by Us at any time and without notice, but only by amending this Policy as posted on this Website. Any amendments will become effective 30 days after being posted on the website, unless circumstances require that a change be immediately implemented.
         </p>
-      </div>
-      <div className="dashboard-footer">
-        <div className="dashboard-footer-button dashboard-footer-terms-button">
-          <Link to='/account/register'>Create an Account</Link>
-        </div>
       </div>
     </div>
   )

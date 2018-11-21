@@ -55,7 +55,6 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
   // Derive POST request URI from form to be submitted and issue fetch request
 
   const fetchURI: string = `/api/${form}`;
-
   return fetch(fetchURI, {
     method: 'POST',
     headers: {
@@ -70,7 +69,9 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
       if (response.status === 401) throw new Error('Invalid email address or password');
       throw new Error('Something has gone wrong - please try again');
     })
-    .then((response: IFormFetchSuccessResponseObject) => dispatch(fetchFormSuccess(response)))
+    .then((response: IFormFetchSuccessResponseObject) => {
+      return dispatch(fetchFormSuccess(response))
+    })
     .catch((error: Error) => dispatch(fetchFormFailure(form, error.message)));
 }
 
@@ -261,10 +262,12 @@ export const fetchCompanyList = () => (dispatch: any) => {
   fetch('/api/companyList')
     .then((response: any) => response.json())
     .then((data: any) => {
-      console.log('data returned from fetchCompanyList: ', data);
       dispatch({
         type: types.FETCH_COMPANY_LIST,
         data
+      })
+      dispatch({
+        type: types.SET_DEFAULT_COMPANY
       });
       dispatch({
         type: types.ADD_COMPANY_SCORE
@@ -277,7 +280,6 @@ export const fetchCompanyList = () => (dispatch: any) => {
 }
 
 export const getStockData = (ticker: string) => (dispatch: any) => {
-  console.log('hello again, ticker = ', ticker);
   fetch('/api/stockData', {
     method: 'POST',
     headers: {

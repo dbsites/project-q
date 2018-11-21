@@ -27,12 +27,27 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
   switch (action.type) {
 
     case actions.FETCH_COMPANY_LIST:
-      const companyListArray = Object.values(action.data.companyDataArray);
+      const companyListArray = Object
+        .values(action.data.companyDataArray)
+        .sort((a: any, b: any): any => {
+          if (a.full_name.toUpperCase() < b.full_name.toUpperCase())
+            return -1;
+          if (a.full_name.toUpperCase() > b.full_name.toUpperCase())
+            return 1;
+          return 0;
+        });
+
       return {
         ...state,
         companyList: companyListArray,
         issueAbbrvs: action.data.issueAbbrvs
       };
+
+    case actions.SET_DEFAULT_COMPANY:
+      return {
+        ...state,
+        selectedCompany: state.companyList[0],
+      }
 
     case actions.GET_USER_ISSUES:
       return {
@@ -77,14 +92,23 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       }
 
     case actions.GET_SELECTED_COMPANY_INFO:
-      //check if it exists in fullCompanyModal/fullCompanyPolit first!!!!!!
       const { moduleData, politData } = action.payload;
-      // console.log('module data: ', moduleData);
-      // console.log('polit data: ', politData);
-      return {
-        ...state,
-        selectedCompanyData: {
-          moduleData, politData
+
+      if (state.fullCompanyModal && state.fullCompanyPolit) {
+        const { full_name } = state.selectedCompany;
+        return {
+          ...state,
+          selectedCompanyData: {
+            moduleData: state.fullCompanyModal[full_name][0],
+            politData: state.fullCompanyPolit[full_name][0]
+          }
+        }
+      } else {
+        return {
+          ...state,
+          selectedCompanyData: {
+            moduleData, politData
+          }
         }
       }
 
@@ -122,7 +146,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         ...state,
         companyList: newCompanyList
       }
-
 
     case actions.SELECT_COMPANY:
       const companyList = Object.values(state.companyList);

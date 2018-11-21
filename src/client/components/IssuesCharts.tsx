@@ -12,7 +12,7 @@ import * as issueMatch from '../issueMatcher';
 // Import Components
 import IssuePie from './IssuePie';
 import Recipients from './Recipients';
-import { render } from 'enzyme';
+// import { render } from 'enzyme';
 
 // TODO: move this props in types.ts and export in
 interface Props {
@@ -21,6 +21,7 @@ interface Props {
   selectedCompany: any
   selectedData: any
   userIssues: any
+  displayDetail: any
 }
 
 class IssuesCharts extends Component<Props> {
@@ -47,39 +48,49 @@ class IssuesCharts extends Component<Props> {
   }
 
   render() {
-    const { moduleData, politData } = this.props.selectedData;
-    const { selectedCompany, userIssues } = this.props;
-    const { issueMatcher } = issueMatch;
-
-    let msg, display: JSX.Element[];
-
-    const userIssuesArray = Object.keys(userIssues)
-      .map((issueID: any) => {
-        return {
-          name: issueMatcher[issueID],
-        }
-      });
-
-    if (selectedCompany) {
-      msg = 'Hover over charts below for detailed descriptions';
-
-      display = userIssuesArray
-        .map((issueObj: any, index: any) => {
-          const { name } = issueObj;
-          const { alignedScore } = selectedCompany[name];
-          const issueInfo = { name, alignedScore };
-          const detailedView = this.state.displayDetail && this.state.pieIndex === index;
-          return <IssuePie
-            info={issueInfo}
-            modal={moduleData}
-            polit={politData}
-            detailedView={detailedView}
-            handleMouseEnter={() => this.handleMouseEnter(index)}
-            handleMouseLeave={this.handleMouseLeave}
-            // (this.handleMouseEnter)(event) (() => this.handleMouseEnter(index))(event)
-          />
+      const { moduleData, politData } = this.props.selectedData;
+      const { selectedCompany, userIssues } = this.props;
+      const { issueMatcher } = issueMatch;
+    
+      let msg, display: JSX.Element[];
+    
+      const userIssuesArray = Object.keys(userIssues)
+        .map((issueID: any) => {
+          return {
+            name: issueMatcher[issueID],
+          }
         });
-    }
+    
+      while (userIssuesArray.length !== 6) {
+        userIssuesArray.push({ name: 'No Issue Selected' });
+      }
+    
+      if (selectedCompany) {
+        msg = 'Hover over charts below for detailed descriptions';
+    
+        display = userIssuesArray
+          .map((issueObj: any) => {
+            const { name } = issueObj;
+            if (name !== 'No Issue Selected') {
+              const { alignedScore } = selectedCompany[name];
+              const issueInfo = { name, alignedScore };
+              return <IssuePie
+                info={issueInfo}
+                modal={moduleData}
+                polit={politData}
+                displayDetail={this.state.displayDetail}
+                handleMouseEnter={() => this.handleMouseEnter(this.state.index)}
+                handleMouseLeave={this.handleMouseLeave}
+              />
+            } else {
+              const issueInfo = { name };
+              return <IssuePie
+                info={issueInfo}
+              />
+            }
+          });
+      }
+
     else {
       msg = 'Select a company to view their issues scores';
 

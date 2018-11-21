@@ -6,15 +6,21 @@
 import * as React from 'react';
 
 const commafy = (value: number) => {
-  return value
+
+  const dollars = value
     .toString()
+    .split('.')[0]
     .split('')
     .reverse()
     .reduce((numString: string, next: string, i: number) => {
       if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
       else numString = next + numString;
       return numString;
-    }, '')
+    }, '');
+
+  const cents = value.toString().split('.')[1] || '00';
+
+  return `${dollars}.${cents}`;
 }
 
 const StockGraph = (props: any) => {
@@ -22,7 +28,7 @@ const StockGraph = (props: any) => {
   let display;
 
   if (!props.selected) {
-    display = (<p>Select a company for stock market performance</p>)
+    display = (<p>Loading . . . </p>)
   } else {
     const { ticker } = props.selected;
     let high, low, open, close, volume;
@@ -47,11 +53,11 @@ const StockGraph = (props: any) => {
         </iframe >
         <div className="stock-container-info">
           <ul className="stock-info-list">
-            <li>High<span>{high}</span></li>
-            <li>Low<span>{low}</span></li>
-            <li>Open<span>{open}</span></li>
-            <li>Close<span>{close}</span></li>
-            <li>Volume<span>{volume}</span></li>
+            <li><span className="stock-info-cat">High</span><span>${high}</span></li>
+            <li><span className="stock-info-cat">Low</span><span>${low}</span></li>
+            <li><span className="stock-info-cat">Open</span><span>${open}</span></li>
+            <li><span className="stock-info-cat">Close</span><span>${close}</span></li>
+            <li><span className="stock-info-cat">Volume</span><span>${volume}</span></li>
           </ul>
         </div>
       </React.Fragment>

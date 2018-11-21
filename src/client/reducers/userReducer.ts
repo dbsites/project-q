@@ -114,6 +114,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       return {
         ...state,
         issuesComplete: false,
+        surveyComplete: false,
         surveyPage: 0,
       }
 

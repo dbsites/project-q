@@ -1,27 +1,35 @@
 /**
- * @module RegisterForm.tsx
- * @description User Survey Presentation Component
+ * @module SurveyButtons.tsx
+ * @description Survey Question Agree/Disagree Buttons
  */
 
- import * as React from 'react';
-import { AnswerPayload } from '../reducers/types';
+import * as React from 'react';
 
-const SurveyQuestion = (props: any) => {
+import { AnswerPayload } from '../../reducers/types';
 
-  const { answerQuestion, issueId, questionId, questionAgree, questionText } = props;
-  
-  let agreeButton;
-  let disagreeButton;
+interface SurveyButtonProps {
+  answerQuestion: any, // TODO: Specify
+  issueId: string,
+  questionAgree: boolean | null,
+  questionId: string,
+}
+
+const SurveyButtons = (props: SurveyButtonProps) => {
+  // Destructure Props
+  const {answerQuestion, issueId, questionAgree, questionId } = props;
 
   // Helper question that generates payload object
-  const callAnswerQuestion = (agreeVal: boolean): void => {
+  const callAnswerQuestion = (agreeVal: boolean): any => {
     const payload: AnswerPayload = {
       agree: agreeVal,
       issueId: issueId,
       questionId: questionId,
     }
-    answerQuestion(payload);
+    return answerQuestion(payload);
   }
+
+  let agreeButton: JSX.Element;
+  let disagreeButton: JSX.Element;
 
   if (questionAgree === null) {
     agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(true)}>Agree</div>;
@@ -35,15 +43,11 @@ const SurveyQuestion = (props: any) => {
   }
 
   return (
-    <div className="survey-question-box">
-      <span className="survey-question-text">{questionText}</span>
-      <div className="survey-question-hr"><hr /></div>
-      <div className="survey-question-buttons">
-        {agreeButton}
-        {disagreeButton}
-      </div>
+    <div className="survey-question-buttons">
+      {agreeButton}
+      {disagreeButton}
     </div>
-  );
-};
+  )
+}
 
-export default SurveyQuestion;
+export default SurveyButtons;

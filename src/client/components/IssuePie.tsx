@@ -15,6 +15,9 @@ interface Props {
   info: any
   modal?: any
   polit?: any
+  displayDetail?: any
+  handleMouseEnter?: any
+  handleMouseLeave?: any
 }
 
 class IssuePie extends Component<Props> {
@@ -101,8 +104,28 @@ class IssuePie extends Component<Props> {
           blurb = IssueScripts[name](company_name, alignedScore, name, taxes_paid);
           break;
       }
-      
-      const COLORS: string[] = ['#A5A8A6', (
+    }
+
+    if (!alignedScore) {
+      display = (
+        <ResponsiveContainer>
+          <PieChart width={100} height={100}>
+            <Pie
+              data={[{ name: name, value: 100 }]}
+              outerRadius="100%"
+              innerRadius="70%"
+              fill="#808080"
+              dataKey="value"
+              startAngle={90}
+              endAngle={450}
+              onMouseEnter={this.handleMouseEnter}
+              paddingAngle={5}
+              />
+          </PieChart>
+        </ResponsiveContainer>
+      );
+    } else {
+      const COLORS: string[] = ['#3A3A3A', (
         alignedScore >= 70 ? '#16C33F' : alignedScore >= 40 ? '#FAEB00' : '#FA2929'
       )];
 
@@ -150,29 +173,9 @@ class IssuePie extends Component<Props> {
       );
     }
 
-    else {
-      display = (
-        <ResponsiveContainer>
-          <PieChart width={100} height={100}>
-            <Pie
-              data={[{ name: name, value: 100 }]}
-              outerRadius="100%"
-              innerRadius="70%"
-              fill="#808080"
-              dataKey="value"
-              startAngle={90}
-              endAngle={450}
-              onMouseEnter={this.handleMouseEnter}
-              paddingAngle={5}
-              />
-          </PieChart>
-        </ResponsiveContainer>
-      );
-    } 
-
     return (
       <div className="issue-box">
-        <div className="issue-pie" id={name}>
+        <div className="issue-pie" id={name.split(' ').join('-')}>
           {display}
           <p>{name}</p>
         </div>

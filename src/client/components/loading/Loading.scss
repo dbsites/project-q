@@ -3,7 +3,7 @@ $bar-color: #FFFFFF;
 $ball-color: #FFFFFF;
 $bg-color: #EA4961;
 
-.loader-container {
+.loading-container {
   color: #FFFFFF;
   display: flex;
   flex-direction: column;
@@ -11,7 +11,7 @@ $bg-color: #EA4961;
   justify-content: center;
 }
 
-.loader {
+.loading {
   position: relative;
   width: 75px;
   height: 100px;

@@ -6,12 +6,13 @@
 import * as React from 'react';
 import FormError from './FormError';
 import FormField from './FormField';
+import { Redirect } from 'react-router-dom';
 
 // TODO: Assign explicit type to props
 // TODO: Look into update form / htmlForm?
 const ResetPass: any = (props: any) => {
   // Destructure form values and actions from props
-  const { fetchFormFailure, fetchForm, resetFields, updateField } = props;
+  const { fetchFormFailure, fetchForm, formLoading, resetFields, updateField } = props;
   const { newPassword, confirmNewPassword, resetError } = resetFields;
 
   const callFetchForm = (resetFields: any): any => {
@@ -19,6 +20,8 @@ const ResetPass: any = (props: any) => {
     if (newPassword !== confirmNewPassword) return fetchFormFailure('reset', 'Password must match Confirm Password');
     return fetchForm('reset', resetFields)
   }
+
+  if (formLoading) return <Redirect to='/account/login' push={true} />;
 
   return (
     <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchForm('login', resetFields)}}>

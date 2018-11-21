@@ -12,8 +12,8 @@
 
 #quads-container {
   display: grid;
-  grid-template-columns: minmax(80vh, 90vh) minmax(80vh, 90vh);
-  grid-template-rows: minmax(20vw, 25vw) minmax(22vw, 25vw);
+  grid-template-columns: minmax(75vh, 85vh) minmax(75vh, 85vh);
+  grid-template-rows: minmax(18vw, 20vw) minmax(20vw, 25vw);
   max-width: 98%;
   margin: 0 auto;
 }
@@ -34,7 +34,7 @@
 }
 
 .overview-container p {
-  color: #FFFFFF;
+  color: #A5A8A6;
   margin: auto;
 }
 
@@ -51,7 +51,7 @@
 #overall-score-chart {
   margin: 15% auto 5%;
   width: 100%;
-  height: 50%;
+  height: 60%;
 }
 
 #overall-score-chart path{
@@ -89,7 +89,7 @@
 
 #overview-logo img {
   height: auto;
-  margin-top: 10%;
+  margin-top: 5%;
   max-width: 275px;
   max-height: 50px;
   min-height: 50px;
@@ -168,6 +168,10 @@
   padding: 0;
 }
 
+.stock-info-cat {
+  color: #FFFFFF;
+}
+
 .stock-info-list span {
   /* animation: blinker 1s linear infinite; */
   /* border: 1px solid gold; */
@@ -183,7 +187,7 @@
 }
 
 #issues-header {
-  margin: 0;
+  margin: 4.5% 0 0;
   color: #A5A8A6;
 }
 
@@ -221,6 +225,10 @@
   stroke-width: 2.5;
 }
 
+#No-Issue-Selected {
+  font-size: 0.8em;
+}
+
 .issue-box p {
   display: block;
   font-size: 0.8em;
@@ -237,10 +245,16 @@
 
 .polit-recip {
   font-size: 0.8em;
-  margin: 0;
+  margin: 15% 0 0;
   text-align: center;
-  text-decoration: underline;
-  color: #A5A8A6;
+  color: #FFFFFF;
+}
+
+.polit-info-name {
+  color: #FFFFFF;
+  font-size: 0.6em;
+  text-align: center;
+  margin: 0;
 }
 
 .polit-info {
@@ -251,7 +265,7 @@
 }
 
 .politician {
-  margin: 5% auto 0;
+  margin: 2% auto 0;
   width: 80%;
   height: 25%;
 }
@@ -264,12 +278,11 @@
 }
 
 .politician img {
-  /* border: 2px dashed gold; */
   display: block;
   position: relative;
   width: auto;
   height: 80%;
-  margin: 2% auto;
+  margin: 2% auto 0;
 }
 
 /* * * * * * * * * * * * * * * *
@@ -286,12 +299,13 @@
   display: block;
   position: relative;
   margin: auto;
-  max-height: 85%;
+  max-height: 100%;
   max-width: 85%; 
 }
 
 .divTable {
   background-color: #000000;
+  margin: 3.5% 0 0;
   width: 100%;
   overflow: auto;
 }
@@ -302,11 +316,37 @@
   width: 100%;
 }
 
+#cl-category-nav {
+  width: 100%;
+  font-size: 1em;
+  color: #FFFFFF;
+  background-color: #000000;
+  position: fixed;
+  margin: 0;
+}
+
+#cl-category-name {
+  max-width: 27.25%;
+  overflow: hidden;
+}
+
+#cl-category-ticker {
+  margin-right: 3.5%;
+}
+
+#cl-category-overall {
+  margin-right: 3.5%;
+}
+
+#cl-category-issue .none {
+  padding-right: 15%;
+}
+
 .cl-category {
   display: inline-block;
   height: 100%;
   overflow: auto;
-  margin-right: 2.5%;
+  margin-right: 5.25%;
 }
 
 .cl-header {
@@ -314,12 +354,34 @@
   color: #FFFFFF;
   font-size: 0.8em;
   text-align: center;
+  margin-right: 1%;
 }
 
-#cl-category-name {
+#cl-header-name {
+  margin-right: 9.5%;
+}
+
+/* #cl-header-ticker {
+
+} */
+/* #cl-header-name .cl-list {
+  margin-right: 9%;
+} */
+
+/* #cl-category-name {
   min-width: 30%;
   max-width: 50%;
   overflow: hidden;
+} */
+
+/* #cl-category-ticker, */
+/* #cl-category-overall, */
+/* #cl-category-issue {
+  visibility: hidden;
+} */
+
+.cl-list {
+  padding-top: 15%;
 }
 
 .cl-list a, .cl-list p {

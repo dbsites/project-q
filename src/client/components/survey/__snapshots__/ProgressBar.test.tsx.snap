@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Progress Bar Component:  matches the snapshot 1`] = `
+<div
+  className="progress-bar-container"
+>
+  <div
+    className="progress-bar"
+  >
+    <div
+      className="progress-bar-fill"
+      style={
+        Object {
+          "width": "40%",
+        }
+      }
+    >
+      40
+      %
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Progress Bar Fill Component:  matches the snapshot 1`] = `
+<div
+  className="progress-bar-fill"
+  style={
+    Object {
+      "width": "40%",
+    }
+  }
+>
+  40
+  %
+</div>
+`;

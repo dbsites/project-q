@@ -45,3 +45,5 @@ const ProgressBar = (props: ProgressBarProps) => {
 }
 
 export default ProgressBar;
+
+export { ProgressBarFill };

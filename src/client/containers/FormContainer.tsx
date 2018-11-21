@@ -41,11 +41,14 @@ const mapStateToProps = (store: any): any => ({
     newPassword: store.form.reset.newPassword,
     confirmNewPassword: store.form.reset.confirmNewPassword,
     resetError: store.form.reset.resetError,
+    resetId: store.form.reset.resetId,
   },
   forgotFields: {
     forgotPassEmail: store.form.forgot.forgotPassEmail,
     forgotError: store.form.forgot.forgotError,
+    emailValid: store.form.forgot.emailValid,
   },
+  formLoading: store.loading.formLoading,
   isAuth: store.user.isAuth,
   userId: store.user.userId,
 });
@@ -56,6 +59,7 @@ const mapStateToProps = (store: any): any => ({
 // Extract form update and submit actions from store to pass as props
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
     updateField: (fieldObject: IFormFieldObject) => dispatch(actions.updateField(fieldObject)),
     fetchFormFailure: (form: string, message: string) => dispatch(actions.fetchFormFailure(form, message)),
     fetchForm: (form: string, formFields: LoginState | RegisterState | ForgotPassState | ResetPassState) => dispatch(actions.fetchForm(form, formFields)),
@@ -71,27 +75,28 @@ let FormContainer: any = (props: any) => {
     loginFields, registerFields, forgotFields, resetFields,
     fetchForm, fetchFormFailure,
     updateField,
-    fetchLogout,
-    isAuth, userId,
+    fetchLogout, updateIssuesSelected,
+    formLoading, isAuth, userId,
   } = props;
 
   const loginForm = <LoginForm
-      loginFields={loginFields}
-      fetchFormFailure={fetchFormFailure}
-      fetchForm={fetchForm}
-      updateField={updateField}
-    />;
+    loginFields={loginFields}
+    fetchFormFailure={fetchFormFailure}
+    fetchForm={fetchForm}
+    updateField={updateField}
+  />;
 
   const registerForm = <RegisterForm
-      registerFields={registerFields}
-      fetchFormFailure={fetchFormFailure}
-      fetchForm={fetchForm}
-      updateField={updateField}
-    />
+    registerFields={registerFields}
+    fetchFormFailure={fetchFormFailure}
+    fetchForm={fetchForm}
+    updateField={updateField}
+  />
 
   const forgotPassForm = <ForgotPass
     fetchFormFailure={fetchFormFailure}
     fetchForm={fetchForm}
+    formLoading={formLoading}
     forgotFields={forgotFields}
     updateField={updateField}
   />
@@ -99,6 +104,7 @@ let FormContainer: any = (props: any) => {
   const resetPassForm = <ResetPass
     fetchFormFailure={fetchFormFailure}
     fetchForm={fetchForm}
+    formLoading={formLoading}
     resetFields={resetFields}
     updateField={updateField}
   />
@@ -109,6 +115,11 @@ let FormContainer: any = (props: any) => {
     fetchLogout(userId);
     return <Redirect to='/account/login' />
   }
+
+  if (match.params.form === 'reset') {
+    updateIssuesSelected();
+    return <Redirect to='/' />
+  }
   
   if (match.params.form === 'login') {
     displayForm = loginForm;
@@ -116,7 +127,8 @@ let FormContainer: any = (props: any) => {
     displayForm = registerForm;
   } else if (match.params.form === 'forgot') {
     displayForm = forgotPassForm;
-  }else if (match.params.form === 'reset') {
+  } else if (match.params.form === 'reset') {
+    if (!resetFields.resetId && match.params.id) updateField({ form: 'reset', field: 'resetId', type: 'text', value: match.params.id });
     displayForm = resetPassForm;
   }
 

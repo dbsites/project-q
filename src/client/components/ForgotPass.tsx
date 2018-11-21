@@ -4,7 +4,7 @@
  */
 
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import FormError from './FormError';
 import FormField from './FormField';
 
@@ -12,7 +12,7 @@ import FormField from './FormField';
 // TODO: Look into update form / htmlForm?
 const ForgotPass: any = (props: any) => {
   // Destructure form values and actions from props
-  const { fetchFormFailure, fetchForm, forgotFields, updateField } = props;
+  const { fetchFormFailure, fetchForm, formLoading, forgotFields, updateField } = props;
   const { forgotPassEmail, emailValid, forgotError } = forgotFields;
 
   const callFetchForm = (forgotFields: any): any => {
@@ -20,11 +20,13 @@ const ForgotPass: any = (props: any) => {
     return fetchForm('forgot', forgotFields)
   }
 
+  if (formLoading) return <Redirect to='/account/login' push={true} />;
+
   return (
     <div className="input-form" onKeyPress={(e) => {if (e.key === 'Enter') fetchForm('login', forgotFields)}}>
       <div className="input-form-header">Forgot Your Password?</div>
       <div className="input-form-text">
-        Enter the email address associated with your account.
+        Enter the email address for your account.
         <br />
         We’ll email you a link to reset your password.
       </div>
