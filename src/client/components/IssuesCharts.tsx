@@ -48,49 +48,51 @@ class IssuesCharts extends Component<Props> {
   }
 
   render() {
-      const { moduleData, politData } = this.props.selectedData;
-      const { selectedCompany, userIssues } = this.props;
-      const { issueMatcher } = issueMatch;
-    
-      let msg, display: JSX.Element[];
-    
-      const userIssuesArray = Object.keys(userIssues)
-        .map((issueID: any) => {
-          return {
-            name: issueMatcher[issueID],
+    const { moduleData, politData } = this.props.selectedData;
+    const { selectedCompany, userIssues } = this.props;
+    const { issueMatcher } = issueMatch;
+
+    let msg, display: JSX.Element[];
+
+    const userIssuesArray = Object.keys(userIssues)
+      .map((issueID: any) => {
+        return {
+          name: issueMatcher[issueID],
+        }
+      });
+
+    while (userIssuesArray.length !== 6) {
+      userIssuesArray.push({ name: 'No Issue Selected' });
+    }
+
+    if (selectedCompany) {
+      msg = 'Hover over charts below for detailed descriptions';
+
+      display = userIssuesArray
+        .map((issueObj: any, index: number) => {
+          const { name } = issueObj;
+          if (name !== 'No Issue Selected') {
+            const { logo } = selectedCompany;
+            const { alignedScore } = selectedCompany[name];
+            const issueInfo = { name, alignedScore };
+            const detailedView = this.state.displayDetail && this.state.pieIndex === index
+            return <IssuePie
+              logo={logo}
+              info={issueInfo}
+              modal={moduleData}
+              polit={politData}
+              detailedView={detailedView}
+              handleMouseEnter={() => this.handleMouseEnter(index)}
+              handleMouseLeave={this.handleMouseLeave}
+            />
+          } else {
+            const issueInfo = { name };
+            return <IssuePie
+              info={issueInfo}
+            />
           }
         });
-    
-      while (userIssuesArray.length !== 6) {
-        userIssuesArray.push({ name: 'No Issue Selected' });
-      }
-    
-      if (selectedCompany) {
-        msg = 'Hover over charts below for detailed descriptions';
-    
-        display = userIssuesArray
-          .map((issueObj: any, index: number) => {
-            const { name } = issueObj;
-            if (name !== 'No Issue Selected') {
-              const { alignedScore } = selectedCompany[name];
-              const issueInfo = { name, alignedScore };
-              const detailedView = this.state.displayDetail && this.state.pieIndex === index
-              return <IssuePie
-                info={issueInfo}
-                modal={moduleData}
-                polit={politData}
-                detailedView={detailedView}
-                handleMouseEnter={() => this.handleMouseEnter(index)}
-                handleMouseLeave={this.handleMouseLeave}
-              />
-            } else {
-              const issueInfo = { name };
-              return <IssuePie
-                info={issueInfo}
-              />
-            }
-          });
-      }
+    }
 
     else {
       msg = 'Select a company to view their issues scores';
@@ -99,7 +101,7 @@ class IssuesCharts extends Component<Props> {
         .map((issueObj: any) => {
           const { name } = issueObj;
           const issueInfo = { name };
-          
+
           return <IssuePie
             info={issueInfo}
           />
