@@ -70,6 +70,7 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
       throw new Error('Something has gone wrong - please try again');
     })
     .then((response: IFormFetchSuccessResponseObject) => {
+      // set onboardComplete equal to issuesComplete
       return dispatch(fetchFormSuccess(response))
     })
     .catch((error: Error) => dispatch(fetchFormFailure(form, error.message)));
@@ -106,6 +107,10 @@ export const fetchIssues = () => (dispatch: any) => {
 }
 
 // --- Sync User Action Creators --- // --- UNIT TESTING 100% --- //
+export const restart = (): Action<string> => ({
+  type: types.RESTART,
+})
+
 export const clearIssues = (): Action<string> => ({
   type: types.CLEAR_ISSUES,
 });

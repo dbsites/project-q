@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Onboarding Component matches the snapshot 1`] = `
+<div
+  className="onboarding"
+>
+  <div
+    className="onboarding-step"
+  >
+    <div
+      className="onboarding-step-text"
+    >
+      Step 1: Select your most important issues.
+    </div>
+    <div
+      className="onboarding-step-icons"
+    >
+      <img
+        alt="Mortar Board Icon"
+        className="onboarding-icons-img"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
+      />
+      <img
+        alt="Doctor Icon"
+        className="onboarding-icons-img"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
+      />
+      <img
+        alt="Rifle Icon"
+        className="onboarding-icons-img"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="onboarding-step"
+  >
+    <div
+      className="onboarding-step-text"
+    >
+      Step 2: Tell us where you stand on these issues.
+    </div>
+    <div
+      className="onboarding-step-icons"
+    >
+      <img
+        alt="Like Icon"
+        className="onboarding-icons-img"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="onboarding-step"
+  >
+    <div
+      className="onboarding-step-text"
+    >
+      Step 3: Discover companies most aligned with your values.
+    </div>
+    <div
+      className="onboarding-step-icons"
+    >
+      <img
+        alt="Hand Shake Icon"
+        className="onboarding-icons-img"
+        src={
+          Object {
+            "process": [Function],
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="onboarding-button"
+    onClick={[MockFunction]}
+  >
+    BEGIN
+  </div>
+</div>
+`;
