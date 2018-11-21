@@ -113,7 +113,7 @@ class IssuePie extends Component<Props> {
               data={[{ name: name, value: 100 }]}
               outerRadius="100%"
               innerRadius="70%"
-              fill="#808080"
+              fill="#3A3A3A"
               dataKey="value"
               startAngle={90}
               endAngle={450}
@@ -124,7 +124,7 @@ class IssuePie extends Component<Props> {
         </ResponsiveContainer>
       );
     } else {
-      const COLORS: string[] = ['#A5A8A6', (
+      const COLORS: string[] = ['#3A3A3A', (
         alignedScore >= 70 ? '#16C33F' : alignedScore >= 40 ? '#FAEB00' : '#FA2929'
       )];
 
@@ -165,7 +165,7 @@ class IssuePie extends Component<Props> {
 
     return (
       <div className="issue-box">
-        <div className="issue-pie" id={name}>
+        <div className="issue-pie" id={name.split(' ').join('-')}>
           {display}
           <p>{name}</p>
         </div>

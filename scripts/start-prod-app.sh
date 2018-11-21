@@ -1,5 +1,5 @@
 #!/bin/bash
-# start-prod-app.sh - script run at startup of container in production image only
+# start-prod-app.sh - script run at startup of container in production image only... 
 # will run db-migrate before starting app (npm run start)
 
 DB_HOST=$RDS_HOSTNAME
