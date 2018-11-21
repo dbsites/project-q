@@ -1,6 +1,7 @@
 /**
  * @module Disclaimer.tsx
  * @description Application Disclaimer Presentation Component
+ * UNIT TEST COVERAGE - 100%
  */
 
 import * as React from 'react';

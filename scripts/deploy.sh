@@ -16,6 +16,6 @@
   # Upload zip file to s3 bucket
   aws s3 cp ethiq-prod-deploy.zip s3://$EB_BUCKET/ethiq-prod-deploy.zip
   # Create a new application version with new Dockerrun
-  aws elasticbeanstalk create-application-version --application-name codesmith-dashboard --version-label $TRAVIS_COMMIT --source-bundle S3Bucket=$EB_BUCKET,S3Key=ethiq-prod-deploy.zip
+  aws elasticbeanstalk create-application-version --application-name ethiq --version-label $TRAVIS_COMMIT --source-bundle S3Bucket=$EB_BUCKET,S3Key=ethiq-prod-deploy.zip
   # Update environment to use new version number
   aws elasticbeanstalk update-environment --environment-name ethiq-prod --version-label $TRAVIS_COMMIT

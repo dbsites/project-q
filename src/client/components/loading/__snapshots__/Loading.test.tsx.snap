@@ -2,28 +2,28 @@
 
 exports[`Loading Component:  matches the snapshot 1`] = `
 <div
-  className="loader-container"
+  className="loading-container"
 >
   <div
-    className="loader"
+    className="loading"
   >
     <div
-      className="loader__bar"
+      className="loading__bar"
     />
     <div
-      className="loader__bar"
+      className="loading__bar"
     />
     <div
-      className="loader__bar"
+      className="loading__bar"
     />
     <div
-      className="loader__bar"
+      className="loading__bar"
     />
     <div
-      className="loader__bar"
+      className="loading__bar"
     />
     <div
-      className="loader__ball"
+      className="loading__ball"
     />
   </div>
   <h1>

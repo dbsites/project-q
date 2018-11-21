@@ -1,0 +1,104 @@
+/* Survey Dashboard - 84vh => 8vh/68vh/8vh */
+.survey-dashboard-container {
+  display: grid;
+  grid-template-columns: 12vw 66vw 12vw;
+  margin: 1vh 0;
+  height: 48vh;
+  width: 100%;
+}
+
+.survey-dashboard-question-container {
+  grid-template-rows: 16vh 16vh 16vh;
+}
+
+.survey-question {
+  margin: 0;
+}
+
+.survey-question-box {
+  font-size: 1.4rem;
+  height: 18vh;
+  margin: 0 2vw;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.survey-question-text {
+  text-align: center;
+}
+
+.survey-question-text {
+  color: white;
+  display: inline-block;
+  padding: 1vh 0 1vh 0;
+}
+
+.survey-question-hr {
+  margin-bottom: 1vh;
+  width: 30vw;
+}
+
+.survey-question-hr hr {
+  background-color: #FFFFFF;
+  color: #FFFFFF;
+  border: none;
+  height: 1px;
+}
+
+.survey-question-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.survey-button {
+  border: none;
+  box-sizing: border-box;
+  color: #888888;
+  font-size: 1.5rem;
+  margin: 0 10vw;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.survey-button:hover {
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.survey-selected {
+  color: #FFFFFF;
+}
+
+.survey-deselected {
+  color: #212121;
+}
+
+/* Progress Bar Component */
+
+.progress-bar-container {
+  margin: 5vh auto auto auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar {
+  border-radius: 50px;
+  border: 2px solid #666666;
+  height: 2.5vh;
+  width: 30vw;
+}
+
+.progress-bar-fill {
+  background: #538161;
+  border-radius: inherit;
+  color: white;
+  font-weight: bold;
+  height: 100%;
+  text-align: center;
+  transition: width .3s ease-in;
+}

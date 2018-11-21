@@ -8,6 +8,7 @@ import loadingReducer, { initialLoadingState } from './loadingReducer';
 // Import action creators to generate loading actions
 import {
   fetchAuthRequest, fetchAuthSuccess, fetchAuthFailure,
+  fetchFormRequest, fetchFormSuccess, fetchFormFailure,
   fetchLogoutRequest, fetchLogoutSuccess, fetchLogoutFailure,
   fetchIssuesRequest, fetchIssuesSuccess, fetchIssuesFailure,
   fetchSubmitIssuesRequest, fetchSubmitIssuesSuccess, fetchSubmitIssuesFailure,
@@ -19,7 +20,9 @@ import { LoadingState } from './types';
 import {
   stubFormFetchSuccessResponse,
   stubIssuesFetchSuccessResponse, stubIssueFetchErrorMessage,
-  stubSubmitIssuesFetchSuccessResponse
+  stubSubmitIssuesFetchSuccessResponse,
+  stubFormName,
+  stubErrorMessage
 } from '../actions/templates';
 
 // Helper Function to generate sample state
@@ -46,6 +49,21 @@ describe('Functionality Test: Loading Reducer', () => {
 
   it('Should update authLoading to false upon auth failure', () => {
     expect(loadingReducer(generateLoadingState('authLoading', true), fetchAuthFailure()).authLoading)
+      .toEqual(false);
+  })
+
+  it('Should update formLoading to true upon fetch form request', () => {
+    expect(loadingReducer(generateLoadingState('formLoading', false), fetchFormRequest()).formLoading)
+      .toEqual(true);
+  })
+  
+  it('Should update formLoading to false upon fetch form success', () => {
+    expect(loadingReducer(generateLoadingState('formLoading', true), fetchFormSuccess(stubFormFetchSuccessResponse)).formLoading)
+      .toEqual(false);
+  })
+
+  it('Should update formLoading to false upon fetch form failure', () => {
+    expect(loadingReducer(generateLoadingState('formLoading', true), fetchFormFailure(stubFormName, stubErrorMessage)).formLoading)
       .toEqual(false);
   })
 

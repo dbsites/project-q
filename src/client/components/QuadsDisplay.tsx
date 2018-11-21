@@ -7,7 +7,7 @@ import * as React from 'react';
 
 // Import Components
 import Overview from '../components/Overview';
-import StockGraph from '../components/StockGraph';
+import StockGraph from './StockGraph';
 import IssuesCharts from '../components/IssuesCharts';
 import CompanyList from '../components/CompanyList';
 

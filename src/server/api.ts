@@ -105,7 +105,7 @@ app.post('/api/reset',
   Sessions.reset,
   UserMethods.resetPassword,
   (_: Request, res: Response) => {
-    res.status(200).send(res.locals.user);
+    res.sendStatus(200);
   }
 );
 

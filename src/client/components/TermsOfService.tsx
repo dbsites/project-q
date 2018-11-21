@@ -250,11 +250,6 @@ const TermsOfService = () => {
           Correspondence regarding these Terms should be sent to <a href="mailto:info@ethiq.org">info@ethiq.org</a>.
         </p>
       </div>
-      <div className="dashboard-footer">
-        <div className="dashboard-footer-button dashboard-footer-terms-button">
-          <Link to='/account/register'>Create an Account</Link>
-        </div>
-      </div>
     </div>
   )
 };

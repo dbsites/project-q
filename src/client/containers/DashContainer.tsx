@@ -6,7 +6,7 @@
 import * as React from 'react';
 
 import IssuesContainer from './IssuesContainer';
-import SurveyContainer from './SurveyContainer';
+import SurveyContainer from '../components/survey/SurveyContainer';
 import QuadsContainer from './QuadsContainer';
 import Loading from '../components/loading/Loading';
 
@@ -20,7 +20,7 @@ const DashContainer = (props: any): any => {
   if (!issuesComplete || !surveyComplete) {
     if (!Object.keys(issues).length || loading.issuesLoading || loading.surveyLoading) {
       if (!loading.issuesLoading && !Object.keys(issues).length) fetchIssues();
-      return <Loading />
+      return <Loading loadingMessage="Calculating" />
     };
     return issuesComplete ? <SurveyContainer /> : <IssuesContainer />;
   }

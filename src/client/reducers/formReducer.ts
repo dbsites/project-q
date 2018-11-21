@@ -21,6 +21,7 @@ const initialForgotState: ForgotPassState = {
 const initialResetState: ResetPassState = {
   newPassword: '',
   confirmNewPassword: '',
+  resetId: '',
   resetError: '',
 }
 
@@ -198,6 +199,8 @@ const formReducer = (state: FormState = initialFormState, action: any): FormStat
         ...state,
         login: initialLoginState,
         register: initialRegisterState,
+        forgot: initialForgotState,
+        reset: initialResetState,
       };
 
     //  FETCH_FORM_FAILURE - Update form with error message

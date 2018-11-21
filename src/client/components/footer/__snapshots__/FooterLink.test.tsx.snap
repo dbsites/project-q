@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FooterLink Component matches the snapshot 1`] = `
+<li>
+  <a
+    href="/terms/privacy"
+    onClick={[Function]}
+  >
+    PRIVACY POLICY
+  </a>
+</li>
+`;

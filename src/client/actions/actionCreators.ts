@@ -55,7 +55,6 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
   // Derive POST request URI from form to be submitted and issue fetch request
 
   const fetchURI: string = `/api/${form}`;
-
   return fetch(fetchURI, {
     method: 'POST',
     headers: {
@@ -70,7 +69,9 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
       if (response.status === 401) throw new Error('Invalid email address or password');
       throw new Error('Something has gone wrong - please try again');
     })
-    .then((response: IFormFetchSuccessResponseObject) => dispatch(fetchFormSuccess(response)))
+    .then((response: IFormFetchSuccessResponseObject) => {
+      return dispatch(fetchFormSuccess(response))
+    })
     .catch((error: Error) => dispatch(fetchFormFailure(form, error.message)));
 }
 
