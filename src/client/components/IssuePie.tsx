@@ -15,7 +15,7 @@ interface Props {
   info: any
   modal?: any
   polit?: any
-  displayDetail?: any
+  detailedView?: any
   handleMouseEnter?: any
   handleMouseLeave?: any
 }
@@ -23,7 +23,7 @@ interface Props {
 class IssuePie extends Component<Props> {
   render() {
     const { name, alignedScore } = this.props.info;
-    const { handleMouseEnter, handleMouseLeave, displayDetail } = this.props;
+    const { handleMouseEnter, handleMouseLeave, detailedView } = this.props;
     let blurb, display, companyName;
 
     if (this.props.modal) {
@@ -164,7 +164,7 @@ class IssuePie extends Component<Props> {
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          {displayDetail && 
+          {detailedView && 
           <IssueDetail
             polit={this.props.polit}
             company={companyName}

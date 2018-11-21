@@ -74,11 +74,12 @@ class IssuesCharts extends Component<Props> {
             if (name !== 'No Issue Selected') {
               const { alignedScore } = selectedCompany[name];
               const issueInfo = { name, alignedScore };
+              const detailedView = this.state.displayDetail && this.state.pieIndex === index
               return <IssuePie
                 info={issueInfo}
                 modal={moduleData}
                 polit={politData}
-                displayDetail={this.state.displayDetail}
+                detailedView={detailedView}
                 handleMouseEnter={() => this.handleMouseEnter(index)}
                 handleMouseLeave={this.handleMouseLeave}
               />
