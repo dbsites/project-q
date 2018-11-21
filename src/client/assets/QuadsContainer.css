@@ -77,7 +77,7 @@
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.7em;
+  font-size: 0.8em;
   color: #A5A8A6;
 } 
 
@@ -89,7 +89,7 @@
 
 #overview-logo img {
   height: auto;
-  margin-top: 5%;
+  margin-top: 2.5%;
   max-width: 275px;
   max-height: 50px;
   min-height: 50px;
@@ -234,6 +234,85 @@
   font-size: 0.8em;
   margin: 5% auto;
   color: #ffffff,
+}
+
+.issue-detail {
+  border: 0.8em solid #3f3f3f;
+  position: fixed;
+  height: 70%;
+  width: 45%;
+  top: 5%;
+  left: 27.5%;
+  background-color: black;
+  z-index: 7;
+  color: white;
+  opacity: .88;
+  font-size: 0.85em;
+}
+
+.issue-detail > * {
+  text-align: center;
+}
+
+#company-logo {
+  margin: 5% auto 2.5%;
+  display: block;
+  width: auto;
+  height: 10%;
+}
+
+.pie-detail {
+  margin: 0 auto;
+  width: 20%;
+  height: 20%;
+}
+
+.issue-detail h3 {
+  margin: 2% 0;
+}
+
+.issue-detail > .issue-description {
+  font-family: 'Lato';
+  font-size: 1.25em;
+  margin: 0;
+  padding: 0 4% 0;
+  text-align: left;
+}
+
+.issue-description > .blurb {
+  margin: 0;
+  padding: 0;
+}
+
+.blurb p {
+  padding: 0;
+  margin: 0;
+}
+
+.blurb-paragraph span {
+  margin: 0;
+  color:gold;
+  font-weight: bolder;
+}
+
+.images {
+  border: 2px solid gold;
+  height: 30%;
+  margin: 0px 5% 1%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.inline {
+  display: inline-block;
+  width: 100px;
+  padding: 5px;        
+  background-color: black;
+  position: center;
 }
 
 .issues-politicians {
