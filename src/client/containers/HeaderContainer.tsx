@@ -15,7 +15,7 @@ let Header = (props: any) => {
   const headerRight = [];
   if (props.isAuth) {
     headerRight.push(<li className="header-right" key="logout"><Link to='/account/logout'>LOGOUT</Link></li>);
-    headerRight.push(<li className="header-right" key="reset"><Link to='/account/reset'>RESET</Link></li>);
+    headerRight.push(<li className="header-right" key="restart"><Link to='/account/restart'>RESET</Link></li>);
     headerRight.push(<li className="header-right" key="home"><Link to='/'>HOME</Link></li>);
   } else {
     headerRight.push(<li className="header-right" key="register"><Link to='/account/register'>REGISTER</Link></li>);

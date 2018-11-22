@@ -13,14 +13,26 @@ import { getSelectedIssueCount } from '../reducers/userReducer';
 // Import Presentation Components
 import Header from '../containers/HeaderContainer';
 import Issue from '../components/Issue';
+import Onboarding from '../components/onboarding/Onboarding';
 
 const IssuesContainer = (props: any): any => {
   const {
-    issues,                    // Props from issues state
-    issuesSelected, userId,    // Props from user state
-    addIssue, removeIssue,     // Actions from user reducer
-    clearIssues, submitIssues, // Actions from user reducer
+    issues,                                           // Props from issues state
+    issuesSelected, onboardComplete, userId,          // Props from user state
+    addIssue, removeIssue,                            // Actions from user reducer
+    clearIssues, submitIssues, updateIssuesSelected,  // Actions from user reducer
   } = props;
+
+  if (!onboardComplete) {
+    return (
+      <div className="main-dashboard">
+        <div className="header">
+          <Header />
+        </div>
+        <Onboarding updateIssuesSelected={updateIssuesSelected} />
+      </div>
+    )
+  }
 
   const issueCount = getSelectedIssueCount(issuesSelected);
   const issuesRemaining = 6 - issueCount;
@@ -98,6 +110,7 @@ const IssuesContainer = (props: any): any => {
 const mapStateToProps = (store: any): any => ({
   issuesSelected: store.user.issuesSelected,
   userId: store.user.userId,
+  onboardComplete: store.user.onboardComplete,
   issues: store.issues,
 });
 
@@ -106,6 +119,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   addIssue: (issueId: string) => dispatch(actions.addIssue(issueId)),
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
   submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssues(userId, issuesSelected)),
+  updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);

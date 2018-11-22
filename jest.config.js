@@ -15,6 +15,7 @@ module.exports = {
     'node',
   ],
   moduleNameMapper: {
+    '\\.(png|svg)$': '<rootDir>/assetsTransformer.js', // Proxy to mock images
     '\\.(css|scss)$': 'identity-obj-proxy', // ES6 Proxy to mock CSS Modules
   },
 };
