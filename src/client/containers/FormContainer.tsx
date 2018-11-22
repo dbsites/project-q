@@ -59,7 +59,7 @@ const mapStateToProps = (store: any): any => ({
 // Extract form update and submit actions from store to pass as props
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
+    restart: () => dispatch(actions.restart()),
     updateField: (fieldObject: IFormFieldObject) => dispatch(actions.updateField(fieldObject)),
     fetchFormFailure: (form: string, message: string) => dispatch(actions.fetchFormFailure(form, message)),
     fetchForm: (form: string, formFields: LoginState | RegisterState | ForgotPassState | ResetPassState) => dispatch(actions.fetchForm(form, formFields)),
@@ -75,7 +75,7 @@ let FormContainer: any = (props: any) => {
     loginFields, registerFields, forgotFields, resetFields,
     fetchForm, fetchFormFailure,
     updateField,
-    fetchLogout, updateIssuesSelected,
+    fetchLogout, restart,
     formLoading, isAuth, userId,
   } = props;
 
@@ -116,8 +116,8 @@ let FormContainer: any = (props: any) => {
     return <Redirect to='/account/login' />
   }
 
-  if (match.params.form === 'reset') {
-    updateIssuesSelected();
+  if (match.params.form === 'restart') {
+    restart();
     return <Redirect to='/' />
   }
   

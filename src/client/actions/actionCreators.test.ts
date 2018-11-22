@@ -165,6 +165,13 @@ describe('Functionality Test: Issue Action Creators', () => {
 
 // --- UNIT TESTS --- User Action Creators --- //
 describe('Functionality Test: Synchronous User Action Creators', () => {
+  it('restart returns an action to restart the app', () => {
+    const expectedAction: Action<string> = {
+      type: types.RESTART,
+    };
+    expect(actions.restart()).toEqual(expectedAction);
+  });
+
   it('clearIssues returns an action to clear all issues', () => {
     const expectedAction: Action<string> = {
       type: types.CLEAR_ISSUES,

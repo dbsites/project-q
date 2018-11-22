@@ -24,6 +24,7 @@ interface Props {
   issuesSelected: any,
   fetchAuth: any,
   loading: LoadingState,
+  onboardComplete: boolean | null
   surveyComplete: boolean | null,
   survey: SurveyState,
   surveyPage: number,
@@ -71,6 +72,7 @@ const mapStateToProps = (state: any): any => {
     issuesComplete: state.user.issuesComplete,
     issuesSelected: state.user.issuesSelected,
     loading: state.loading,
+    onboardComplete: state.user.onboardComplete,
     surveyComplete: state.user.surveyComplete,
     survey: state.survey,
     surveyPage: state.user.surveyPage,

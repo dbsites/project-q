@@ -83,6 +83,7 @@ export interface UserState {
   readonly issuesComplete: boolean | null,
   readonly firstName: string | null,
   readonly lastName: string | null,
+  readonly onboardComplete: boolean | null,
   readonly surveyComplete: boolean | null,
   readonly surveyPage: number,
 };
