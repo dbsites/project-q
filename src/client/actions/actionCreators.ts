@@ -322,6 +322,7 @@ export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('response from fetch: ', response);
       dispatch({
         type: types.GET_SELECTED_COMPANY_INFO,
         payload: {
@@ -330,7 +331,16 @@ export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
         }
       })
     })
-    .catch((err: any) => console.error(err));
+    .catch((err: any) => {
+      // dispatch({
+      //   type: types.GET_SELECTED_COMPANY_INFO,
+      //   payload: {
+      //     moduleData: response.moduleData,
+      //     politData: response.politicianData
+      //   }
+      // })
+      console.error(err);
+    });
 
 }
 

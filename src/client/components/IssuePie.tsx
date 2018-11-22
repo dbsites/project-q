@@ -154,7 +154,8 @@ class IssuePie extends Component<Props> {
                 startAngle={90}
                 endAngle={450}
                 onMouseEnter={handleMouseEnter}
-                paddingAngle={5}>
+                paddingAngle={5}
+                onMouseLeave={handleMouseLeave}>
                 {
                   DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
                 }
@@ -170,7 +171,7 @@ class IssuePie extends Component<Props> {
               logo={logo}
               name={name}
               score={alignedScore}
-              handleMouseLeave={handleMouseLeave}
+              //handleMouseLeave={handleMouseLeave}
             />}
         </React.Fragment>
       );

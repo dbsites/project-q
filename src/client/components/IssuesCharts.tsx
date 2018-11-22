@@ -83,7 +83,7 @@ class IssuesCharts extends Component<Props> {
               polit={politData}
               detailedView={detailedView}
               handleMouseEnter={() => this.handleMouseEnter(index)}
-              handleMouseLeave={this.handleMouseLeave}
+              handleMouseLeave={() => this.handleMouseLeave()}
             />
           } else {
             const issueInfo = { name };

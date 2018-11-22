@@ -8,6 +8,8 @@ const Recipients = (props: any) => {
 
   let display;
 
+  console.log('props in recipients: ', props);
+
   if (props.data) {
     const {
       recip_1,
@@ -44,21 +46,21 @@ const Recipients = (props: any) => {
   } else {
     display = (
       <React.Fragment>
-        <p className="polit-recip">Loading Recipients...</p>
+        <p className="polit-recip">Loading...</p>
         <div className="politician" key="recip-1">
           <img src={blurPolitOne} />
         </div>
-        <p className="polit-info-name">No Recipients</p>
+        <p className="polit-info-name">Recipient #1</p>
         <p className="polit-info">$-</p>
         <div className="politician">
           <img src={blurPolitTwo} />
         </div>
-        <p className="polit-info-name">No Recipients</p>
+        <p className="polit-info-name">Recipient #2</p>
         <p className="polit-info">$-</p>
         <div className="politician">
           <img src={blurPolitThree} />
         </div>
-        <p className="polit-info-name">No Recipients</p>
+        <p className="polit-info-name">Recipient #3</p>
         <p className="polit-info">$-</p>
       </React.Fragment>
     );
