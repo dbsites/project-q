@@ -10,21 +10,23 @@ import { Redirect } from 'react-router-dom'
 import * as actions from './actions/actionCreators';
 
 import DashContainer from './containers/DashContainer'
-
 import Loading from './components/loading/Loading'
+import Mobile from './components/mobile/Mobile';
 
 // Import Types
 import { SurveyState, LoadingState } from './reducers/types';
 
 // TODO: Find more appropriate home for interface
 interface Props {
+  deviceType: string | null,
   isAuth: boolean,
   issues: string[],
   issuesComplete: boolean | null,
   issuesSelected: any,
   fetchAuth: any,
   loading: LoadingState,
-  onboardComplete: boolean | null
+  onboardComplete: boolean | null,
+  setDevice: any,
   surveyComplete: boolean | null,
   survey: SurveyState,
   surveyPage: number,
@@ -36,37 +38,46 @@ class App extends React.Component<Props> {
     super(props);
   }
 
-  // Upon mount, check if user is logged in
-  componentDidMount() {
-    // Extract fetchAuth action from props and call
-  }
-
   render() {
     // Destructure auth status from props
-    const { isAuth, fetchAuth, loading } = this.props;
+    const { deviceType, isAuth, fetchAuth, setDevice, loading } = this.props;
     
     // Check for non-desktop device
-    if (window.innerWidth <= 1024) console.log('Mobile Device Detected!');
+    if (window.innerWidth < 1000 ||
+      navigator.userAgent.match(/Android/i) ||
+      navigator.userAgent.match(/webOS/i) ||
+      navigator.userAgent.match(/iPhone/i) ||
+      navigator.userAgent.match(/iPod/i)
+    ) {
+      setDevice('mobile');
+    } else {
+      setDevice('desktop');
+    }
+
+    if(deviceType === 'mobile') {
+      return <Mobile />;
+    }
 
     if (loading.authLoading === true) {
-      return <Loading loadingMessage="Calculating" />
+      return <Loading loadingMessage="Calculating" />;
     }
     if (isAuth === null) {
       fetchAuth();
-      return <Loading loadingMessage="Calculating" />
+      return <Loading loadingMessage="Calculating" />;
     } 
     if (isAuth === false) {
       // If user hasn't been authenticated, redirect to Registration
-      return <Redirect to='/account/register' />
+      return <Redirect to='/account/register' />;
     }
     // Otherwise render dashboard
-    return <DashContainer userState={this.props} />
+    return <DashContainer userState={this.props} />;
   }
 };
 
 // mapStatetoProps to access user auth status
 const mapStateToProps = (state: any): any => {
   return {
+    deviceType: state.device.deviceType,
     isAuth: state.user.isAuth,
     issues: state.issues,
     issuesComplete: state.user.issuesComplete,
@@ -85,6 +96,7 @@ const mapDispatchToProps = (dispatch: any): any => {
     fetchAuth: () => dispatch(actions.fetchAuth()),
     fetchIssues: () => dispatch(actions.fetchIssues()),
     prevPage: () => dispatch(actions.prevPage()),
+    setDevice: (deviceType: string) => dispatch(actions.setDevice(deviceType)),
   }
 }
 

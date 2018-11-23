@@ -89,7 +89,11 @@ export interface UserState {
 };
 
 export interface LoadingState {
-  [nameLoading: string]: boolean
+  [nameLoading: string]: boolean,
+}
+
+export interface DeviceState {
+  deviceType: string | null,
 }
 
 //***************************** */
@@ -174,6 +178,7 @@ export interface CompanyDataState {
 //***************************** */
 export interface ApplicationState {
   readonly company: CompanyState,
+  readonly device: DeviceState,
   readonly form: FormState,
   readonly issues: IssuesState,
   readonly loading: LoadingState,
