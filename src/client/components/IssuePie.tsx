@@ -8,6 +8,7 @@ import { Component } from 'react';
 import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
 import IssueDetail from './IssueDetail';
 
+// TODO when store structure finalized
 interface Props {
   info: any
   logo?: any
@@ -18,6 +19,7 @@ interface Props {
   handleMouseLeave?: any
 }
 
+// TODO when store structure finalized
 class IssuePie extends Component<Props> {
   render() {
     const { name, alignedScore } = this.props.info;
@@ -146,20 +148,21 @@ class IssuePie extends Component<Props> {
           <ResponsiveContainer>
             <PieChart width={100} height={100}>
               <Pie
-                data={DATA}
+                // data={DATA}
+                data={[{ value: 100 - alignedScore }, { value: alignedScore }]}
                 outerRadius="100%"
                 innerRadius="70%"
                 fill="#808080"
                 dataKey="value"
                 startAngle={90}
                 endAngle={450}
-                onMouseEnter={handleMouseEnter}
                 paddingAngle={5}
+                onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}>
                 {
                   DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
                 }
-                <Label value={alignedScore === 0 ? '10%' : `${alignedScore}%`} position="center" fill="white" />
+                <Label value={alignedScore === 0 ? '0%' : `${alignedScore}%`} position="center" fill="white" />
               </Pie>
             </PieChart>
           </ResponsiveContainer>
@@ -171,7 +174,6 @@ class IssuePie extends Component<Props> {
               logo={logo}
               name={name}
               score={alignedScore}
-              //handleMouseLeave={handleMouseLeave}
             />}
         </React.Fragment>
       );
