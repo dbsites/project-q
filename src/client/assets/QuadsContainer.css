@@ -416,23 +416,39 @@
   overflow: hidden;
 }
 
-#cl-category-ticker {
-  margin-right: 3.5%;
-}
 
-#cl-category-overall {
-  margin-right: 3.5%;
-}
 
-#cl-category-issue .none {
-  padding-right: 15%;
-}
+
+
 
 .cl-category {
   display: inline-block;
   height: 100%;
   overflow: auto;
-  margin-right: 5.25%;
+  /* margin-right: 5.25%; */
+}
+
+#cl-category-name {
+  /* margin-right: 0; */
+  min-width: 30%;
+}
+
+#cl-category-ticker {
+  /* margin-right: 3.5%; */
+  min-width: 12%;
+}
+
+#cl-category-overall {
+  /* margin-right: 3.5%; */
+  min-width: 5%;
+}
+
+#cl-category-issue {
+  min-width: 8%;
+}
+
+#cl-category-issue .none {
+  min-width: 10%;
 }
 
 .cl-header {
@@ -447,25 +463,6 @@
   margin-right: 9.5%;
 }
 
-/* #cl-header-ticker {
-
-} */
-/* #cl-header-name .cl-list {
-  margin-right: 9%;
-} */
-
-/* #cl-category-name {
-  min-width: 30%;
-  max-width: 50%;
-  overflow: hidden;
-} */
-
-/* #cl-category-ticker, */
-/* #cl-category-overall, */
-/* #cl-category-issue {
-  visibility: hidden;
-} */
-
 .cl-list {
   padding-top: 15%;
 }
@@ -476,6 +473,14 @@
 
 .cl-list a:hover {
   color: #FFFFFF;
+}
+
+.cl-list .black {
+  background-color: #000000;
+}
+
+.cl-list .grey {
+  background-color: #383838;
 }
 
 .company-names-list {
