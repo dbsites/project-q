@@ -5,6 +5,7 @@
 
 import * as React from 'react';
 
+// Garron's brilliant multi-line implementation for adding commas to price value
 const commafy = (value: number) => {
 
   const dollars = value
@@ -23,12 +24,13 @@ const commafy = (value: number) => {
   return `${dollars}.${cents}`;
 }
 
+// TODO when store structure finalized
 const StockGraph = (props: any) => {
 
   let display;
 
   if (!props.selected) {
-    display = (<p>Loading . . . </p>)
+    display = (<p>Loading Stock Graph. . . </p>)
   } else {
     const { ticker } = props.selected;
     let high, low, open, close, volume;
