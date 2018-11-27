@@ -12,7 +12,6 @@ import * as issueMatch from '../issueMatcher';
 // Import Components
 import IssuePie from './IssuePie';
 import Recipients from './Recipients';
-// import { render } from 'enzyme';
 
 // TODO: move this props in types.ts and export in
 interface Props {
@@ -24,6 +23,7 @@ interface Props {
   displayDetail?: any
 }
 
+// TODO transition component state to redux
 class IssuesCharts extends Component<Props> {
   state: any;
   constructor(props: any) {
@@ -36,7 +36,6 @@ class IssuesCharts extends Component<Props> {
 
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
-
   }
 
   handleMouseEnter(index: any) {
@@ -59,7 +58,7 @@ class IssuesCharts extends Component<Props> {
         return {
           name: issueMatcher[issueID],
         }
-      });
+      }); //.slice(0, 1);
 
     while (userIssuesArray.length !== 6) {
       userIssuesArray.push({ name: 'No Issue Selected' });
@@ -77,6 +76,7 @@ class IssuesCharts extends Component<Props> {
             const issueInfo = { name, alignedScore };
             const detailedView = this.state.displayDetail && this.state.pieIndex === index
             return <IssuePie
+              key={index}
               logo={logo}
               info={issueInfo}
               modal={moduleData}
@@ -88,6 +88,7 @@ class IssuesCharts extends Component<Props> {
           } else {
             const issueInfo = { name };
             return <IssuePie
+              key={index}
               info={issueInfo}
             />
           }
@@ -98,11 +99,12 @@ class IssuesCharts extends Component<Props> {
       msg = 'Select a company to view their issues scores';
 
       display = userIssuesArray
-        .map((issueObj: any) => {
+        .map((issueObj: any, i: number) => {
           const { name } = issueObj;
           const issueInfo = { name };
 
           return <IssuePie
+            key={i}
             info={issueInfo}
           />
         });
