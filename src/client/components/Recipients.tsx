@@ -8,8 +8,6 @@ const Recipients = (props: any) => {
 
   let display;
 
-  console.log('props in recipients: ', props);
-
   if (props.data) {
     const {
       recip_1,
