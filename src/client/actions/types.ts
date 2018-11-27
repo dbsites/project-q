@@ -1,8 +1,13 @@
 import { Action } from "redux";
 import { UserIssuesSelected, SurveyState } from "../reducers/types";
 
+// Device Action Interfaces
+export interface ISetDeviceAction extends Action<string> {
+  deviceType: string,
+}
+
 // Fetch Failure Interface
-export interface IFetchFailureAction extends Action<string>{
+export interface IFetchFailureAction extends Action<string> {
   message: string,
 }
 

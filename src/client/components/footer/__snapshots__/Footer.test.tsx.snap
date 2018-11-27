@@ -9,10 +9,10 @@ exports[`Footer Component:  matches the snapshot 1`] = `
   >
     <li>
       <a
-        href="/terms/privacy"
+        href="/terms/faq"
         onClick={[Function]}
       >
-        PRIVACY POLICY
+        FAQ
       </a>
     </li>
     <li>
@@ -25,10 +25,10 @@ exports[`Footer Component:  matches the snapshot 1`] = `
     </li>
     <li>
       <a
-        href="/terms/faq"
+        href="/terms/privacy"
         onClick={[Function]}
       >
-        FAQ
+        PRIVACY POLICY
       </a>
     </li>
   </ul>

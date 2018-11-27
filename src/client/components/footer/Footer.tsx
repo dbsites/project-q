@@ -13,9 +13,9 @@ import './Footer.css';
 // TODO: REFACTOR
 const footerLinkArray: JSX.Element[] = [];
 export const footerLinkData: string[][] = [
-  ['privacy-policy', '/terms/privacy', 'PRIVACY POLICY'],
-  ['terms-of-service', '/terms/service', 'TERMS AND CONDITIONS'],
   ['frequently-asked-questions', '/terms/faq', 'FAQ'],
+  ['terms-of-service', '/terms/service', 'TERMS AND CONDITIONS'],
+  ['privacy-policy', '/terms/privacy', 'PRIVACY POLICY'],
 ];
 footerLinkData.forEach(data => footerLinkArray.push(<FooterLink key={data[0]} linkKey={data[0]} link={data[1]} text={data[2]} />))
 

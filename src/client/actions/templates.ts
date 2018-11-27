@@ -8,6 +8,9 @@ import { v4 } from 'uuid';
 import { IFormFieldObject, IFormFetchSuccessResponseObject, IIssuesFetchSuccessResponseObject, INoAuthObject } from './types';
 import { LoginState, SurveyState, UserIssuesSelected } from '../reducers/types';
 
+// Stub device type
+export const stubDeviceType: string = 'mobile';
+
 // Stubs for Updating Forms (and Auth)
 export const stubUserId: string = v4();
 export const stubFormName: string = 'login';
