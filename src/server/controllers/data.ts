@@ -100,7 +100,6 @@ export class DatabaseRepository {
     for (let i = 0; i < companyData.length; i += 1) {
       await this.db.any('SELECT * FROM politicians WHERE company_id = $1;', companyData[i].id)
       .then((data: any) => {
-        console.log(data);
         if (data[0].recip_1 === "") {
           politicanData[companyData[i].full_name] = {};
         }
