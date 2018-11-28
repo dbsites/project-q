@@ -325,6 +325,7 @@ export const getAllCompanyInfo = () => (dispatch: any) => {
 }
 
 export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
+  console.log('selected ticker: ', ticker);
   fetch('/api/companyModule', {
     method: 'POST',
     headers: {
@@ -334,6 +335,7 @@ export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((response: any) => {
+      console.log('polit info: ', response.politicianData);
       dispatch({
         type: types.GET_SELECTED_COMPANY_INFO,
         payload: {

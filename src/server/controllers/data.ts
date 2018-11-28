@@ -17,23 +17,23 @@ import { IDatabase } from 'pg-promise';
 import { v4 } from 'uuid';
 
 export class DatabaseRepository {
-  constructor (db: any) {
+  constructor(db: any) {
     this.db = db;
   }
 
-  private db: IDatabase<any>; 
-  
+  private db: IDatabase<any>;
+
   // add questions
   async addQuestions(questionData: any[]) {
     // iterate through all questions being submitted to the db
-    for(let i=0; i < questionData.length; i++) {
+    for (let i = 0; i < questionData.length; i++) {
 
       // at each question, insert into the db...no need to return here, just a submission route
-      this.db.none('INSERT INTO questions (id, "issueId", question, bias) VALUES ($1, $2, $3, $4);', 
-      [v4(), questionData[i].issueId, questionData[i].question, questionData[i].Bias])
-      .catch((error: any) => {
-        console.log('ERROR AT ADD FUNCTION IN QUESTIONSTORE.TS', error);
-      })
+      this.db.none('INSERT INTO questions (id, "issueId", question, bias) VALUES ($1, $2, $3, $4);',
+        [v4(), questionData[i].issueId, questionData[i].question, questionData[i].Bias])
+        .catch((error: any) => {
+          console.log('ERROR AT ADD FUNCTION IN QUESTIONSTORE.TS', error);
+        })
     }
   };
 
@@ -45,20 +45,20 @@ export class DatabaseRepository {
     for (let i = 0; i < issues.length; i += 1) {
       // hold the function with await, to stop teh thread while each issue queries
       await this.db.any('SELECT * FROM questions WHERE "issueId" = $1', [issues[i]])
-      .then((data: any) => {
-        // data comes back as an array of question objects, use each object to shape the question object for the front end
-        data.forEach((question: any)=> {
-          questions[question.id] = {};
-          questions[question.id].issueId = question.issueId;
-          questions[question.id].questionText = question.question;
-          questions[question.id].position = question.bias;
-          // REFACTOR once we can complete the survey we should query for user answers
-          questions[question.id].agree = null;
+        .then((data: any) => {
+          // data comes back as an array of question objects, use each object to shape the question object for the front end
+          data.forEach((question: any) => {
+            questions[question.id] = {};
+            questions[question.id].issueId = question.issueId;
+            questions[question.id].questionText = question.question;
+            questions[question.id].position = question.bias;
+            // REFACTOR once we can complete the survey we should query for user answers
+            questions[question.id].agree = null;
+          })
         })
-      })
-      .catch((error: any) => {
-        console.log('ERROR AT getIssueQuestions IN data.ts', error);
-      })
+        .catch((error: any) => {
+          console.log('ERROR AT getIssueQuestions IN data.ts', error);
+        })
     }
     // after the iterations return teh question object
     return questions;
@@ -66,18 +66,18 @@ export class DatabaseRepository {
 
   // insert issue data, data submission
   async addIssues(issueData: any[]) {
-      for (let i = 0; i < issueData.length; i += 1) {
-        this.db.none('INSERT INTO issues (id, issue, description) VALUES ($1, $2, $3)', [v4(), issueData[i].issue, issueData[i].description])
+    for (let i = 0; i < issueData.length; i += 1) {
+      this.db.none('INSERT INTO issues (id, issue, description) VALUES ($1, $2, $3)', [v4(), issueData[i].issue, issueData[i].description])
         .catch((error: any) => {
           console.log('ERROR AT addIssues IN additionalDataMethods.ts', error);
         })
-      }
+    }
   }
 
   // get issues from db for front end
   getIssues() {
     return this.db.query('SELECT id, issue_name, description FROM issues;');
-  } 
+  }
 
   getIssueAbbrvs() {
     return this.db.any('SELECT issue_name, abbrv FROM issues;');
@@ -89,7 +89,7 @@ export class DatabaseRepository {
     }
   }
 
-  async updatePoliticianData (dataArray: any) {
+  async updatePoliticianData(dataArray: any) {
     for (let i = 0; i < dataArray.length; i += 1) {
       await this.db.none('UPDATE politicians SET recip_1_info = $1, recip_2_info = $2, recip_3_info = $3 WHERE company_id = $4', [dataArray[i].recip_1_info, dataArray[i].recip_2_info, dataArray[i].recip_3_info, dataArray[i].id]);
     }
@@ -99,15 +99,15 @@ export class DatabaseRepository {
     let politicanData: any = {};
     for (let i = 0; i < companyData.length; i += 1) {
       await this.db.any('SELECT * FROM politicians WHERE company_id = $1;', companyData[i].id)
-      .then((data: any) => {
-        console.log(data);
-        if (data[0].recip_1 === "") {
-          politicanData[companyData[i].full_name] = {};
-        }
-        else {
-          politicanData[companyData[i].full_name] = data;
-        }
-      })
+        .then((data: any) => {
+          console.log(data);
+          if (data[0].recip_1 === "") {
+            politicanData[companyData[i].full_name] = {};
+          }
+          else {
+            politicanData[companyData[i].full_name] = data;
+          }
+        })
     }
     return politicanData;
   }
