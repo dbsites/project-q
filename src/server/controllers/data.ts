@@ -89,12 +89,24 @@ export class DatabaseRepository {
     }
   }
 
+  async updatePoliticianData (dataArray: any) {
+    for (let i = 0; i < dataArray.length; i += 1) {
+      await this.db.none('UPDATE politicians SET recip_1_info = $1, recip_2_info = $2, recip_3_info = $3 WHERE company_id = $4', [dataArray[i].recip_1_info, dataArray[i].recip_2_info, dataArray[i].recip_3_info, dataArray[i].id]);
+    }
+  }
+
   async getPoliticianData(companyData: any[]) {
     let politicanData: any = {};
     for (let i = 0; i < companyData.length; i += 1) {
       await this.db.any('SELECT * FROM politicians WHERE company_id = $1;', companyData[i].id)
       .then((data: any) => {
-        politicanData[companyData[i].full_name] = data;
+        console.log(data);
+        if (data[0].recip_1 === "") {
+          politicanData[companyData[i].full_name] = {};
+        }
+        else {
+          politicanData[companyData[i].full_name] = data;
+        }
       })
     }
     return politicanData;

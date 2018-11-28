@@ -11,6 +11,7 @@ import { Action, Dispatch } from 'redux';
 
 // Import Action Interfaces
 import {
+  ISetDeviceAction,                                           // Device Action Interfaces
   IFetchFailureAction,                                        // Fetch Failure Action Interface
   IFormFieldObject, IFormFetchSuccessResponseObject,          // Form Request and Response Interfaces
   IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, // Form Action Interfaces
@@ -27,6 +28,12 @@ import {
   LoginState, RegisterState,
   ForgotPassState, ResetPassState, SurveyState, UserIssuesSelected,
 } from '../reducers/types';
+
+// --- Device Action Creators --- // --- UNIT TESTING 100% --- //
+export const setDevice = (deviceType: string): ISetDeviceAction => ({
+  type: types.SET_DEVICE,
+  deviceType,
+})
 
 // --- Form Action Creators --- // --- UNIT TESTING 100% --- //
 // Description: Action Creators to update form fields and submit forms with fetch request

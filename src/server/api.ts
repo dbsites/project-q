@@ -187,6 +187,15 @@ app.post('/api/stockData',
   }
 );
 
+// React Router Redirect to /index.html
+app.get('/*', (_: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, '../../dist/index.html'), (err: Error) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+  });
+});
+
 module.exports = app;
 
 /* APPLICATION DATA SUBMISSION ROUTES
