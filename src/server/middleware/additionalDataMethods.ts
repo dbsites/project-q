@@ -113,10 +113,16 @@ DatabaseMethods.getPoliticianData = (_: Request, res: Response, next: NextFuncti
 
 DatabaseMethods.getSinglePoliticianData = (req: Request, res: Response, next: NextFunction) => {
   db.data.getSinglePoliticianData(req.body.ticker)
-    .then((politicianData: any) => {
+  .then((politicianData: any) => {
+    console.log(politicianData);
+    if (politicianData.recip_1 === ''){
+      res.locals.politicianData = {};
+    }
+    else {
       res.locals.politicianData = politicianData;
-      next();
-    })
+    }
+    next();
+  })
 }
 
 
