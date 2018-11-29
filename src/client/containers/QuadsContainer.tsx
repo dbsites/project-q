@@ -33,6 +33,7 @@ interface Props {
   getSelectedCompanyInfo: any
 }
 
+// TODO when store structure finalized
 class QuadsContainer extends React.Component<Props> {
   constructor(props: any) {
     super(props);
@@ -51,7 +52,7 @@ class QuadsContainer extends React.Component<Props> {
     getUserIssues();
     // Fetch company list from db and adds to company store
     fetchCompanyList();
-
+    // Grab and display stock data of first company in alphabetized list (3M)
     getStockData('MMM.N');
     setTimeout(() => { getSelectedCompanyInfo('MMM.N'); }, 4000);
     // Grab all companies modal and politician info
