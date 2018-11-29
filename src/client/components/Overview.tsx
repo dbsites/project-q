@@ -59,18 +59,20 @@ const Overview = (props: any) => {
               {description}
             </p>
             <div id="company-info-more">
-              <p><strong>Founded: </strong>{yearFounded}</p>
-              <p><strong># of Employees: </strong>{
-                numberEmployees
-                  .toString()
-                  .split('')
-                  .reverse()
-                  .reduce((numString: string, next: string, i: number) => {
-                    if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
-                    else numString = next + numString;
-                    return numString;
-                  }, '')
-              }
+              <p>
+                <span><strong>Founded: </strong>{yearFounded}</span>
+                <span><strong># of Employees: </strong>{
+                  numberEmployees
+                    .toString()
+                    .split('')
+                    .reverse()
+                    .reduce((numString: string, next: string, i: number) => {
+                      if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
+                      else numString = next + numString;
+                      return numString;
+                    }, '')
+                }
+                </span>
               </p>
             </div>
             <p id="company-url-pre">

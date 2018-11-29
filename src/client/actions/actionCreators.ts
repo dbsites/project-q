@@ -335,7 +335,6 @@ export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((response: any) => {
-      console.log('polit info: ', response.politicianData);
       dispatch({
         type: types.GET_SELECTED_COMPANY_INFO,
         payload: {

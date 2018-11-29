@@ -11,9 +11,15 @@ interface Props {
   overall: any
 }
 
+// let display;
+
 class OverviewPie extends Component<Props> {
   constructor(props: any) {
     super(props);
+  }
+
+  componentWillUpdate() {
+    
   }
   render() {
     const { overall } = this.props;

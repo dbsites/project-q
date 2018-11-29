@@ -77,7 +77,8 @@
 
 #overview-right p {
   font-family: 'Lato', serif; 
-  font-size: 0.7em;
+  font-size: 0.95rem;
+  /* line-height: 22px; */
   color: #A5A8A6;
 } 
 
@@ -97,23 +98,40 @@
 
 #overview-description-container {
   display: block;
-  width: 80%;
+  width: 90%;
 }
 
 #company-info {
   text-align: left;
+  line-height: 150%;
   margin-top: 2.5%;
   margin-bottom: 2.5%;
   width: 100%;
 }
 
+#company-info-more p {
+  font-size: 0.8em;
+}
+
+#company-info-more span {
+  margin-right: 10%;
+}
+
 #company-url-pre {
-  margin-top: 2.5%;
+  font-size: 0.8em;
+  margin-top: 1%;
+  text-decoration: none;
+}
+
+#company-url-pre a:hover{
+  color: #FFFFFF;
+  text-decoration: none;
 }
 
 #company-url-pre a,
 #company-url-pre a:visited {
-  color: #FFFFFF;
+  color: #A5A8A6;
+  text-decoration: none;
 }
 
 /* * * * * * * * * * * * * * * *
@@ -217,6 +235,7 @@
 
 .issue-pie tspan {
   font-size: 1.25em;
+  /* font-weight: bolder; */
   position: relative;
   height: 100%
 }
@@ -241,9 +260,9 @@
   border: 0.5em solid black;
   position: fixed;
   height: 31.75vh;
-  width: 37.5vw;
+  width: 40vw; /*37.5vw;*/
   top: 12%;
-  left: 6.75%;
+  left: 6%;
   background-color: black;
   z-index: 7;
   color: white;
@@ -255,7 +274,8 @@
   display: block;
   height: auto;
   padding-top: 0.25%;
-  padding-left: 5.75%;
+  padding-right: 2.5%;
+  /* padding-left: 5%; */
   margin: 0 auto;
   max-width: 275px;
   max-height: 50px;
@@ -266,6 +286,7 @@
   display: inline-block;
   width: 40%;
   height: 100%;
+  /* padding-left: 1%; */
   vertical-align: top;
 }
 
@@ -288,7 +309,7 @@
 .pie-detail {
   width: 100%;
   height: 60%;
-  margin: 15% auto 5.5%;
+  margin: 15% auto 6.5%;
 }
 
 .pie-detail tspan {
@@ -297,14 +318,14 @@
 }
 
 .blurb p {
-  font-size: 1.1em;
+  font-size: 0.95rem;
   margin-left: 5%;
-  padding-left: 1%;
+  /* padding-left: 1%; */
   margin-top: -2%;
   text-align: left;
   font-family: 'Lato';
   color: #A5A8A6;
-  width: 90%;
+  width: 100%;
   line-height: 150%;
 }
 
@@ -350,6 +371,13 @@
   margin: 0;
 }
 
+.polit-info-hide {
+  color: #000000;
+  font-size: 0.6em;
+  text-align: center;
+  margin: 0;
+}
+
 .politician {
   margin: 2% auto 0;
   width: 80%;
@@ -361,6 +389,10 @@
   color: #FFFFFF;
   margin: 0 auto;
   position: relative;
+}
+
+.politician img:hover {
+  border: 2px solid #FFFFFF;
 }
 
 .politician img {
@@ -444,7 +476,7 @@
 }
 
 #cl-category-issue {
-  min-width: 8%;
+  min-width: 8.5%;
 }
 
 #cl-category-issue .none {

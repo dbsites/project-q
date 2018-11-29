@@ -202,7 +202,7 @@ export const MONEY = (companyName: string, score: number, issueName: string, agg
   return (
     <div className="blurb">
       <p className="blurb-paragraph">
-        <span>{companyName}</span> has received a score of <span>{score}</span> on the issue of <span>{issueName}</span>. Your unique input on Ethiq’s quiz has been cross-referenced with data points that track corporate expenditures to federal-level candidates, incumbents and political parties. In the 2016 election cycle, <span>{companyName}</span> contributed <span>{aggregate}</span>. The top three recipients were <span>{recip_1}</span> (<span>{recip_1_amount}</span>), <span>{recip_2}</span> (<span>{recip_2_amount}</span>), and <span>{recip_3}</span> (<span>{recip_3_amount}</span>).
+        <span>{companyName}</span> has received a score of <span>{score}</span> on the issue of <span>{issueName}</span>. Your unique input on Ethiq’s quiz has been cross-referenced with data points tracking corporate expenditures to federal-level candidates, incumbents and political parties. In the 2016 election cycle, <span>{companyName}</span> contributed <span>{aggregate}</span>. The top three recipients were <span>{recip_1}</span> (<span>{recip_1_amount}</span>), <span>{recip_2}</span> (<span>{recip_2_amount}</span>), and <span>{recip_3}</span> (<span>{recip_3_amount}</span>).
       </p>
     </div>
   )
@@ -302,7 +302,7 @@ export const PRESIDENTIAL = (companyName: string, score: number, issueName: stri
   return (
     <div className="blurb">
       <p className="blurb-paragraph">
-        <span>{companyName}</span> has received a score of <span>{score}</span> on the issue of <span>{issueName}</span>. Your unique input on Ethiq’s quiz has been cross-referenced with data points. Among them are <span>{companyName}'s</span> expenditures to politicians who have voted in line with or in opposition of President Trump, expenditures to the Presidential campaign, etc. <span>{trumpAlignment}</span> of the <span>{companyName}'s</span> political financing goes to legislators who votes are aligned with the current administration. Legislation introduced by the president is tracked through the House and Senate, as is the money flowing to politicians who eventually vote on these issues.
+        <span>{companyName}</span> has received a score of <span>{score}</span> on the issue of <span>{issueName}</span>. This is based on <span>{companyName}'s</span> expenditures to politicians voting in line with or in opposition of President Trump, donations to his campaign, etc. <span>{trumpAlignment}</span> of the <span>{companyName}'s</span> political financing goes to legislators who votes are aligned with the current administration.
     </p>
     </div>
 

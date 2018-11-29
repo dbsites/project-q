@@ -188,7 +188,7 @@ const CompanyList = (props: any) => {
               <div id="cl-category-nav">
                 <Link to='#' className="cl-header" id='cl-header-name' onClick={sortListBy}>COMPANY</Link>
                 <Link to='#' className="cl-header" id='cl-header-ticker' onClick={props.sortListBy}>TICKER</Link>
-                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>OVL</Link>
+                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>ALL</Link>
                 {...issueNamesArray}
               </div>
 
