@@ -4,6 +4,7 @@
  */
 
 import * as React from 'react';
+import * as ReactGA from 'react-ga';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -14,6 +15,10 @@ import TermsContainer from './client/containers/TermsContainer';
 import App from './client/App';
 
 import './Root.css';
+
+// Initialize Google Analytics Tracking
+ReactGA.initialize('UA-115296410-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 // Root pulls store out of params to pass to Redux Provider
 // Wrap React Router in Redux Provider and nest App in '/' path with optional 'filter' param
