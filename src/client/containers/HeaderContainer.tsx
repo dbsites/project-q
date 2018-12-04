@@ -6,8 +6,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-const brandingLogo = require('../assets/brandingLogo.png')
+import Logo from '../components/logo/Logo';
 
 let Header = (props: any) => {
 
@@ -27,7 +26,7 @@ let Header = (props: any) => {
       <ul className="header">
         <li className="header-left">
           <Link to='/'>
-            <img alt="Welcome to eTrade powered by Ethiq" className="header-logo-image" src={brandingLogo} />
+            <Logo className="header-logo-image" />
           </Link>
         </li>
         {headerRight}

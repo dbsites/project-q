@@ -4,13 +4,13 @@
  */
 
 import * as React from 'react';
-const brandingLogo = require('../assets/brandingLogo.png')
+import Logo from './logo/Logo';
 
 const FormHeader = () => {
   return (
     <div className="form-header">
       <div className="form-header-welcome-text">Welcome to</div>
-      <img alt="Welcome to eTrade powered by Ethiq" className="form-header-logo-image" src={brandingLogo}  />
+      <Logo className="form-header-logo-image" />
       <div className="form-header-hr"><hr /></div>
       <div className="form-header-tagline">Invest in companies aligned with <em>you.</em></div>
     </div>
