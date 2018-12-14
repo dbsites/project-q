@@ -51,6 +51,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
+// end point for checking if user is returning with an active session
 app.get('/api/auth',
 Sessions.check,
 UserMethods.getAccountInfo,
@@ -90,6 +91,7 @@ Sessions.end,
 }
 );
 
+// login for resetting a users password
 app.post('/api/forgot',
 UserMethods.findByEmail,
 Sessions.forgot,
