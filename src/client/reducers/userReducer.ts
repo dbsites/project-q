@@ -15,6 +15,7 @@ const initialUserState: UserState = {
   issuesComplete: null,
   firstName: null,
   lastName: null,
+  onboardComplete: null,
   surveyComplete: null,
   surveyPage: 0,
 };
@@ -66,14 +67,22 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
     case actions.FETCH_AUTH_SUCCESS:
     case actions.FETCH_FORM_SUCCESS:
       return {
-        ...initialUserState,
-        ...response,
+        isAuth: response.isAuth,
+        userId: response.userId,
+        firstName: response.firstName,
+        lastName: response.lastName,
+        issuesComplete: response.issuesComplete,
+        onboardComplete: response.issuesComplete,
+        surveyComplete: response.surveyComplete,
+        issuesSelected: response.issuesSelected || {},
+        surveyPage: 0
       };
-    
+
     case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
       return {
         ...state,
         issuesComplete: true,
+        surveyPage: 0,
       };
 
     case actions.FETCH_SUBMIT_ISSUES_FAILURE:
@@ -114,6 +123,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       return {
         ...state,
         issuesComplete: false,
+        onboardComplete: true,
         surveyComplete: false,
         surveyPage: 0,
       }
@@ -129,6 +139,16 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       return {
         ...state,
         issuesSelected: {},
+      }
+
+    case actions.RESTART:
+      return {
+        ...state,
+        issuesComplete: false,
+        onboardComplete: false,
+        surveyComplete: false,
+        issuesSelected: {},
+        surveyPage: 0,
       }
 
     default:

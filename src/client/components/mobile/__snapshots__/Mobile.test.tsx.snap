@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mobile Component matches the snapshot 1`] = `
+<div
+  className="mobile-takeover"
+>
+  <img
+    alt="Welcome to eTrade powered by Ethiq"
+    className="mobile-takeover-image"
+    src={
+      Object {
+        "process": [Function],
+      }
+    }
+  />
+  <div
+    className="mobile-takeover-text"
+  >
+    Ethiq Beta Is Currently Optimized For Desktop
+  </div>
+</div>
+`;

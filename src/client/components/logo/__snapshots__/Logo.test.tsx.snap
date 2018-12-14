@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loading Component:  matches the snapshot 1`] = `
+<img
+  alt="Welcome to Ethiq"
+  className="logo-image"
+  src={
+    Object {
+      "process": [Function],
+    }
+  }
+/>
+`;

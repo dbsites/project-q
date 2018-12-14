@@ -11,11 +11,13 @@ import types from './actionTypes'
 import * as actions from './actionCreators';
 import {
   IToggleIssueAction, IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, 
-  IIssuesSuccessAction, IFetchFailureAction, IAuthSuccessAction, ISubmitIssuesSuccessAction
+  IIssuesSuccessAction, IFetchFailureAction, IAuthSuccessAction, ISubmitIssuesSuccessAction,
+  ISetDeviceAction,
 } from './types';
 
 // Import Templates for Testing
 import {
+  stubDeviceType,
   stubUserId, stubFormName,
   stubFormFieldObject,
   stubFormFetchRequestBody, stubFormFetchSuccessResponse, stubNoAuthFetchResponse, stubFormFetchErrorMessage,
@@ -27,6 +29,17 @@ import {
 // Configure Mocks (store and error logging)
 const middleware: Middleware[] = [thunk];
 const mockStore = configureMockStore(middleware);
+
+// --- UNIT TESTS --- Device Action Creators --- //
+describe('Functionality Test: Device Action Creators', () => {
+  it('setDevice, given a deviceType, returns an action to set that deviceType', () => {
+    const expectedAction: ISetDeviceAction = {
+      type: types.SET_DEVICE,
+      deviceType: stubDeviceType,
+    };
+    expect(actions.setDevice(stubDeviceType)).toEqual(expectedAction);
+  }); 
+})
 
 // --- UNIT TESTS --- Form Action Creators --- //
 describe('Functionality Test: Form Action Creators', () => {
@@ -165,6 +178,13 @@ describe('Functionality Test: Issue Action Creators', () => {
 
 // --- UNIT TESTS --- User Action Creators --- //
 describe('Functionality Test: Synchronous User Action Creators', () => {
+  it('restart returns an action to restart the app', () => {
+    const expectedAction: Action<string> = {
+      type: types.RESTART,
+    };
+    expect(actions.restart()).toEqual(expectedAction);
+  });
+
   it('clearIssues returns an action to clear all issues', () => {
     const expectedAction: Action<string> = {
       type: types.CLEAR_ISSUES,

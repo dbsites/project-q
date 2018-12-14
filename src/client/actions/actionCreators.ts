@@ -11,6 +11,7 @@ import { Action, Dispatch } from 'redux';
 
 // Import Action Interfaces
 import {
+  ISetDeviceAction,                                           // Device Action Interfaces
   IFetchFailureAction,                                        // Fetch Failure Action Interface
   IFormFieldObject, IFormFetchSuccessResponseObject,          // Form Request and Response Interfaces
   IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, // Form Action Interfaces
@@ -27,6 +28,12 @@ import {
   LoginState, RegisterState,
   ForgotPassState, ResetPassState, SurveyState, UserIssuesSelected,
 } from '../reducers/types';
+
+// --- Device Action Creators --- // --- UNIT TESTING 100% --- //
+export const setDevice = (deviceType: string): ISetDeviceAction => ({
+  type: types.SET_DEVICE,
+  deviceType,
+})
 
 // --- Form Action Creators --- // --- UNIT TESTING 100% --- //
 // Description: Action Creators to update form fields and submit forms with fetch request
@@ -70,6 +77,7 @@ export const fetchForm = (form: string, formFields: LoginState | RegisterState |
       throw new Error('Something has gone wrong - please try again');
     })
     .then((response: IFormFetchSuccessResponseObject) => {
+      // set onboardComplete equal to issuesComplete
       return dispatch(fetchFormSuccess(response))
     })
     .catch((error: Error) => dispatch(fetchFormFailure(form, error.message)));
@@ -106,6 +114,10 @@ export const fetchIssues = () => (dispatch: any) => {
 }
 
 // --- Sync User Action Creators --- // --- UNIT TESTING 100% --- //
+export const restart = (): Action<string> => ({
+  type: types.RESTART,
+})
+
 export const clearIssues = (): Action<string> => ({
   type: types.CLEAR_ISSUES,
 });
@@ -313,6 +325,7 @@ export const getAllCompanyInfo = () => (dispatch: any) => {
 }
 
 export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
+  console.log('selected ticker: ', ticker);
   fetch('/api/companyModule', {
     method: 'POST',
     headers: {
@@ -328,7 +341,7 @@ export const getSelectedCompanyInfo = (ticker: string) => (dispatch: any) => {
           moduleData: response.moduleData,
           politData: response.politicianData
         }
-      })
+      });
     })
     .catch((err: any) => console.error(err));
 

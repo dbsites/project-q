@@ -83,12 +83,17 @@ export interface UserState {
   readonly issuesComplete: boolean | null,
   readonly firstName: string | null,
   readonly lastName: string | null,
+  readonly onboardComplete: boolean | null,
   readonly surveyComplete: boolean | null,
   readonly surveyPage: number,
 };
 
 export interface LoadingState {
-  [nameLoading: string]: boolean
+  [nameLoading: string]: boolean,
+}
+
+export interface DeviceState {
+  deviceType: string | null,
 }
 
 //***************************** */
@@ -173,6 +178,7 @@ export interface CompanyDataState {
 //***************************** */
 export interface ApplicationState {
   readonly company: CompanyState,
+  readonly device: DeviceState,
   readonly form: FormState,
   readonly issues: IssuesState,
   readonly loading: LoadingState,
