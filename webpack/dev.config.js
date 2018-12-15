@@ -27,10 +27,9 @@ module.exports = {
     compress: true,                                       // GZIP Compression
     contentBase: path.resolve(__dirname, '../dist'),      // Serve static content from ../dist
     historyApiFallback: true,                             // Redirect 404s back to /index.html
+    host: '0.0.0.0',                                      // Bind host for Docker compatibility
     proxy: {
-      '/api': {                                           // Proxy requests to '8080/api' route
-        target: 'http://localhost:3000',                  // Proxy 8080 to 3000
-      },
+      '/api': 'http://ethiq-dev-server:3000',             // Proxy requests to '8080/api' route
     },
     port: 8080,                                           // Specify PORT for requests
   },

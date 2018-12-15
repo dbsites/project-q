@@ -5,8 +5,8 @@
 # and run 'npm run test'
 
 version: "3"
-services:
 
+services:
   test:
     image: dbsites/ethiq-dependencies
     container_name: "ethiq-test"
@@ -14,7 +14,9 @@ services:
       - "3000:3000"
     volumes:
       - ./:/usr/src/app
-      - node_modules_test:/usr/src/app/node_modules
+      - dist:/usr/src/app/dist
+      - coverage:/usr/src/app/coverage
+      - node_modules:/usr/src/app/node_modules
     depends_on:
       - postgres-db-test
       - postgres-data-test
@@ -39,7 +41,10 @@ services:
     volumes:
       - test-db-volume:/var/lib/postgresql/data
     command: tail -f /dev/null
+
 # shared volumes
 volumes:
+  coverage:
+  dist:
+  node_modules:
   test-db-volume:
-  node_modules_test:
