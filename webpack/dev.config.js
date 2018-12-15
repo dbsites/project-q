@@ -80,8 +80,4 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
   plugins: [HTMLWebPackPlugin],
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-  },
 };
