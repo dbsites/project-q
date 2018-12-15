@@ -13,8 +13,7 @@ ENV DB_MIGRATIONS=${DATABASE_MIGRATIONS}
 ENV DB_SCOPES=${DATABASE_SCOPES}
 
 # Install db-migrate
-RUN npm install db-migrate -g
-
+RUN npm install db-migrate db-migrate-pg -g
 
 # npm install into /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -23,7 +22,7 @@ RUN npm install
 
 # copy webapp files to container & build:prod
 COPY . /usr/src/app/
-RUN npm run build
+RUN npm run build:prod
 
 # replace this with your application's default port
 EXPOSE 3000

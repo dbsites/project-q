@@ -1,16 +1,53 @@
 # command to run:
-# docker-compose -f docker-comp-dev.yml -f docker-comp-dev-hot up
+# docker-compose -f docker-comp-dev-hot up
 
 # This will start ethiq-dependencies & postgres db container with it's associated data volumes container
-# and run 'npm run dev:hot'
-
-#  note the use of 2 '-f' in command. Second file overwrites, first one
+# and run 'npm run dev-server' and 'npm run dev-client'
 
 version: "3"
-services:
 
-  dev:
-    container_name: "ethiq-dev-hot"
+services:
+  client:
+    image: dbsites/ethiq-dependencies
+    container_name: "ethiq-dev-client"
     ports:
       - "8080:8080"
-    command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db", "${DATABASE_MIGRATIONS}", "dev:hot", "${DATABASE_SCOPES}"]
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: ["npm", "run", "dev-client"]
+  server:
+    image: dbsites/ethiq-dependencies
+    container_name: "ethiq-dev-server"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+      - dist:/usr/src/app/dist
+      - node_modules:/usr/src/app/node_modules
+    depends_on:
+      - postgres-db
+      - postgres-data
+    command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db", "${DATABASE_MIGRATIONS}", "dev-server"]
+  postgres-db:
+    environment:
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_USER=ethiqadmin
+      - POSTGRES_DB=ethiqdb
+    image: dbsites/ethiq-postgres
+    container_name: ethiq-postgres
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+      - ./scripts/postgres-db:/postgres-db
+    depends_on:
+      - postgres-data
+  postgres-data:
+    image: busybox
+    container_name: ethiq-dev-dbdata
+    volumes:
+      - dev-db-volume:/var/lib/postgresql/data
+# shared volumes for development
+volumes:
+  dev-db-volume:
+  dist:
+  node_modules:
