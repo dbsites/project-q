@@ -78,6 +78,7 @@ export interface UserIssuesSelected {
 
 export interface UserState {
   readonly userId: string | null,
+  readonly isAdmin: boolean,
   readonly isAuth: boolean | null,
   readonly issuesSelected: UserIssuesSelected,
   readonly issuesComplete: boolean | null,
