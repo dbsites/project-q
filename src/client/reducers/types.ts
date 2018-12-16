@@ -93,6 +93,11 @@ export interface LoadingState {
   [nameLoading: string]: boolean,
 }
 
+export interface ModalState {
+  isModalActive: boolean,
+  modalType: string | null,
+}
+
 export interface DeviceState {
   deviceType: string | null,
 }
