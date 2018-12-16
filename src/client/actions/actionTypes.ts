@@ -18,6 +18,10 @@ enum ActionTypes {
   // Device Actions
   SET_DEVICE = 'SET_DEVICE',
 
+  // Modal Actions
+  SET_MODAL = 'SET_MODAL',
+  CLEAR_MODAL = 'CLEAR_MODAL',
+
   // User Actions
   CLEAR_ISSUES = 'CLEAR_ISSUES',
   ADD_ISSUE = 'ADD_ISSUE',
