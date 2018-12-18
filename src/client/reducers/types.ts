@@ -188,6 +188,7 @@ export interface ApplicationState {
   readonly form: FormState,
   readonly issues: IssuesState,
   readonly loading: LoadingState,
+  readonly modal: ModalState,
   readonly survey: SurveyState,
   readonly user: UserState,
 };

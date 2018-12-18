@@ -74,30 +74,26 @@ body {
 }
 
 .header-left {
+  color: #FFFFFF;
+  cursor: pointer;
   float: left;
+  padding: 2vh 20px;
 }
 
 .header-right {
+  padding: 3.5vh 20px;
   float: right;
+}
+
+.header-right:hover{
+  color: #FFFFFF;
+  cursor: pointer;
 }
 
 .header li a {
   color: inherit;
   display: block;
-  text-align: center;
   text-decoration: none;
-}
-
-.header a:hover {
-  color: #FFFFFF;
-}
-
-.header-left a {
-  padding: 2vh 20px;
-}
-
-.header-right a {
-  padding: 3.5vh 20px;
 }
 
 /* Main Container = 12vh + 14vh + 52vh + 14vh = 92vh */
