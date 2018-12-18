@@ -13,6 +13,7 @@ import issuesReducer from './issuesReducer';
 import loadingReducer from './loadingReducer';
 import surveyReducer from './surveyReducer';
 import userReducer from './userReducer';
+import modalReducer from './modalReducer';
 
 // Import store type
 import { ApplicationState } from './types';
@@ -24,6 +25,7 @@ const reducers: Reducer = combineReducers<ApplicationState>({
   form: formReducer,
   issues: issuesReducer,
   loading: loadingReducer,
+  modal: modalReducer,
   survey: surveyReducer,
   user: userReducer,
 });

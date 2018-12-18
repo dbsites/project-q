@@ -83,7 +83,6 @@ const loadingReducer = (state: LoadingState = initialLoadingState, action: any):
           surveyLoading: false,
         };
 
-
     default:
       return state;
   } 
