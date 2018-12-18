@@ -9,7 +9,7 @@ import actions from '../actions/actionTypes';
 import * as issueMatch from '../issueMatcher';
 // import { selectCompany } from '../actions/actionCreators';
 
-const initialCompanyState: /*CompanyDataState*/any = {
+const initialCompanyState: /*CompanyDataState*/ any = {
   selectedCompany: null,
   fullCompanyModal: null,
   fullCompanyPolit: null,
@@ -25,29 +25,18 @@ const { issueMatcher } = issueMatch;
 
 const companyReducer = (state: any = initialCompanyState, action: any): any => {
   switch (action.type) {
-
     case actions.FETCH_COMPANY_LIST:
-      const companyListArray = Object
-        .values(action.data.companyDataArray)
-        .sort((a: any, b: any): any => {
-          if (a.full_name.toUpperCase() < b.full_name.toUpperCase())
-            return -1;
-          if (a.full_name.toUpperCase() > b.full_name.toUpperCase())
-            return 1;
-          return 0;
-        });
-
       return {
         ...state,
-        companyList: companyListArray,
+        companyList: Object.values(action.data.companyDataArray),
         issueAbbrvs: action.data.issueAbbrvs
       };
 
     case actions.SET_DEFAULT_COMPANY:
       return {
         ...state,
-        selectedCompany: state.companyList[0],
-      }
+        selectedCompany: state.companyList[0]
+      };
 
     case actions.GET_USER_ISSUES:
       return {
@@ -57,13 +46,14 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
 
     case actions.ADD_COMPANY_SCORE:
       const updatedCompanyList = state.companyList.slice(0);
-      const userIssuesArray = Object.keys(state.userIssues)
-        .map((issueID: any) => {
+      const userIssuesArray = Object.keys(state.userIssues).map(
+        (issueID: any) => {
           return {
             name: issueMatcher[issueID],
             leaning: state.userIssues[issueID]
-          }
-        });
+          };
+        }
+      );
 
       let score = 0;
 
@@ -72,45 +62,40 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
           userIssuesArray.forEach((issue: any) => {
             if (issue.leaning.includes('con'))
               score += state.companyList[i][issue.name].disagreeScore;
-            else
-              score += state.companyList[i][issue.name].agreeScore
-          })
+            else score += state.companyList[i][issue.name].agreeScore;
+          });
           updatedCompanyList[i].overallScore = score;
           score = 0;
         }
       }
 
+      updatedCompanyList.sort(
+        (a: any, b: any): any => {
+          return b.overallScore - a.overallScore;
+        }
+      );
+
       return {
         ...state,
         companyList: updatedCompanyList
-      }
+      };
 
     case actions.GET_STOCK_INFO:
       return {
         ...state,
-        currentCompanyStockData: Object.assign({}, action.payload.stockData),
-      }
+        currentCompanyStockData: Object.assign({}, action.payload.stockData)
+      };
 
     case actions.GET_SELECTED_COMPANY_INFO:
       const { moduleData, politData } = action.payload;
 
-      if (state.fullCompanyModal && state.fullCompanyPolit) {
-        const { full_name } = state.selectedCompany;
-        return {
-          ...state,
-          selectedCompanyData: {
-            moduleData: state.fullCompanyModal[full_name][0],
-            politData: state.fullCompanyPolit[full_name][0]
-          }
+      return {
+        ...state,
+        selectedCompanyData: {
+          moduleData,
+          politData
         }
-      } else {
-        return {
-          ...state,
-          selectedCompanyData: {
-            moduleData, politData
-          }
-        }
-      }
+      };
 
     case actions.GET_ALL_COMPANY_INFO:
       const { modalData, politicianData } = action.payload;
@@ -122,13 +107,14 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
 
     case actions.MERGE_ISSUE_SCORES:
       const newCompanyList = state.companyList.slice(0);
-      const userIssuesArr = Object.keys(state.userIssues)
-        .map((issueID: any) => {
+      const userIssuesArr = Object.keys(state.userIssues).map(
+        (issueID: any) => {
           return {
             name: issueMatcher[issueID],
             leaning: state.userIssues[issueID]
-          }
-        });
+          };
+        }
+      );
 
       if (newCompanyList.length > 0) {
         for (let i = 0; i < newCompanyList.length; i += 1) {
@@ -139,13 +125,22 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
             else
               newCompanyList[i][issue.name].alignedScore =
                 newCompanyList[i][issue.name].agreeScore;
-          })
+          });
         }
       }
       return {
         ...state,
         companyList: newCompanyList
-      }
+      };
+
+    case actions.RESET_USER_ISSUES:
+      console.log('resetting user issues');
+      return {
+        ...state,
+        // selectedCompany: null,
+        // companyList: [],
+        userIssues: {}
+      };
 
     case actions.SELECT_COMPANY:
       const companyList = Object.values(state.companyList);
@@ -155,7 +150,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         ...state,
         selectedCompany: companyList[position]
       };
-
 
     case actions.SORT_COMPANY_LIST:
       const companyArray = state.companyList;
@@ -168,61 +162,87 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       if (category === 'name') {
         const topListCompanyName = companyArray[0].short_name;
         if (topListCompanyName[0] !== '2') {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            if (a.short_name.toUpperCase() < b.short_name.toUpperCase()) return -1;
-            if (a.short_name.toUpperCase() > b.short_name.toUpperCase()) return 1;
-            return 0;
-          });
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              if (a.short_name.toUpperCase() < b.short_name.toUpperCase())
+                return -1;
+              if (a.short_name.toUpperCase() > b.short_name.toUpperCase())
+                return 1;
+              return 0;
+            }
+          );
         } else {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            if (a.short_name.toUpperCase() > b.short_name.toUpperCase()) return -1;
-            if (a.short_name.toUpperCase() < b.short_name.toUpperCase()) return 1;
-            return 0;
-          });
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              if (a.short_name.toUpperCase() > b.short_name.toUpperCase())
+                return -1;
+              if (a.short_name.toUpperCase() < b.short_name.toUpperCase())
+                return 1;
+              return 0;
+            }
+          );
         }
-      }
-
-      /**
-       * Sort list by 'TICKER'
-       */
-      else if (category === 'ticker') {
+      } else if (category === 'ticker') {
+        /**
+         * Sort list by 'TICKER'
+         */
         const topListCompanyTicker = companyArray[0].ticker;
         if (topListCompanyTicker[0] !== 'Z') {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            if (a.ticker.toUpperCase() > b.ticker.toUpperCase()) return -1;
-            if (a.ticker.toUpperCase() < b.ticker.toUpperCase()) return 1;
-            return 0;
-          });
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              if (a.ticker.toUpperCase() > b.ticker.toUpperCase()) return -1;
+              if (a.ticker.toUpperCase() < b.ticker.toUpperCase()) return 1;
+              return 0;
+            }
+          );
         } else {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            if (a.ticker.toUpperCase() < b.ticker.toUpperCase()) return -1;
-            if (a.ticker.toUpperCase() > b.ticker.toUpperCase()) return 1;
-            return 0;
-          });
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              if (a.ticker.toUpperCase() < b.ticker.toUpperCase()) return -1;
+              if (a.ticker.toUpperCase() > b.ticker.toUpperCase()) return 1;
+              return 0;
+            }
+          );
         }
-      }
-      /**
-       * Sort list by 'SCORE'
-       */
-      else if (category === 'overall') {
-        const lowestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest.overallScore > next.overallScore ? next : lowest);
+      } else if (category === 'overall') {
+        /**
+         * Sort list by 'SCORE'
+         */
+        const lowestScoreCompany = companyArray.reduce(
+          (lowest: any, next: any) =>
+            lowest.overallScore > next.overallScore ? next : lowest
+        );
 
-        const highestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest.overallScore > next.overallScore ? lowest : next);
+        const highestScoreCompany = companyArray.reduce(
+          (lowest: any, next: any) =>
+            lowest.overallScore > next.overallScore ? lowest : next
+        );
 
         const topListCompany = companyArray[0];
 
-        if (topListCompany.overallScore !== highestScoreCompany.overallScore && topListCompany.overallScore !== lowestScoreCompany.overallScore) {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            return b.overallScore - a.overallScore;
-          });
-        } else if (topListCompany.overallScore === highestScoreCompany.overallScore) {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            return a.overallScore - b.overallScore;
-          })
+        if (
+          topListCompany.overallScore !== highestScoreCompany.overallScore &&
+          topListCompany.overallScore !== lowestScoreCompany.overallScore
+        ) {
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              return b.overallScore - a.overallScore;
+            }
+          );
+        } else if (
+          topListCompany.overallScore === highestScoreCompany.overallScore
+        ) {
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              return a.overallScore - b.overallScore;
+            }
+          );
         } else {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            return b.overallScore - a.overallScore;
-          })
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              return b.overallScore - a.overallScore;
+            }
+          );
         }
       }
 
@@ -230,26 +250,54 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       else {
         const categoryName = category.replace(/=/g, ' ').trim();
 
-        const lowestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest[categoryName].alignedScore > next[categoryName].alignedScore ? next : lowest);
+        const lowestScoreCompany = companyArray.reduce(
+          (lowest: any, next: any) =>
+            lowest[categoryName].alignedScore > next[categoryName].alignedScore
+              ? next
+              : lowest
+        );
 
-        const highestScoreCompany = companyArray.reduce((lowest: any, next: any) => lowest[categoryName].alignedScore > next[categoryName].alignedScore ? lowest : next);
+        const highestScoreCompany = companyArray.reduce(
+          (lowest: any, next: any) =>
+            lowest[categoryName].alignedScore > next[categoryName].alignedScore
+              ? lowest
+              : next
+        );
 
         const topListCompany = companyArray[0];
 
-        if (topListCompany[categoryName].alignedScore !== highestScoreCompany[categoryName].alignedScore && topListCompany[categoryName].alignedScore !== lowestScoreCompany[categoryName].alignedScore) {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            return b[categoryName].alignedScore - a[categoryName].alignedScore;
-          });
-        }
-        else if (topListCompany[categoryName].alignedScore === highestScoreCompany[categoryName].alignedScore) {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            return a[categoryName].alignedScore - b[categoryName].alignedScore;
-          })
-        }
-        else {
-          sortedList = companyArray.slice(0).sort((a: any, b: any): any => {
-            return b[categoryName].alignedScore - a[categoryName].alignedScore;
-          })
+        if (
+          topListCompany[categoryName].alignedScore !==
+            highestScoreCompany[categoryName].alignedScore &&
+          topListCompany[categoryName].alignedScore !==
+            lowestScoreCompany[categoryName].alignedScore
+        ) {
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              return (
+                b[categoryName].alignedScore - a[categoryName].alignedScore
+              );
+            }
+          );
+        } else if (
+          topListCompany[categoryName].alignedScore ===
+          highestScoreCompany[categoryName].alignedScore
+        ) {
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              return (
+                a[categoryName].alignedScore - b[categoryName].alignedScore
+              );
+            }
+          );
+        } else {
+          sortedList = companyArray.slice(0).sort(
+            (a: any, b: any): any => {
+              return (
+                b[categoryName].alignedScore - a[categoryName].alignedScore
+              );
+            }
+          );
         }
       }
 
@@ -261,6 +309,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     default:
       return state;
   }
-}
+};
 
 export default companyReducer;
