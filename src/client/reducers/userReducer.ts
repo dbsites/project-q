@@ -10,6 +10,7 @@ import { UserState, UserIssuesSelected } from './types';
 // Define initial state
 const initialUserState: UserState = {
   userId: null,
+  isAdmin: false,
   isAuth: null,
   issuesSelected: {},
   issuesComplete: null,
@@ -67,6 +68,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
     case actions.FETCH_AUTH_SUCCESS:
     case actions.FETCH_FORM_SUCCESS:
       return {
+        isAdmin: response.isAdmin || false,
         isAuth: response.isAuth,
         userId: response.userId,
         firstName: response.firstName,

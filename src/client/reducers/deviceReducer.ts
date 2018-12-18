@@ -17,11 +17,7 @@ export const initialDeviceState: DeviceState = {
 };
 
 // Define reducer to update device.deviceType to payload deviceType
-const deviceReducer = (
-  state: DeviceState = initialDeviceState,
-  action: ISetDeviceAction
-): DeviceState => {
-  // console.log(action);
+const deviceReducer = (state: DeviceState = initialDeviceState, action: ISetDeviceAction): DeviceState => {
   const { deviceType, type } = action;
   switch (type) {
     case actions.SET_DEVICE:

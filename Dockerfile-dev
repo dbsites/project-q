@@ -2,10 +2,10 @@
 FROM dbsites/ubuntu-ethiq
 
 # Install webpack dev server
-RUN npm install webpack -g
+# RUN npm install webpack -g
 
 # Install db-migrate
-RUN npm install db-migrate -g
+RUN npm install db-migrate db-migrate-pg -g
 
 # Working directory for application
 WORKDIR /usr/src/app
@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 # npm install into /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json /usr/src/app/
-RUN npm install
+# RUN npm install
 
 # replace this with your application's default port
-EXPOSE 3000
+EXPOSE 3000 8080

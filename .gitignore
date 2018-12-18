@@ -16,6 +16,9 @@ daemonServer.ts
 # Database Dump
 ethiq.dump.sql
 
+# Coverage report
+coverage/
+
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

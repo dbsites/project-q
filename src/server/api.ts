@@ -35,9 +35,6 @@ import Sessions from './middleware/sessionMethods';
 // activate the express server
 const app: Application = express();
 
-// server static files from dist directory
-app.use(express.static(path.resolve(__dirname, '../../dist')));
-
 // Allow CORS, credentials true expects  request to come with credentials and origin specifies where they should come from
 app.use(cors({credentials: true, origin: 'http://localhost:8080'}));
 
@@ -54,91 +51,93 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // cookie initializer
 app.use(cookieParser());
 
+// end point for checking if user is returning with an active session
 app.get('/api/auth',
-  Sessions.check,
-  UserMethods.getAccountInfo,
-  UserMethods.getIssues,
-  UserMethods.getQuestions,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.user);
-  }
+Sessions.check,
+UserMethods.getAccountInfo,
+UserMethods.getIssues,
+UserMethods.getQuestions,
+(_: Request, res: Response) => {
+  res.status(200).send(res.locals.user);
+}
 )
-  
+
 // registration end point
 app.post('/api/register', 
-  UserMethods.createAccount,
-  Sessions.create,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.user);
-  }
+UserMethods.createAccount,
+Sessions.create,
+(_: Request, res: Response) => {
+  res.status(200).send(res.locals.user);
+}
 );
 
 // login end point
 app.post('/api/login', 
-  UserMethods.login,
-  Sessions.create,
-  UserMethods.getAccountInfo,
-  UserMethods.getIssues,
-  UserMethods.getQuestions,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.user);
-  }
+UserMethods.login,
+Sessions.create,
+UserMethods.getAccountInfo,
+UserMethods.getIssues,
+UserMethods.getQuestions,
+(_: Request, res: Response) => {
+  res.status(200).send(res.locals.user);
+}
 );
 
 // route for logout which deletes sessions
 app.post('/api/logout', 
-  Sessions.end,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.user);
-  }
+Sessions.end,
+(_: Request, res: Response) => {
+  res.status(200).send(res.locals.user);
+}
 );
 
+// login for resetting a users password
 app.post('/api/forgot',
-  UserMethods.findByEmail,
-  Sessions.forgot,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals);
-  }
+UserMethods.findByEmail,
+Sessions.forgot,
+(_: Request, res: Response) => {
+  res.status(200).send(res.locals);
+}
 );
 
 app.post('/api/reset',
-  Sessions.reset,
-  UserMethods.resetPassword,
-  (_: Request, res: Response) => {
-    res.sendStatus(200);
-  }
+Sessions.reset,
+UserMethods.resetPassword,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
+}
 );
 
 // route for getting a list of issues for the front end
 app.get('/api/getIssues',
-  DatabaseMethods.getIssues,
-  (_: Request, res: Response) => {
-    res.status(200).send(res.locals.issues);
-  }
+DatabaseMethods.getIssues,
+(_: Request, res: Response) => {
+  res.status(200).send(res.locals.issues);
+}
 );
 
 // route for storing user issues/
 app.post('/api/userIssues', 
-  UserMethods.addIssues,
-  UserMethods.getIssues,
-  UserMethods.updateIssuesComplete,
-  UserMethods.getAccountInfo,
-  UserMethods.getQuestions,
-  (_: Request, res: Response) => {
-    // sending back user, issues, and question data in locals
-    res.status(200).send(res.locals.user.questions);
-  }
+UserMethods.addIssues,
+UserMethods.getIssues,
+UserMethods.updateIssuesComplete,
+UserMethods.getAccountInfo,
+UserMethods.getQuestions,
+(_: Request, res: Response) => {
+  // sending back user, issues, and question data in locals
+  res.status(200).send(res.locals.user.questions);
+}
 );
 
 // route for delivering user issues
 //   UserMethods.getIssues,
 //   (_: Request, res: Response) => {
-//     res.status(200).send(res.locals);
-//   }
-// );
-
-// route for storing user answers to questions
-app.post('/api/userSurvey',
+  //     res.status(200).send(res.locals);
+  //   }
+  // );
+  
+  // route for storing user answers to questions
+  app.post('/api/userSurvey',
   UserMethods.updateIssuePositons,
   UserMethods.updateUserSurvey,
   UserMethods.updateSurveyComplete,
@@ -152,61 +151,67 @@ app.post('/api/userSurvey',
       res.status(200).send(res.locals.companyData);
     }
   }
-);
-
-// end point for deliverying a list of companies on dashboard render
-app.get('/api/companyList',
+  );
+  
+  // end point for deliverying a list of companies on dashboard render
+  app.get('/api/companyList',
   DatabaseMethods.getIssueAbbrvs,
   CompanyDatabase.getCompanyList,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.companyData);
   }
-);
-
-app.get('/api/moduleData',
+  );
+  
+  app.get('/api/moduleData',
   CompanyDatabase.getCompanyModule,
   DatabaseMethods.getPoliticianData,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals.modules);
   }
-);
-
-app.post('/api/companyModule',
+  );
+  
+  app.post('/api/companyModule',
   CompanyDatabase.getCompanyModuleData,
   DatabaseMethods.getSinglePoliticianData,
   CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }
-);
-
-app.post('/api/stockData',
+  );
+  
+  app.post('/api/stockData',
   CompanyDatabase.getStockData,
   (_: Request, res: Response) => {
     res.status(200).send(res.locals);
   }
-);
-
-// React Router Redirect to /index.html
-app.get('/*', (_: Request, res: Response) => {
-  res.sendFile(path.resolve(__dirname, '../../dist/index.html'), (err: Error) => {
-    if (err) {
-      res.status(500).send(err)
-    }
+  );
+  
+  // App favicon redirect
+  app.use('/favicon.ico', express.static(path.resolve(__dirname, '../client/assets/favicon.ico')));
+  
+  // server static files from dist directory
+  app.use(express.static(path.resolve(__dirname, '../../dist')));
+  
+  // React Router Redirect to /index.html
+  app.get('/*', (_: Request, res: Response) => {
+    res.sendFile(path.resolve(__dirname, '../../dist/index.html'), (err: Error) => {
+      if (err) {
+        res.status(500).send(err)
+      }
+    });
   });
-});
 
-module.exports = app;
-
-/* APPLICATION DATA SUBMISSION ROUTES
-***********************************************************
+  module.exports = app;
+  
+  /* APPLICATION DATA SUBMISSION ROUTES
+  ***********************************************************
   // end point for company data submission
   
   app.post('/companyData', 
   CompanyDatabase.insertData,
   (_: Request, res: Response) => {
     res.sendStatus(200);
-    }
+  }
   );
 ***********************************************************
   // insert company issue scores
