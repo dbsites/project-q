@@ -7,7 +7,6 @@ import * as React from 'react';
 
 // Garron's brilliant multi-line implementation for adding commas to price value
 const commafy = (value: number) => {
-
   const dollars = value
     .toString()
     .split('.')[0]
@@ -22,22 +21,25 @@ const commafy = (value: number) => {
   const cents = value.toString().split('.')[1] || '00';
 
   return `${dollars}.${cents}`;
-}
+};
 
 // TODO when store structure finalized
 const StockGraph = (props: any) => {
-
   let display;
 
   if (!props.selected) {
-    display = (<p>Loading Stock Graph. . . </p>)
+    display = <p>Loading Stock Graph. . . </p>;
   } else {
     const { ticker } = props.selected;
     let high, low, open, close, volume;
 
     // Before stock data retrieval, set defaults to 0
     if (!props.stockData.high) {
-      high = 0; low = 0; open = 0; close = 0; volume = 0;
+      high = 0;
+      low = 0;
+      open = 0;
+      close = 0;
+      volume = 0;
     } else {
       high = commafy(props.stockData.high);
       low = commafy(props.stockData.low);
@@ -47,19 +49,35 @@ const StockGraph = (props: any) => {
     }
 
     // StockDIO API
-    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=50EC4535F41E4734BC8AD78686377BAC&symbol=${ticker.split('.')[0]}&indices=SPX&includeCompetitors=true&palette=Relief&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
+    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=DA26FDAD160C4FE38E722CE5459148DE&symbol=${
+      ticker.split('.')[0]
+    }&indices=SPX&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000&includeCompetitors=true`;
 
     display = (
       <React.Fragment>
-        <iframe frameBorder='0' scrolling='no' src={URI}>
-        </iframe >
+        <iframe frameBorder="0" scrolling="no" src={URI} />
         <div className="stock-container-info">
           <ul className="stock-info-list">
-            <li><span className="stock-info-cat">High</span><span>${high}</span></li>
-            <li><span className="stock-info-cat">Low</span><span>${low}</span></li>
-            <li><span className="stock-info-cat">Open</span><span>${open}</span></li>
-            <li><span className="stock-info-cat">Close</span><span>${close}</span></li>
-            <li><span className="stock-info-cat">Volume</span><span>${volume}</span></li>
+            <li>
+              <span className="stock-info-cat">High</span>
+              <span>${high}</span>
+            </li>
+            <li>
+              <span className="stock-info-cat">Low</span>
+              <span>${low}</span>
+            </li>
+            <li>
+              <span className="stock-info-cat">Open</span>
+              <span>${open}</span>
+            </li>
+            <li>
+              <span className="stock-info-cat">Close</span>
+              <span>${close}</span>
+            </li>
+            <li>
+              <span className="stock-info-cat">Volume</span>
+              <span>${volume}</span>
+            </li>
           </ul>
         </div>
       </React.Fragment>
@@ -67,12 +85,10 @@ const StockGraph = (props: any) => {
   }
 
   return (
-    <div className='quad' id="quad-stock">
-      <div className="stock-container">
-        {display}
-      </div>
+    <div className="quad" id="quad-stock">
+      <div className="stock-container">{display}</div>
     </div>
   );
-}
+};
 
 export default StockGraph;
