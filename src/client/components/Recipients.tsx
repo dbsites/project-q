@@ -8,8 +8,6 @@ const Recipients = (props: any) => {
 
   let display;
 
-  // console.log('props.data = ', props.data);
-
   if (!props.data) {
     display = (
       <React.Fragment>

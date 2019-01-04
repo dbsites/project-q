@@ -151,7 +151,6 @@ CompanyDatabase.getCompanyModule = async (_: Request, res: Response, next: NextF
 
 CompanyDatabase.getCompanyModuleData = (req: Request, res: Response, next: NextFunction) => {
   // if empty request object
-  console.log(req.body.ticker);
   if (!req.body.ticker) res.status(500).send('INVALID TICKER, NO TICKER');
 
   db.companies.getCompanyModuleData(req.body.ticker)
