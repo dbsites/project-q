@@ -117,7 +117,7 @@ DatabaseMethods.getIssues,
 );
 
 // route for storing user issues/
-app.post('/api/userIssues', 
+app.post('/api/userIssues',
 UserMethods.addIssues,
 UserMethods.getIssues,
 UserMethods.updateIssuesComplete,

@@ -11,16 +11,13 @@ import { Action, Dispatch } from 'redux';
 
 // Import Action Interfaces
 import {
-  ISetDeviceAction, // Device Action Interfaces
-  IFetchFailureAction, // Fetch Failure Action Interface
-  IFormFieldObject,
-  IFormFetchSuccessResponseObject, // Form Request and Response Interfaces
-  IUpdateFieldAction,
-  IFormSuccessAction,
-  IFormFailureAction, // Form Action Interfaces
-  IToggleIssueAction,
-  IUpdateIssuePositionAction, // User Action Interfaces
-  IIssuesSuccessAction, // Issue Action Interfaces
+  ISetDeviceAction,                                           // Device Action Interface
+  ISetModalAction,                                            // Modal Action Interface
+  IFetchFailureAction,                                        // Fetch Failure Action Interface
+  IFormFieldObject, IFormFetchSuccessResponseObject,          // Form Request and Response Interfaces
+  IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, // Form Action Interfaces
+  IToggleIssueAction, IUpdateIssuePositionAction,             // User Action Interfaces
+  IIssuesSuccessAction,                                       // Issue Action Interfaces
   IIssuesFetchSuccessResponseObject,
   INoAuthObject,
   IAuthSuccessAction,
@@ -42,6 +39,16 @@ export const setDevice = (deviceType: string): ISetDeviceAction => ({
   type: types.SET_DEVICE,
   deviceType
 });
+
+// --- Modal Action Creators --- // --- UNIT TESTING 100% --- //
+export const setModal = (modalType: string): ISetModalAction => ({
+  type: types.SET_MODAL,
+  modalType,
+})
+
+export const clearModal = (): Action<string> => ({
+  type: types.CLEAR_MODAL,
+})
 
 // --- Form Action Creators --- // --- UNIT TESTING 100% --- //
 // Description: Action Creators to update form fields and submit forms with fetch request

@@ -6,6 +6,11 @@ export interface ISetDeviceAction extends Action<string> {
   deviceType: string,
 }
 
+// Modal Action Interfaces
+export interface ISetModalAction extends Action<string> {
+  modalType: string,
+}
+
 // Fetch Failure Interface
 export interface IFetchFailureAction extends Action<string> {
   message: string,
