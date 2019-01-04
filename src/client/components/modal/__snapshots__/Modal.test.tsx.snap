@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reset Modal Component matches the snapshot 1`] = `
+Array [
+  <div
+    className="modal-opacity"
+    onClick={[MockFunction]}
+  />,
+  <div
+    className="modal-outer"
+  >
+    <div
+      className="modal-inner"
+    >
+      <span
+        className="modal-header-text"
+      >
+        Reset Ethiq?
+      </span>
+      <span
+        className="modal-body-text"
+      >
+        Clicking "Continue" will reset your profile and issue selections. Continue?
+      </span>
+      <div
+        className="modal-button-container"
+      >
+        <div
+          className="modal-button"
+          onClick={[MockFunction]}
+        >
+          CANCEL
+        </div>
+        <a
+          href="/account/restart"
+          onClick={[Function]}
+        >
+          <div
+            className="modal-button"
+            onClick={[MockFunction]}
+          >
+            CONTINUE
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>,
+]
+`;

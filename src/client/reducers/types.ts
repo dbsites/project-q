@@ -93,6 +93,11 @@ export interface LoadingState {
   [nameLoading: string]: boolean,
 }
 
+export interface ModalState {
+  isModalActive: boolean,
+  modalType: string | null,
+}
+
 export interface DeviceState {
   deviceType: string | null,
 }
@@ -183,6 +188,7 @@ export interface ApplicationState {
   readonly form: FormState,
   readonly issues: IssuesState,
   readonly loading: LoadingState,
+  readonly modal: ModalState,
   readonly survey: SurveyState,
   readonly user: UserState,
 };

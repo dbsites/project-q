@@ -84,7 +84,6 @@ const CompanyList = (props: any) => {
       // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
-          console.log(userIssuesArray);
           userIssuesArray.forEach((issue: any) => {
             if (issue.leaning.includes('con'))
               score += companyList[i][issue.name].disagreeScore;
