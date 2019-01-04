@@ -7,19 +7,16 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 #quads-container {
   display: grid;
-  grid-template-columns: minmax(75vh, 85vh) minmax(75vh, 85vh);
-  grid-template-rows: minmax(18vw, 20vw) minmax(20vw, 25vw);
-  max-width: 98%;
+  height: 80vh;
+  grid-template-columns: minmax(80vh, 85vh) minmax(80vh, 85vh);
+  grid-template-rows: minmax(15vw, 20vw) minmax(20vw, 25vw);
+  width: 100%;
   margin: 0 auto;
-}
-
-.quad {
-  background-color: black;
 }
 
 /* * * * * * * * * * * * * * * *
@@ -34,7 +31,7 @@
 }
 
 .overview-container p {
-  color: #A5A8A6;
+  color: #a5a8a6;
   margin: auto;
 }
 
@@ -44,7 +41,7 @@
 
 #overview-left h3 {
   margin: 0;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
 }
 
@@ -54,7 +51,7 @@
   height: 60%;
 }
 
-#overall-score-chart path{
+#overall-score-chart path {
   stroke-width: 2.5;
 }
 
@@ -69,23 +66,21 @@
 
 #overview-right {
   display: inline-block;
-  width: 59%;
+  width: 55%;
   height: 100%;
+  padding-bottom: 2.5%;
   line-height: 100%;
-  vertical-align: top;
 }
 
 #overview-right p {
-  font-family: 'Lato', serif; 
-  font-size: 0.95rem;
-  /* line-height: 22px; */
-  color: #A5A8A6;
-} 
+  font-family: 'Lato', serif;
+  color: #a5a8a6;
+}
 
 #overview-logo {
   position: relative;
   text-align: center;
-  width: 80%;
+  margin-top: 1.5%;
 }
 
 #overview-logo img {
@@ -98,19 +93,28 @@
 
 #overview-description-container {
   display: block;
-  width: 90%;
-}
-
-#company-info {
-  text-align: left;
-  line-height: 150%;
-  margin-top: 2.5%;
-  margin-bottom: 2.5%;
   width: 100%;
 }
 
+#company-info {
+  display: block;
+  text-align: left;
+  line-height: 150%;
+  margin: 1% auto;
+  padding-left: 2%;
+  font-size: 1.075vw;
+  width: 98%;
+}
+
 #company-info-more p {
-  font-size: 0.8em;
+  font-size: 0.8vw;
+  display: block;
+  text-align: left;
+  line-height: 150%;
+  margin: auto;
+  padding-left: 2.5%;
+  padding-top: 1%;
+  width: 98%;
 }
 
 #company-info-more span {
@@ -118,19 +122,24 @@
 }
 
 #company-url-pre {
-  font-size: 0.8em;
-  margin-top: 1%;
+  font-size: 0.8vw;
   text-decoration: none;
+  display: block;
+  text-align: left;
+  line-height: 150%;
+  margin: 0 auto;
+  padding-left: 2.5%;
+  width: 98%;
 }
 
-#company-url-pre a:hover{
-  color: #FFFFFF;
+#company-url-pre a:hover {
+  color: #ffffff;
   text-decoration: none;
 }
 
 #company-url-pre a,
 #company-url-pre a:visited {
-  color: #A5A8A6;
+  color: #a5a8a6;
   text-decoration: none;
 }
 
@@ -138,22 +147,22 @@
  *            STOCK            *  
  * * * * * * * * * * * * * * * */
 
- .stock-container {
+.stock-container {
   display: flex;
   margin: auto;
   width: 100%;
-  height: 99%
+  height: 99%;
 }
 
 .stock-container p {
   margin: auto;
   text-align: center;
-  color: #A5A8A6;
+  color: #a5a8a6;
 }
 
 .stock-container iframe {
-  width: 100%;
-  height: 95%;
+  width: 95%;
+  height: 100%;
   background-color: black;
 }
 
@@ -168,7 +177,7 @@
 }
 
 .stock-container-info li {
-  color:#A5A8A6;
+  color: #a5a8a6;
   display: inline-block;
   font-size: 0.65em;
   margin: 15%;
@@ -187,44 +196,40 @@
 }
 
 .stock-info-cat {
-  color: #FFFFFF;
-}
-
-.stock-info-list span {
-  /* animation: blinker 1s linear infinite; */
-  /* border: 1px solid gold; */
+  color: #ffffff;
 }
 
 /* * * * * * * * * * * * * * * *
  *           ISSUES            *  
  * * * * * * * * * * * * * * * */
- 
+
 #quad-issues {
-  width: 100%;
-  height: 99%;
+  display: flex;
+  padding-bottom: 0.5%;
 }
 
 #issues-header {
-  margin: 4.5% 0 0;
-  color: #A5A8A6;
+  margin: 0.25% 0 0;
+  color: #a5a8a6;
 }
 
 .issues-container {
-  display: inline-block;
-  width: 75%;
+  margin: auto;
+  width: 100%;
   height: 99%;
 }
 
 .issues-container p {
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .issue-box {
-  height: 48%;
-  width: 32.5%;
+  height: 45%;
+  width: 32%;
+  margin-right: 1.25%;
   display: inline-block;
-  vertical-align: top; 
+  vertical-align: top;
 }
 
 .issue-pie {
@@ -235,9 +240,8 @@
 
 .issue-pie tspan {
   font-size: 1.25em;
-  /* font-weight: bolder; */
   position: relative;
-  height: 100%
+  height: 100%;
 }
 
 .issue-pie path {
@@ -250,32 +254,35 @@
 
 .issue-box p {
   display: block;
-  font-size: 0.8em;
+  font-size: 0.75em;
   margin: 5% auto;
-  color: #ffffff,
+  color: #ffffff;
 }
 
 .issue-detail {
   display: inline-block;
-  border: 0.5em solid black;
   position: fixed;
-  height: 31.75vh;
-  width: 40vw; /*37.5vw;*/
+  height: 35%;
+  width: 42%; /*37.5vw;*/
   top: 12%;
   left: 6%;
   background-color: black;
   z-index: 7;
   color: white;
-  /* opacity: .75; */
+  /* opacity: 0.75; */
   font-size: 0.85em;
+}
+
+.modal-left h4 {
+  margin: 0;
+  text-align: center;
 }
 
 #company-logo {
   display: block;
   height: auto;
-  padding-top: 0.25%;
-  padding-right: 2.5%;
-  /* padding-left: 5%; */
+  padding-top: 4%;
+  padding-left: 1.5%;
   margin: 0 auto;
   max-width: 275px;
   max-height: 50px;
@@ -284,61 +291,59 @@
 
 .modal-left {
   display: inline-block;
-  width: 40%;
-  height: 100%;
-  /* padding-left: 1%; */
+  width: 39%;
+  height: 90%;
+  padding-right: 1%;
   vertical-align: top;
 }
 
 .modal-left h3 {
   margin: 0;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   padding-left: 5%;
-  /* padding-top: 2%; */
-  /* border: 2px solid green; */
+  padding-top: 1%;
 }
 
 .modal-right {
   display: inline-block;
+  padding-left: -2.5%;
   width: 59%;
-  height: 100%;
-  /* border: 2px solid green; */
+  height: 90%;
 }
 
 .pie-detail {
   width: 100%;
-  height: 60%;
-  margin: 15% auto 6.5%;
+  height: 66%;
+  margin: 17% auto 6.5%;
 }
 
 .pie-detail tspan {
-  font-size: 2em;
+  font-size: 2.25em;
   font-weight: bolder;
 }
 
 .blurb p {
   font-size: 0.95rem;
-  margin-left: 5%;
-  /* padding-left: 1%; */
-  margin-top: -2%;
+  margin-left: 3%;
+  margin-top: -2.5%;
   text-align: left;
   font-family: 'Lato';
-  color: #A5A8A6;
+  color: #a5a8a6;
   width: 100%;
-  line-height: 150%;
+  line-height: 155%;
 }
 
 .blurb-paragraph span {
   margin: 0;
-  color:gold;
+  color: gold;
   font-weight: bolder;
 }
 
 .inline {
   display: inline-block;
   width: 100px;
-  padding: 5px;        
+  padding: 5px;
   background-color: black;
   position: center;
 }
@@ -346,26 +351,28 @@
 .issues-politicians {
   display: inline-block;
   vertical-align: top;
+  padding-bottom: 5%;
   width: 25%;
   height: 99%;
 }
 
 .polit-recip {
   font-size: 0.8em;
-  margin: 15% 0 0;
+  padding-top: 2.5%;
+  margin: 0;
   text-align: center;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .polit-info-name {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 0.6em;
   text-align: center;
   margin: 0;
 }
 
 .polit-info {
-  color: #A5A8A6;
+  color: #a5a8a6;
   font-size: 0.6em;
   text-align: center;
   margin: 0;
@@ -379,27 +386,27 @@
 }
 
 .politician {
-  margin: 2% auto 0;
+  margin: 3% auto;
   width: 80%;
-  height: 25%;
+  height: 22%;
 }
 
 .politician p {
   font-size: 0.6em;
-  color: #FFFFFF;
+  color: #ffffff;
   margin: 0 auto;
   position: relative;
 }
 
 .politician img:hover {
-  border: 2px solid #FFFFFF;
+  border: 2px solid #ffffff;
 }
 
 .politician img {
   display: block;
   position: relative;
   width: auto;
-  height: 80%;
+  height: 95%;
   margin: 2% auto 0;
 }
 
@@ -408,6 +415,8 @@
  * * * * * * * * * * * * * * * */
 
 #quad-company-list {
+  margin: 0;
+  margin-left: 0.5%;
   height: 99%;
   width: 100%;
 }
@@ -418,93 +427,115 @@
   position: relative;
   margin: auto;
   max-height: 100%;
-  max-width: 85%; 
+  max-width: 85%;
 }
 
-.divTable {
+.cl-quad {
   background-color: #000000;
-  margin: 3.5% 0 0;
   width: 100%;
-  overflow: auto;
-}
-
-.divTableHead {
-  display: inline-block;
-  white-space: pre;
-  width: 100%;
-}
-
-#cl-category-nav {
-  width: 100%;
-  font-size: 1em;
-  color: #FFFFFF;
-  background-color: #000000;
-  position: fixed;
-  margin: 0;
-}
-
-#cl-category-name {
-  max-width: 27.25%;
   overflow: hidden;
 }
 
+#cl-nav {
+  background: #000000;
+  position: fixed;
+  min-width: 43.5vw;
+}
 
+#cl-table {
+  height: 90%;
+  margin-top: 3.75%;
+  width: 99.5%;
+  padding-bottom: 1%;
+  overflow: auto;
+}
 
+#cl-nav-bar {
+  vertical-align: top;
+  display: flex;
+}
 
+#cl-nav-bar > #cl-nav-name {
+  flex: 2;
+  text-align: left;
+}
 
+#cl-nav-bar > div {
+  color: white;
+  flex: 1;
+  text-align: center;
+}
+
+#cl-body {
+  display: flex;
+  overflow: auto;
+}
+
+#cl-ignore {
+  display: none;
+}
+
+.divTableHead {
+  position: fixed;
+  white-space: pre;
+  width: 44.1%;
+}
+
+#cl-category-nav {
+  display: flex;
+  font-size: 1em;
+  color: #ffffff;
+  background-color: #000000;
+  width: 100%;
+  margin: 0;
+}
+
+#cl-category-nav > div {
+  display: fixed;
+}
+
+#cl-category-nav > #cl-nav-name {
+  flex: 2.65;
+}
+
+#cl-category-nav > #cl-nav-ticker {
+  flex: 1.4;
+  text-align: center;
+}
+
+#cl-body > #cl-category-name {
+  flex: 2;
+  overflow: hidden;
+}
+
+#cl-body > .cl-category {
+  flex: 1;
+}
 
 .cl-category {
   display: inline-block;
   height: 100%;
-  overflow: auto;
-  /* margin-right: 5.25%; */
-}
-
-#cl-category-name {
-  /* margin-right: 0; */
-  min-width: 30%;
-}
-
-#cl-category-ticker {
-  /* margin-right: 3.5%; */
-  min-width: 12%;
-}
-
-#cl-category-overall {
-  /* margin-right: 3.5%; */
-  min-width: 5%;
-}
-
-#cl-category-issue {
-  min-width: 8.5%;
-}
-
-#cl-category-issue .none {
-  min-width: 10%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .cl-header {
-  background-color: black; 
-  color: #FFFFFF;
+  background-color: black;
+  color: #ffffff;
   font-size: 0.8em;
-  text-align: center;
-  margin-right: 1%;
 }
 
-#cl-header-name {
-  margin-right: 9.5%;
+.divTableRow {
+  display: flex;
 }
 
-.cl-list {
-  padding-top: 15%;
-}
-
-.cl-list a, .cl-list p {
-  color: #A5A8A6;
+.cl-list a,
+.cl-list p {
+  color: #a5a8a6;
 }
 
 .cl-list a:hover {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .cl-list .black {
@@ -519,7 +550,7 @@
   display: block;
   font-size: 0.8em;
   list-style-position: inside;
-  list-style-type: none; 
+  list-style-type: none;
   text-decoration: none;
   white-space: nowrap;
   margin: 0;
@@ -529,7 +560,7 @@
   display: block;
   font-size: 0.8em;
   list-style-position: inside;
-  list-style-type: none; 
+  list-style-type: none;
   white-space: nowrap;
   margin: 0;
   text-align: center;

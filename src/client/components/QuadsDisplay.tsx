@@ -14,13 +14,8 @@ import CompanyList from '../components/CompanyList';
 const QuadsDisplay = (props: any) => {
   return (
     <React.Fragment>
-      <Overview
-        selected={props.selected}
-      />
-      <StockGraph
-        selected={props.selected}
-        stockData={props.stockData}
-      />
+      <Overview selected={props.selected} />
+      <StockGraph selected={props.selected} stockData={props.stockData} />
       <IssuesCharts
         selectedCompany={props.selected}
         selectedData={props.selectedData}
@@ -32,10 +27,11 @@ const QuadsDisplay = (props: any) => {
         getStockData={props.stock}
         sortListBy={props.sort}
         selectCompany={props.select}
+        selectedCompany={props.selected}
         userIssues={props.issues}
         issueAbbrvs={props.abbrvs}
       />
     </React.Fragment>
-  )
-}
+  );
+};
 export default QuadsDisplay;

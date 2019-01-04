@@ -9,49 +9,64 @@ import * as React from 'react';
 import * as issueMatch from '../issueMatcher';
 
 // Import navigational links for company names
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-// Import loading GIF 
+// Import loading GIF
 const loadingMovie = require('../assets/loading-movie.gif');
 
 const CompanyList = (props: any) => {
-  const { companyList, sortListBy, userIssues, issueAbbrvs } = props;
+  const {
+    companyList,
+    sortListBy,
+    userIssues,
+    issueAbbrvs,
+    selectedCompany
+  } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
 
-  // Load movie while fetching company list 
-  if (companyList.length === 0) {
+  // Load movie while fetching company list
+  if (!selectedCompany) {
     return (
       <div className="quad" id="quad-company-list">
         <img src={loadingMovie} id="loading-movie" />
       </div>
-    )
+    );
     // Clicking company name will fetch stockData etc.
   } else {
-    const companyNames: any = companyList
-      .map((company: any, index: any) => {
-        const bgColor = index % 2 === 0 ? 'black' : 'grey';
-        return (
-          <Link id={index} className={"company-names-list " + bgColor} to="#" key={index} onClick={(e) => {
+    // Company names list
+    const companyNames: any = companyList.map((company: any, index: any) => {
+      const bgColor = index % 2 === 0 ? 'black' : 'grey';
+      return (
+        <Link
+          id={index}
+          className={'company-names-list ' + bgColor}
+          to="#"
+          key={index}
+          onClick={e => {
             props.selectCompany(e);
             props.getStockData(company.ticker);
             props.getSelectedCompanyInfo(company.ticker);
-          }}>
-            {company.short_name}
-          </Link>
-        )
-      });
+          }}
+        >
+          {company.short_name}
+        </Link>
+      );
+    });
 
     // Company stock ticker names
-    const companyTickers: any = companyList
-      .map((company: any, index: any) => {
-        const bgColor = index % 2 === 0 ? 'black' : 'grey';
-        return (
-          <p id={index.toString()} key={index} className={"company-list " + bgColor}>
-            {company.ticker.split('.')[0]}
-          </p>
-        )
-      });
+    const companyTickers: any = companyList.map((company: any, index: any) => {
+      const bgColor = index % 2 === 0 ? 'black' : 'grey';
+      return (
+        <p
+          id={index.toString()}
+          key={index}
+          className={'company-list ' + bgColor}
+        >
+          {company.ticker.split('.')[0]}
+        </p>
+      );
+    });
 
     // Company overall scores
     const companyOverallScores = () => {
@@ -59,13 +74,12 @@ const CompanyList = (props: any) => {
       let score: number = 0;
 
       // Create array of user issue objects with converted name
-      const userIssuesArray = Object.keys(userIssues)
-        .map((issueID: any) => {
-          return {
-            name: issueMatcher[issueID],
-            leaning: userIssues[issueID]
-          }
-        });
+      const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
+        return {
+          name: issueMatcher[issueID],
+          leaning: userIssues[issueID]
+        };
+      });
 
       // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
@@ -73,28 +87,28 @@ const CompanyList = (props: any) => {
           userIssuesArray.forEach((issue: any) => {
             if (issue.leaning.includes('con'))
               score += companyList[i][issue.name].disagreeScore;
-            else
-              score += companyList[i][issue.name].agreeScore
-          })
+            else score += companyList[i][issue.name].agreeScore;
+          });
 
           // Color match based off of score
-          score = Math.round(score / userIssuesArray.length)
+          score = Math.round(score / userIssuesArray.length);
+
           let color = {
             color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
-          }
+          };
 
           const bgColor = i % 2 === 0 ? 'black' : 'grey';
           // Add each score to company scores array
           companyOverallScoresArray.push(
-            <p className={"company-list " + bgColor} key={i} style={color}>
+            <p className={'company-list ' + bgColor} key={i} style={color}>
               {score}
             </p>
-          )
+          );
           score = 0;
         }
       }
       return companyOverallScoresArray;
-    }
+    };
 
     // Company scores per user-selected issue
     const companyScoresPerIssue = () => {
@@ -103,16 +117,15 @@ const CompanyList = (props: any) => {
       let score: number = 0;
 
       // Create array of user issue objects with converted name
-      const userIssuesArray = Object.keys(userIssues)
-        .map((issueID: any) => {
-          return {
-            name: issueMatcher[issueID],
-            leaning: userIssues[issueID]
-          }
-        });
+      const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
+        return {
+          name: issueMatcher[issueID],
+          leaning: userIssues[issueID]
+        };
+      });
 
       while (userIssuesArray.length !== 6) {
-        userIssuesArray.push({ name: 'NONE', leaning: '' })
+        userIssuesArray.push({ name: 'NONE', leaning: '' });
       }
 
       // Calculate issue score and color coordinate
@@ -124,26 +137,29 @@ const CompanyList = (props: any) => {
             if (userIssuesArray[a].name !== 'NONE') {
               if (userIssuesArray[a].leaning.includes('con'))
                 score = companyList[i][userIssuesArray[a].name].disagreeScore;
-              else
-                score = companyList[i][userIssuesArray[a].name].agreeScore;
+              else score = companyList[i][userIssuesArray[a].name].agreeScore;
 
               let color = {
-                color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
-              }
+                color:
+                  score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
+              };
 
               // Push company's issue score into array
               issueScoresArray.push(
-                <p className={"company-list " + bgColor} key={i} style={color}>
+                <p className={'company-list ' + bgColor} key={i} style={color}>
                   {score}
                 </p>
               );
-
             } else {
               issueScoresArray.push(
-                <p className={"company-list none " + bgColor} key={i} style={{ color: '#A5A8A6' }}>
+                <p
+                  className={'company-list none ' + bgColor}
+                  key={i}
+                  style={{ color: '#A5A8A6' }}
+                >
                   ---
                 </p>
-              )
+              );
             }
             score = 0;
           }
@@ -153,24 +169,45 @@ const CompanyList = (props: any) => {
 
           const abbrvSearchWord = name.slice(0, 2);
 
-          const issueWord: any = Object.keys(issueAbbrvs)
-            .filter((issueName: any) => issueName.includes(abbrvSearchWord));
+          const issueWord: any = Object.keys(issueAbbrvs).filter(
+            (issueName: any) => issueName.includes(abbrvSearchWord)
+          );
 
           // Add name to element for sorting purposes
           // Add onClick sorting functionality
           // Spread all scores to issue list
 
+          console.log('name: ', name);
+
           if (name !== 'NONE') {
-            issueNamesArray.push(<Link to='#' className="cl-header" id={'cl-header-' + name} onClick={props.sortListBy}>{issueAbbrvs[issueWord[0]]}</Link>);
+            issueNamesArray.push(
+              <div className="cl-cat-name" id={'cl-nav-' + name}>
+                <Link
+                  to="#"
+                  className="cl-header"
+                  id={'cl-header-' + name}
+                  onClick={props.sortListBy}
+                >
+                  {issueAbbrvs[issueWord[0]]}
+                </Link>
+              </div>
+            );
           } else {
-            issueNamesArray.push(<Link to='#' className="cl-header" id={'cl-header-' + name}>NONE</Link>)
+            issueNamesArray.push(
+              <div className="cl-cat-name" id={'cl-nav-' + name}>
+                <Link to="#" className="cl-header" id={'cl-header-' + name}>
+                  NONE
+                </Link>
+              </div>
+            );
           }
 
           companyScorePerIssueArray.push(
-            <div className="cl-category cl-category-issue" id="cl-category-issue">
-              <div className="cl-list">
-                {...issueScoresArray}
-              </div>
+            <div
+              className="cl-category cl-category-issue"
+              id="cl-category-issue"
+            >
+              <div className="cl-list">{...issueScoresArray}</div>
             </div>
           );
           issueScoresArray = [];
@@ -180,44 +217,59 @@ const CompanyList = (props: any) => {
     };
 
     return (
-      <div className="divTable" id="quad-company-list">
-        <div className="divTableBody">
-          <div className="divTableRow">
-            <div className="divTableHead">
-
-              <div id="cl-category-nav">
-                <Link to='#' className="cl-header" id='cl-header-name' onClick={sortListBy}>COMPANY</Link>
-                <Link to='#' className="cl-header" id='cl-header-ticker' onClick={props.sortListBy}>TICKER</Link>
-                <Link to='#' className="cl-header" id='cl-header-overall' onClick={props.sortListBy}>ALL</Link>
-                {...issueNamesArray}
-              </div>
-
-              <div className="cl-category" id="cl-category-name">
-                <div className="cl-list">
-                  {companyNames}
-                </div>
-              </div>
-
-              <div className="cl-category" id="cl-category-ticker">
-                <div className="cl-list">
-                  {companyTickers}
-                </div>
-              </div>
-
-              <div className="cl-category" id="cl-category-overall">
-                <div className="cl-list">
-                  {companyOverallScores()}
-                </div>
-              </div>
-
-              {companyScoresPerIssue()}
+      <div className="cl-quad" id="quad-company-list">
+        <div id="cl-nav">
+          <div id="cl-nav-bar">
+            <div className="cl-cat-name" id="cl-nav-name">
+              <Link
+                to="#"
+                className="cl-header"
+                id="cl-header-name"
+                onClick={sortListBy}
+              >
+                COMPANY
+              </Link>
             </div>
+            <div className="cl-cat-name" id="cl-nav-ticker">
+              <Link
+                to="#"
+                className="cl-header"
+                id="cl-header-ticker"
+                onClick={props.sortListBy}
+              >
+                TICKER
+              </Link>
+            </div>
+            <div className="cl-cat-name" id="cl-nav-overall">
+              <Link
+                to="#"
+                className="cl-header"
+                id="cl-header-overall"
+                onClick={props.sortListBy}
+              >
+                ALL
+              </Link>
+            </div>
+            {...issueNamesArray}
+          </div>
+        </div>
+        <div id="cl-table">
+          <div id="cl-body">
+            <div className="cl-category" id="cl-category-name">
+              <div className="cl-list">{companyNames}</div>
+            </div>
+            <div className="cl-category" id="cl-category-ticker">
+              <div className="cl-list">{companyTickers}</div>
+            </div>
+            <div className="cl-category" id="cl-category-overall">
+              <div className="cl-list">{companyOverallScores()}</div>
+            </div>
+            {companyScoresPerIssue()}
           </div>
         </div>
       </div>
     );
   }
-}
+};
 
 export default CompanyList;
-
