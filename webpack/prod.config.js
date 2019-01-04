@@ -3,6 +3,7 @@
  * @description Webpack Production Mode Configuration
  */
 
+const path = require('path');
 const merge = require('webpack-merge');
 
 const HTMLWebpack = require('html-webpack-plugin');
