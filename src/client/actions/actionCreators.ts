@@ -368,7 +368,6 @@ export const getStockData = (ticker: string) => (dispatch: any) => {
   })
     .then(response => response.json())
     .then((data: any) => {
-      console.log('data in getStockData: ', data);
       dispatch({
         type: types.GET_STOCK_INFO,
         payload: data

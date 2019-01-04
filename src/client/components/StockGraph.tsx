@@ -49,7 +49,7 @@ const StockGraph = (props: any) => {
     }
 
     // StockDIO API
-    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=DA26FDAD160C4FE38E722CE5459148DE&symbol=${
+    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=${process.env.STOCKDIO_API_KEY}&symbol=${
       ticker.split('.')[0]
     }&indices=SPX&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000&includeCompetitors=true`;
 

@@ -12,7 +12,7 @@
     "server": "nodemon",
     "daemon": "nodemon --exec ts-node ./src/server/daemonServer.ts",
     "test": "NODE_ENV=test jest",
-    "test-coverage": "npm install && NODE_ENV=test webpack --config ./webpack/dev.config.js && jest --coverage",
+    "test-coverage": "npm install && NODE_ENV=test webpack --config ./webpack/prod.config.js && jest --coverage",
     "test-watch": "NODE_ENV=test jest --watch",
     "test-updateSnapshot": "NODE_ENV=development jest --updateSnapshot",
     "add-dep": "bash ./scripts/npm-docker/add-dep.sh",

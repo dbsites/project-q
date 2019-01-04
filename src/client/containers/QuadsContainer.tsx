@@ -54,7 +54,6 @@ class QuadsContainer extends React.Component<Props> {
 
   componentWillUnmount() {
     const { resetUserIssues } = this.props;
-    console.log('component unmounting');
     resetUserIssues();
   }
 
