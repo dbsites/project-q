@@ -78,6 +78,7 @@ export interface UserIssuesSelected {
 
 export interface UserState {
   readonly userId: string | null,
+  readonly isAdmin: boolean,
   readonly isAuth: boolean | null,
   readonly issuesSelected: UserIssuesSelected,
   readonly issuesComplete: boolean | null,
@@ -90,6 +91,11 @@ export interface UserState {
 
 export interface LoadingState {
   [nameLoading: string]: boolean,
+}
+
+export interface ModalState {
+  isModalActive: boolean,
+  modalType: string | null,
 }
 
 export interface DeviceState {
@@ -182,6 +188,7 @@ export interface ApplicationState {
   readonly form: FormState,
   readonly issues: IssuesState,
   readonly loading: LoadingState,
+  readonly modal: ModalState,
   readonly survey: SurveyState,
   readonly user: UserState,
 };

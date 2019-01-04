@@ -12,12 +12,13 @@ import * as actions from './actionCreators';
 import {
   IToggleIssueAction, IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, 
   IIssuesSuccessAction, IFetchFailureAction, IAuthSuccessAction, ISubmitIssuesSuccessAction,
-  ISetDeviceAction,
+  ISetDeviceAction, ISetModalAction
 } from './types';
 
 // Import Templates for Testing
 import {
   stubDeviceType,
+  stubModalType,
   stubUserId, stubFormName,
   stubFormFieldObject,
   stubFormFetchRequestBody, stubFormFetchSuccessResponse, stubNoAuthFetchResponse, stubFormFetchErrorMessage,
@@ -39,6 +40,24 @@ describe('Functionality Test: Device Action Creators', () => {
     };
     expect(actions.setDevice(stubDeviceType)).toEqual(expectedAction);
   }); 
+})
+
+// --- UNIT TESTS --- Modal Action Creators --- //
+describe('Functionality Test: Modal Action Creators', () => {
+  it('setModal, given a modalType, returns an action to set that modalType', () => {
+    const expectedAction: ISetModalAction = {
+      type: types.SET_MODAL,
+      modalType: stubModalType,
+    };
+    expect(actions.setModal(stubModalType)).toEqual(expectedAction);
+  });
+
+  it('clearModal returns an action to clear the current modal', () => {
+    const expectedAction: Action<string> = {
+      type: types.CLEAR_MODAL,
+    };
+    expect(actions.clearModal()).toEqual(expectedAction);
+  })
 })
 
 // --- UNIT TESTS --- Form Action Creators --- //

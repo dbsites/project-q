@@ -5,7 +5,7 @@
 DB_HOST=$RDS_HOSTNAME
 
 # $1 is DATABASE_MIGRATIONS from scripts/staging.sh or scripts/deploy.sh
-# $2 is DATABASE_SCOPES from scripts/staging.sh or scripts/deplot.sh
+# $2 is DATABASE_SCOPES from scripts/staging.sh or scripts/deploy.sh
 # both these variables are inserted into Docker image at build time, then passed here as arguments at startup of container
 (./scripts/postgres-db/run-migrate.sh "$DB_HOST" "$1" start "$2")
 db_migrate_finished=$?

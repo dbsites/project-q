@@ -9,12 +9,21 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers/index';
 import { ApplicationState } from './reducers/types';
 
-// Add composeWithDevTools for Redux Dev Tools
-const store = createStore(
+// Build store variant for production environment
+const prodStore = createStore(
+  reducers, 
+  applyMiddleware(thunk as ThunkMiddleware<ApplicationState>),
+);
+
+// Add composeWithDevTools for Redux Dev Tools if not in production
+const devStore = createStore(
   reducers,
   composeWithDevTools(
     applyMiddleware(thunk as ThunkMiddleware<ApplicationState>),
   ),
 );
+
+// Determine which store to export using NODE_ENV
+const store = process.env.NODE_ENV as string === 'production' ? prodStore : devStore;
 
 export default store;

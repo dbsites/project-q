@@ -131,7 +131,7 @@ Sessions.forgot = async (req: Request, res: Response, next: NextFunction) => {
   // send the email
   // Connect to SparkPost using API key to generate client
   const sparkPostClient = new SparkPost(process.env.SPARK_POST_KEY);
-  const resetUrl = `http://localhost:8080/account/reset/${forgotKey}`;
+  const resetUrl = `https://beta.ethiq.com/account/reset/${forgotKey}`;
 
   const sendEmail = async (recipient: string, url: string) => {
     // Send e-mail to recipient with a link to passed in URL

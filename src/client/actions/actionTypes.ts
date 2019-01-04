@@ -18,6 +18,10 @@ enum ActionTypes {
   // Device Actions
   SET_DEVICE = 'SET_DEVICE',
 
+  // Modal Actions
+  SET_MODAL = 'SET_MODAL',
+  CLEAR_MODAL = 'CLEAR_MODAL',
+
   // User Actions
   CLEAR_ISSUES = 'CLEAR_ISSUES',
   ADD_ISSUE = 'ADD_ISSUE',
@@ -57,6 +61,7 @@ enum ActionTypes {
   GET_STOCK_INFO = 'GET_STOCK_INFO',
   GET_SELECTED_COMPANY_INFO = 'GET_SELECTED_COMPANY_INFO',
   SET_DEFAULT_COMPANY = 'SET_DEFAULT_COMPANY',
+  RESET_USER_ISSUES = 'RESET_USER_ISSUES'
 }
 
 export default ActionTypes;

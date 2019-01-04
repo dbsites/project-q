@@ -5,27 +5,27 @@
  */
 
 // Import action types
-import actions from '../actions/actionTypes';
+import actions from "../actions/actionTypes";
 
 // Import Device and SetDeviceAction Interfaces
-import { DeviceState } from './types';
-import { ISetDeviceAction } from '../actions/types';
+import { DeviceState } from "./types";
+import { ISetDeviceAction } from "../actions/types";
 
 // Define Initial State
 export const initialDeviceState: DeviceState = {
-  deviceType: null,
-}
+  deviceType: null
+};
 
 // Define reducer to update device.deviceType to payload deviceType
 const deviceReducer = (state: DeviceState = initialDeviceState, action: ISetDeviceAction): DeviceState => {
   const { deviceType, type } = action;
-  switch(type) {
+  switch (type) {
     case actions.SET_DEVICE:
-      return { deviceType: deviceType }
+      return { deviceType: deviceType };
 
     default:
       return state;
   }
-}
+};
 
 export default deviceReducer;
