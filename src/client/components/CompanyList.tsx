@@ -177,8 +177,6 @@ const CompanyList = (props: any) => {
           // Add onClick sorting functionality
           // Spread all scores to issue list
 
-          console.log('name: ', name);
-
           if (name !== 'NONE') {
             issueNamesArray.push(
               <div className="cl-cat-name" id={'cl-nav-' + name}>
