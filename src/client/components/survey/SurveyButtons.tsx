@@ -44,8 +44,8 @@ const SurveyButtons = (props: SurveyButtonProps) => {
 
   return (
     <div className="survey-question-buttons">
-      {agreeButton}
       {disagreeButton}
+      {agreeButton}
     </div>
   )
 }
