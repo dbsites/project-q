@@ -3,13 +3,7 @@
  * @description Webpack Common Configuration for Dev and Prod
  */
 
-const HTMLWebpack = require('html-webpack-plugin');
 const path = require('path');
-
-const HTMLWebPackPlugin = new HTMLWebpack({
-  template: path.resolve(__dirname, '../src/index.html'),
-  filename: './index.html',
-});
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.tsx'),
@@ -63,5 +57,4 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
   },
-  plugins: [HTMLWebPackPlugin],
 };

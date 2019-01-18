@@ -134,7 +134,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       };
 
     case actions.RESET_USER_ISSUES:
-      console.log('resetting user issues');
       return {
         ...state,
         // selectedCompany: null,

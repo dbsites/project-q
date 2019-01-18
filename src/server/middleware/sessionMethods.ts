@@ -153,8 +153,6 @@ Sessions.forgot = async (req: Request, res: Response, next: NextFunction) => {
     })
   };
 
-  console.log(req.body.forgotPassEmail);
-
   sendEmail(req.body.forgotPassEmail, resetUrl)
 
   next();
