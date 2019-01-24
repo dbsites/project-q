@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderLink Component matches the snapshot 1`] = `
+<li
+  className="header-right"
+>
+  <a
+    href="/account/login"
+    onClick={[Function]}
+  >
+    LOGIN
+  </a>
+</li>
+`;
