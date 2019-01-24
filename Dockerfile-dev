@@ -13,7 +13,7 @@ WORKDIR /usr/src/app
 # npm install into /usr/src/app
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 COPY package*.json /usr/src/app/
-# RUN npm install
+RUN npm install
 
 # replace this with your application's default port
 EXPOSE 3000 8080
