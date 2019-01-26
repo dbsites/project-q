@@ -6,26 +6,29 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import HeaderLink from '../components/header/HeaderLink';
 import Logo from '../components/logo/Logo';
 import Modal from '../components/modal/Modal';
 
 import * as actions from './../actions/actionCreators';
+import { headerLinkData } from '../components/header/headerLinkData';
+import HeaderModal from '../components/header/HeaderModal';
 
 let Header = (props: any) => {
   const {
     isAuth, isModalActive, modalType,
     clearModal, setModal
   } = props;
+  const {logout, restart, home, register, login} = headerLinkData;
   // Header Links depend on user auth status
   const headerRight = [];
   if (isAuth) {
-    headerRight.push(<li className="header-right" key="logout"><Link to='/account/logout'>LOGOUT</Link></li>);
-    // headerRight.push(<li className="header-right" key="restart" onClick={props.setModal('error')}><Link to='/'>RESET</Link></li>);
-    headerRight.push(<li className="header-right" key="restart" onClick={() => setModal('reset')}>RESET</li>);
-    headerRight.push(<li className="header-right" key="home"><Link to='/'>HOME</Link></li>);
+    headerRight.push(<HeaderLink className={logout.className} linkKey={logout.linkKey} linkRoute={logout.linkRoute as string}>{logout.linkText}</HeaderLink>);
+    headerRight.push(<HeaderModal className={restart.className} linkKey={restart.linkKey} onClick={() => setModal('reset')}>{restart.linkText}</HeaderModal>);
+    headerRight.push(<HeaderLink className={home.className} linkKey={home.linkKey} linkRoute={home.linkRoute as string}>{home.linkText}</HeaderLink>);
   } else {
-    headerRight.push(<li className="header-right" key="register"><Link to='/account/register'>REGISTER</Link></li>);
-    headerRight.push(<li className="header-right" key="login"><Link to='/account/login'>LOGIN</Link></li>);
+    headerRight.push(<HeaderLink className={register.className} linkKey={register.linkKey} linkRoute={register.linkRoute as string}>{register.linkText}</HeaderLink>);
+    headerRight.push(<HeaderLink className={login.className} linkKey={login.linkKey} linkRoute={login.linkRoute as string}>{login.linkText}</HeaderLink>);
   }
 
   // set modal if modal active

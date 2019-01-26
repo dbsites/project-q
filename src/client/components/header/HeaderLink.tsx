@@ -9,15 +9,15 @@ import { Link } from 'react-router-dom';
 
 export interface HeaderLinkProps {
   className: string,
-  link: string,
   linkKey: string,
-  linkText: string,
+  linkRoute: string,
+  children: string,
 }
 
 const HeaderLink = (props: HeaderLinkProps): JSX.Element => {
-  const { className, linkKey, link, linkText } = props;
+  const { className, linkKey, linkRoute, children } = props;
   return (
-    <li className={className} key={linkKey}><Link to={link}>{linkText}</Link></li>
+    <li className={className} key={linkKey}><Link to={linkRoute}>{children}</Link></li>
   )
 }
 
