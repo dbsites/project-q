@@ -24,6 +24,11 @@ export const headerLinkData: IHeaderLinkData = {
     linkKey: 'restart',
     linkText: 'RESET',
   },
+  screen: {
+    className: 'header-right-screen',
+    linkKey: 'screen',
+    linkText: 'SCREEN YOUR PORTFOLIO',
+  },
   home: {
     className: 'header-right',
     linkKey: 'home',

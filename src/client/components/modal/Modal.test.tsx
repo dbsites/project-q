@@ -49,6 +49,13 @@ describe('Reset Modal Component', () => {
     expect(mountModalWrapper.find(Button).at(1).text()).toEqual(modalText.RESET_BUTTON_TEXT);
   });
 
+  it('renders a screen modal if screen modalType is passed in', () => {
+    const mountModalWrapper = Enzyme.mount(<MemoryRouter><Modal clearModal={mockFn} modalType='screen'/></MemoryRouter>);
+    expect(mountModalWrapper.find(ModalSpan).at(0).text()).toEqual(modalText.SCREEN_MODAL_HEADER_TEXT);
+    expect(mountModalWrapper.find(ModalSpan).at(1).text()).toEqual(modalText.SCREEN_MODAL_BODY_TEXT);
+    expect(mountModalWrapper.find('label').text()).toEqual(modalText.SCREEN_BUTTON_TEXT);
+  });
+
   it('renders a dummy modal if no modalType is passed in', () => {
     const mountModalWrapper = Enzyme.mount(<MemoryRouter><Modal clearModal={mockFn} modalType=''/></MemoryRouter>);
     expect(mountModalWrapper.find(ModalSpan).at(0).text()).toEqual('');
