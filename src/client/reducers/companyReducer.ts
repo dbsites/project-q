@@ -138,8 +138,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     case actions.RESET_USER_ISSUES:
       return {
         ...state,
-        // selectedCompany: null,
-        // companyList: [],
         userIssues: {}
       };
 
