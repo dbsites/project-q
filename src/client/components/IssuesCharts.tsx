@@ -12,6 +12,7 @@ import * as issueMatch from '../issueMatcher';
 // Import Components
 import IssuePie from './IssuePie';
 import Recipients from './Recipients';
+// import { hoverOn, hoverOff } from '../actions/actionCreators';
 
 // TODO: move this props in types.ts and export in
 interface Props {
@@ -20,35 +21,18 @@ interface Props {
   selectedCompany: any;
   selectedData: any;
   userIssues: any;
-  displayDetail?: any;
+  displayDetail: any;
+  hoverOn: any;
+  hoverOff: any;
+  pieIndex: number;
 }
 
 // TODO transition component state to redux
 class IssuesCharts extends Component<Props> {
-  state: any;
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      pieIndex: 0,
-      displayDetail: false
-    };
-
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-  }
-
-  handleMouseEnter(index: any) {
-    this.setState({ pieIndex: index, displayDetail: true });
-  }
-
-  handleMouseLeave() {
-    this.setState({ displayDetail: false });
-  }
 
   render() {
     const { moduleData, politData } = this.props.selectedData;
-    const { selectedCompany, userIssues } = this.props;
+    const { selectedCompany, userIssues, hoverOn, hoverOff, displayDetail, pieIndex } = this.props;
     const { issueMatcher } = issueMatch;
 
     let msg, display: JSX.Element[];
@@ -73,7 +57,7 @@ class IssuesCharts extends Component<Props> {
           const { alignedScore } = selectedCompany[name];
           const issueInfo = { name, alignedScore };
           const detailedView =
-            this.state.displayDetail && this.state.pieIndex === index;
+            displayDetail && pieIndex === index;
           return (
             <IssuePie
               key={index}
@@ -82,8 +66,8 @@ class IssuesCharts extends Component<Props> {
               modal={moduleData}
               polit={politData}
               detailedView={detailedView}
-              handleMouseEnter={() => this.handleMouseEnter(index)}
-              handleMouseLeave={() => this.handleMouseLeave()}
+              handleMouseEnter={(blurb: string, name: string, alignedScore: number) => hoverOn(blurb, name, alignedScore)}
+              handleMouseLeave={() => hoverOff()}
             />
           );
         } else {
