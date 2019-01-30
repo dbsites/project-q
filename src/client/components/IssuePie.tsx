@@ -196,6 +196,9 @@ class IssuePie extends Component<Props> {
               startAngle={90}
               endAngle={450}
               paddingAngle={5}
+              isAnimationActive={true}
+              isUpdateAnimationActive={true}
+              animationEasing={'ease'}
             >
               <Cell fill="#3A3A3A" />
               <Label
@@ -247,10 +250,12 @@ class IssuePie extends Component<Props> {
                 startAngle={90}
                 endAngle={450}
                 paddingAngle={5}
-                animationEasing="ease-in-out"
+                isAnimationActive={true}
+                isUpdateAnimationActive={true}
+                animationEasing={'ease'}
               >
                 {DATA.map((_: any, i: number) => (
-                  <Cell fill={COLORS[i % COLORS.length]} />
+                  <Cell fill={COLORS[i % COLORS.length]} key={i} />
                 ))}
                 <Label
                   value={alignedScore === 0 ? "0%" : `${alignedScore}%`}
