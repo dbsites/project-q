@@ -18,7 +18,9 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   companyList: [],
   companyListModal: [],
   userIssues: {},
-  issueAbbrvs: {}
+  issueAbbrvs: {},
+  displayDetails: false,
+  hoverOverviewInfo: {}
 };
 
 const { issueMatcher } = issueMatch;
@@ -267,9 +269,9 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
 
         if (
           topListCompany[categoryName].alignedScore !==
-            highestScoreCompany[categoryName].alignedScore &&
+          highestScoreCompany[categoryName].alignedScore &&
           topListCompany[categoryName].alignedScore !==
-            lowestScoreCompany[categoryName].alignedScore
+          lowestScoreCompany[categoryName].alignedScore
         ) {
           sortedList = companyArray.slice(0).sort(
             (a: any, b: any): any => {
@@ -303,6 +305,24 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         companyList: sortedList
+      };
+
+    /***********************************************/
+    /* HOVER ON/OFF ON ISSUE PIES, UPDATE OVERVIEW */
+    /***********************************************/
+
+    case actions.HOVER_ON:
+      return {
+        ...state,
+        displayDetails: true,
+        hoverOverviewInfo: action.payload
+      };
+
+    case actions.HOVER_OFF:
+      return {
+        ...state,
+        displayDetails: false,
+        hoverOverviewInfo: {}
       };
 
     default:
