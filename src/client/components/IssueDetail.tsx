@@ -1,22 +1,22 @@
-import * as React from 'react';
-import { PieChart, Pie, Cell, Label, ResponsiveContainer } from 'recharts';
+import * as React from "react";
+import { PieChart, Pie, Cell, Label, ResponsiveContainer } from "recharts";
 
 const IssueDetail: any = (props: any) => {
   let display;
 
   if (props.polit) {
     const COLORS = [
-      '#A5A8A6',
-      props.score >= 70 ? '#16C33F' : props.score >= 40 ? '#FAEB00' : '#FA2929'
+      "#A5A8A6",
+      props.score >= 70 ? "#16C33F" : props.score >= 40 ? "#FAEB00" : "#FA2929"
     ];
 
     const DATA: any = [
       {
-        name: '',
+        name: "",
         value: 100 - props.score
       },
       {
-        name: 'Aligned',
+        name: "Aligned",
         value: props.score
       }
     ];
@@ -32,13 +32,12 @@ const IssueDetail: any = (props: any) => {
             dataKey="value"
             startAngle={90}
             endAngle={450}
-            onMouseEnter={this.handleMouseEnter}
             paddingAngle={5}
           >
             {DATA.map((_: any, i: number) => (
               <Cell fill={COLORS[i % COLORS.length]} />
             ))}
-            <Label value={props.score + '%'} position="center" fill="white" />
+            <Label value={props.score + "%"} position="center" fill="white" />
           </Pie>
         </PieChart>
       </ResponsiveContainer>
