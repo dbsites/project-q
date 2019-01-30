@@ -24,15 +24,13 @@ interface Props {
   displayDetail: any;
   hoverOn: any;
   hoverOff: any;
-  pieIndex: number;
 }
 
 // TODO transition component state to redux
 class IssuesCharts extends Component<Props> {
-
   render() {
     const { moduleData, politData } = this.props.selectedData;
-    const { selectedCompany, userIssues, hoverOn, hoverOff, displayDetail, pieIndex } = this.props;
+    const { selectedCompany, userIssues, hoverOn, hoverOff, displayDetail } = this.props;
     const { issueMatcher } = issueMatch;
 
     let msg, display: JSX.Element[];
@@ -51,38 +49,32 @@ class IssuesCharts extends Component<Props> {
       msg = 'Hover over charts below for detailed descriptions';
 
       display = userIssuesArray.map((issueObj: any, index: number) => {
-        const { name } = issueObj;
         if (name !== 'No Issue Selected') {
+          const { name } = issueObj;
           const { logo } = selectedCompany;
           const { alignedScore } = selectedCompany[name];
-          const issueInfo = { name, alignedScore };
-          const detailedView =
-            displayDetail && pieIndex === index;
+
           return (
             <IssuePie
               key={index}
               logo={logo}
-              info={issueInfo}
+              info={{ name, alignedScore }}
               modal={moduleData}
               polit={politData}
-              detailedView={detailedView}
+              detailedView={displayDetail}
               handleMouseEnter={(blurb: string, name: string, alignedScore: number) => hoverOn(blurb, name, alignedScore)}
               handleMouseLeave={() => hoverOff()}
             />
           );
         } else {
-          const issueInfo = { name };
-          return <IssuePie key={index} info={issueInfo} />;
+          return <IssuePie key={index} info={{ name: issueObj.name }} />;
         }
       });
     } else {
       msg = 'Select a company to view their issues scores';
 
       display = userIssuesArray.map((issueObj: any, i: number) => {
-        const { name } = issueObj;
-        const issueInfo = { name };
-
-        return <IssuePie key={i} info={issueInfo} />;
+        return <IssuePie key={i} info={{ name: issueObj.name }} />;
       });
     }
 
