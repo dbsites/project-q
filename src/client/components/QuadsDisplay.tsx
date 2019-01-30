@@ -18,7 +18,6 @@ const QuadsDisplay = (props: any) => {
       <StockGraph selected={props.selected} stockData={props.stockData} />
       <IssuesCharts
         displayDetail={props.displayDetails}
-        // pieIndex={props.pieHoverIndex}
         hoverOn={props.hoverOn}
         hoverOff={props.hoverOff}
         selectedCompany={props.selected}
