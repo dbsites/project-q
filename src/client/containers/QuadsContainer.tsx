@@ -34,7 +34,6 @@ interface Props {
   resetUserIssues: any;
   hoverOn: any;
   hoverOff: any;
-  pieHoverIndex: any;
   displayDetails: boolean;
   hoverOverviewInfo: any;
 }
@@ -49,12 +48,12 @@ class QuadsContainer extends React.Component<Props> {
     const {
       getUserIssues,
       fetchCompanyList,
-      getAllCompanyInfo
+      // getAllCompanyInfo
     } = this.props;
 
     getUserIssues();
     fetchCompanyList();
-    getAllCompanyInfo();
+    // getAllCompanyInfo();
   }
 
   componentWillUnmount() {
@@ -74,7 +73,6 @@ class QuadsContainer extends React.Component<Props> {
       hoverOn,
       hoverOverviewInfo,
       issueAbbrvs,
-      pieHoverIndex,
       selectCompany,
       selectedCompany,
       selectedCompanyData,
@@ -101,7 +99,6 @@ class QuadsContainer extends React.Component<Props> {
             abbrvs={issueAbbrvs}
             hoverOn={hoverOn}
             hoverOff={hoverOff}
-            pieHoverIndex={pieHoverIndex}
             displayDetails={displayDetails}
             hoverOverviewInfo={hoverOverviewInfo}
           />
@@ -118,7 +115,6 @@ const mapStateToProps = (state: any): any => ({
   selectedCompanyData: state.company.selectedCompanyData,
   userIssues: state.company.userIssues,
   issueAbbrvs: state.company.issueAbbrvs,
-  pieHoverIndex: state.company.pieHoverIndex,
   displayDetails: state.company.displayDetails,
   hoverOverviewInfo: state.company.hoverOverviewInfo
 });

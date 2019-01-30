@@ -18,9 +18,6 @@ class OverviewPie extends Component<Props> {
     super(props);
   }
 
-  componentWillUpdate() {
-    
-  }
   render() {
     const { overall } = this.props;
     const diff = 100 - overall;
@@ -58,7 +55,7 @@ class OverviewPie extends Component<Props> {
             animationEasing={'ease'}
           >
             {
-              DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} />)
+              DATA.map((_: any, i: number) => <Cell fill={COLORS[i % COLORS.length]} key={i} />)
             }
             <Label value={overall + '%'} position="center" fill="white" />
           </Pie>

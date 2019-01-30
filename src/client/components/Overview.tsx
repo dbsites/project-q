@@ -45,8 +45,9 @@ const Overview = (props: Props) => {
             <p
               id="company-info"
               className="blurb-paragraph"
+              dangerouslySetInnerHTML={{ __html: blurb }}
             >
-              <div dangerouslySetInnerHTML={{ __html: blurb }}></div>
+              {/* <div dangerouslySetInnerHTML={{ __html: blurb }}></div> */}
             </p>
           </div>
         </div>
