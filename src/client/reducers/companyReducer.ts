@@ -5,9 +5,9 @@
  */
 
 import actions from '../actions/actionTypes';
-// import { CompanyDataState } from '../reducers/types';
+
 import * as issueMatch from '../issueMatcher';
-// import { selectCompany } from '../actions/actionCreators';
+
 
 const initialCompanyState: /*CompanyDataState*/ any = {
   selectedCompany: null,
