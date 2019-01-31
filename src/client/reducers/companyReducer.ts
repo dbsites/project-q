@@ -20,7 +20,9 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   userIssues: {},
   issueAbbrvs: {},
   displayDetails: false,
-  hoverOverviewInfo: {}
+  hoverOverviewInfo: {},
+  portfolioMode: 'sp500',
+  portfolioList: []
 };
 
 const { issueMatcher } = issueMatch;
@@ -31,6 +33,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         companyList: Object.values(action.data.companyDataArray),
+        companyListModal: Object.values(action.data.companyDataArray),
         issueAbbrvs: action.data.issueAbbrvs
       };
 
@@ -321,6 +324,35 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         ...state,
         displayDetails: false,
         hoverOverviewInfo: {}
+      };
+
+    /***********************************************/
+    /* TOGGLE PORTFOLIO MODE, FILTER BY CATEGORY   */
+    /***********************************************/
+
+    case actions.TOGGLE_PORTFOLIO:
+      if (action.payload && action.payload !== state.portfolioMode) {
+
+        const selected = document.getElementById(action.payload);
+        const deselected = document.getElementById(state.portfolioMode);
+        const companyListDiv = document.getElementById("cl-table");
+
+        if (selected !== null && deselected !== null) {
+          selected.style.border = '2px solid gold';
+          deselected.style.border = 'none';
+        }
+
+        if (companyListDiv !== null) {
+          if (action.payload === 'portfolio')
+            companyListDiv.style.display = 'none';
+          else
+            companyListDiv.style.display = 'block';
+        }
+      }
+
+      return {
+        ...state,
+        portfolioMode: action.payload
       };
 
     default:
