@@ -44,11 +44,7 @@ const CompanyList = (props: any) => {
           className={'company-names-list ' + bgColor}
           to="#"
           key={index}
-          onClick={e => {
-            props.selectCompany(e);
-            props.getStockData(company.ticker);
-            props.getSelectedCompanyInfo(company.ticker);
-          }}
+          onClick={e => props.selectCompany(e, company.ticker)}
         >
           {company.short_name}
         </Link>
