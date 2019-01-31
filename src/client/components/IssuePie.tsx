@@ -1,5 +1,5 @@
 /**
- * @module IssuePieChart.tsx
+ * @module IssuePie.tsx
  * @description Single Issue Display (Pie/Score/Name) Component
  */
 
@@ -186,7 +186,7 @@ class IssuePie extends Component<Props> {
     if (!alignedScore) {
       display = (
         <ResponsiveContainer>
-          <PieChart width={100} height={100}>
+          <PieChart>
             <Pie
               data={[{ value: 100 }, { value: alignedScore }]}
               outerRadius="100%"
@@ -238,34 +238,32 @@ class IssuePie extends Component<Props> {
       ];
 
       display = (
-        <React.Fragment>
-          <ResponsiveContainer>
-            <PieChart width={100} height={100}>
-              <Pie
-                data={[{ value: 100 - alignedScore }, { value: alignedScore }]}
-                outerRadius="100%"
-                innerRadius="70%"
-                fill="#808080"
-                dataKey="value"
-                startAngle={90}
-                endAngle={450}
-                paddingAngle={5}
-                isAnimationActive={true}
-                isUpdateAnimationActive={true}
-                animationEasing={'ease'}
-              >
-                {DATA.map((_: any, i: number) => (
-                  <Cell fill={COLORS[i % COLORS.length]} key={i} />
-                ))}
-                <Label
-                  value={alignedScore === 0 ? "0%" : `${alignedScore}%`}
-                  position="center"
-                  fill="white"
-                />
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </React.Fragment>
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={[{ value: 100 - alignedScore }, { value: alignedScore }]}
+              outerRadius="100%"
+              innerRadius="70%"
+              fill="#808080"
+              dataKey="value"
+              startAngle={90}
+              endAngle={450}
+              paddingAngle={5}
+              isAnimationActive={true}
+              isUpdateAnimationActive={true}
+              animationEasing={'ease'}
+            >
+              {DATA.map((_: any, i: number) => (
+                <Cell fill={COLORS[i % COLORS.length]} key={i} />
+              ))}
+              <Label
+                value={alignedScore === 0 ? "0%" : `${alignedScore}%`}
+                position="center"
+                fill="white"
+              />
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
       );
     }
 
