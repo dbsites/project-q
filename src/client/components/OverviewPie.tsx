@@ -51,7 +51,6 @@ class OverviewPie extends Component<Props> {
             paddingAngle={5}
             isAnimationActive={true}
             isUpdateAnimationActive={true}
-            // animationDuration={2000}
             animationEasing={'ease'}
           >
             {
