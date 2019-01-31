@@ -12,7 +12,6 @@ import * as issueMatch from '../issueMatcher';
 // Import Components
 import IssuePie from './IssuePie';
 import Recipients from './Recipients';
-// import { hoverOn, hoverOff } from '../actions/actionCreators';
 
 // TODO: move this props in types.ts and export in
 interface Props {
@@ -35,17 +34,22 @@ class IssuesCharts extends Component<Props> {
 
     let msg, display: JSX.Element[];
 
-    const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
-      return {
-        name: issueMatcher[issueID]
-      };
-    });
+    const userIssuesArray = Object
+      .keys(userIssues)
+      .map((issueID: any) =>
+        ({ name: issueMatcher[issueID] }));
 
     while (userIssuesArray.length !== 6) {
       userIssuesArray.push({ name: 'No Issue Selected' });
     }
 
-    if (selectedCompany) {
+    if (!selectedCompany) {
+      msg = 'Select a company to view their issues scores';
+
+      display = userIssuesArray.map((issueObj: any, i: number) => {
+        return <IssuePie key={i} info={{ name: issueObj.name }} />;
+      });
+    } else {
       msg = 'Hover over charts below for detailed descriptions';
 
       display = userIssuesArray.map((issueObj: any, index: number) => {
@@ -69,12 +73,6 @@ class IssuesCharts extends Component<Props> {
         } else {
           return <IssuePie key={index} info={{ name: issueObj.name }} />;
         }
-      });
-    } else {
-      msg = 'Select a company to view their issues scores';
-
-      display = userIssuesArray.map((issueObj: any, i: number) => {
-        return <IssuePie key={i} info={{ name: issueObj.name }} />;
       });
     }
 
