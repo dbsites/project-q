@@ -20,7 +20,8 @@ const CompanyList = (props: any) => {
     sortListBy,
     userIssues,
     issueAbbrvs,
-    selectedCompany
+    selectedCompany,
+    togglePortfolio
   } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
@@ -216,6 +217,24 @@ const CompanyList = (props: any) => {
 
     return (
       <div className="cl-quad" id="quad-company-list">
+        <div id="cl-select">
+          <button
+            id="portfolio"
+            className=""
+            onClick={togglePortfolio}
+            value="portfolio"
+          >
+            Your Portfolio
+          </button>
+          <button
+            id="sp500"
+            className="selected"
+            onClick={togglePortfolio}
+            value="sp500"
+          >
+            S&P 500
+          </button>
+        </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">
             <div className="cl-cat-name" id="cl-nav-name">
