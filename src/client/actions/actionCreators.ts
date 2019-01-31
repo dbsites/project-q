@@ -335,6 +335,11 @@ export const hoverOff = () => ({
   type: types.HOVER_OFF
 })
 
+export const togglePortfolio = (mode: string) => ({
+  type: types.TOGGLE_PORTFOLIO,
+  payload: mode
+})
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')
