@@ -64,6 +64,7 @@ enum ActionTypes {
   RESET_USER_ISSUES = 'RESET_USER_ISSUES',
   HOVER_ON = 'HOVER_ON',
   HOVER_OFF = 'HOVER_OFF',
+  TOGGLE_PORTFOLIO = 'TOGGLE_PORTFOLIO',
 }
 
 export default ActionTypes;
