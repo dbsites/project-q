@@ -442,6 +442,24 @@
   overflow: hidden;
 }
 
+#cl-select {
+  width: 97.5%;
+}
+
+#cl-select button {
+  background-color: #25B73F;
+  border-radius: 3px;
+  color: #ffffff;
+  padding: 1% 1.5%;
+  margin-bottom: 1%;
+  margin-right: 3%;
+  outline: none;
+}
+
+.selected {
+  border: 2px solid gold;
+}
+
 #cl-nav {
   background: #000000;
   width: 97.5%;
