@@ -124,9 +124,11 @@ const mapStateToProps = (state: any): any => ({
 
 const mapDispatchToProps = (dispatch: any): any => ({
   fetchCompanyList: () => dispatch(actions.fetchCompanyList()),
-  selectCompany: (event: any) => {
+  selectCompany: (event: any, ticker: any) => {
     event.preventDefault();
     dispatch(actions.selectCompany({ field: event.target.id }));
+    setTimeout(() => dispatch(actions.getStockData(ticker)), 2000);
+    setTimeout(() => dispatch(actions.getSelectedCompanyInfo(ticker)), 2000);
   },
   sortCompanyList: (event: any) => {
     event.preventDefault();
