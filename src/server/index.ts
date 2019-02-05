@@ -29,10 +29,10 @@ const initOptions: IOptions<IExtensions> = {
 
 // database configuration - links to Amazon RDS
 const connection = {
-  host: process.env.RDS_HOST as string,
+  host: process.env.RDS_HOSTNAME as string,
   port: Number(process.env.RDS_PORT as string),
-  database: process.env.RDS_DATABASE as string,
-  user: process.env.RDS_USER as string,
+  database: process.env.RDS_DB_NAME as string,
+  user: process.env.RDS_USERNAME as string,
   password: process.env.RDS_PASSWORD as string,
 };
 
