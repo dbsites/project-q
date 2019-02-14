@@ -18,7 +18,7 @@ dotenv.config();
 
 const initOptions: IOptions<IExtensions> = {
   // extending the db protocol to incorporate a custom repo for user functions
-  //  this is where the functions for modifying user data within the database will be hosted
+  // this is where the functions for modifying user data within the database will be hosted
   extend(obj: IExtensions) {
     // user methods
     obj.users = new UsersRepository(obj);

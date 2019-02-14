@@ -10,6 +10,10 @@
   background: #ffffff;
 }
 
+/* ::placeholder {
+  color: #ffffff;
+} */
+
 #quads-container {
   display: grid;
   height: 80vh;
@@ -25,6 +29,7 @@
 
 .overview-container {
   display: flex;
+  /* display: none; */
   height: 99%;
   margin: auto;
   overflow: hidden;
@@ -73,7 +78,7 @@
 }
 
 #overview-right p {
-  font-family: 'Lato', serif;
+  font-family: "Lato", serif;
   color: #a5a8a6;
 }
 
@@ -149,6 +154,7 @@
 
 .stock-container {
   display: flex;
+  /* display: none; */
   margin: auto;
   width: 100%;
   height: 99%;
@@ -205,6 +211,7 @@
 
 #quad-issues {
   display: flex;
+  /* display: none; */
   padding-bottom: 0.5%;
 }
 
@@ -328,7 +335,7 @@
   margin-left: 3%;
   margin-top: -2.5%;
   text-align: left;
-  font-family: 'Lato';
+  font-family: "Lato";
   color: #a5a8a6;
   width: 100%;
   line-height: 155%;
@@ -350,6 +357,7 @@
 
 .issues-politicians {
   display: inline-block;
+  /* display: none; */
   vertical-align: top;
   padding-bottom: 5%;
   width: 25%;
@@ -403,6 +411,7 @@
 }
 
 .politician img {
+  border-radius: 5px;
   display: block;
   position: relative;
   width: auto;
@@ -424,6 +433,7 @@
 /* loading video */
 #quad-company-list img {
   display: block;
+  /* display: none; */
   position: relative;
   margin: auto;
   max-height: 100%;
@@ -431,20 +441,63 @@
 }
 
 .cl-quad {
+  /* display: none; */
   background-color: #000000;
   width: 100%;
   overflow: hidden;
 }
 
+#cl-select {
+  width: 97.5%;
+}
+
+.no-upload {
+  background-color: #B0B0B0;
+  border-radius: 3px;
+  color: #ffffff;
+  padding: 1% 1.5%;
+  margin-bottom: 1%;
+  margin-right: 3%;
+  outline: none;
+}
+
+#cl-select .active {
+  background-color: #25B73F;
+  border-radius: 3px;
+  color: #ffffff;
+  padding: 1% 1.5%;
+  margin-bottom: 1%;
+  margin-right: 3%;
+  outline: none;
+}
+
+.selected {
+  border: 2px solid gold;
+}
+
+#filter-sectors {
+  display: inline;
+}
+
+#filter-sectors select {
+  /* background-color: #25B73F; */
+  border-radius: 3px;
+  color: #000000;
+  padding: 1% 1.5%;
+  margin-right: 3%;
+  margin-bottom: 1%;
+  outline: none;
+  width: 10vw;
+}
+
 #cl-nav {
   background: #000000;
-  position: fixed;
-  min-width: 43.5vw;
+  width: 97.5%;
 }
 
 #cl-table {
   height: 90%;
-  margin-top: 3.75%;
+  /* margin-top: 3.75%; */
   width: 99.5%;
   padding-bottom: 1%;
   overflow: auto;
@@ -472,7 +525,7 @@
 }
 
 #cl-ignore {
-  display: none;
+  /* display: none; */
 }
 
 .divTableHead {
