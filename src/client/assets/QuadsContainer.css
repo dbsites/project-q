@@ -10,6 +10,10 @@
   background: #ffffff;
 }
 
+/* ::placeholder {
+  color: #ffffff;
+} */
+
 #quads-container {
   display: grid;
   height: 80vh;
@@ -446,7 +450,17 @@
   width: 97.5%;
 }
 
-#cl-select button {
+.no-upload {
+  background-color: #B0B0B0;
+  border-radius: 3px;
+  color: #ffffff;
+  padding: 1% 1.5%;
+  margin-bottom: 1%;
+  margin-right: 3%;
+  outline: none;
+}
+
+#cl-select .active {
   background-color: #25B73F;
   border-radius: 3px;
   color: #ffffff;
@@ -459,6 +473,27 @@
 .selected {
   border: 2px solid gold;
 }
+
+#filter-sectors {
+  display: inline;
+}
+
+#filter-sectors input {
+  /* background-color: #25B73F; */
+  border-radius: 3px;
+  color: #000000;
+  padding: 1% 1.5%;
+  margin-right: 3%;
+  margin-bottom: 1%;
+  outline: none;
+}
+
+#sectors option:hover {
+  background-color:#25B73F; 
+}
+/* #filter-input:hover {
+  background-color: #25B73F;
+} */
 
 #cl-nav {
   background: #000000;
