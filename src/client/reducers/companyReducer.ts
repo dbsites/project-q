@@ -22,7 +22,8 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   displayDetails: false,
   hoverOverviewInfo: {},
   portfolioMode: 'sp500',
-  portfolioList: []
+  portfolioList: [],
+  filteredList: []
 };
 
 const { issueMatcher } = issueMatch;
@@ -135,7 +136,8 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       }
       return {
         ...state,
-        companyList: newCompanyList
+        companyList: newCompanyList,
+        filteredList: newCompanyList
       };
 
     case actions.RESET_USER_ISSUES:
@@ -363,6 +365,19 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         portfolioMode: action.payload
+      };
+
+    case actions.FILTER_SECTOR:
+      if (action.payload === 'All' || action.payload.length === 0) {
+        return {
+          ...state,
+          companyList: state.filteredList
+        }
+      }
+
+      return {
+        ...state,
+        companyList: state.filteredList.filter((c: any) => c.sector === action.payload)
       };
 
     default:
