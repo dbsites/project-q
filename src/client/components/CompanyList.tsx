@@ -216,7 +216,7 @@ const CompanyList = (props: any) => {
         <div id="cl-select">
           <button
             id="portfolio"
-            className=""
+            className="no-upload"
             onClick={togglePortfolio}
             value="portfolio"
           >
@@ -224,12 +224,29 @@ const CompanyList = (props: any) => {
           </button>
           <button
             id="sp500"
-            className="selected"
+            className="selected active"
             onClick={togglePortfolio}
             value="sp500"
           >
             S&P 500
           </button>
+          <div id="filter-sectors">
+            <input id="filter-input" name="filter" list="sectors" placeholder="Filter by sector" />
+            <datalist id="sectors">
+              <option className="sector-option" value="ALL" />
+              <option className="sector-option" value="Consumer Discretionary" />
+              <option className="sector-option" value="Consumer Staples" />
+              <option className="sector-option" value="Energy" />
+              <option className="sector-option" value="Financials" />
+              <option className="sector-option" value="Health Care" />
+              <option className="sector-option" value="Industrials" />
+              <option className="sector-option" value="Information Technology" />
+              <option className="sector-option" value="Materials" />
+              <option className="sector-option" value="Real Estate" />
+              <option className="sector-option" value="Telecommunication Services" />
+              <option className="sector-option" value="Utilities" />
+            </datalist>
+          </div>
         </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">
