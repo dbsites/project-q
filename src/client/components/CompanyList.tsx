@@ -21,7 +21,8 @@ const CompanyList = (props: any) => {
     userIssues,
     issueAbbrvs,
     selectedCompany,
-    togglePortfolio
+    togglePortfolio,
+    filterSector
   } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
@@ -33,6 +34,7 @@ const CompanyList = (props: any) => {
         <img src={loadingMovie} id="loading-movie" />
       </div>
     );
+
     // Clicking company name will fetch stockData etc.
   } else {
     // Company names list
@@ -231,21 +233,20 @@ const CompanyList = (props: any) => {
             S&P 500
           </button>
           <div id="filter-sectors">
-            <input id="filter-input" name="filter" list="sectors" placeholder="Filter by sector" />
-            <datalist id="sectors">
-              <option className="sector-option" value="ALL" />
-              <option className="sector-option" value="Consumer Discretionary" />
-              <option className="sector-option" value="Consumer Staples" />
-              <option className="sector-option" value="Energy" />
-              <option className="sector-option" value="Financials" />
-              <option className="sector-option" value="Health Care" />
-              <option className="sector-option" value="Industrials" />
-              <option className="sector-option" value="Information Technology" />
-              <option className="sector-option" value="Materials" />
-              <option className="sector-option" value="Real Estate" />
-              <option className="sector-option" value="Telecommunication Services" />
-              <option className="sector-option" value="Utilities" />
-            </datalist>
+            <select id="filter-input" name="filter" placeholder="Filter by sector" onChange={e => filterSector(e)}>
+              <option className="sector-option" value="All">All</option>
+              <option className="sector-option" value="Consumer Discretionary">Consumer Discretionary</option>
+              <option className="sector-option" value="Consumer Staples">Consumer Staples</option>
+              <option className="sector-option" value="Energy">Energy</option>
+              <option className="sector-option" value="Financials">Financials</option>
+              <option className="sector-option" value="Health Care">Health Care</option>
+              <option className="sector-option" value="Industrials">Industrials</option>
+              <option className="sector-option" value="Information Technology">Information Technology</option>
+              <option className="sector-option" value="Materials">Materials</option>
+              <option className="sector-option" value="Real Estate">Real Estate</option>
+              <option className="sector-option" value="Telecommunication Services">Telecommunication Services</option>
+              <option className="sector-option" value="Utilities">Utilities</option>
+            </select>
           </div>
         </div>
         <div id="cl-nav">
