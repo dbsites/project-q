@@ -340,6 +340,11 @@ export const togglePortfolio = (mode: string) => ({
   payload: mode
 })
 
+export const filterSector = (sec: string) => ({
+  type: types.FILTER_SECTOR,
+  payload: sec
+})
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')
