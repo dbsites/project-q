@@ -121,4 +121,8 @@ export class CompanyRepository {
     return this.db.one('SELECT * FROM company_module WHERE company_id = (SELECT id FROM companies WHERE ticker = $1);', stockSymbol);
   }
 
+  addSectors(id: string, sector: string) {
+    return this.db.none('UPDATE companies SET sector = $1 WHERE id = $2', [sector, id]);
+  }
+
 }
