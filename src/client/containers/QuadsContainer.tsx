@@ -37,6 +37,7 @@ interface Props {
   displayDetails: boolean;
   hoverOverviewInfo: any;
   togglePortfolio: any;
+  filterSector: any;
 }
 
 // TODO when store structure finalized
@@ -68,6 +69,7 @@ class QuadsContainer extends React.Component<Props> {
       companyList,
       currentCompanyStockData,
       displayDetails,
+      filterSector,
       getSelectedCompanyInfo,
       getStockData,
       hoverOff,
@@ -104,6 +106,7 @@ class QuadsContainer extends React.Component<Props> {
             displayDetails={displayDetails}
             hoverOverviewInfo={hoverOverviewInfo}
             togglePortfolio={togglePortfolio}
+            filterSector={filterSector}
           />
         </div>
       </div>
@@ -151,7 +154,11 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.hoverOn({ blurb, name, alignedScore }));
   },
   hoverOff: () => dispatch(actions.hoverOff()),
-  togglePortfolio: (e: any) => dispatch(actions.togglePortfolio(e.target.value))
+  togglePortfolio: (e: any) => dispatch(actions.togglePortfolio(e.target.value)),
+  filterSector: (e: any) => {
+    console.log(e.target.value);
+    dispatch(actions.filterSector(e.target.value))
+  }
 });
 
 export default connect(
