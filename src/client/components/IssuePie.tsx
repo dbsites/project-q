@@ -252,6 +252,7 @@ class IssuePie extends Component<Props> {
               isAnimationActive={true}
               isUpdateAnimationActive={true}
               animationEasing={'ease'}
+              animationDuration={1000}
             >
               {DATA.map((_: any, i: number) => (
                 <Cell fill={COLORS[i % COLORS.length]} key={i} />
