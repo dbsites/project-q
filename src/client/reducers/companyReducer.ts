@@ -331,15 +331,25 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     /***********************************************/
 
     case actions.TOGGLE_PORTFOLIO:
+      /* User portfolio has not been uploaded yet */
+      if (action.payload === 'portfolio' && !state.portfolioList.length)
+        return state;
+
+
       if (action.payload && action.payload !== state.portfolioMode) {
 
         const selected = document.getElementById(action.payload);
         const deselected = document.getElementById(state.portfolioMode);
         const companyListDiv = document.getElementById("cl-table");
 
+        if (selected !== null && selected.classList.contains('no-upload')) {
+          selected.classList.remove('no-upload');
+          selected.classList.add('active');
+        }
+
         if (selected !== null && deselected !== null) {
-          selected.style.border = '2px solid gold';
-          deselected.style.border = 'none';
+          selected.classList.add('selected');
+          deselected.classList.remove('selected');
         }
 
         if (companyListDiv !== null) {
