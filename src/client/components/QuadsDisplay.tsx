@@ -34,6 +34,7 @@ const QuadsDisplay = (props: any) => {
         userIssues={props.issues}
         issueAbbrvs={props.abbrvs}
         togglePortfolio={props.togglePortfolio}
+        filterSector={props.filterSector}
       />
     </React.Fragment>
   );
