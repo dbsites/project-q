@@ -65,6 +65,7 @@ enum ActionTypes {
   HOVER_ON = 'HOVER_ON',
   HOVER_OFF = 'HOVER_OFF',
   TOGGLE_PORTFOLIO = 'TOGGLE_PORTFOLIO',
+  FILTER_SECTOR = 'FILTER_SECTOR'
 }
 
 export default ActionTypes;
