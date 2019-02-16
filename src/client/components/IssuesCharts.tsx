@@ -14,7 +14,8 @@ import IssuePie from './IssuePie';
 import Recipients from './Recipients';
 
 // TODO: move this props in types.ts and export in
-interface Props {
+interface Props
+{
   moduleData?: any;
   politData?: any;
   selectedCompany: any;
@@ -27,7 +28,8 @@ interface Props {
 
 // TODO transition component state to redux
 class IssuesCharts extends Component<Props> {
-  render() {
+  render ()
+  {
     const { moduleData, politData } = this.props.selectedData;
     const { selectedCompany, userIssues, hoverOn, hoverOff, displayDetail } = this.props;
     const { issueMatcher } = issueMatch;
@@ -37,7 +39,7 @@ class IssuesCharts extends Component<Props> {
     const userIssuesArray = Object
       .keys(userIssues)
       .map((issueID: any) =>
-        ({ name: issueMatcher[issueID] }));
+        ({ name: issueMatcher[ issueID ] }));
 
     while (userIssuesArray.length !== 6) {
       userIssuesArray.push({ name: 'No Issue Selected' });
@@ -46,32 +48,35 @@ class IssuesCharts extends Component<Props> {
     if (!selectedCompany) {
       msg = 'Select a company to view their issues scores';
 
-      display = userIssuesArray.map((issueObj: any, i: number) => {
-        return <IssuePie key={i} info={{ name: issueObj.name }} />;
+      display = userIssuesArray.map((issueObj: any, i: number) =>
+      {
+        const { name }: { name: string } = issueObj;
+        return <IssuePie key={ i } info={ { name } } />;
       });
     } else {
       msg = 'Hover over charts below for detailed descriptions';
 
-      display = userIssuesArray.map((issueObj: any, index: number) => {
-        if (name !== 'No Issue Selected') {
+      display = userIssuesArray.map((issueObj: any, index: number) =>
+      {
+        if (issueObj.name !== 'No Issue Selected') {
           const { name } = issueObj;
           const { logo } = selectedCompany;
-          const { alignedScore } = selectedCompany[name];
+          const { alignedScore } = selectedCompany[ name ];
 
           return (
             <IssuePie
-              key={index}
-              logo={logo}
-              info={{ name, alignedScore }}
-              modal={moduleData}
-              polit={politData}
-              detailedView={displayDetail}
-              handleMouseEnter={(blurb: string, name: string, alignedScore: number) => hoverOn(blurb, name, alignedScore)}
-              handleMouseLeave={() => hoverOff()}
+              key={ index }
+              logo={ logo }
+              info={ { name, alignedScore } }
+              modal={ moduleData }
+              polit={ politData }
+              detailedView={ displayDetail }
+              handleMouseEnter={ (blurb: string, name: string, alignedScore: number) => hoverOn(blurb, name, alignedScore) }
+              handleMouseLeave={ () => hoverOff() }
             />
           );
         } else {
-          return <IssuePie key={index} info={{ name: issueObj.name }} />;
+          return <IssuePie key={ index } info={ { name: issueObj.name } } />;
         }
       });
     }
@@ -79,10 +84,10 @@ class IssuesCharts extends Component<Props> {
     return (
       <div className="quad" id="quad-issues">
         <div className="issues-container">
-          <p id="issues-header">{msg}</p>
-          {display}
+          <p id="issues-header">{ msg }</p>
+          { display }
         </div>
-        <Recipients data={politData} />
+        <Recipients data={ politData } />
       </div>
     );
   }
