@@ -20,7 +20,7 @@ services:
     depends_on:
       - postgres-db-test
       - postgres-data-test
-    command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db-test", "${DATABASE_MIGRATIONS}", "test-coverage", "${DATABASE_TEST_SCOPES}"]
+    command: ["./scripts/postgres-db/run-migrate.sh", "postgres-db-test", "${DATABASE_MIGRATIONS}", "test:coverage", "${DATABASE_TEST_SCOPES}"]
 
   postgres-db-test:
     environment:

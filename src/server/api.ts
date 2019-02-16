@@ -266,4 +266,15 @@ app.post('/politicianData',
   }
 );
 ***********************************************************
+  // route to update sector data  
+
+app.post('/api/addSectors',
+CompanyDatabase.updateSectors,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
+}
+);
+***********************************************************
 */
+
+

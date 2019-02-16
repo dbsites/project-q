@@ -14,9 +14,12 @@ import CompanyList from '../components/CompanyList';
 const QuadsDisplay = (props: any) => {
   return (
     <React.Fragment>
-      <Overview selected={props.selected} />
+      <Overview selected={props.selected} hoverInfo={props.hoverOverviewInfo} displayDetail={props.displayDetails} />
       <StockGraph selected={props.selected} stockData={props.stockData} />
       <IssuesCharts
+        displayDetail={props.displayDetails}
+        hoverOn={props.hoverOn}
+        hoverOff={props.hoverOff}
         selectedCompany={props.selected}
         selectedData={props.selectedData}
         userIssues={props.issues}
@@ -30,6 +33,8 @@ const QuadsDisplay = (props: any) => {
         selectedCompany={props.selected}
         userIssues={props.issues}
         issueAbbrvs={props.abbrvs}
+        togglePortfolio={props.togglePortfolio}
+        filterSector={props.filterSector}
       />
     </React.Fragment>
   );

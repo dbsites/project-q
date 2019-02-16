@@ -65,3 +65,12 @@
   font-weight: bold;
   padding: 4vh 0;
 }
+
+.modal-file-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
