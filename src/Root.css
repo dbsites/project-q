@@ -90,7 +90,10 @@ body {
   cursor: pointer;
 }
 
+/* Screen your portfolio button */
+
 .header-right-screen {
+  display: none;
   background: #25B73F;
   border-radius: 3px;
   color: #FFFFFF;
@@ -100,6 +103,7 @@ body {
 }
 
 .header-right-screen:hover{
+  display: none;
   background: none;
   color: #25B73F;
   cursor: pointer;
