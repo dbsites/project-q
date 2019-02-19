@@ -139,6 +139,11 @@
     updateUserSurvey(user: string, questionId: string, agree: boolean) {
       return this.db.none('INSERT INTO user_answers (id, user_id, question_id, agree) VALUES ($1, $2, $3, $4);', [v4(), user, questionId, agree]);
     }
+
+    async updateUserPortfolios (user: string, ticker: string, holding: number) {
+      await this.db.none('DELETE FROM user_portfolio WHERE user = $1;', user);
+      return this.db.none('INSERT INTO user_portfolio (id, user, ticker, holding) VALUES ($1, $2, $3, $4);', [v4(), user, ticker, holding]);
+    }
  }
 
 
