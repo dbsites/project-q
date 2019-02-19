@@ -164,8 +164,8 @@ UserMethods.getQuestions,
 
   app.post('api/userPortfolio',
   DatabaseMethods.parseCSV,
-  UserMethods.updatePorfolio,
-  (req: Request, res: Response) => {
+  UserMethods.updatePortfolio,
+  (_: Request, res: Response) => {
     res.status(200).send('Response From /userPortfolio');
   }
   );

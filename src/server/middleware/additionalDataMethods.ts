@@ -121,16 +121,16 @@ DatabaseMethods.getSinglePoliticianData = (req: Request, res: Response, next: Ne
       res.locals.politicianData = politicianData;
     }
     next();
-  })
+  }) 
+}
 
-  DatabaseMethods.parseCSV = (req: Request, res: Response, next: NextFunction) => {
+DatabaseMethods.parseCSV = (req: Request, res: Response, next: NextFunction) => {
     // there should be some type of file in the req.body, likely a csv
     // extract ticker data from csv, maybe holding amount 
     // stash ticker data and holding amount, maybe, in res.locals.userPortfolio and pass it along
     console.log(req.body);
-    console.log(res.body);
+    console.log(res.locals);
     next();
-  }
 }
 
 
