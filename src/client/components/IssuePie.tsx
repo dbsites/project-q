@@ -331,7 +331,6 @@ export const MONEY = (
     );
   }
 
-
   return (
     `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
     on the issue of <span>${issueName }</span>. Your input is cross-referenced
