@@ -161,6 +161,14 @@ UserMethods.getQuestions,
     res.status(200).send(res.locals.companyData);
   }
   );
+
+  app.post('api/userPortfolio',
+  DatabaseMethods.parseCSV,
+  UserMethods.updatePorfolio,
+  (req: Request, res: Response) => {
+    res.status(200).send('Response From /userPortfolio');
+  }
+  );
   
   app.get('/api/moduleData',
   CompanyDatabase.getCompanyModule,
