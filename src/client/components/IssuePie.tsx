@@ -309,7 +309,7 @@ export const MONEY = (
 {
   const topRecipients = () =>
   {
-    if (recip_1 === undefined) return;
+    if (recip_1 === undefined) return '';
 
     const recip1: any = recip_1.split(" ");
     recip1.pop();
@@ -336,7 +336,7 @@ export const MONEY = (
     on the issue of <span>${issueName }</span>. Your input is cross-referenced
     with data tracking expenditures to federal candidates, incumbents and
     political parties. In 2016, <span>${companyName }</span> contributed 
-    <span>${aggregate }</span>. ${ topRecipients() }`
+    <span>${aggregate ? aggregate : '$0' }</span>. ${ topRecipients() }`
   );
 };
 
