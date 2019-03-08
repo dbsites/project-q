@@ -161,6 +161,14 @@ UserMethods.getQuestions,
     res.status(200).send(res.locals.companyData);
   }
   );
+
+  app.post('api/userPortfolio',
+  DatabaseMethods.parseCSV,
+  UserMethods.updatePortfolio,
+  (_: Request, res: Response) => {
+    res.status(200).send('Response From /userPortfolio');
+  }
+  );
   
   app.get('/api/moduleData',
   CompanyDatabase.getCompanyModule,
@@ -266,4 +274,15 @@ app.post('/politicianData',
   }
 );
 ***********************************************************
+  // route to update sector data  
+
+app.post('/api/addSectors',
+CompanyDatabase.updateSectors,
+(_: Request, res: Response) => {
+  res.sendStatus(200);
+}
+);
+***********************************************************
 */
+
+

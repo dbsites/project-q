@@ -26,17 +26,26 @@ const Modal = (props: IModalProps) => {
   let bodyText: string;
   let headerText: string;
   let buttonText: string;
+  let buttonAction: JSX.Element;
 
   switch (modalType) {
     case 'reset':
       headerText = modalText.RESET_MODAL_HEADER_TEXT;
       bodyText = modalText.RESET_MODAL_BODY_TEXT;
       buttonText = modalText.RESET_BUTTON_TEXT;
+      buttonAction = <Link to='/account/restart'><Button className="modal-button" onClick={clearModal}>{buttonText}</ Button></Link>;
+      break;
+    case 'screen':
+      headerText = modalText.SCREEN_MODAL_HEADER_TEXT;
+      bodyText = modalText.SCREEN_MODAL_BODY_TEXT;
+      buttonText = modalText.SCREEN_BUTTON_TEXT;
+      buttonAction = <form onChange={clearModal}><label className="modal-button">{buttonText}<input className="modal-file-input" type="file"/></label></form>;
       break;
     default:
       bodyText = '';
       headerText = '';
       buttonText = '';
+      buttonAction = <Button className="modal-button" onClick={clearModal}>{buttonText}</ Button>;
   }
 
   return (
@@ -48,7 +57,7 @@ const Modal = (props: IModalProps) => {
           <ModalSpan header={false}>{bodyText}</ ModalSpan>
           <div className="modal-button-container">
             <Button className="modal-button" onClick={clearModal}>CANCEL</ Button>
-            <Link to='/account/restart'><Button className="modal-button" onClick={clearModal}>{buttonText}</ Button></Link>
+            {buttonAction}
           </div>
         </div>
       </div>
