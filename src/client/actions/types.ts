@@ -80,6 +80,10 @@ export interface IAuthSuccessAction extends Action<string> {
   response: IFormFetchSuccessResponseObject,
 }
 
+export interface IUpdateWeightAction extends Action<string> {
+  issueId: string,
+  weight: string,
+}
 // Survey Action Interfaces
 export interface ISubmitIssuesSuccessAction extends Action<string>{
   response: SurveyState,

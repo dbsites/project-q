@@ -25,12 +25,12 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
   const nextState: UserIssuesSelected = {};
 
   switch (action.type) {
-    case actions.ADD_ISSUE:
-      nextState[action.issueId] = null;
+    case actions.UPDATE_WEIGHT:
+      nextState[action.issueId] = {position: null, weight: action.weight};
       return {
         ...state,
-        ...nextState,
-      };
+        ...nextState
+      }
 
     case actions.REMOVE_ISSUE:
       Object.keys(state).forEach((issueId) => {
@@ -41,16 +41,33 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
       return nextState;
       
     case actions.UPDATE_ISSUE_POSITION:
-      nextState[action.issueId] = action.position;
+      nextState[action.issueId].position = action.position;
       return {
         ...state,
         ...nextState
       }
+
+    case actions.ADD_ISSUE:
+      nextState[action.issueId] = {position: null, weight: 5}
+      return {
+        ...state,
+        ...nextState,
+      };
+
     default:
       return state;
 
   }
 }
+
+// return Object.assign({}, state, {
+//   categories: Object.assign({}, state.categories, {
+//     Professional: Object.assign({}, state.Professional, {
+//       active: true
+//     })
+//   })
+// });
+
 
 const userReducer = (state: UserState = initialUserState, action: any): UserState => {
   // Destructure response object from action
@@ -131,6 +148,7 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
       }
 
     case actions.ADD_ISSUE:
+    case actions.UPDATE_WEIGHT:
     case actions.REMOVE_ISSUE:
       return {
         ... state,

@@ -16,7 +16,7 @@ import {
   IFetchFailureAction,                                        // Fetch Failure Action Interface
   IFormFieldObject, IFormFetchSuccessResponseObject,          // Form Request and Response Interfaces
   IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, // Form Action Interfaces
-  IToggleIssueAction, IUpdateIssuePositionAction,             // User Action Interfaces
+  IToggleIssueAction, IUpdateIssuePositionAction, IUpdateWeightAction,             // User Action Interfaces
   IIssuesSuccessAction,                                       // Issue Action Interfaces
   IIssuesFetchSuccessResponseObject,
   INoAuthObject,
@@ -155,6 +155,12 @@ export const clearIssues = (): Action<string> => ({
 export const addIssue = (issueId: string): IToggleIssueAction => ({
   type: types.ADD_ISSUE,
   issueId
+});
+
+export const updateWeight = (issueId: string, weight: string): IUpdateWeightAction => ({
+  type: types.UPDATE_WEIGHT,
+  issueId,
+  weight
 });
 
 export const removeIssue = (issueId: string): IToggleIssueAction => ({
