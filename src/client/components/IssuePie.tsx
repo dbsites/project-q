@@ -8,7 +8,8 @@ import { Component } from "react";
 import { PieChart, Pie, Cell, Label, ResponsiveContainer } from "recharts";
 
 // TODO when store structure finalized
-interface Props {
+interface Props
+{
   info: any;
   logo?: any;
   modal?: any;
@@ -20,7 +21,8 @@ interface Props {
 
 // TODO when store structure finalized
 class IssuePie extends Component<Props> {
-  render() {
+  render ()
+  {
     const { name, alignedScore } = this.props.info;
     const { handleMouseEnter, handleMouseLeave } = this.props;
     let blurb: string, display;
@@ -63,11 +65,11 @@ class IssuePie extends Component<Props> {
         company_name
       } = this.props.modal;
 
-      const searchName = name.split(" ")[0].toUpperCase();
+      const searchName = name.split(" ")[ 0 ].toUpperCase();
 
       switch (searchName) {
         case "MONEY":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -81,7 +83,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "ENVIRONMENT":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -90,7 +92,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "CIVIL/WOMEN'S":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -100,7 +102,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "2ND":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -111,7 +113,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "EXECUTIVE":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -120,7 +122,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "CORPORATE":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -129,7 +131,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "DRUG":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -137,7 +139,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "HEALTH":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -146,7 +148,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "IMMIGRATION":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -156,7 +158,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "TAXES":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -165,7 +167,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "PRESIDENTIAL":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -173,7 +175,7 @@ class IssuePie extends Component<Props> {
           );
           break;
         case "ECONOMY":
-          blurb = IssueScripts[name](
+          blurb = IssueScripts[ name ](
             company_name,
             alignedScore,
             name,
@@ -188,17 +190,17 @@ class IssuePie extends Component<Props> {
         <ResponsiveContainer>
           <PieChart>
             <Pie
-              data={[{ value: 100 }, { value: alignedScore }]}
+              data={ [ { value: 100 }, { value: alignedScore } ] }
               outerRadius="100%"
               innerRadius="70%"
               fill="#808080"
               dataKey="value"
-              startAngle={90}
-              endAngle={450}
-              paddingAngle={5}
-              isAnimationActive={true}
-              isUpdateAnimationActive={true}
-              animationEasing={'ease'}
+              startAngle={ 90 }
+              endAngle={ 450 }
+              paddingAngle={ 5 }
+              isAnimationActive={ true }
+              isUpdateAnimationActive={ true }
+              animationEasing={ 'ease' }
             >
               <Cell fill="#3A3A3A" />
               <Label
@@ -207,7 +209,7 @@ class IssuePie extends Component<Props> {
                     ? "0%"
                     : alignedScore === undefined
                       ? "0%"
-                      : `${alignedScore}%`
+                      : `${ alignedScore }%`
                 }
                 position="center"
                 fill="white"
@@ -241,24 +243,24 @@ class IssuePie extends Component<Props> {
         <ResponsiveContainer>
           <PieChart>
             <Pie
-              data={[{ value: 100 - alignedScore }, { value: alignedScore }]}
+              data={ [ { value: 100 - alignedScore }, { value: alignedScore } ] }
               outerRadius="100%"
               innerRadius="70%"
               fill="#808080"
               dataKey="value"
-              startAngle={90}
-              endAngle={450}
-              paddingAngle={5}
-              isAnimationActive={true}
-              isUpdateAnimationActive={true}
-              animationEasing={'ease'}
-              animationDuration={1000}
+              startAngle={ 90 }
+              endAngle={ 450 }
+              paddingAngle={ 5 }
+              isAnimationActive={ true }
+              isUpdateAnimationActive={ true }
+              animationEasing={ 'ease' }
+              animationDuration={ 1000 }
             >
-              {DATA.map((_: any, i: number) => (
-                <Cell fill={COLORS[i % COLORS.length]} key={i} />
-              ))}
+              { DATA.map((_: any, i: number) => (
+                <Cell fill={ COLORS[ i % COLORS.length ] } key={ i } />
+              )) }
               <Label
-                value={alignedScore === 0 ? "0%" : `${alignedScore}%`}
+                value={ alignedScore === 0 ? "0%" : `${ alignedScore }%` }
                 position="center"
                 fill="white"
               />
@@ -271,13 +273,13 @@ class IssuePie extends Component<Props> {
     return (
       <div
         className="issue-box"
-        key={name}
-        onMouseEnter={() => handleMouseEnter(blurb, name, alignedScore)}
-        onMouseLeave={handleMouseLeave}
+        key={ name }
+        onMouseEnter={ () => handleMouseEnter(blurb, name, alignedScore) }
+        onMouseLeave={ handleMouseLeave }
       >
-        <div className="issue-pie" key={name} id={name.split(" ").join("-")}>
-          {display}
-          <p>{name}</p>
+        <div className="issue-pie" key={ name } id={ name.split(" ").join("-") }>
+          { display }
+          <p>{ name }</p>
         </div>
       </div>
     );
@@ -303,28 +305,38 @@ export const MONEY = (
   recip_2_amount: number,
   recip_3: string,
   recip_3_amount: string
-) => {
-  const recip1: any = recip_1.split(" ");
-  recip1.pop();
-  recip_1 = recip1.join(" ");
+) =>
+{
+  const topRecipients = () =>
+  {
+    if (recip_1 === undefined) return '';
 
-  const recip2: any = recip_2.split(" ");
-  recip2.pop();
-  recip_2 = recip2.join(" ");
+    const recip1: any = recip_1.split(" ");
+    recip1.pop();
+    recip_1 = recip1.join(" ");
 
-  const recip3: any = recip_3.split(" ");
-  recip3.pop();
-  recip_3 = recip3.join(" ");
+    const recip2: any = recip_2.split(" ");
+    recip2.pop();
+    recip_2 = recip2.join(" ");
+
+    const recip3: any = recip_3.split(" ");
+    recip3.pop();
+    recip_3 = recip3.join(" ");
+
+    return (
+      `The top three recipients were 
+      <span>${recip_1 }</span> (<span>${ recip_1_amount }</span>), 
+      <span>${recip_2 }</span> (<span>${ recip_2_amount }</span>), and 
+      <span>${recip_3 }</span> (<span>${ recip_3_amount }</span>).`
+    );
+  }
 
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your input is cross-referenced
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your input is cross-referenced
     with data tracking expenditures to federal candidates, incumbents and
-    political parties. In 2016, <span>${companyName}</span> contributed 
-    <span>${aggregate}</span>. The top three recipients were 
-    <span>${recip_1}</span> (<span>${recip_1_amount}</span>), 
-    <span>${recip_2}</span> (<span>${recip_2_amount}</span>), and 
-    <span>${recip_3}</span> (<span>${recip_3_amount}</span>).`
+    political parties. In 2016, <span>${companyName }</span> contributed 
+    <span>${aggregate ? aggregate : '$0' }</span>. ${ topRecipients() }`
   );
 };
 
@@ -334,14 +346,15 @@ export const ENVIRONMENT = (
   issueName: string,
   greenBuildings: string,
   targetEmissions: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including whether 
-    <span>${companyName}</span> has committed to green building practices (
-    <span>${greenBuildings}</span>) and targeting emissions (
-    <span>${targetEmissions}</span>). In addition, Ethiq factors in corporate
+    <span>${companyName }</span> has committed to green building practices (
+    <span>${greenBuildings }</span>) and targeting emissions (
+    <span>${targetEmissions }</span>). In addition, Ethiq factors in corporate
     expenditures to politicians who advocate for and against environment
     regulations.`
   );
@@ -354,15 +367,16 @@ export const CIVIL = (
   humanRightsScore: number,
   policyBoardDiversity: string,
   womenManagers: number
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> Human Rights Rating (
-    <span>${humanRightsScore}</span>), whether it has a policy on Board
-    Diversity (<span>${policyBoardDiversity}</span>) and its percentage of
-    women in managerial positions (<span>${womenManagers}</span>).`
+    <span>${companyName }'s</span> Human Rights Rating (
+    <span>${humanRightsScore }</span>), whether it has a policy on Board
+    Diversity (<span>${policyBoardDiversity }</span>) and its percentage of
+    women in managerial positions (<span>${womenManagers }</span>).`
   );
 };
 
@@ -374,16 +388,17 @@ export const SECOND = (
   bradyRating: number,
   yesManchin: string,
   noManchin: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> hybrid NRA score of <span>${nraScore}</span>
-    , it's hybrid Brady rating of <span>${bradyRating}</span>, and aggregate
-    money given by <span>${companyName}</span> to those who voted YES on the
-    S.715-Manchin-Toomey Amdt. (<span>${yesManchin}</span>) vs. those who
-    voted NO (<span>${noManchin}</span>)`
+    <span>${companyName }'s</span> hybrid NRA score of <span>${ nraScore }</span>
+    , it's hybrid Brady rating of <span>${bradyRating }</span>, and aggregate
+    money given by <span>${companyName }</span> to those who voted YES on the
+    S.715-Manchin-Toomey Amdt. (<span>${yesManchin }</span>) vs. those who
+    voted NO (<span>${noManchin }</span>)`
   );
 };
 
@@ -393,14 +408,15 @@ export const SALARY = (
   issueName: string,
   TSR: string,
   salaryGap: number
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> CEO compensation is linked to total
-    shareholder return (<span>${TSR}</span>), the salary gap ratio between
-    executives and the average worker (<span>${salaryGap}</span>-to-1),
+    <span>${companyName }'s</span> CEO compensation is linked to total
+    shareholder return (<span>${TSR }</span>), the salary gap ratio between
+    executives and the average worker (<span>${salaryGap }</span>-to-1),
     employee satisfaction, strikes, etc.`
   );
 };
@@ -411,15 +427,16 @@ export const CORPORATE = (
   issueName: string,
   communityScore: number,
   charityAmount: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> community score of 
-    <span>${communityScore}</span>, representing its charitable and volunteer
+    <span>${companyName }'s</span> community score of 
+    <span>${communityScore }</span>, representing its charitable and volunteer
     work, the overall amount of money given to charity during the year (
-    <span>${charityAmount}</span>), charitable contributions as a percentage
+    <span>${charityAmount }</span>), charitable contributions as a percentage
     of revenue, etc.`
   );
 };
@@ -429,14 +446,15 @@ export const DRUG = (
   score: number,
   issueName: string,
   normlScore: any
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> campaign donations to politicians in favor
+    <span>${companyName }'s</span> campaign donations to politicians in favor
     or opposition of drug reform, its hybrid NORML (National Organization
-    for the Reform of Marijuana Laws) score of <span>${normlScore}</span>,
+    for the Reform of Marijuana Laws) score of <span>${normlScore }</span>,
     and additional metrics.`
   );
 };
@@ -447,14 +465,15 @@ export const HEALTH = (
   issueName: string,
   yesRepeal: string,
   noRepeal: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> aggregate expenditures to those who voted
-    YES to repeal the Affordable Care Act (<span>${yesRepeal}</span>) vs.
-    those who voted NO (<span>${noRepeal}</span>).`
+    <span>${companyName }'s</span> aggregate expenditures to those who voted
+    YES to repeal the Affordable Care Act (<span>${yesRepeal }</span>) vs.
+    those who voted NO (<span>${noRepeal }</span>).`
   );
 };
 
@@ -465,16 +484,17 @@ export const IMMIGRATION = (
   diversityScore: number,
   ailaScore: number,
   fairScore: number
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> overall diversity score (
-    <span>${diversityScore}</span>), hybrid scores based on American
-    Immigration Lawyers Association rankings (<span>${ailaScore}</span>), the
+    <span>${companyName }'s</span> overall diversity score (
+    <span>${diversityScore }</span>), hybrid scores based on American
+    Immigration Lawyers Association rankings (<span>${ailaScore }</span>), the
     Federation for American Immigration Reform rankings (
-    <span>${fairScore}</span>) and other metrics.`
+    <span>${fairScore }</span>) and other metrics.`
   );
 };
 
@@ -484,14 +504,15 @@ export const TAXES = (
   issueName: string,
   yesTaxCut: string,
   noTaxCut: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> aggregate expenditures to those who voted
-    YES on the 2017 Tax Cut and Jobs Act (<span>${yesTaxCut}</span>) vs.
-    those who voted NO (<span>${noTaxCut}</span>). In addition, hybrid scores
+    <span>${companyName }'s</span> aggregate expenditures to those who voted
+    YES on the 2017 Tax Cut and Jobs Act (<span>${yesTaxCut }</span>) vs.
+    those who voted NO (<span>${noTaxCut }</span>). In addition, hybrid scores
     from the Club for Growth and the National Taxpayers Union were
     considered.`
   );
@@ -502,13 +523,14 @@ export const PRESIDENTIAL = (
   score: number,
   issueName: string,
   trumpAlignment: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span>  
-    on the issue of <span>${issueName}</span>. This is based on  
-    <span>${ companyName}'s</span> expenditures to politicians voting in line
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span>  
+    on the issue of <span>${issueName }</span>. This is based on  
+    <span>${ companyName }'s</span> expenditures to politicians voting in line
     with or in opposition of President Trump, donations to his campaign,
-    etc. <span>${ trumpAlignment}</span> of the <span> ${companyName}'s</span> 
+    etc. <span>${ trumpAlignment }</span> of the <span> ${ companyName }'s</span> 
     political financing goes to legislators who votes are aligned with the
     current administration.`
   );
@@ -519,14 +541,15 @@ export const ECONOMY = (
   score: number,
   issueName: string,
   taxesPaid: string
-) => {
+) =>
+{
   return (
-    `<span>${companyName}</span> has received a score of <span>${score}</span> 
-    on the issue of <span>${issueName}</span>. Your unique input on Ethiq’s
+    `<span>${ companyName }</span> has received a score of <span>${ score }</span> 
+    on the issue of <span>${issueName }</span>. Your unique input on Ethiq’s
     quiz has been cross-referenced with data points including 
-    <span>${companyName}'s</span> value to overall GDP, historical net hiring
+    <span>${companyName }'s</span> value to overall GDP, historical net hiring
     vs. layoffs, taxes paid as a percentage of revenue (
-    <span>${taxesPaid}</span>), etc.`
+    <span>${taxesPaid }</span>), etc.`
   );
 };
 
