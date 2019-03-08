@@ -133,4 +133,4 @@ const mapDispatchToProps = (dispatch: any): any => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(QuadsContainer);
+)(QuadsContainer) as any;
