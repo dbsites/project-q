@@ -8,7 +8,6 @@ import actions from '../actions/actionTypes';
 
 import * as issueMatch from '../issueMatcher';
 
-
 const initialCompanyState: /*CompanyDataState*/ any = {
   selectedCompany: null,
   fullCompanyModal: null,
@@ -272,9 +271,9 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
 
         if (
           topListCompany[categoryName].alignedScore !==
-          highestScoreCompany[categoryName].alignedScore &&
+            highestScoreCompany[categoryName].alignedScore &&
           topListCompany[categoryName].alignedScore !==
-          lowestScoreCompany[categoryName].alignedScore
+            lowestScoreCompany[categoryName].alignedScore
         ) {
           sortedList = companyArray.slice(0).sort(
             (a: any, b: any): any => {
@@ -337,12 +336,10 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       if (action.payload === 'portfolio' && !state.portfolioList.length)
         return state;
 
-
       if (action.payload && action.payload !== state.portfolioMode) {
-
         const selected = document.getElementById(action.payload);
         const deselected = document.getElementById(state.portfolioMode);
-        const companyListDiv = document.getElementById("cl-table");
+        const companyListDiv = document.getElementById('cl-table');
 
         if (selected !== null && selected.classList.contains('no-upload')) {
           selected.classList.remove('no-upload');
@@ -357,8 +354,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         if (companyListDiv !== null) {
           if (action.payload === 'portfolio')
             companyListDiv.style.display = 'none';
-          else
-            companyListDiv.style.display = 'block';
+          else companyListDiv.style.display = 'block';
         }
       }
 
@@ -368,16 +364,18 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       };
 
     case actions.FILTER_SECTOR:
-      if (action.payload === 'All' || action.payload.length === 0) {
+      if (action.payload === 'Filter All' || action.payload.length === 0) {
         return {
           ...state,
           companyList: state.filteredList
-        }
+        };
       }
 
       return {
         ...state,
-        companyList: state.filteredList.filter((c: any) => c.sector === action.payload)
+        companyList: state.filteredList.filter(
+          (c: any) => c.sector === action.payload
+        )
       };
 
     default:
