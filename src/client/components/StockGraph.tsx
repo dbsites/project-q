@@ -25,6 +25,7 @@ const commafy = (value: number) => {
 
 // TODO when store structure finalized
 const StockGraph = (props: any) => {
+  let appKey = process.env.STOCK_API_KEY;
   let display;
 
   if (!props.selected) {
@@ -49,7 +50,7 @@ const StockGraph = (props: any) => {
     }
 
     // StockDIO API
-    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=693547058288464CAF34150B9A3F77D4&symbol=${
+    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=${appKey}&symbol=${
       ticker.split('.')[0]
     }&indices=SPX&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000&includeCompetitors=true`;
 

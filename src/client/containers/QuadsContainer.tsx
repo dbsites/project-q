@@ -32,6 +32,12 @@ interface Props {
   getStockData: any;
   getSelectedCompanyInfo: any;
   resetUserIssues: any;
+  hoverOn: any;
+  hoverOff: any;
+  displayDetails: boolean;
+  hoverOverviewInfo: any;
+  togglePortfolio: any;
+  filterSector: any;
 }
 
 // TODO when store structure finalized
@@ -43,13 +49,13 @@ class QuadsContainer extends React.Component<Props> {
   componentDidMount() {
     const {
       getUserIssues,
-      fetchCompanyList,
-      getAllCompanyInfo
+      fetchCompanyList
+      // getAllCompanyInfo
     } = this.props;
 
     getUserIssues();
     fetchCompanyList();
-    getAllCompanyInfo();
+    // getAllCompanyInfo();
   }
 
   componentWillUnmount() {
@@ -62,13 +68,19 @@ class QuadsContainer extends React.Component<Props> {
     const {
       companyList,
       currentCompanyStockData,
+      displayDetails,
+      filterSector,
       getSelectedCompanyInfo,
       getStockData,
+      hoverOff,
+      hoverOn,
+      hoverOverviewInfo,
       issueAbbrvs,
       selectCompany,
       selectedCompany,
       selectedCompanyData,
       sortCompanyList,
+      togglePortfolio,
       userIssues
     } = this.props;
 
@@ -89,6 +101,12 @@ class QuadsContainer extends React.Component<Props> {
             stockData={currentCompanyStockData}
             issues={userIssues}
             abbrvs={issueAbbrvs}
+            hoverOn={hoverOn}
+            hoverOff={hoverOff}
+            displayDetails={displayDetails}
+            hoverOverviewInfo={hoverOverviewInfo}
+            togglePortfolio={togglePortfolio}
+            filterSector={filterSector}
           />
         </div>
       </div>
@@ -102,14 +120,18 @@ const mapStateToProps = (state: any): any => ({
   selectedCompany: state.company.selectedCompany,
   selectedCompanyData: state.company.selectedCompanyData,
   userIssues: state.company.userIssues,
-  issueAbbrvs: state.company.issueAbbrvs
+  issueAbbrvs: state.company.issueAbbrvs,
+  displayDetails: state.company.displayDetails,
+  hoverOverviewInfo: state.company.hoverOverviewInfo
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
   fetchCompanyList: () => dispatch(actions.fetchCompanyList()),
-  selectCompany: (event: any) => {
+  selectCompany: (event: any, ticker: any) => {
     event.preventDefault();
     dispatch(actions.selectCompany({ field: event.target.id }));
+    setTimeout(() => dispatch(actions.getStockData(ticker)), 1500);
+    setTimeout(() => dispatch(actions.getSelectedCompanyInfo(ticker)), 1500);
   },
   sortCompanyList: (event: any) => {
     event.preventDefault();
@@ -127,7 +149,14 @@ const mapDispatchToProps = (dispatch: any): any => ({
   },
   resetUserIssues: () => {
     dispatch(actions.resetUserIssues());
-  }
+  },
+  hoverOn: (blurb: string, name: string, alignedScore: number) => {
+    dispatch(actions.hoverOn({ blurb, name, alignedScore }));
+  },
+  hoverOff: () => dispatch(actions.hoverOff()),
+  togglePortfolio: (e: any) =>
+    dispatch(actions.togglePortfolio(e.target.value)),
+  filterSector: (e: any) => dispatch(actions.filterSector(e.target.value))
 });
 
 export default connect(

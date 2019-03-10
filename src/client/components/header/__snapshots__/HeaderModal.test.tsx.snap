@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HeaderModal Component matches the snapshot 1`] = `
+<li
+  className="header-right"
+  onClick={[MockFunction]}
+>
+  LOGIN
+</li>
+`;

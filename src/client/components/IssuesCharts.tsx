@@ -14,101 +14,80 @@ import IssuePie from './IssuePie';
 import Recipients from './Recipients';
 
 // TODO: move this props in types.ts and export in
-interface Props {
+interface Props
+{
   moduleData?: any;
   politData?: any;
   selectedCompany: any;
   selectedData: any;
   userIssues: any;
-  displayDetail?: any;
+  displayDetail: any;
+  hoverOn: any;
+  hoverOff: any;
 }
 
 // TODO transition component state to redux
 class IssuesCharts extends Component<Props> {
-  state: any;
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      pieIndex: 0,
-      displayDetail: false
-    };
-
-    this.handleMouseEnter = this.handleMouseEnter.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
-  }
-
-  handleMouseEnter(index: any) {
-    this.setState({ pieIndex: index, displayDetail: true });
-  }
-
-  handleMouseLeave() {
-    this.setState({ displayDetail: false });
-  }
-
-  render() {
+  render ()
+  {
     const { moduleData, politData } = this.props.selectedData;
-    const { selectedCompany, userIssues } = this.props;
+    const { selectedCompany, userIssues, hoverOn, hoverOff, displayDetail } = this.props;
     const { issueMatcher } = issueMatch;
 
     let msg, display: JSX.Element[];
 
-    const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
-      return {
-        name: issueMatcher[issueID]
-      };
-    });
+    const userIssuesArray = Object
+      .keys(userIssues)
+      .map((issueID: any) =>
+        ({ name: issueMatcher[ issueID ] }));
 
     while (userIssuesArray.length !== 6) {
       userIssuesArray.push({ name: 'No Issue Selected' });
     }
 
-    if (selectedCompany) {
+    if (!selectedCompany) {
+      msg = 'Select a company to view their issues scores';
+
+      display = userIssuesArray.map((issueObj: any, i: number) =>
+      {
+        const { name }: { name: string } = issueObj;
+        return <IssuePie key={ i } info={ { name } } />;
+      });
+    } else {
       msg = 'Hover over charts below for detailed descriptions';
 
-      display = userIssuesArray.map((issueObj: any, index: number) => {
-        const { name } = issueObj;
-        if (name !== 'No Issue Selected') {
+      display = userIssuesArray.map((issueObj: any, index: number) =>
+      {
+        if (issueObj.name !== 'No Issue Selected') {
+          const { name } = issueObj;
           const { logo } = selectedCompany;
-          const { alignedScore } = selectedCompany[name];
-          const issueInfo = { name, alignedScore };
-          const detailedView =
-            this.state.displayDetail && this.state.pieIndex === index;
+          const { alignedScore } = selectedCompany[ name ];
+
           return (
             <IssuePie
-              key={index}
-              logo={logo}
-              info={issueInfo}
-              modal={moduleData}
-              polit={politData}
-              detailedView={detailedView}
-              handleMouseEnter={() => this.handleMouseEnter(index)}
-              handleMouseLeave={() => this.handleMouseLeave()}
+              key={ index }
+              logo={ logo }
+              info={ { name, alignedScore } }
+              modal={ moduleData }
+              polit={ politData }
+              detailedView={ displayDetail }
+              handleMouseEnter={ (blurb: string, name: string, alignedScore: number) => hoverOn(blurb, name, alignedScore) }
+              handleMouseLeave={ () => hoverOff() }
             />
           );
         } else {
-          const issueInfo = { name };
-          return <IssuePie key={index} info={issueInfo} />;
+          return <IssuePie key={ index } info={ { name: issueObj.name } } />;
         }
-      });
-    } else {
-      msg = 'Select a company to view their issues scores';
-
-      display = userIssuesArray.map((issueObj: any, i: number) => {
-        const { name } = issueObj;
-        const issueInfo = { name };
-
-        return <IssuePie key={i} info={issueInfo} />;
       });
     }
 
     return (
       <div className="quad" id="quad-issues">
         <div className="issues-container">
-          <p id="issues-header">{msg}</p>
-          {display}
+          <p id="issues-header">{ msg }</p>
+          { display }
         </div>
-        <Recipients data={politData} />
+        <Recipients data={ politData } />
       </div>
     );
   }

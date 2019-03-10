@@ -1,5 +1,5 @@
 # command to run:
-# docker-compose -f docker-comp-dev-hot up
+# docker-compose -f docker-comp-dev-hot.yml up
 
 # This will start ethiq-dependencies & postgres db container with it's associated data volumes container
 # and run 'npm run dev-server' and 'npm run dev-client'
@@ -51,3 +51,4 @@ volumes:
   dev-db-volume:
   dist:
   node_modules:
+  

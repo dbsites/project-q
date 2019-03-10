@@ -90,6 +90,25 @@ body {
   cursor: pointer;
 }
 
+/* Screen your portfolio button */
+
+.header-right-screen {
+  display: none;
+  background: #25B73F;
+  border-radius: 3px;
+  color: #FFFFFF;
+  margin: 3vh 10px;
+  padding: 0.5vh 10px;
+  float: right;
+}
+
+.header-right-screen:hover{
+  display: none;
+  background: none;
+  color: #25B73F;
+  cursor: pointer;
+}
+
 .header li a {
   color: inherit;
   display: block;
