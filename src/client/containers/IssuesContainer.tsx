@@ -54,7 +54,9 @@ const IssuesContainer = (props: any): any => {
             selected={true}
             toggleIssue={removeIssue}
           />
+          <span className='slider-font'>Least </span>
           <Slider issueId={issueId} updateWeight={updateWeight} issuesSelected={issuesSelected}/>
+          <span className='slider-font'> Most</span>
         </div>
     } else {
       issue = <Issue
@@ -125,7 +127,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
   submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssues(userId, issuesSelected)),
   updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
-  updateWeight: (issueId: string, weight: string) => { 
+  updateWeight: (issueId: string, weight: number) => { 
     console.log('inside updateWeight: ', issueId, weight);
     const action = actions.updateWeight(issueId, weight);
     console.log('returned action object: ', action);

@@ -11,7 +11,7 @@ const Slider = (props: any) => {
       value={issuesSelected[issueId].weight} 
       id={issueId}
       className='slider'
-      onChange={(event)=>updateWeight(issueId, event.target.value)}
+      onChange={(event)=>updateWeight(issueId, Number(event.target.value))}
     />
   )
 }

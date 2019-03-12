@@ -160,7 +160,7 @@ export const addIssue = (issueId: string): IToggleIssueAction => ({
   issueId
 });
 
-export const updateWeight = (issueId: string, weight: string): IUpdateWeightAction => ({
+export const updateWeight = (issueId: string, weight: number): IUpdateWeightAction => ({
   type: types.UPDATE_WEIGHT,
   issueId,
   weight

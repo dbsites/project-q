@@ -515,3 +515,7 @@ body {
   -webkit-transition: .2s;
   transition: opacity .2s;
 }
+
+.slider-font {
+  font-size: 1.2rem;
+}
