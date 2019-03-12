@@ -85,7 +85,6 @@ export const fetchForm = (
 ) => (dispatch: Dispatch) => {
   dispatch(fetchFormRequest());
   // Derive POST request URI from form to be submitted and issue fetch request
-
   const fetchURI: string = `/api/${form}`;
   return fetch(fetchURI, {
     method: 'POST',
@@ -96,6 +95,7 @@ export const fetchForm = (
     body: JSON.stringify(formFields)
   })
     .then((response: Response) => {
+      console.log(response, 'FETCH_REQUEST_RESPONSE')
       // If successful(200), return parsed response, otherwise dispatch failure and throw error
       if (response.status === 200) return response.json();
       if (response.status === 401)
@@ -106,7 +106,10 @@ export const fetchForm = (
       // set onboardComplete equal to issuesComplete
       return dispatch(fetchFormSuccess(response));
     })
-    .catch((error: Error) => dispatch(fetchFormFailure(form, error.message)));
+    .catch((error: Error) => {
+      console.log(error);
+      dispatch(fetchFormFailure(form, error.message))
+    });
 };
 
 // --- Issue Action Creators --- // --- UNIT TESTING 100% --- //
@@ -207,6 +210,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
   })
     .then((response: Response) => response.json())
     .then((response: IFormFetchSuccessResponseObject | INoAuthObject) => {
+      console.log(response, 'FETCH_AUTH')
       if (!response.isAuth) dispatch(fetchAuthFailure());
       else
         dispatch(fetchAuthSuccess(response as IFormFetchSuccessResponseObject));
@@ -278,6 +282,7 @@ export const fetchSubmitIssues = (
   })
     .then((response: Response) => response.json())
     .then((response: SurveyState) => {
+      console.log(response, 'FETCH_SUBMIT_ISSUES');
       dispatch({
         type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
         response

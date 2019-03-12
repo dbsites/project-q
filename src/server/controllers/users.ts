@@ -70,10 +70,10 @@
     async addIssues (user: string, issues: any, userIssueIds: string[]) {
       // delete user_issues for user
       await this.db.none('DELETE FROM user_issues WHERE user_id = $1', user);
-
+      console.log(issues, 'ISSUES');
       // insert new issues
       for (let i = 0; i < userIssueIds.length; i += 1) {
-        await this.db.none('INSERT INTO user_issues (id, user_id, issue_id, position) VALUES ($1, $2, $3, $4);', [v4(), user, userIssueIds[i], issues[userIssueIds[i]]]); 
+        await this.db.none('INSERT INTO user_issues (id, user_id, issue_id, position, weight) VALUES ($1, $2, $3, $4, $5);', [v4(), user, userIssueIds[i], issues[userIssueIds[i]].position, issues[userIssueIds[i]].weight]); 
       }
     }
 
@@ -89,7 +89,7 @@
 
     // get relevant data from userIssues table
     getIssues(user: string) {
-     return this.db.any('SELECT user_issues.issue_id, issues.issue_name, issues.description, user_issues.position FROM user_issues INNER JOIN issues ON user_issues.issue_id = issues.id WHERE user_issues.user_id = $1;', [user]);
+     return this.db.any('SELECT user_issues.issue_id, issues.issue_name, issues.description, user_issues.position, user_issues.weight FROM user_issues INNER JOIN issues ON user_issues.issue_id = issues.id WHERE user_issues.user_id = $1;', [user]);
     }
 
     // get questons for users to answer from db

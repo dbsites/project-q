@@ -72,15 +72,14 @@ const CompanyList = (props: any) => {
     const companyOverallScores = () => {
       const companyOverallScoresArray = [];
       let score: number = 0;
-
+      
       // Create array of user issue objects with converted name
       const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
         return {
           name: issueMatcher[issueID],
-          leaning: userIssues[issueID]
+          leaning: userIssues[issueID].position
         };
       });
-
       // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
@@ -120,7 +119,7 @@ const CompanyList = (props: any) => {
       const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
         return {
           name: issueMatcher[issueID],
-          leaning: userIssues[issueID]
+          leaning: userIssues[issueID].position
         };
       });
 

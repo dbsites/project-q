@@ -26,7 +26,7 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
 
   switch (action.type) {
     case actions.UPDATE_WEIGHT:
-      nextState[action.issueId] = {position: null, weight: action.weight};
+      nextState[action.issueId] = { position: null, weight: action.weight };
       return {
         ...state,
         ...nextState
@@ -41,7 +41,7 @@ const issueReducer = (state: UserIssuesSelected, action: any): UserIssuesSelecte
       return nextState;
       
     case actions.UPDATE_ISSUE_POSITION:
-      nextState[action.issueId].position = action.position;
+      nextState[action.issueId] = { position: action.position, weight:state[action.issueId].weight };
       return {
         ...state,
         ...nextState
@@ -84,6 +84,16 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
 
     case actions.FETCH_AUTH_SUCCESS:
     case actions.FETCH_FORM_SUCCESS:
+      console.log(response, "RESPOSE");
+      if (response.issuesSelected) {
+        Object.keys(response.issuesSelected).forEach((issue) => {
+          console.log('ISSSUE', issue)
+          response.issuesSelected[issue] = {
+            position: response.issuesSelected[issue].position,
+            weight: response.issuesSelected[issue].weight
+          }
+        })
+      }
       return {
         isAdmin: response.isAdmin || false,
         isAuth: response.isAuth,

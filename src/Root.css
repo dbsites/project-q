@@ -408,7 +408,7 @@ body {
   margin: 1vh auto;
   text-align: center;
   width: 33%;
-  height: 15%;
+  height: 17%;
   display: block;
   justify-content: center;
   align-items: center;
@@ -485,4 +485,14 @@ body {
 .forgot-password a:hover {
   color: #FFFFFF;
   cursor: pointer;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 4px;
+  background: #528161;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
 }
