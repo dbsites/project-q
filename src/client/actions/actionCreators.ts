@@ -337,6 +337,25 @@ export const resetUserIssues = () => ({
   type: types.RESET_USER_ISSUES
 });
 
+export const hoverOn = (info: any) => ({
+  type: types.HOVER_ON,
+  payload: info
+})
+
+export const hoverOff = () => ({
+  type: types.HOVER_OFF
+})
+
+export const togglePortfolio = (mode: string) => ({
+  type: types.TOGGLE_PORTFOLIO,
+  payload: mode
+})
+
+export const filterSector = (sec: string) => ({
+  type: types.FILTER_SECTOR,
+  payload: sec
+})
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')
@@ -356,20 +375,10 @@ export const fetchCompanyList = () => (dispatch: any, getState: any) => {
       dispatch(getStockData(ticker));
       dispatch(getSelectedCompanyInfo(ticker));
     })
-    // .then(() => {
-    //   const { company } = getState();
-    //   const { ticker } = company.selectedCompany;
-    //   return ticker;
-    //   getStockData(ticker);
-    //   getSelectedCompanyInfo(ticker);
-    // })
     .catch((err: any) => console.error(err));
 };
 
 export const getStockData = (ticker: string) => (dispatch: any) => {
-  // const { company } = getState();
-  // const { ticker } = company.selectedCompany;
-
   fetch('/api/stockData', {
     method: 'POST',
     headers: {

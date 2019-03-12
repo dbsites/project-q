@@ -61,6 +61,7 @@ CompanyDatabase.getCompanyList = (_: Request, res: Response, next: NextFunction)
           companyData[item.full_name].short_name = item.short_name;
           companyData[item.full_name].ticker = item.ticker;
           companyData[item.full_name].description = item.description;
+          companyData[item.full_name].sector = item.sector;
           companyData[item.full_name].yearFounded = item.year_founded;
           companyData[item.full_name].numberEmployees = item.number_employees;
           companyData[item.full_name].url = item.url;
@@ -167,6 +168,17 @@ CompanyDatabase.getCompanyModuleData = (req: Request, res: Response, next: NextF
         res.status(500).send('SERVER FAILURE');
       }
     })
+}
+
+CompanyDatabase.updateSectors = (req: Request, __: Response, next: NextFunction) => {
+  const ids: any = Object.keys(req.body[0]);
+
+  for (let i = 0; i < ids.length; i += 1) {
+    db.companies.addSectors(ids[i], req.body[0][ids[i]]).catch((error: any) => console.log(error));
+  }
+
+  next();
+
 }
 
 

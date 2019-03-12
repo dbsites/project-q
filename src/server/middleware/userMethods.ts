@@ -410,4 +410,11 @@ UserMethods.findByEmail = (req: Request, res: Response, next: NextFunction) => {
   })
 }
 
+UserMethods.updatePortfolio = async (req: Request, res: Response, next: NextFunction) => {
+  // define an async function to iterate through the ticker list and call an insert with user controller
+  // dont wait, call next
+  console.log(req.body);
+  console.log(res.locals);
+  next();
+}
 export default UserMethods;

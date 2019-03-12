@@ -5,9 +5,8 @@
  */
 
 import actions from '../actions/actionTypes';
-// import { CompanyDataState } from '../reducers/types';
+
 import * as issueMatch from '../issueMatcher';
-// import { selectCompany } from '../actions/actionCreators';
 
 const initialCompanyState: /*CompanyDataState*/ any = {
   selectedCompany: null,
@@ -18,7 +17,12 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   companyList: [],
   companyListModal: [],
   userIssues: {},
-  issueAbbrvs: {}
+  issueAbbrvs: {},
+  displayDetails: false,
+  hoverOverviewInfo: {},
+  portfolioMode: 'sp500',
+  portfolioList: [],
+  filteredList: []
 };
 
 const { issueMatcher } = issueMatch;
@@ -29,6 +33,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         companyList: Object.values(action.data.companyDataArray),
+        companyListModal: Object.values(action.data.companyDataArray),
         issueAbbrvs: action.data.issueAbbrvs
       };
 
@@ -135,14 +140,13 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       }
       return {
         ...state,
-        companyList: newCompanyList
+        companyList: newCompanyList,
+        filteredList: newCompanyList
       };
 
     case actions.RESET_USER_ISSUES:
       return {
         ...state,
-        // selectedCompany: null,
-        // companyList: [],
         userIssues: {}
       };
 
@@ -308,6 +312,75 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         companyList: sortedList
+      };
+
+    /***********************************************/
+    /* HOVER ON/OFF ON ISSUE PIES, UPDATE OVERVIEW */
+    /***********************************************/
+
+    case actions.HOVER_ON:
+      return {
+        ...state,
+        displayDetails: true,
+        hoverOverviewInfo: action.payload
+      };
+
+    case actions.HOVER_OFF:
+      return {
+        ...state,
+        displayDetails: false,
+        hoverOverviewInfo: {}
+      };
+
+    /***********************************************/
+    /* TOGGLE PORTFOLIO MODE, FILTER BY CATEGORY   */
+    /***********************************************/
+
+    case actions.TOGGLE_PORTFOLIO:
+      /* User portfolio has not been uploaded yet */
+      if (action.payload === 'portfolio' && !state.portfolioList.length)
+        return state;
+
+      if (action.payload && action.payload !== state.portfolioMode) {
+        const selected = document.getElementById(action.payload);
+        const deselected = document.getElementById(state.portfolioMode);
+        const companyListDiv = document.getElementById('cl-table');
+
+        if (selected !== null && selected.classList.contains('no-upload')) {
+          selected.classList.remove('no-upload');
+          selected.classList.add('active');
+        }
+
+        if (selected !== null && deselected !== null) {
+          selected.classList.add('selected');
+          deselected.classList.remove('selected');
+        }
+
+        if (companyListDiv !== null) {
+          if (action.payload === 'portfolio')
+            companyListDiv.style.display = 'none';
+          else companyListDiv.style.display = 'block';
+        }
+      }
+
+      return {
+        ...state,
+        portfolioMode: action.payload
+      };
+
+    case actions.FILTER_SECTOR:
+      if (action.payload === 'Filter All' || action.payload.length === 0) {
+        return {
+          ...state,
+          companyList: state.filteredList
+        };
+      }
+
+      return {
+        ...state,
+        companyList: state.filteredList.filter(
+          (c: any) => c.sector === action.payload
+        )
       };
 
     default:
