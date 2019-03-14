@@ -49,7 +49,7 @@ class QuadsContainer extends React.Component<Props> {
   componentDidMount() {
     const {
       getUserIssues,
-      fetchCompanyList,
+      fetchCompanyList
       // getAllCompanyInfo
     } = this.props;
 
@@ -154,11 +154,9 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.hoverOn({ blurb, name, alignedScore }));
   },
   hoverOff: () => dispatch(actions.hoverOff()),
-  togglePortfolio: (e: any) => dispatch(actions.togglePortfolio(e.target.value)),
-  filterSector: (e: any) => {
-    console.log(e.target.value);
-    dispatch(actions.filterSector(e.target.value))
-  }
+  togglePortfolio: (e: any) =>
+    dispatch(actions.togglePortfolio(e.target.value)),
+  filterSector: (e: any) => dispatch(actions.filterSector(e.target.value))
 });
 
 export default connect(

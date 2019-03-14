@@ -21,7 +21,7 @@ const CompanyList = (props: any) => {
     userIssues,
     issueAbbrvs,
     selectedCompany,
-    togglePortfolio,
+    // togglePortfolio,
     filterSector
   } = props;
   const { issueMatcher } = issueMatch;
@@ -71,15 +71,14 @@ const CompanyList = (props: any) => {
     const companyOverallScores = () => {
       const companyOverallScoresArray = [];
       let score: number = 0;
-
+      
       // Create array of user issue objects with converted name
       const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
         return {
           name: issueMatcher[issueID],
-          leaning: userIssues[issueID]
+          leaning: userIssues[issueID].position
         };
       });
-
       // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
@@ -119,7 +118,7 @@ const CompanyList = (props: any) => {
       const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
         return {
           name: issueMatcher[issueID],
-          leaning: userIssues[issueID]
+          leaning: userIssues[issueID].position
         };
       });
 
@@ -216,7 +215,7 @@ const CompanyList = (props: any) => {
     return (
       <div className="cl-quad" id="quad-company-list">
         <div id="cl-select">
-          <button
+          {/* <button
             id="portfolio"
             className="no-upload"
             onClick={togglePortfolio}
@@ -231,21 +230,53 @@ const CompanyList = (props: any) => {
             value="sp500"
           >
             S&P 500
-          </button>
+          </button> */}
           <div id="filter-sectors">
-            <select id="filter-input" name="filter" placeholder="Filter by sector" onChange={e => filterSector(e)}>
-              <option className="sector-option" value="All">All</option>
-              <option className="sector-option" value="Consumer Discretionary">Consumer Discretionary</option>
-              <option className="sector-option" value="Consumer Staples">Consumer Staples</option>
-              <option className="sector-option" value="Energy">Energy</option>
-              <option className="sector-option" value="Financials">Financials</option>
-              <option className="sector-option" value="Health Care">Health Care</option>
-              <option className="sector-option" value="Industrials">Industrials</option>
-              <option className="sector-option" value="Information Technology">Information Technology</option>
-              <option className="sector-option" value="Materials">Materials</option>
-              <option className="sector-option" value="Real Estate">Real Estate</option>
-              <option className="sector-option" value="Telecommunication Services">Telecommunication Services</option>
-              <option className="sector-option" value="Utilities">Utilities</option>
+            <select
+              id="filter-input"
+              name="filter"
+              placeholder="Filter by sector"
+              onChange={e => filterSector(e)}
+            >
+              <option className="sector-option" value="Filter All">
+                Filter All
+              </option>
+              <option className="sector-option" value="Consumer Discretionary">
+                Consumer Discretionary
+              </option>
+              <option className="sector-option" value="Consumer Staples">
+                Consumer Staples
+              </option>
+              <option className="sector-option" value="Energy">
+                Energy
+              </option>
+              <option className="sector-option" value="Financials">
+                Financials
+              </option>
+              <option className="sector-option" value="Health Care">
+                Health Care
+              </option>
+              <option className="sector-option" value="Industrials">
+                Industrials
+              </option>
+              <option className="sector-option" value="Information Technology">
+                Information Technology
+              </option>
+              <option className="sector-option" value="Materials">
+                Materials
+              </option>
+              <option className="sector-option" value="Real Estate">
+                Real Estate
+              </option>
+              <option
+                className="sector-option"
+                value="Telecommunication Services"
+              >
+                Telecommunication Services
+              </option>
+              <option className="sector-option" value="Utilities">
+                Utilities
+              </option>
             </select>
           </div>
         </div>

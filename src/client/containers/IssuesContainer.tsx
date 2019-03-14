@@ -14,12 +14,13 @@ import { getSelectedIssueCount } from '../reducers/userReducer';
 import Header from '../containers/HeaderContainer';
 import Issue from '../components/Issue';
 import Onboarding from '../components/onboarding/Onboarding';
+import Slider from '../components/Slider';
 
 const IssuesContainer = (props: any): any => {
   const {
     issues,                                           // Props from issues state
     issuesSelected, onboardComplete, userId,          // Props from user state
-    addIssue, removeIssue,                            // Actions from user reducer
+    addIssue, removeIssue, updateWeight,             // Actions from user reducer
     clearIssues, submitIssues, updateIssuesSelected,  // Actions from user reducer
   } = props;
 
@@ -43,14 +44,20 @@ const IssuesContainer = (props: any): any => {
   Object.keys(issues).forEach((issueId) => {
     let issue: JSX.Element;
     if (issueId in issuesSelected) {
-      issue = <Issue
-        issue={issues[issueId]}
-        issueId={issueId}
-        key={issueId}
-        remaining={issuesRemaining}
-        selected={true}
-        toggleIssue={removeIssue}
-      />
+      issue =
+        <div className='issue-card'>
+          <Issue
+            issue={issues[issueId]}
+            issueId={issueId}
+            key={issueId}
+            remaining={issuesRemaining}
+            selected={true}
+            toggleIssue={removeIssue}
+          />
+          <span className='slider-font'>Least </span>
+          <Slider issueId={issueId} updateWeight={updateWeight} issuesSelected={issuesSelected}/>
+          <span className='slider-font'> Most</span>
+        </div>
     } else {
       issue = <Issue
         issue={issues[issueId]}
@@ -120,6 +127,12 @@ const mapDispatchToProps = (dispatch: any): any => ({
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
   submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssues(userId, issuesSelected)),
   updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
+  updateWeight: (issueId: string, weight: number) => { 
+    console.log('inside updateWeight: ', issueId, weight);
+    const action = actions.updateWeight(issueId, weight);
+    console.log('returned action object: ', action);
+    dispatch(action); 
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);
