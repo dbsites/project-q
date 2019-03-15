@@ -73,23 +73,23 @@ const CompanyList = (props: any) => {
       let score: number = 0;
       
       // Create array of user issue objects with converted name
-      const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
-        return {
-          name: issueMatcher[issueID],
-          leaning: userIssues[issueID].position
-        };
-      });
+      // const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
+      //   return {
+      //     name: issueMatcher[issueID],
+      //     leaning: userIssues[issueID].position
+      //   };
+      // });
       // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
-          userIssuesArray.forEach((issue: any) => {
-            if (issue.leaning.includes('con'))
-              score += companyList[i][issue.name].disagreeScore;
-            else score += companyList[i][issue.name].agreeScore;
-          });
+          // userIssuesArray.forEach((issue: any) => {
+          //   if (issue.leaning.includes('con'))
+          //     score += companyList[i][issue.name].disagreeScore;
+          //   else score += companyList[i][issue.name].agreeScore;
+          // });
 
           // Color match based off of score
-          score = Math.round(score / userIssuesArray.length);
+          score = companyList[i].overallScore;
 
           let color = {
             color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'

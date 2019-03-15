@@ -128,9 +128,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssues(userId, issuesSelected)),
   updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
   updateWeight: (issueId: string, weight: number) => { 
-    console.log('inside updateWeight: ', issueId, weight);
     const action = actions.updateWeight(issueId, weight);
-    console.log('returned action object: ', action);
     dispatch(action); 
   }
 })

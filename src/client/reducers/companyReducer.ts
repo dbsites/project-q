@@ -60,7 +60,6 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
           };
         }
       );
-      console.log(userIssuesArray, 'USERISSUESARRAY');
 
       if (state.companyList.length > 0) {
         for (let i = 0; i < state.companyList.length; i += 1) {
@@ -73,12 +72,8 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
               score = score + (state.companyList[i][issue.name].agreeScore * issue.weight);
             }
             denominator += issue.weight;
-            console.log(score, 'SCORE')
           });
           updatedCompanyList[i].overallScore = Math.round(score / denominator);
-          console.log(score, 'ACCSCORE')
-          console.log(denominator, 'DENOMINATOR')
-          console.log(updatedCompanyList[i], 'Company')
           // console.log(updatedCompanyList[i].overallScore, 'overall Score')
 
         }
