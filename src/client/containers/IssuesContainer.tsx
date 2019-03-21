@@ -54,9 +54,7 @@ const IssuesContainer = (props: any): any => {
             selected={true}
             toggleIssue={removeIssue}
           />
-          <span className='slider-font'>Least </span>
           <Slider issueId={issueId} updateWeight={updateWeight} issuesSelected={issuesSelected}/>
-          <span className='slider-font'> Most</span>
         </div>
     } else {
       issue = <Issue

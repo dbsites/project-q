@@ -519,3 +519,19 @@ body {
 .slider-font {
   font-size: 1.2rem;
 }
+
+.range-labels {
+  margin: 0 0 0 22%;
+  padding: 0;
+  list-style: none;
+}
+
+.range-labels li {
+  position: relative;
+  float: left;
+  width: 7.1%;
+  text-align: center;
+  color: #b2b2b2;
+  font-size: 14px;
+  cursor: pointer;
+}
