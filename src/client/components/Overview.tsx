@@ -63,12 +63,12 @@ const Overview = (props: Props) => {
     } = props.selected;
 
     // Get number of user-selected issues (length)
-    const userIssuesLength = Object.keys(props.selected).filter(
-      key => props.selected[key].alignedScore
-    ).length;
+    // const userIssuesLength = Object.keys(props.selected).filter(
+    //   key => props.selected[key].alignedScore
+    // ).length;
 
     // Get overall company score based off user issues
-    const overall = Math.round(overallScore / userIssuesLength);
+    const overall = overallScore;
 
     // Declare 'match' outcome based off overall score
     const scoreAlign =

@@ -4,6 +4,7 @@
  */
 
 import * as React from 'react';
+;
 
 const Issue = (props: any) => {
   const {
@@ -18,8 +19,9 @@ const Issue = (props: any) => {
   );
 
   const issueDivSelected = (
-    <div className="issue-card issue-card-selected" onClick={() => toggleIssue(issueId)}>
+    <div className="issue-card-selected" onClick={() => toggleIssue(issueId)}>
       {issueCard}
+
     </div>
   );
 
