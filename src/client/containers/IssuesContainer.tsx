@@ -73,6 +73,7 @@ const IssuesContainer = (props: any): any => {
     `Select Up To ${6 - issueCount} ${additional} Issues That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
+  const subHeader = issuesRemaining ? '(adjust the slider based on how important each issue is to you)' : '';
   const footerButtons = issueCount ?
     <React.Fragment>
       <div className="dashboard-footer-button" onClick={clearIssues}>
@@ -100,6 +101,9 @@ const IssuesContainer = (props: any): any => {
       <div className="dashboard-header dashboard-issue-header">
         <span>
           {headerText}
+        </span>
+        <span className='subheader'>
+          {subHeader}
         </span>
       </div>
       <div className="issue-dashboard-container">
