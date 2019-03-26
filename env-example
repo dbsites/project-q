@@ -1,0 +1,7 @@
+REDIS_URI=redis
+RDS_HOSTNAME=ethiq-postgres
+RDS_USERNAME=ethiqadmin
+RDS_PASSWORD=admin
+RDS_DB_NAME=ethiqdb
+REDIS_KEY_PREFIX=rkeyprefix
+COOKIES_KEY=cookieskey
