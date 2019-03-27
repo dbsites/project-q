@@ -55,22 +55,27 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         (issueID: any) => {
           return {
             name: issueMatcher[issueID],
-            leaning: state.userIssues[issueID]
+            leaning: state.userIssues[issueID].position,
+            weight: state.userIssues[issueID].weight
           };
         }
       );
 
-      let score = 0;
-
       if (state.companyList.length > 0) {
         for (let i = 0; i < state.companyList.length; i += 1) {
+          let score = 0;
+          let denominator = 0;
           userIssuesArray.forEach((issue: any) => {
-            if (issue.leaning.includes('con'))
-              score += state.companyList[i][issue.name].disagreeScore;
-            else score += state.companyList[i][issue.name].agreeScore;
+            if (issue.leaning.includes('con')) {
+              score = score + (state.companyList[i][issue.name].disagreeScore * issue.weight);
+            } else {
+              score = score + (state.companyList[i][issue.name].agreeScore * issue.weight);
+            }
+            denominator += issue.weight;
           });
-          updatedCompanyList[i].overallScore = score;
-          score = 0;
+          updatedCompanyList[i].overallScore = Math.round(score / denominator);
+          // console.log(updatedCompanyList[i].overallScore, 'overall Score')
+
         }
       }
 
@@ -116,7 +121,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         (issueID: any) => {
           return {
             name: issueMatcher[issueID],
-            leaning: state.userIssues[issueID]
+            leaning: state.userIssues[issueID].position
           };
         }
       );

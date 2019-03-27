@@ -14,12 +14,13 @@ import { getSelectedIssueCount } from '../reducers/userReducer';
 import Header from '../containers/HeaderContainer';
 import Issue from '../components/Issue';
 import Onboarding from '../components/onboarding/Onboarding';
+import Slider from '../components/Slider';
 
 const IssuesContainer = (props: any): any => {
   const {
     issues,                                           // Props from issues state
     issuesSelected, onboardComplete, userId,          // Props from user state
-    addIssue, removeIssue,                            // Actions from user reducer
+    addIssue, removeIssue, updateWeight,             // Actions from user reducer
     clearIssues, submitIssues, updateIssuesSelected,  // Actions from user reducer
   } = props;
 
@@ -43,14 +44,18 @@ const IssuesContainer = (props: any): any => {
   Object.keys(issues).forEach((issueId) => {
     let issue: JSX.Element;
     if (issueId in issuesSelected) {
-      issue = <Issue
-        issue={issues[issueId]}
-        issueId={issueId}
-        key={issueId}
-        remaining={issuesRemaining}
-        selected={true}
-        toggleIssue={removeIssue}
-      />
+      issue =
+        <div className='issue-card'>
+          <Issue
+            issue={issues[issueId]}
+            issueId={issueId}
+            key={issueId}
+            remaining={issuesRemaining}
+            selected={true}
+            toggleIssue={removeIssue}
+          />
+          <Slider issueId={issueId} updateWeight={updateWeight} issuesSelected={issuesSelected}/>
+        </div>
     } else {
       issue = <Issue
         issue={issues[issueId]}
@@ -68,6 +73,7 @@ const IssuesContainer = (props: any): any => {
     `Select Up To ${6 - issueCount} ${additional} Issues That Matter Most To You` :
     `Please Click 'Submit' To Continue`;
 
+  const subHeader = issuesRemaining ? '(adjust the slider based on how important each issue is to you)' : '';
   const footerButtons = issueCount ?
     <React.Fragment>
       <div className="dashboard-footer-button" onClick={clearIssues}>
@@ -96,6 +102,9 @@ const IssuesContainer = (props: any): any => {
         <span>
           {headerText}
         </span>
+        <span className='subheader'>
+          {subHeader}
+        </span>
       </div>
       <div className="issue-dashboard-container">
         {issuesArray}
@@ -120,6 +129,10 @@ const mapDispatchToProps = (dispatch: any): any => ({
   removeIssue: (issueId: string) => dispatch(actions.removeIssue(issueId)),
   submitIssues: (userId: string, issuesSelected: any) => dispatch(actions.fetchSubmitIssues(userId, issuesSelected)),
   updateIssuesSelected: () => dispatch(actions.updateIssuesSelected()),
+  updateWeight: (issueId: string, weight: number) => { 
+    const action = actions.updateWeight(issueId, weight);
+    dispatch(action); 
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(IssuesContainer);

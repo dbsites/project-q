@@ -225,22 +225,24 @@ UserMethods.getIssues = (req: Request, res: Response, next: NextFunction) => {
   // get the issues from the userIssues table, specific to a particular user
   db.users.getIssues(userReference)
   .then((issues: any[]) => {
-    
+    console.log(issues, 'ISSUES')
     let userHasIssues = issues.length;
     
     if (userHasIssues) {
       // this object will be a part of the output object sent to the front end
       res.locals.user.issuesSelected = {};
-      
       // iterate through the issue objects returned from the getIssues query
       issues.forEach((issueObject: any) => {
         // declare issue id for readability
         let issueId = issueObject.issue_id;
         // add to teh issues object for the front end, issueId is the key and the bias is the value
-        res.locals.user.issuesSelected[issueId] = issueObject.position;
+        res.locals.user.issuesSelected[issueId] = {
+          position:issueObject.position,
+          weight: issueObject.weight,
+        }
       })
       
-      // move on to UserMethods.getQuestions out of the database for userIssues
+      // move on to UserMethods.getQuestions out of 2222the database for userIssues
       // res.locals.user = {userId: string, isAuth: bool, firstName: string, lastName: string issuesComplete: bool, surveryComplete: bool, issuesSelected: object }
       next();
     } else next();
@@ -307,10 +309,11 @@ UserMethods.updateIssuePositons = async (req: Request, res: Response, next: Next
   else {
     // build an array of issue Ids
     const issueIds = Object.keys(req.body.issues);
-    
+
     // for each id update the user_issues table
     for (let i = 0; i < issueIds.length; i += 1) {
-      await db.users.updateIssuePosition(req.body.userId, issueIds[i],req.body.issues[issueIds[i]])
+      console.log(req.body.issues[issueIds[i]], 'issuesOBJECTs')
+      await db.users.updateIssuePosition(req.body.userId, issueIds[i],req.body.issues[issueIds[i]].position)
       .catch((error: any) => {
         console.log('ERROR AT updateIssuesPositons IN userMethods.ts', error);
       });
