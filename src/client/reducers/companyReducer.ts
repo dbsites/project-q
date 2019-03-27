@@ -23,7 +23,9 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   hoverOverviewInfo: {},
   portfolioMode: 'sp500',
   portfolioList: [],
-  filteredList: []
+  filteredList: [],
+
+  isStocksVisualizerActive: true,
 };
 
 const { issueMatcher } = issueMatch;
@@ -379,6 +381,13 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         ...state,
         companyList: state.filteredList.filter((c: any) => c.sector === action.payload)
       };
+
+    case actions.TOGGLE_STOCKS_VISUALIZER: {
+      return {
+        ...state,
+        isStocksVisualizerActive: !state.isStocksVisualizerActive,
+      };
+    }
 
     default:
       return state;

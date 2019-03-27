@@ -22,7 +22,9 @@ const CompanyList = (props: any) => {
     issueAbbrvs,
     selectedCompany,
     togglePortfolio,
-    filterSector
+    toggleStocksVisualizer,
+    filterSector,
+    isStocksVisualizerActive,
   } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
@@ -248,6 +250,12 @@ const CompanyList = (props: any) => {
               <option className="sector-option" value="Utilities">Utilities</option>
             </select>
           </div>
+          <button
+            className="selected active"
+            onClick={toggleStocksVisualizer}
+          >
+            {isStocksVisualizerActive ? 'Stockdio' : 'StocksChart'}
+          </button>
         </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">

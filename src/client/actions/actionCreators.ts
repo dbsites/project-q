@@ -345,6 +345,10 @@ export const filterSector = (sec: string) => ({
   payload: sec
 })
 
+export const toggleStocksVisualizer = () => ({
+  type: types.TOGGLE_STOCKS_VISUALIZER,
+})
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')
