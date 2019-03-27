@@ -250,12 +250,14 @@ const CompanyList = (props: any) => {
               <option className="sector-option" value="Utilities">Utilities</option>
             </select>
           </div>
-          <button
-            className="selected active"
-            onClick={toggleStocksVisualizer}
-          >
-            {isStocksVisualizerActive ? 'Stockdio' : 'StocksChart'}
-          </button>
+          {companyList.length &&
+            <button
+              className="selected active"
+              onClick={toggleStocksVisualizer}
+            >
+              {isStocksVisualizerActive ? 'Stockdio' : 'StocksChart'}
+            </button>
+          }
         </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">

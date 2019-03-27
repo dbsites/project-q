@@ -2,17 +2,11 @@ import * as XLSX from 'xlsx';
 import * as moment from 'moment';
 
 const sendMessage: any = self.postMessage;
-
-const XLSX_FILE_URL = './HistoricalDataTest.xlsx';
-const STOCKS_LIST = [
-  "S&P 500",
-  'AAPL',
-  // 'ABC',
-  // 'A'
-];
+// const XLSX_FILE_URL = './HistoricalDataTest.xlsx';
+const XLSX_FILE_URL = './HistoricalDataFull.xlsx';
 
 onmessage = (e) => {
-  const { event, /*data,*/} = e.data;
+  const { event, stocksList /*data,*/} = e.data;
   switch (event){
     case 'readData':
       // const url = "./HistoricalDataTest.xlsx";
@@ -36,7 +30,7 @@ onmessage = (e) => {
               .keys(ugly)
               .map(k => ({date: k, value: ugly[k]}))
           }))
-          .filter((el: any) => ~(STOCKS_LIST.indexOf(el.name)))
+          .filter((el: any) => ~(stocksList.indexOf(el.name)))
           .map((el: any) => ({
             ...el,
             lol: el.lol

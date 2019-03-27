@@ -347,7 +347,12 @@ export const filterSector = (sec: string) => ({
 
 export const toggleStocksVisualizer = () => ({
   type: types.TOGGLE_STOCKS_VISUALIZER,
-})
+});
+
+export const setStocksVisualizerData = (payload: any) => ({
+  type: types.SET_STOCKS_VISUALIZER_DATA,
+  payload,
+});
 
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {

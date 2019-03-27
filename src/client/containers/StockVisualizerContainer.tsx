@@ -9,9 +9,10 @@ import { bindActionCreators } from 'redux';
 
 const readStocksVisualizerWorker = require('../stock-visualizer.worker');
 
-// import * as actions from '../actions/actionCreators';
+import { setStocksVisualizerData } from '../actions/actionCreators';
 import StocksChart from '../components/StocksChart';
 
+const SP500_NAME = "S&P 500";
 
 class StockVisualizerContainer extends React.Component<any> {
   worker: any = null;
@@ -29,11 +30,34 @@ class StockVisualizerContainer extends React.Component<any> {
           alert('error');
           this.setState({isLoading: false});
       }
-      console.log(workerEvent.data);
-      console.log(this.someLogic(workerEvent.data.data));
+      // console.log(workerEvent.data);
+      // console.log(this.someLogic(workerEvent.data.data));
+      this.someLogic(workerEvent.data.data);
     });
 
-    this.worker.postMessage({event: 'readData', /*data,*/ rABS: true});
+    // top 10, 25, 50, or 100 of stocks
+
+    const getStocksNames = (top: number = 10) => this.props.companyList
+      .slice(0, top)
+      .map((el: any) => el.ticker.split('.')[0]);
+
+    console.log(getStocksNames());
+
+    this.worker.postMessage({
+      event: 'readData',
+      // stocksList: [
+      //   SP500_NAME,
+      //   'AAPL',
+      //   // 'ABC',
+      //   // 'A'
+      // ],
+      stocksList: [
+        SP500_NAME,
+        ...getStocksNames()
+      ],
+      /*data,*/
+      rABS: true
+    });
   }
 
   calcSmthForStocks = (stocksList: any, investmentAmount: any) => {
@@ -82,6 +106,7 @@ class StockVisualizerContainer extends React.Component<any> {
 
     console.log('lool', allData);
 
+    this.props.setStocksVisualizerData(allData);
     this.setState({ chartData: allData });
     return portfolioStocksCalculated;
   }
@@ -93,9 +118,10 @@ class StockVisualizerContainer extends React.Component<any> {
   }
 
   render() {
+    const { stocksVisualizerData } = this.props;
     return (
       <div className="stock-container">
-        <StocksChart />
+        <StocksChart data={stocksVisualizerData} />
       </div>
     );
   }
@@ -103,10 +129,11 @@ class StockVisualizerContainer extends React.Component<any> {
 
 const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
+  stocksVisualizerData: state.company.stocksVisualizerData,
 });
 
 const mapDispatchToProps = (dispatch: any): any =>
-  bindActionCreators({}, dispatch);
+  bindActionCreators({ setStocksVisualizerData }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StockVisualizerContainer);
 

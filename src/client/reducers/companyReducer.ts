@@ -25,7 +25,7 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   portfolioList: [],
   filteredList: [],
 
-  isStocksVisualizerActive: true,
+  isStocksVisualizerActive: false,
 };
 
 const { issueMatcher } = issueMatch;
@@ -386,6 +386,12 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         isStocksVisualizerActive: !state.isStocksVisualizerActive,
+      };
+    }
+    case actions.SET_STOCKS_VISUALIZER_DATA: {
+      return {
+        ...state,
+        stocksVisualizerData: action.payload,
       };
     }
 
