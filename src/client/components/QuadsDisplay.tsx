@@ -10,12 +10,15 @@ import Overview from '../components/Overview';
 import StockGraph from './StockGraph';
 import IssuesCharts from '../components/IssuesCharts';
 import CompanyList from '../components/CompanyList';
+import StockVisualizerContainer from '../containers/StockVisualizerContainer';
 
 const QuadsDisplay = (props: any) => {
   return (
     <React.Fragment>
       <Overview selected={props.selected} hoverInfo={props.hoverOverviewInfo} displayDetail={props.displayDetails} />
-      <StockGraph selected={props.selected} stockData={props.stockData} />
+      {false
+        ? <StockGraph selected={props.selected} stockData={props.stockData} />
+        : <StockVisualizerContainer />}
       <IssuesCharts
         displayDetail={props.displayDetails}
         hoverOn={props.hoverOn}

@@ -8,13 +8,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 // import * as actions from '../actions/actionCreators';
-// import TermsOfService from '../components/TermsOfService';
+import StocksChart from '../components/StocksChart';
 
 const StockVisualizerContainer = (_: any) => {
   
   return (
-    <div className="">
-      StockVisualizerContainer
+    <div className="stock-container">
+      <StocksChart />
     </div>
   );
 };
