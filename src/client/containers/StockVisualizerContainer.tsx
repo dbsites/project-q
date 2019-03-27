@@ -41,7 +41,7 @@ class StockVisualizerContainer extends React.Component<any> {
       .slice(0, top)
       .map((el: any) => el.ticker.split('.')[0]);
 
-    console.log(getStocksNames());
+    console.log(getStocksNames(this.props.topStocksFilter));
 
     this.worker.postMessage({
       event: 'readData',
@@ -53,7 +53,7 @@ class StockVisualizerContainer extends React.Component<any> {
       // ],
       stocksList: [
         SP500_NAME,
-        ...getStocksNames()
+        ...getStocksNames(this.props.topStocksFilter)
       ],
       /*data,*/
       rABS: true
@@ -130,6 +130,7 @@ class StockVisualizerContainer extends React.Component<any> {
 const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
   stocksVisualizerData: state.company.stocksVisualizerData,
+  topStocksFilter: state.company.topStocksFilter,
 });
 
 const mapDispatchToProps = (dispatch: any): any =>

@@ -354,6 +354,11 @@ export const setStocksVisualizerData = (payload: any) => ({
   payload,
 });
 
+export const setTopStocksFilter = (payload: number) => ({
+  type: types.SET_TOP_STOCKS_COUNT,
+  payload,
+});
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')

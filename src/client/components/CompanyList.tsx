@@ -25,6 +25,7 @@ const CompanyList = (props: any) => {
     toggleStocksVisualizer,
     filterSector,
     isStocksVisualizerActive,
+    setTopStocksFilter
   } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
@@ -248,6 +249,17 @@ const CompanyList = (props: any) => {
               <option className="sector-option" value="Real Estate">Real Estate</option>
               <option className="sector-option" value="Telecommunication Services">Telecommunication Services</option>
               <option className="sector-option" value="Utilities">Utilities</option>
+            </select>
+            <select
+              value={props.topStocksFilter}
+              onChange={e => setTopStocksFilter(e.target.value)}>
+              {[10, 25, 50, 100].map((el: number) => (
+                <option
+                  className="sector-option"
+                  key={el}
+                  // value={el}
+                >{el}</option>
+              ))}
             </select>
           </div>
           {companyList.length &&

@@ -9,7 +9,6 @@ onmessage = (e) => {
   const { event, stocksList /*data,*/} = e.data;
   switch (event){
     case 'readData':
-      // const url = "./HistoricalDataTest.xlsx";
 
       /* set up async GET request */
       var req = new XMLHttpRequest();

@@ -26,6 +26,7 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   filteredList: [],
 
   isStocksVisualizerActive: false,
+  topFilter: 10,
 };
 
 const { issueMatcher } = issueMatch;
@@ -392,6 +393,12 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         stocksVisualizerData: action.payload,
+      };
+    }
+    case actions.SET_TOP_STOCKS_COUNT: {
+      return {
+        ...state,
+        topStocksFilter: action.payload,
       };
     }
 

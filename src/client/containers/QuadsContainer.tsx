@@ -40,6 +40,8 @@ interface Props {
   togglePortfolio: any;
   filterSector: any;
   toggleStocksVisualizer: any;
+  topStocksFilter: number;
+  setTopStocksFilter: any;
 }
 
 // TODO when store structure finalized
@@ -85,7 +87,9 @@ class QuadsContainer extends React.Component<Props> {
       togglePortfolio,
       userIssues,
       toggleStocksVisualizer,
-      isStocksVisualizerActive
+      isStocksVisualizerActive,
+      topStocksFilter,
+      setTopStocksFilter
     } = this.props;
 
     return (
@@ -113,6 +117,8 @@ class QuadsContainer extends React.Component<Props> {
             filterSector={filterSector}
             toggleStocksVisualizer={toggleStocksVisualizer}
             isStocksVisualizerActive={isStocksVisualizerActive}
+            topStocksFilter={topStocksFilter}
+            setTopStocksFilter={setTopStocksFilter}
           />
         </div>
       </div>
@@ -130,6 +136,7 @@ const mapStateToProps = (state: any): any => ({
   displayDetails: state.company.displayDetails,
   hoverOverviewInfo: state.company.hoverOverviewInfo,
   isStocksVisualizerActive: state.company.isStocksVisualizerActive,
+  topStocksFilter: state.company.topStocksFilter,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
@@ -164,6 +171,7 @@ const mapDispatchToProps = (dispatch: any): any => ({
   togglePortfolio: (e: any) => dispatch(actions.togglePortfolio(e.target.value)),
   filterSector: (e: any) => dispatch(actions.filterSector(e.target.value)),
   toggleStocksVisualizer: () => dispatch(actions.toggleStocksVisualizer()),
+  setTopStocksFilter: (payload: number) => dispatch(actions.setTopStocksFilter(payload)),
 });
 
 export default connect(
