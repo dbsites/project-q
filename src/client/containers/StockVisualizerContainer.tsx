@@ -14,12 +14,13 @@ import StocksChart from '../components/StocksChart';
 
 
 class StockVisualizerContainer extends React.Component<any> {
-  worker = null;
+  worker: any = null;
 
   componentDidMount() {
     this.worker = new readStocksVisualizerWorker();
 
-    (this.worker as any).addEventListener('message', (workerEvent: any) => {
+    // subscribe to worker message
+    this.worker.addEventListener('message', (workerEvent: any) => {
       switch(workerEvent.data.event){
         case 'SUCCESS':
           this.setState({isLoading: false});
@@ -31,6 +32,8 @@ class StockVisualizerContainer extends React.Component<any> {
       console.log(workerEvent.data);
       console.log(this.someLogic(workerEvent.data.data));
     });
+
+    this.worker.postMessage({event: 'readData', /*data,*/ rABS: true});
   }
 
   calcSmthForStocks = (stocksList: any, investmentAmount: any) => {
