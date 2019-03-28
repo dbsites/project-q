@@ -25,6 +25,7 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   portfolioList: [],
   filteredList: [],
 
+  stocksVisualizerData: [],
   isStocksVisualizerActive: false,
   topStocksFilter: 10,
 };
@@ -399,6 +400,14 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         topStocksFilter: action.payload,
+      };
+    }
+
+    case actions.CALC_STOCKS_VISUALIZER_STOP:
+    case actions.CALC_STOCKS_VISUALIZER_ERROR: {
+      return {
+        ...state,
+        stocksVisualizerData: [],
       };
     }
 

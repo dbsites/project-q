@@ -26,7 +26,6 @@ onmessage = (e) => {
       req.onload = () => {
         const data = new Uint8Array(req.response);
         const workbook = XLSX.read(data, {type:"array"});
-        // const workbook = XLSX.read(data, {type: 'binary'});
         // const startDate = '01-01-2015';
         // const endDate = '03-01-2019';
         const raw = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
@@ -43,7 +42,10 @@ onmessage = (e) => {
 
         // if we have no in XLSX_FILE_URL such stock NAME
         const rawLengthWithoutSp500 = (filteredRaw.length - 1);
-        if(topStocksFilter !== rawLengthWithoutSp500) {
+        // console.log(topStocksFilter, 'topStocksFilter');
+        // console.log(rawLengthWithoutSp500, 'rawLengthWithoutSp500');
+
+        if((+topStocksFilter) !== (+rawLengthWithoutSp500)) {
           // throw new Error('test');
           return sendMessage({
             event: 'ERROR',
