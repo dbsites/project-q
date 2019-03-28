@@ -14,6 +14,7 @@ export const initialLoadingState: LoadingState = {
   issuesLoading: false,
   logoutLoading: false,
   surveyLoading: false,
+  stocksVisualizationLoading: false,
 };
 
 const loadingReducer = (state: LoadingState = initialLoadingState, action: any): LoadingState => {
@@ -76,12 +77,25 @@ const loadingReducer = (state: LoadingState = initialLoadingState, action: any):
         surveyLoading: true,
       };
 
-      case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
-      case actions.FETCH_SUBMIT_ISSUES_FAILURE:
-        return {
-          ...state,
-          surveyLoading: false,
-        };
+    case actions.FETCH_SUBMIT_ISSUES_SUCCESS:
+    case actions.FETCH_SUBMIT_ISSUES_FAILURE:
+      return {
+        ...state,
+        surveyLoading: false,
+      };
+
+    case actions.CALC_STOCKS_VISUALIZER_PENDING:
+      return {
+        ...state,
+        stocksVisualizationLoading: true,
+      };
+
+    case actions.CALC_STOCKS_VISUALIZER_SUCCESS:
+    case actions.CALC_STOCKS_VISUALIZER_ERROR:
+      return {
+        ...state,
+        stocksVisualizationLoading: false,
+      };
 
     default:
       return state;

@@ -359,6 +359,19 @@ export const setTopStocksFilter = (payload: number) => ({
   payload,
 });
 
+export const calcStocksVisualizerPending = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_PENDING,
+});
+export const calcStocksVisualizerSuccess = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_SUCCESS,
+});
+export const calcStocksVisualizerError = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_ERROR,
+});
+export const calcStocksVisualizerStop = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_STOP,
+});
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')

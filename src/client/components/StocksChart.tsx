@@ -21,6 +21,18 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 export default class Chart extends React.PureComponent<any> {
   render() {
+    if(this.props.loading) return <div style={{
+      color: '#fff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%'
+    }}>
+      <div>
+        loading...
+      </div>
+    </div>;
+
     return (
       <div style={{background: '#fff', width: '100%'}}>
       <ResponsiveContainer>

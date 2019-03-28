@@ -9,7 +9,13 @@ import { bindActionCreators } from 'redux';
 
 const readStocksVisualizerWorker = require('../stock-visualizer.worker');
 
-import { setStocksVisualizerData } from '../actions/actionCreators';
+import {
+  setStocksVisualizerData,
+  calcStocksVisualizerPending,
+  calcStocksVisualizerSuccess,
+  calcStocksVisualizerError,
+  calcStocksVisualizerStop,
+} from '../actions/actionCreators';
 import StocksChart from '../components/StocksChart';
 
 const SP500_NAME = "S&P 500";
@@ -24,11 +30,13 @@ class StockVisualizerContainer extends React.Component<any> {
     this.worker.addEventListener('message', (workerEvent: any) => {
       switch(workerEvent.data.event){
         case 'SUCCESS':
-          this.setState({isLoading: false});
+          this.props.calcStocksVisualizerSuccess();
+          // this.setState({isLoading: false});
           break;
         default:
           alert('error');
-          this.setState({isLoading: false});
+          this.props.calcStocksVisualizerError();
+          // this.setState({isLoading: false});
       }
       // console.log(workerEvent.data);
       // console.log(this.someLogic(workerEvent.data.data));
@@ -43,6 +51,7 @@ class StockVisualizerContainer extends React.Component<any> {
 
     console.log(getStocksNames(this.props.topStocksFilter));
 
+    this.props.calcStocksVisualizerPending();
     this.worker.postMessage({
       event: 'readData',
       // stocksList: [
@@ -118,10 +127,13 @@ class StockVisualizerContainer extends React.Component<any> {
   }
 
   render() {
-    const { stocksVisualizerData } = this.props;
+    const { stocksVisualizerData, stocksVisualizationLoading } = this.props;
     return (
       <div className="stock-container">
-        <StocksChart data={stocksVisualizerData} />
+        <StocksChart
+          loading={stocksVisualizationLoading}
+          data={stocksVisualizerData}
+        />
       </div>
     );
   }
@@ -131,10 +143,17 @@ const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
   stocksVisualizerData: state.company.stocksVisualizerData,
   topStocksFilter: state.company.topStocksFilter,
+  stocksVisualizationLoading: state.loading.stocksVisualizationLoading,
 });
 
 const mapDispatchToProps = (dispatch: any): any =>
-  bindActionCreators({ setStocksVisualizerData }, dispatch);
+  bindActionCreators({
+    setStocksVisualizerData,
+    calcStocksVisualizerPending,
+    calcStocksVisualizerSuccess,
+    calcStocksVisualizerError,
+    calcStocksVisualizerStop,
+  }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StockVisualizerContainer);
 
