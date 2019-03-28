@@ -23,28 +23,12 @@ const SP500_NAME = "S&P 500";
 class StockVisualizerContainer extends React.Component<any> {
   worker: any = null;
 
-  componentDidMount() {
-    this.worker = new readStocksVisualizerWorker();
+  killRunningWorker = () => {
+    this.worker.terminate();
+    this.props.calcStocksVisualizerStop();
+  }
 
-    // subscribe to worker message
-    this.worker.addEventListener('message', (workerEvent: any) => {
-      switch(workerEvent.data.event){
-        case 'SUCCESS':
-          this.props.calcStocksVisualizerSuccess();
-          // this.setState({isLoading: false});
-          break;
-        default:
-          alert('error');
-          this.props.calcStocksVisualizerError();
-          // this.setState({isLoading: false});
-      }
-      // console.log(workerEvent.data);
-      // console.log(this.someLogic(workerEvent.data.data));
-      this.someLogic(workerEvent.data.data);
-    });
-
-    // top 10, 25, 50, or 100 of stocks
-
+  runWorkerCalculations = () => {
     const getStocksNames = (top: number = 10) => this.props.companyList
       .slice(0, top)
       .map((el: any) => el.ticker.split('.')[0]);
@@ -54,19 +38,33 @@ class StockVisualizerContainer extends React.Component<any> {
     this.props.calcStocksVisualizerPending();
     this.worker.postMessage({
       event: 'readData',
-      // stocksList: [
-      //   SP500_NAME,
-      //   'AAPL',
-      //   // 'ABC',
-      //   // 'A'
-      // ],
       stocksList: [
         SP500_NAME,
         ...getStocksNames(this.props.topStocksFilter)
-      ],
-      /*data,*/
-      rABS: true
+      ]
     });
+  }
+
+  componentWillUnmount() {
+    this.killRunningWorker();
+  }
+  componentDidMount() {
+    this.worker = new readStocksVisualizerWorker();
+
+    // subscribe to worker message
+    this.worker.addEventListener('message', (workerEvent: any) => {
+      switch(workerEvent.data.event){
+        case 'SUCCESS':
+          this.props.calcStocksVisualizerSuccess();
+          break;
+        default:
+          alert('error');
+          this.props.calcStocksVisualizerError();
+      }
+      this.someLogic(workerEvent.data.data);
+    });
+
+    this.runWorkerCalculations();
   }
 
   calcSmthForStocks = (stocksList: any, investmentAmount: any) => {

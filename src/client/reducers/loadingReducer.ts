@@ -92,6 +92,7 @@ const loadingReducer = (state: LoadingState = initialLoadingState, action: any):
 
     case actions.CALC_STOCKS_VISUALIZER_SUCCESS:
     case actions.CALC_STOCKS_VISUALIZER_ERROR:
+    case actions.CALC_STOCKS_VISUALIZER_STOP:
       return {
         ...state,
         stocksVisualizationLoading: false,
