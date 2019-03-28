@@ -33,7 +33,7 @@ class StockVisualizerContainer extends React.Component<any> {
       .slice(0, top)
       .map((el: any) => el.ticker.split('.')[0]);
 
-    console.log(getStocksNames(this.props.topStocksFilter));
+    // console.log(getStocksNames(this.props.topStocksFilter));
 
     this.props.calcStocksVisualizerPending();
     this.worker.postMessage({
@@ -41,7 +41,8 @@ class StockVisualizerContainer extends React.Component<any> {
       stocksList: [
         SP500_NAME,
         ...getStocksNames(this.props.topStocksFilter)
-      ]
+      ],
+      topStocksFilter: this.props.topStocksFilter
     });
   }
 
@@ -56,12 +57,12 @@ class StockVisualizerContainer extends React.Component<any> {
       switch(workerEvent.data.event){
         case 'SUCCESS':
           this.props.calcStocksVisualizerSuccess();
+          this.someLogic(workerEvent.data.data);
           break;
         default:
-          alert('error');
+          alert(workerEvent.data.data);
           this.props.calcStocksVisualizerError();
       }
-      this.someLogic(workerEvent.data.data);
     });
 
     this.runWorkerCalculations();
@@ -69,13 +70,19 @@ class StockVisualizerContainer extends React.Component<any> {
 
   calcSmthForStocks = (stocksList: any, investmentAmount: any) => {
     return stocksList
+      .map((el: any) => {
+        const firstDateValue = el.lol[0].value;
+        return {
+          ...el,
+          share: investmentAmount / firstDateValue
+        };
+      })
       .map((el: any) => ({
         ...el,
-        share: investmentAmount / el.lol[0].value
-      }))
-      .map((el: any) => ({
-        ...el,
-        lol: el.lol.map((ell: any) => ({...ell, calculated: ell.value * el.share}))
+        lol: el.lol.map((ell: any) => ({
+          ...ell,
+          calculated: ell.value * el.share
+        }))
       }));
   }
 
@@ -99,12 +106,11 @@ class StockVisualizerContainer extends React.Component<any> {
       portfolioStocks,
       INVESTMENT_INTO_ONE_STOCK
     );
-    
 
     const matrix = portfolioStocksCalculated
       .map((el: any) => el.lol.map((ell: any) => ell.calculated));
     const calculatedPortfolioList = this.calcMatrixHorizontally(matrix);
-    
+
     const allData = sP500StockCalculated[0].lol.map((el: any, i: number) => ({
       name: el.date, // date
       sp500: Math.round(el.calculated.toFixed()),

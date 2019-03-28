@@ -15,10 +15,9 @@ onmessage = (e) => {
     return new Date(Math.max.apply(null, moments));
   }
 
-  const { event, stocksList /*data,*/} = e.data;
+  const { event, stocksList, topStocksFilter /*data,*/} = e.data;
   switch (event){
     case 'readData':
-
       /* set up async GET request */
       let req = new XMLHttpRequest();
       req.open("GET", XLSX_FILE_URL, true);
@@ -32,15 +31,25 @@ onmessage = (e) => {
         // const endDate = '03-01-2019';
         const raw = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
         // console.log(raw, 'raw');
-        const raw2 = raw
-          .map((ugly: any) => ({
-            name: ugly.__EMPTY,
-            lol: Object
-              .keys(ugly)
-              .map(k => ({date: k, value: ugly[k]}))
-          }));
+        const raw2 = raw.map((ugly: any) => ({
+          name: ugly.__EMPTY,
+          lol: Object
+            .keys(ugly)
+            .map(k => ({date: k, value: ugly[k]}))
+        }));
         // console.log(raw2, 'raw2');
         const filteredRaw = raw2.filter((el: any) => ~(stocksList.indexOf(el.name)));
+        // console.log(filteredRaw.map(el => el.name), 'filteredRaw');
+
+        // if we have no in XLSX_FILE_URL such stock NAME
+        const rawLengthWithoutSp500 = (filteredRaw.length - 1);
+        if(topStocksFilter !== rawLengthWithoutSp500) {
+          // throw new Error('test');
+          return sendMessage({
+            event: 'ERROR',
+            data: 'Error. There is some Stocks that not represented in HistoricalData workbook'
+          });
+        }
 
         const startDate = _getMaxDate(filteredRaw);
         // console.log(startDate, 'startDate');

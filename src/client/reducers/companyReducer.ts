@@ -26,7 +26,7 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   filteredList: [],
 
   isStocksVisualizerActive: false,
-  topFilter: 10,
+  topStocksFilter: 10,
 };
 
 const { issueMatcher } = issueMatch;
