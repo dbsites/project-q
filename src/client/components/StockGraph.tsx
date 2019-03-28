@@ -30,7 +30,7 @@ const StockGraph = (props: any) => {
   if (!props.selected) {
     display = <p>Loading Stock Graph. . . </p>;
   } else {
-    const { ticker } = props.selected;
+    let { ticker } = props.selected;
     let high, low, open, close, volume;
 
     // Before stock data retrieval, set defaults to 0
@@ -47,10 +47,10 @@ const StockGraph = (props: any) => {
       close = commafy(props.stockData.close);
       volume = commafy(props.stockData.volume);
     }
-
+    if (ticker === 'GOOG.OQ') ticker = 'GOOGL.OQ';
     // StockDIO API
     const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=693547058288464CAF34150B9A3F77D4&symbol=${ticker.split('.')[0]}&compare=FB;MSFT;AAPL&indices=SPX&includeCompetitors=true&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
-
+    console.log(ticker, 'THIS IS TICKER');
     display = (
       <React.Fragment>
         <iframe frameBorder="0" scrolling="no" src={URI} />
