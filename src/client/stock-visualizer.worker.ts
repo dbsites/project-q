@@ -49,7 +49,7 @@ onmessage = (e) => {
           // throw new Error('test');
           return sendMessage({
             event: 'ERROR',
-            data: `Error. There is some Stocks that not represented in HistoricalData workbook. Finded ${rawLengthWithoutSp500} companies instead of ${topStocksFilter}`
+            data: `Error. There is some companies that not represented in HistoricalData workbook. Finded ${rawLengthWithoutSp500} companies instead of ${topStocksFilter}`
           });
         }
 
