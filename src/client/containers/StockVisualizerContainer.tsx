@@ -6,6 +6,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import ChartInfo from '../components/chartInfo/ChartInfo';
+
 
 const readStocksVisualizerWorker = require('../stock-visualizer.worker');
 
@@ -117,7 +119,7 @@ class StockVisualizerContainer extends React.Component<any> {
       portfolio1: Math.round(calculatedPortfolioList[i])
     }));
 
-    console.log('lool', allData);
+    console.log('allData', allData);
 
     this.props.setStocksVisualizerData(allData);
     this.setState({ chartData: allData });
@@ -133,11 +135,12 @@ class StockVisualizerContainer extends React.Component<any> {
   render() {
     const { stocksVisualizerData, stocksVisualizationLoading } = this.props;
     return (
-      <div className="stock-container">
+      <div className="stock-container stock-container--visualizer">
         <StocksChart
           loading={stocksVisualizationLoading}
           data={stocksVisualizerData}
         />
+        {!stocksVisualizationLoading && <ChartInfo />}
       </div>
     );
   }

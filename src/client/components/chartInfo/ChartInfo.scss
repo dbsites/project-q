@@ -1,0 +1,16 @@
+.chart-visualizer-info{
+  min-height: 100px;
+  width: 100%;
+  min-width: 100px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  text-transform: unset;
+  font-size: 10px;
+  .blue{color: #399bf0;}
+  .red{color: red;}
+  &__text{
+    max-width: 200px;
+    font-size: 8px;
+  }
+}

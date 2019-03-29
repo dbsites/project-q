@@ -160,6 +160,12 @@
   width: 100%;
   height: 99%;
 }
+.stock-container--visualizer {
+  /* height: auto; */
+  /* height: 100%; */
+  flex-direction: column;
+  display: grid;
+}
 
 .stock-container p {
   margin: auto;
