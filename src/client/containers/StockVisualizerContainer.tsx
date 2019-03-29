@@ -140,7 +140,8 @@ class StockVisualizerContainer extends React.Component<any> {
           loading={stocksVisualizationLoading}
           data={stocksVisualizerData}
         />
-        {!stocksVisualizationLoading && <ChartInfo />}
+        {!stocksVisualizationLoading
+          && <ChartInfo finalBalance={stocksVisualizerData[stocksVisualizerData.length - 1]} />}
       </div>
     );
   }

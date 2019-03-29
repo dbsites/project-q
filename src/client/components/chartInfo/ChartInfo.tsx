@@ -7,8 +7,9 @@
 import * as React from 'react';
 import './ChartInfo.scss';
 
-const ChartInfo = () => {
-  // const {} = props;
+const ChartInfo = (props: any) => {
+  const { finalBalance } = props;
+
   return (
     <div className="chart-visualizer-info">
       <div className="chart-visualizer-info__block">
@@ -23,8 +24,12 @@ const ChartInfo = () => {
       </div>
       <div className="chart-visualizer-info__block">
         <div className="chart-visualizer-info__el">Final Balance</div>
-        <div className="chart-visualizer-info__el blue">{`$${2452}`}</div>
-        <div className="chart-visualizer-info__el red">{`$${2453}`}</div>
+        <div className="chart-visualizer-info__el blue">
+          {`$${finalBalance && finalBalance.portfolio1}`}
+        </div>
+        <div className="chart-visualizer-info__el red">
+          {`$${finalBalance && finalBalance.sp500}`}
+        </div>
       </div>
       <div className="chart-visualizer-info__block">
         <div className="chart-visualizer-info__text">
