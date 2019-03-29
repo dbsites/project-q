@@ -38,7 +38,7 @@ onmessage = (e) => {
         }));
         // console.log(raw2, 'raw2');
         const filteredRaw = raw2.filter((el: any) => ~(stocksList.indexOf(el.name)));
-        // console.log(filteredRaw.map(el => el.name), 'filteredRaw');
+        console.log(filteredRaw.map(el => el.name), 'filteredRaw');
 
         const rawLengthWithoutSp500 = (filteredRaw.length - 1);
 

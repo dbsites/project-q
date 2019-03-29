@@ -393,7 +393,9 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     case actions.SET_STOCKS_VISUALIZER_DATA: {
       return {
         ...state,
-        stocksVisualizerData: action.payload,
+        // stocksVisualizerData: action.payload,
+        stocksVisualizerData: action.payload.data,
+        companiesCount: action.payload.companiesCount,
       };
     }
     case actions.SET_TOP_STOCKS_COUNT: {

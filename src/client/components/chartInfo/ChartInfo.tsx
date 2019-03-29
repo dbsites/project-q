@@ -8,13 +8,15 @@ import * as React from 'react';
 import './ChartInfo.scss';
 
 const ChartInfo = (props: any) => {
-  const { finalBalance, fromDate, toDate } = props;
+  const { finalBalance, fromDate, toDate, companiesCount } = props;
 
   return (
     <div className="chart-visualizer-info">
       <div className="chart-visualizer-info__block">
         <div className="chart-visualizer-info__el">Portfolio</div>
-        <div className="chart-visualizer-info__el blue">{`Your Portfolio (Top ${10})`}</div>
+        <div className="chart-visualizer-info__el blue">
+          {`Your Portfolio (Top ${companiesCount})`}
+        </div>
         <div className="chart-visualizer-info__el red">{'S&P 500'}</div>
       </div>
       <div className="chart-visualizer-info__block">

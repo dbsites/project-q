@@ -127,8 +127,9 @@ class StockVisualizerContainer extends React.Component<any> {
 
     console.log('allData', allData);
 
-    this.props.setStocksVisualizerData(allData);
-    this.setState({ chartData: allData });
+    // this.props.setStocksVisualizerData(allData);
+    this.props.setStocksVisualizerData({data: allData, companiesCount});
+    // this.setState({ chartData: allData });
     return portfolioStocksCalculated;
   }
 
@@ -159,6 +160,7 @@ class StockVisualizerContainer extends React.Component<any> {
         />
         {!stocksVisualizationLoading &&
           <ChartInfo
+            companiesCount={this.props.companiesCount}
             toDate={toDate}
             fromDate={fromDate}
             finalBalance={finalBalance}
@@ -172,6 +174,7 @@ const mapStateToProps = (state: any): any => ({
   companyList: state.company.companyList,
   stocksVisualizerData: state.company.stocksVisualizerData,
   topStocksFilter: state.company.topStocksFilter,
+  companiesCount: state.company.companiesCount,
   stocksVisualizationLoading: state.loading.stocksVisualizationLoading,
 });
 
