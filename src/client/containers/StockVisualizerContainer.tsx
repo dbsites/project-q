@@ -196,6 +196,7 @@ const mapStateToProps = (state: any): any => ({
   topStocksFilter: state.company.topStocksFilter,
   companiesCount: state.company.companiesCount,
   stocksVisualizationLoading: state.loading.stocksVisualizationLoading,
+  isBacktestModal: state.company.isBacktestModal,
 });
 
 const mapDispatchToProps = (dispatch: any): any =>

@@ -243,6 +243,7 @@ const CompanyList = (props: any) => {
               <option className="sector-option" value="Utilities">Utilities</option>
             </select>
             <select
+              style={{marginRight: 0}}
               value={props.topStocksFilter}
               onChange={e => setTopStocksFilter(e.target.value)}>
               {[10, 25, 50, 100].map((el: number) => (
@@ -250,10 +251,13 @@ const CompanyList = (props: any) => {
                   className="sector-option"
                   key={el}
                   // value={el}
-                >{el}</option>
+                >{`Top ${el}`}</option>
               ))}
             </select>
           </div>
+          <button
+            onClick={props.toggleBacktestPortfolioModal}
+            className='question-mark'>?</button>
           {companyList.length &&
             <button
               className="selected active"

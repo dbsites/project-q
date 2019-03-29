@@ -28,6 +28,7 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   stocksVisualizerData: [],
   isStocksVisualizerActive: false,
   topStocksFilter: 10,
+  isBacktestModal: false,
 };
 
 const { issueMatcher } = issueMatch;
@@ -402,6 +403,13 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         topStocksFilter: action.payload,
+      };
+    }
+
+    case actions.TOGGLE_BACKTEST_PORTFOLIO_MODAL: {
+      return {
+        ...state,
+        isBacktestModal: !state.isBacktestModal,
       };
     }
 

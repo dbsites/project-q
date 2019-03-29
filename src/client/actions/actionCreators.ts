@@ -372,6 +372,10 @@ export const calcStocksVisualizerStop = () => ({
   type: types.CALC_STOCKS_VISUALIZER_STOP,
 });
 
+export const toggleBacktestPortfolioModal = () => ({
+  type: types.TOGGLE_BACKTEST_PORTFOLIO_MODAL,
+});
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')

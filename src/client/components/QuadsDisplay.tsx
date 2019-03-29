@@ -47,6 +47,7 @@ const QuadsDisplay = (props: any) => {
         isStocksVisualizerActive={props.isStocksVisualizerActive}
         topStocksFilter={props.topStocksFilter}
         setTopStocksFilter={props.setTopStocksFilter}
+        toggleBacktestPortfolioModal={props.toggleBacktestPortfolioModal}
       />
     </React.Fragment>
   );
