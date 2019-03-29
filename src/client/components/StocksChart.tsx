@@ -34,7 +34,7 @@ export default class Chart extends React.PureComponent<any> {
     </div>;
 
     return (
-      <div style={{width: '100%', minHeight: '144px'}}>
+      <div style={{width: '100%', minHeight: '144px', height: '144px'}}>
       <ResponsiveContainer>
         <LineChart
           data={this.props.data}
@@ -50,7 +50,7 @@ export default class Chart extends React.PureComponent<any> {
               fill="#fff"
             >Pages of my website ($)</Label>
           </YAxis>
-          <Tooltip formatter={(value) => value + '$'} />
+          <Tooltip formatter={(value) => '$ ' + value} />
           <Line type="monotone" dataKey="sp500" stroke="red" activeDot={{ r: 8 }} />
           <Line type="monotone" dataKey="portfolio1" stroke="#399bf0" activeDot={{ r: 8 }} />
           {/* <Line type="monotone" dataKey="uv" stroke="#399bf0" activeDot={{ r: 8 }} /> */}

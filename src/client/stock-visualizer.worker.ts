@@ -15,7 +15,7 @@ onmessage = (e) => {
     return new Date(Math.max.apply(null, moments));
   }
 
-  const { event, stocksList, topStocksFilter /*data,*/} = e.data;
+  const { event, stocksList, /*topStocksFilter data,*/} = e.data;
   switch (event){
     case 'readData':
       /* set up async GET request */
@@ -40,31 +40,43 @@ onmessage = (e) => {
         const filteredRaw = raw2.filter((el: any) => ~(stocksList.indexOf(el.name)));
         // console.log(filteredRaw.map(el => el.name), 'filteredRaw');
 
-        // if we have no in XLSX_FILE_URL such stock NAME
         const rawLengthWithoutSp500 = (filteredRaw.length - 1);
-        // console.log(topStocksFilter, 'topStocksFilter');
-        // console.log(rawLengthWithoutSp500, 'rawLengthWithoutSp500');
 
-        if((+topStocksFilter) !== (+rawLengthWithoutSp500)) {
+        // console.log(stocksList, 'need');
+        // console.log(filteredRaw.map((el: any) => el.name), 'found');
+
+        // if we have no in XLSX_FILE_URL such stock NAME
+        // if((+topStocksFilter) !== (+rawLengthWithoutSp500)) {
+        //   // throw new Error('test');
+        //   return sendMessage({
+        //     event: 'ERROR',
+        //     data: `Error. There is some companies that not represented in HistoricalData workbook. Finded ${rawLengthWithoutSp500} companies instead of ${topStocksFilter}`
+        //   });
+        // }
+
+        if(!rawLengthWithoutSp500) {
           // throw new Error('test');
           return sendMessage({
             event: 'ERROR',
-            data: `Error. There is some companies that not represented in HistoricalData workbook. Finded ${rawLengthWithoutSp500} companies instead of ${topStocksFilter}`
+            data: `Error. Companies with such names not found.`
           });
         }
 
         const startDate = _getMaxDate(filteredRaw);
-        // console.log(startDate, 'startDate');
 
         const sp500 = filteredRaw
           .map((el: any) => ({
             ...el,
             lol: el.lol
-              .filter((ell: any) => moment(ell.date).isSameOrAfter(startDate))
+              .filter((ell: any) => moment(new Date(ell.date)).isSameOrAfter(new Date(startDate)))
                 // && moment(ell.date).isSameOrBefore(endDate))
           }));
 
-        sendMessage({event: 'SUCCESS', data: sp500});
+        sendMessage({
+          event: 'SUCCESS',
+          data: sp500,
+          companiesCount: rawLengthWithoutSp500
+        });
       }
       req.send();
 
@@ -72,4 +84,3 @@ onmessage = (e) => {
       return;
   } 
 }
-

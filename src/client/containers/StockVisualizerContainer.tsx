@@ -57,13 +57,14 @@ class StockVisualizerContainer extends React.Component<any> {
 
     // subscribe to worker message
     this.worker.addEventListener('message', (workerEvent: any) => {
-      switch(workerEvent.data.event){
+      const { event, data, companiesCount } = workerEvent.data;
+      switch(event){
         case 'SUCCESS':
           this.props.calcStocksVisualizerSuccess();
-          this.someLogic(workerEvent.data.data);
+          this.someLogic(data, companiesCount);
           break;
         default:
-          alert(workerEvent.data.data);
+          alert(data);
           this.props.calcStocksVisualizerError();
       }
     });
@@ -89,12 +90,16 @@ class StockVisualizerContainer extends React.Component<any> {
       }));
   }
 
-  someLogic = (arr: any) => {
+  someLogic = (arr: any, companiesCount: number) => {
     const ALL_INVESTMENT = 10000; //$
     // const STOCK_COUNT = 50; // top 50
     const portfolioStocks = arr.filter((el: any) => el.name !== 'S&P 500');
 
-    const STOCKS_COUNT = portfolioStocks.length; // top 50
+    // const STOCKS_COUNT = portfolioStocks.length; // top 50
+    // console.log(portfolioStocks.length, 'portfolioStocks.length');
+    console.log(companiesCount, 'companiesCount');
+
+    const STOCKS_COUNT = companiesCount; // top 50
     // each share is fair, so
     const INVESTMENT_INTO_ONE_STOCK = ALL_INVESTMENT / STOCKS_COUNT; // %
 
@@ -145,7 +150,6 @@ class StockVisualizerContainer extends React.Component<any> {
     const toDate = stocksVisualizerData.length
       ? moment(new Date(stocksVisualizerData[stocksVisualizerData.length - 1].name)).format("MMM YYYY")
       : '';
-
 
     return (
       <div className="stock-container stock-container--visualizer">
