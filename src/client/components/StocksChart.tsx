@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as moment from 'moment';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer } from 'recharts';
 
 // const data = [
@@ -43,16 +44,14 @@ export default class Chart extends React.PureComponent<any> {
           margin={{top: 10, right: 30}}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis tick={{fill: "#fff"}} dataKey="name" />
+          <XAxis tick={{fill: "#fff"}}
+            dataKey="name"
+            tickFormatter={(tickItem) => moment(new Date(tickItem)).format('YYYY')}
+          />
           <YAxis tick={{fill: "#fff"}}>
             <Label
               style={{fontSize: '8px'}}
-              // dy={-100}
               dx={-30}
-              // offset={200}
-              // position="insideLeft"
-              // position="insideTopLeft"
-              // position="left"
               angle={-90}
               fill="#fff"
             >Pages of my website ($)</Label>
