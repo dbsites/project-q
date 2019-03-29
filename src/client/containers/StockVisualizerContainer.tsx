@@ -19,6 +19,7 @@ import {
   calcStocksVisualizerStop,
 } from '../actions/actionCreators';
 import StocksChart from '../components/StocksChart';
+import moment = require('moment');
 
 const SP500_NAME = "S&P 500";
 
@@ -134,14 +135,29 @@ class StockVisualizerContainer extends React.Component<any> {
 
   render() {
     const { stocksVisualizerData, stocksVisualizationLoading } = this.props;
+    const finalBalance = stocksVisualizerData.length
+      ? stocksVisualizerData[stocksVisualizerData.length - 1]
+      : {};
+
+    const fromDate = stocksVisualizerData.length
+      ? moment(new Date(stocksVisualizerData[0].name)).format("MMM YYYY")
+      : '';
+    const toDate = stocksVisualizerData.length
+      ? moment(new Date(stocksVisualizerData[stocksVisualizerData.length - 1].name)).format("MMM YYYY")
+      : '';
+
+
     return (
       <div className="stock-container stock-container--visualizer">
         <StocksChart
           loading={stocksVisualizationLoading}
           data={stocksVisualizerData}
         />
-        {!stocksVisualizationLoading
-          && <ChartInfo finalBalance={stocksVisualizerData[stocksVisualizerData.length - 1]} />}
+        {!stocksVisualizationLoading &&
+          <ChartInfo
+            toDate={toDate}
+            fromDate={fromDate}
+            finalBalance={finalBalance} />}
       </div>
     );
   }

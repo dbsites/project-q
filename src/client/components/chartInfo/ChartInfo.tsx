@@ -8,7 +8,7 @@ import * as React from 'react';
 import './ChartInfo.scss';
 
 const ChartInfo = (props: any) => {
-  const { finalBalance } = props;
+  const { finalBalance, fromDate, toDate } = props;
 
   return (
     <div className="chart-visualizer-info">
@@ -33,7 +33,7 @@ const ChartInfo = (props: any) => {
       </div>
       <div className="chart-visualizer-info__block">
         <div className="chart-visualizer-info__text">
-  {`Note: The time period was automatically adjusted based on the available data (${'June 2003'} - ${'Feb 2019'}) for the selected asset: ${'Netflix (NFLX)'}`}
+  {`Note: The time period was automatically adjusted based on the available data (${fromDate} - ${toDate}) for the selected asset: ${'Netflix (NFLX)'}`}
         </div>
       </div>
     </div>
