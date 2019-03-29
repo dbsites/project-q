@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ChartInfo from '../components/chartInfo/ChartInfo';
 
-
 const readStocksVisualizerWorker = require('../stock-visualizer.worker');
 
 import {
@@ -162,7 +161,7 @@ class StockVisualizerContainer extends React.Component<any> {
       : '';
 
     return (
-      <div className="stock-container stock-container--visualizer">
+      <div className="stock-container stock-container--visualizer chart-visualizer">
         <StocksChart
           loading={stocksVisualizationLoading}
           data={stocksVisualizerData}
@@ -175,7 +174,17 @@ class StockVisualizerContainer extends React.Component<any> {
             finalBalance={finalBalance}
           />}
         {!stocksVisualizationLoading &&
-          <button onClick={this.refreshChart}>REFRESH</button>}
+          <div
+            style={{
+              display: 'inlie-block',
+              position: 'absolute',
+              bottom: '0',
+              right: '0',
+            }}
+            className='btn'
+            onClick={this.refreshChart}>
+            Refresh
+          </div>}
       </div>
     );
   }

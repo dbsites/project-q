@@ -165,6 +165,7 @@
   height: 100%;
   flex-direction: column;
   display: grid;
+  position: relative;
 }
 
 .stock-container p {

@@ -14,3 +14,24 @@
     font-size: 8px;
   }
 }
+.chart-visualizer{
+  .btn{
+    background-color: #fff;
+    border-radius: 3px;
+    color: #ffffff;
+    padding: 1% 1.5%;
+    margin-bottom: 1%;
+    margin-right: 3%;
+    outline: none;
+    display: none;
+    cursor: pointer;
+    text-transform: unset;
+    color: #000;
+    font-weight: bold;
+  }
+  &:hover{
+    .btn{display: block;}
+  }
+}
+
+
