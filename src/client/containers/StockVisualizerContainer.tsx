@@ -157,7 +157,8 @@ class StockVisualizerContainer extends React.Component<any> {
           <ChartInfo
             toDate={toDate}
             fromDate={fromDate}
-            finalBalance={finalBalance} />}
+            finalBalance={finalBalance}
+          />}
       </div>
     );
   }

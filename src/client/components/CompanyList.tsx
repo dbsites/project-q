@@ -227,14 +227,6 @@ const CompanyList = (props: any) => {
           >
             Your Portfolio
           </button>
-          <button
-            id="sp500"
-            className="selected active"
-            onClick={togglePortfolio}
-            value="sp500"
-          >
-            S&P 500
-          </button>
           <div id="filter-sectors">
             <select id="filter-input" name="filter" placeholder="Filter by sector" onChange={e => filterSector(e)}>
               <option className="sector-option" value="All">All</option>
