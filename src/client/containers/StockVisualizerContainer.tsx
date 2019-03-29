@@ -26,6 +26,15 @@ const SP500_NAME = "S&P 500";
 class StockVisualizerContainer extends React.Component<any> {
   worker: any = null;
 
+  refreshChart = () => {
+    if(this.props.stocksVisualizationLoading){
+      this.killRunningWorker();
+      this.worker = new readStocksVisualizerWorker();
+      this.worker.addEventListener('message', this.handleWorkerEvent);
+    }
+    this.runWorkerCalculations();
+  }
+
   killRunningWorker = () => {
     this.worker.terminate();
     this.props.calcStocksVisualizerStop();
@@ -52,24 +61,24 @@ class StockVisualizerContainer extends React.Component<any> {
   componentWillUnmount() {
     this.killRunningWorker();
   }
+
   componentDidMount() {
     this.worker = new readStocksVisualizerWorker();
-
-    // subscribe to worker message
-    this.worker.addEventListener('message', (workerEvent: any) => {
-      const { event, data, companiesCount } = workerEvent.data;
-      switch(event){
-        case 'SUCCESS':
-          this.props.calcStocksVisualizerSuccess();
-          this.someLogic(data, companiesCount);
-          break;
-        default:
-          alert(data);
-          this.props.calcStocksVisualizerError();
-      }
-    });
-
+    this.worker.addEventListener('message', this.handleWorkerEvent);
     this.runWorkerCalculations();
+  }
+
+  handleWorkerEvent = (workerEvent: any) => {
+    const { event, data, companiesCount } = workerEvent.data;
+    switch(event){
+      case 'SUCCESS':
+        this.props.calcStocksVisualizerSuccess();
+        this.someLogic(data, companiesCount);
+        break;
+      default:
+        alert(data);
+        this.props.calcStocksVisualizerError();
+    }
   }
 
   calcSmthForStocks = (stocksList: any, investmentAmount: any) => {
@@ -165,6 +174,8 @@ class StockVisualizerContainer extends React.Component<any> {
             fromDate={fromDate}
             finalBalance={finalBalance}
           />}
+        {!stocksVisualizationLoading &&
+          <button onClick={this.refreshChart}>REFRESH</button>}
       </div>
     );
   }

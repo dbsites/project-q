@@ -39,13 +39,20 @@ export default class Chart extends React.PureComponent<any> {
         <LineChart
           data={this.props.data}
           // data={data}
+          // margin={{top: 10, right: 30, left: 10}}
           margin={{top: 10, right: 30}}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis tick={{fill: "#fff"}} dataKey="name" />
           <YAxis tick={{fill: "#fff"}}>
             <Label
-              position="insideLeft"
+              style={{fontSize: '8px'}}
+              // dy={-100}
+              dx={-20}
+              // offset={200}
+              // position="insideLeft"
+              // position="insideTopLeft"
+              // position="left"
               angle={-90}
               fill="#fff"
             >Pages of my website ($)</Label>
