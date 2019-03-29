@@ -48,7 +48,7 @@ export default class Chart extends React.PureComponent<any> {
             <Label
               style={{fontSize: '8px'}}
               // dy={-100}
-              dx={-20}
+              dx={-30}
               // offset={200}
               // position="insideLeft"
               // position="insideTopLeft"
