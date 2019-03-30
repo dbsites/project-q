@@ -7,11 +7,13 @@
   justify-content: space-between;
   text-transform: unset;
   font-size: 10px;
+  margin-bottom: 10px;
   .blue{color: #399bf0;}
   .red{color: red;}
   &__text{
     max-width: 200px;
     font-size: 8px;
+    margin-right: 20px;
   }
 }
 .chart-visualizer{
@@ -41,6 +43,8 @@
   color: #fff;
   border-radius: 50%;
   line-height: 16px;
+  padding-top: 3px;
+  font-size: 14px;
 }
 .backtest-modal{
   position: fixed;

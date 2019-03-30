@@ -35,20 +35,25 @@ export default class Chart extends React.PureComponent<any> {
     </div>;
 
     return (
-      <div style={{width: '100%', minHeight: '144px', height: '144px'}}>
-      <ResponsiveContainer>
+      <div style={{
+        width: '100%',
+        minHeight: '144px',
+        height: '100%'
+      }}>
+      <ResponsiveContainer width="99%">
         <LineChart
           data={this.props.data}
-          margin={{top: 10, right: 30}}
+          // data={data}
+          margin={{top: 10, right: 20}}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             interval={12}
-            tick={{fill: "#fff"}}
+            tick={{fontSize: '12px', fill: "#fff"}}
             dataKey="name"
             tickFormatter={(tickItem) => moment(new Date(tickItem)).format('YYYY')}
           />
-          <YAxis tick={{fill: "#fff"}}>
+          <YAxis tick={{fontSize: '12px', fill: "#fff"}}>
             <Label
               style={{fontSize: '8px'}}
               dx={-30}
