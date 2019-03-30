@@ -20,21 +20,22 @@
   .btn{
     background-color: #fff;
     border-radius: 3px;
-    color: #ffffff;
     padding: 1% 1.5%;
     margin-bottom: 1%;
-    // margin-right: 3%;
     outline: none;
-    /* border: 2px solid gold; */
-    display: none;
+    // display: none;
     cursor: pointer;
     text-transform: unset;
     color: #000;
-    font-weight: bold;
+    // font-weight: bold;
+    position: absolute;
+    bottom: -40px;
+    font-size: 12px;
+    right: 0;
   }
-  &:hover{
-    .btn{display: block;}
-  }
+  // &:hover{
+  //   .btn{display: block;}
+  // }
 }
 .question-mark{
   margin: 10px;

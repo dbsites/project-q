@@ -180,15 +180,9 @@ class StockVisualizerContainer extends React.Component<any> {
           />}
         {!stocksVisualizationLoading &&
           <div
-            style={{
-              display: 'inlie-block',
-              position: 'absolute',
-              bottom: '0',
-              right: '0',
-            }}
             className='btn'
             onClick={this.refreshChart}>
-            R
+            Refresh
           </div>}
       </div>
     );
