@@ -243,14 +243,16 @@ const CompanyList = (props: any) => {
               <option className="sector-option" value="Utilities">Utilities</option>
             </select>
             <select
+              placeholder='backtest portfolio'
+              title='backtest portfolio'
               style={{marginRight: 0}}
               value={props.topStocksFilter}
-              onChange={e => setTopStocksFilter(e.target.value)}>
+              onChange={e => setTopStocksFilter(+e.target.value)}>
               {[10, 25, 50, 100].map((el: number) => (
                 <option
                   className="sector-option"
                   key={el}
-                  // value={el}
+                  value={el}
                 >{`Top ${el}`}</option>
               ))}
             </select>
