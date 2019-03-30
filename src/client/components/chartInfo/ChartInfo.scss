@@ -40,6 +40,7 @@
   border: none;
   color: #fff;
   border-radius: 50%;
+  line-height: 16px;
 }
 .backtest-modal{
   position: fixed;
@@ -53,12 +54,17 @@
   background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
   &__content {
     background-color: #000;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 0 auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 80%;
     color: #fff;
     max-width: 300px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     
     p {
       text-transform: unset;

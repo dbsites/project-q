@@ -39,12 +39,12 @@ export default class Chart extends React.PureComponent<any> {
       <ResponsiveContainer>
         <LineChart
           data={this.props.data}
-          // data={data}
-          // margin={{top: 10, right: 30, left: 10}}
           margin={{top: 10, right: 30}}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis tick={{fill: "#fff"}}
+          <XAxis
+            interval={12}
+            tick={{fill: "#fff"}}
             dataKey="name"
             tickFormatter={(tickItem) => moment(new Date(tickItem)).format('YYYY')}
           />
