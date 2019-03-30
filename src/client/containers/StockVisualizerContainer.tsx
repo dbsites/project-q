@@ -68,11 +68,11 @@ class StockVisualizerContainer extends React.Component<any> {
   }
 
   handleWorkerEvent = (workerEvent: any) => {
-    const { event, data, companiesCount } = workerEvent.data;
+    const { event, data, companiesCount, startDateCompanyName } = workerEvent.data;
     switch(event){
       case 'SUCCESS':
         this.props.calcStocksVisualizerSuccess();
-        this.someLogic(data, companiesCount);
+        this.someLogic(data, companiesCount, startDateCompanyName);
         break;
       default:
         alert(data);
@@ -98,7 +98,7 @@ class StockVisualizerContainer extends React.Component<any> {
       }));
   }
 
-  someLogic = (arr: any, companiesCount: number) => {
+  someLogic = (arr: any, companiesCount: number, startDateCompanyName: string) => {
     const ALL_INVESTMENT = 10000; //$
     // const STOCK_COUNT = 50; // top 50
     const portfolioStocks = arr.filter((el: any) => el.name !== 'S&P 500');
@@ -136,7 +136,11 @@ class StockVisualizerContainer extends React.Component<any> {
     console.log('allData', allData);
 
     // this.props.setStocksVisualizerData(allData);
-    this.props.setStocksVisualizerData({data: allData, companiesCount});
+    this.props.setStocksVisualizerData({
+      data: allData,
+      companiesCount,
+      startDateCompanyName
+    });
     // this.setState({ chartData: allData });
     return portfolioStocksCalculated;
   }
@@ -168,6 +172,7 @@ class StockVisualizerContainer extends React.Component<any> {
         />
         {!stocksVisualizationLoading &&
           <ChartInfo
+            startDateCompanyName={this.props.startDateCompanyName}
             companiesCount={this.props.companiesCount}
             toDate={toDate}
             fromDate={fromDate}
@@ -197,6 +202,7 @@ const mapStateToProps = (state: any): any => ({
   companiesCount: state.company.companiesCount,
   stocksVisualizationLoading: state.loading.stocksVisualizationLoading,
   isBacktestModal: state.company.isBacktestModal,
+  startDateCompanyName: state.company.startDateCompanyName,
 });
 
 const mapDispatchToProps = (dispatch: any): any =>

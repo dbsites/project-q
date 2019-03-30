@@ -7,6 +7,12 @@ const XLSX_FILE_URL = './HistoricalDataFull.xlsx';
 
 onmessage = (e) => {
 
+  const _getStartDateCompany = (filteredRaw: any) => {
+    return filteredRaw
+      .map((el: any) => ({n: el.name, date: new Date(el.lol[1].date)}))
+      .sort((a: any, b: any) => b.date - a.date)[0];
+  }
+
   const _getMaxDate = (filteredRaw: any) => {
     const moments: any = filteredRaw
       .map((el: any) => el.lol.map((ell: any) => ell.date))
@@ -63,6 +69,7 @@ onmessage = (e) => {
         }
 
         const startDate = _getMaxDate(filteredRaw);
+        const startDateCompany = _getStartDateCompany(filteredRaw);
 
         const sp500 = filteredRaw
           .map((el: any) => ({
@@ -75,7 +82,8 @@ onmessage = (e) => {
         sendMessage({
           event: 'SUCCESS',
           data: sp500,
-          companiesCount: rawLengthWithoutSp500
+          companiesCount: rawLengthWithoutSp500,
+          startDateCompanyName: startDateCompany && startDateCompany.n
         });
       }
       req.send();

@@ -29,6 +29,7 @@ const initialCompanyState: /*CompanyDataState*/ any = {
   isStocksVisualizerActive: false,
   topStocksFilter: 10,
   isBacktestModal: false,
+  startDateCompanyName: ''
 };
 
 const { issueMatcher } = issueMatch;
@@ -394,9 +395,9 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
     case actions.SET_STOCKS_VISUALIZER_DATA: {
       return {
         ...state,
-        // stocksVisualizerData: action.payload,
         stocksVisualizerData: action.payload.data,
         companiesCount: action.payload.companiesCount,
+        startDateCompanyName: action.payload.startDateCompanyName,
       };
     }
     case actions.SET_TOP_STOCKS_COUNT: {
@@ -418,6 +419,8 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       return {
         ...state,
         stocksVisualizerData: [],
+        startDateCompanyName: '',
+        companiesCount: undefined
       };
     }
 
