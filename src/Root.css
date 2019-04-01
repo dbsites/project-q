@@ -137,7 +137,7 @@ body {
 .dashboard-header {
   color: #FFFFFF;
 
-  display: flex;
+  display: inherit;
   justify-content: center;
   align-items: center;
 }
@@ -427,8 +427,8 @@ body {
   margin: 1vh auto;
   text-align: center;
   width: 33%;
-  
-  display: flex;
+  height: 17%;
+  display: block;
   justify-content: center;
   align-items: center;
   
@@ -504,4 +504,41 @@ body {
 .forgot-password a:hover {
   color: #FFFFFF;
   cursor: pointer;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 50%;
+  height: 4px;
+  background: #528161;
+  outline: none;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider-font {
+  font-size: 1.2rem;
+}
+
+.range-labels {
+  margin: 0 0 0 22%;
+  padding: 0;
+  list-style: none;
+}
+
+.range-labels li {
+  position: relative;
+  float: left;
+  width: 7.1%;
+  text-align: center;
+  color: #b2b2b2;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.subheader {
+  font-size: 16px;
+  display: inherit;
+  font-style: italic;
+  justify-content: center;
 }

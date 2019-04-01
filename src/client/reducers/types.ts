@@ -73,9 +73,13 @@ export interface AnswerPayload {
 
 // User Object Types
 export interface UserIssuesSelected {
-  [name: string]: boolean | null,
+  [name: string]: UserIssueSelected,
 };
 
+export interface UserIssueSelected {
+  position: string | null
+  weight: number,
+}
 export interface UserState {
   readonly userId: string | null,
   readonly isAdmin: boolean,

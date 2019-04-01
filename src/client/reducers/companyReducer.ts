@@ -8,7 +8,6 @@ import actions from '../actions/actionTypes';
 
 import * as issueMatch from '../issueMatcher';
 
-
 const initialCompanyState: /*CompanyDataState*/ any = {
   selectedCompany: null,
   fullCompanyModal: null,
@@ -62,22 +61,27 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         (issueID: any) => {
           return {
             name: issueMatcher[issueID],
-            leaning: state.userIssues[issueID]
+            leaning: state.userIssues[issueID].position,
+            weight: state.userIssues[issueID].weight
           };
         }
       );
 
-      let score = 0;
-
       if (state.companyList.length > 0) {
         for (let i = 0; i < state.companyList.length; i += 1) {
+          let score = 0;
+          let denominator = 0;
           userIssuesArray.forEach((issue: any) => {
-            if (issue.leaning.includes('con'))
-              score += state.companyList[i][issue.name].disagreeScore;
-            else score += state.companyList[i][issue.name].agreeScore;
+            if (issue.leaning.includes('con')) {
+              score = score + (state.companyList[i][issue.name].disagreeScore * issue.weight);
+            } else {
+              score = score + (state.companyList[i][issue.name].agreeScore * issue.weight);
+            }
+            denominator += issue.weight;
           });
-          updatedCompanyList[i].overallScore = score;
-          score = 0;
+          updatedCompanyList[i].overallScore = Math.round(score / denominator);
+          // console.log(updatedCompanyList[i].overallScore, 'overall Score')
+
         }
       }
 
@@ -123,7 +127,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         (issueID: any) => {
           return {
             name: issueMatcher[issueID],
-            leaning: state.userIssues[issueID]
+            leaning: state.userIssues[issueID].position
           };
         }
       );
@@ -278,9 +282,9 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
 
         if (
           topListCompany[categoryName].alignedScore !==
-          highestScoreCompany[categoryName].alignedScore &&
+            highestScoreCompany[categoryName].alignedScore &&
           topListCompany[categoryName].alignedScore !==
-          lowestScoreCompany[categoryName].alignedScore
+            lowestScoreCompany[categoryName].alignedScore
         ) {
           sortedList = companyArray.slice(0).sort(
             (a: any, b: any): any => {
@@ -343,12 +347,10 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       if (action.payload === 'portfolio' && !state.portfolioList.length)
         return state;
 
-
       if (action.payload && action.payload !== state.portfolioMode) {
-
         const selected = document.getElementById(action.payload);
         const deselected = document.getElementById(state.portfolioMode);
-        const companyListDiv = document.getElementById("cl-table");
+        const companyListDiv = document.getElementById('cl-table');
 
         if (selected !== null && selected.classList.contains('no-upload')) {
           selected.classList.remove('no-upload');
@@ -363,8 +365,7 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
         if (companyListDiv !== null) {
           if (action.payload === 'portfolio')
             companyListDiv.style.display = 'none';
-          else
-            companyListDiv.style.display = 'block';
+          else companyListDiv.style.display = 'block';
         }
       }
 
@@ -374,16 +375,18 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
       };
 
     case actions.FILTER_SECTOR:
-      if (action.payload === 'All' || action.payload.length === 0) {
+      if (action.payload === 'Filter All' || action.payload.length === 0) {
         return {
           ...state,
           companyList: state.filteredList
-        }
+        };
       }
 
       return {
         ...state,
-        companyList: state.filteredList.filter((c: any) => c.sector === action.payload)
+        companyList: state.filteredList.filter(
+          (c: any) => c.sector === action.payload
+        )
       };
 
     case actions.TOGGLE_STOCKS_VISUALIZER: {

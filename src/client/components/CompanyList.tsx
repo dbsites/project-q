@@ -21,11 +21,11 @@ const CompanyList = (props: any) => {
     userIssues,
     issueAbbrvs,
     selectedCompany,
-    togglePortfolio,
     toggleStocksVisualizer,
     filterSector,
     isStocksVisualizerActive,
-    setTopStocksFilter
+    setTopStocksFilter,
+    // togglePortfolio,
   } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
@@ -74,26 +74,25 @@ const CompanyList = (props: any) => {
     const companyOverallScores = () => {
       const companyOverallScoresArray = [];
       let score: number = 0;
-
+      
       // Create array of user issue objects with converted name
-      const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
-        return {
-          name: issueMatcher[issueID],
-          leaning: userIssues[issueID]
-        };
-      });
-
+      // const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
+      //   return {
+      //     name: issueMatcher[issueID],
+      //     leaning: userIssues[issueID].position
+      //   };
+      // });
       // Calculate scores of companies based off user issues
       if (companyList.length > 0) {
         for (let i = 0; i < companyList.length; i += 1) {
-          userIssuesArray.forEach((issue: any) => {
-            if (issue.leaning.includes('con'))
-              score += companyList[i][issue.name].disagreeScore;
-            else score += companyList[i][issue.name].agreeScore;
-          });
+          // userIssuesArray.forEach((issue: any) => {
+          //   if (issue.leaning.includes('con'))
+          //     score += companyList[i][issue.name].disagreeScore;
+          //   else score += companyList[i][issue.name].agreeScore;
+          // });
 
           // Color match based off of score
-          score = Math.round(score / userIssuesArray.length);
+          score = companyList[i].overallScore;
 
           let color = {
             color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
@@ -122,7 +121,7 @@ const CompanyList = (props: any) => {
       const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
         return {
           name: issueMatcher[issueID],
-          leaning: userIssues[issueID]
+          leaning: userIssues[issueID].position
         };
       });
 
@@ -219,7 +218,7 @@ const CompanyList = (props: any) => {
     return (
       <div className="cl-quad" id="quad-company-list">
         <div id="cl-select">
-          <button
+          {/* <button
             id="portfolio"
             className="no-upload"
             onClick={togglePortfolio}
@@ -227,20 +226,60 @@ const CompanyList = (props: any) => {
           >
             Your Portfolio
           </button>
+          <button
+            id="sp500"
+            className="selected active"
+            onClick={togglePortfolio}
+            value="sp500"
+          >
+            S&P 500
+          </button> */}
           <div id="filter-sectors">
-            <select id="filter-input" name="filter" placeholder="Filter by sector" onChange={e => filterSector(e)}>
-              <option className="sector-option" value="All">All</option>
-              <option className="sector-option" value="Consumer Discretionary">Consumer Discretionary</option>
-              <option className="sector-option" value="Consumer Staples">Consumer Staples</option>
-              <option className="sector-option" value="Energy">Energy</option>
-              <option className="sector-option" value="Financials">Financials</option>
-              <option className="sector-option" value="Health Care">Health Care</option>
-              <option className="sector-option" value="Industrials">Industrials</option>
-              <option className="sector-option" value="Information Technology">Information Technology</option>
-              <option className="sector-option" value="Materials">Materials</option>
-              <option className="sector-option" value="Real Estate">Real Estate</option>
-              <option className="sector-option" value="Telecommunication Services">Telecommunication Services</option>
-              <option className="sector-option" value="Utilities">Utilities</option>
+            <select
+              id="filter-input"
+              name="filter"
+              placeholder="Filter by sector"
+              onChange={e => filterSector(e)}
+            >
+              <option className="sector-option" value="Filter All">
+                Filter All
+              </option>
+              <option className="sector-option" value="Consumer Discretionary">
+                Consumer Discretionary
+              </option>
+              <option className="sector-option" value="Consumer Staples">
+                Consumer Staples
+              </option>
+              <option className="sector-option" value="Energy">
+                Energy
+              </option>
+              <option className="sector-option" value="Financials">
+                Financials
+              </option>
+              <option className="sector-option" value="Health Care">
+                Health Care
+              </option>
+              <option className="sector-option" value="Industrials">
+                Industrials
+              </option>
+              <option className="sector-option" value="Information Technology">
+                Information Technology
+              </option>
+              <option className="sector-option" value="Materials">
+                Materials
+              </option>
+              <option className="sector-option" value="Real Estate">
+                Real Estate
+              </option>
+              <option
+                className="sector-option"
+                value="Telecommunication Services"
+              >
+                Telecommunication Services
+              </option>
+              <option className="sector-option" value="Utilities">
+                Utilities
+              </option>
             </select>
             <select
               placeholder='backtest portfolio'

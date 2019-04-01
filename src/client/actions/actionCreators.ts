@@ -16,7 +16,7 @@ import {
   IFetchFailureAction,                                        // Fetch Failure Action Interface
   IFormFieldObject, IFormFetchSuccessResponseObject,          // Form Request and Response Interfaces
   IUpdateFieldAction, IFormSuccessAction, IFormFailureAction, // Form Action Interfaces
-  IToggleIssueAction, IUpdateIssuePositionAction,             // User Action Interfaces
+  IToggleIssueAction, IUpdateIssuePositionAction, IUpdateWeightAction,             // User Action Interfaces
   IIssuesSuccessAction,                                       // Issue Action Interfaces
   IIssuesFetchSuccessResponseObject,
   INoAuthObject,
@@ -85,7 +85,6 @@ export const fetchForm = (
 ) => (dispatch: Dispatch) => {
   dispatch(fetchFormRequest());
   // Derive POST request URI from form to be submitted and issue fetch request
-
   const fetchURI: string = `/api/${form}`;
   return fetch(fetchURI, {
     method: 'POST',
@@ -96,6 +95,7 @@ export const fetchForm = (
     body: JSON.stringify(formFields)
   })
     .then((response: Response) => {
+      console.log(response, 'FETCH_REQUEST_RESPONSE')
       // If successful(200), return parsed response, otherwise dispatch failure and throw error
       if (response.status === 200) return response.json();
       if (response.status === 401)
@@ -106,7 +106,10 @@ export const fetchForm = (
       // set onboardComplete equal to issuesComplete
       return dispatch(fetchFormSuccess(response));
     })
-    .catch((error: Error) => dispatch(fetchFormFailure(form, error.message)));
+    .catch((error: Error) => {
+      console.log(error);
+      dispatch(fetchFormFailure(form, error.message))
+    });
 };
 
 // --- Issue Action Creators --- // --- UNIT TESTING 100% --- //
@@ -157,6 +160,12 @@ export const addIssue = (issueId: string): IToggleIssueAction => ({
   issueId
 });
 
+export const updateWeight = (issueId: string, weight: number): IUpdateWeightAction => ({
+  type: types.UPDATE_WEIGHT,
+  issueId,
+  weight
+});
+
 export const removeIssue = (issueId: string): IToggleIssueAction => ({
   type: types.REMOVE_ISSUE,
   issueId
@@ -201,6 +210,7 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
   })
     .then((response: Response) => response.json())
     .then((response: IFormFetchSuccessResponseObject | INoAuthObject) => {
+      console.log(response, 'FETCH_AUTH')
       if (!response.isAuth) dispatch(fetchAuthFailure());
       else
         dispatch(fetchAuthSuccess(response as IFormFetchSuccessResponseObject));
@@ -272,6 +282,7 @@ export const fetchSubmitIssues = (
   })
     .then((response: Response) => response.json())
     .then((response: SurveyState) => {
+      console.log(response, 'FETCH_SUBMIT_ISSUES');
       dispatch({
         type: types.FETCH_SUBMIT_ISSUES_SUCCESS,
         response

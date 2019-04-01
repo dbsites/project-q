@@ -64,7 +64,7 @@ export const stubIssueFetchErrorMessage: string = 'Something has gone wrong - pl
 
 // Stubs for Submitting Issues
 export const stubSubmitIssuesFetchRequest: UserIssuesSelected = {
-  '580600c8-c633-476b-98d2-9676c70c177d': null,
+  '580600c8-c633-476b-98d2-9676c70c177d': {position: null, weight: 5}
 };
 
 export const stubSubmitIssuesFetchSuccessResponse: SurveyState = {

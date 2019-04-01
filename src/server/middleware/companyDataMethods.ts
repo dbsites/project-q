@@ -156,6 +156,9 @@ CompanyDatabase.getCompanyModuleData = (req: Request, res: Response, next: NextF
 
   db.companies.getCompanyModuleData(req.body.ticker)
     .then((companyData: any) => {
+      Object.keys(companyData).forEach((issue: any) => {
+        if (companyData[issue] === 0) companyData[issue] = 'N/A';
+      })
       res.locals.moduleData = companyData;
       next();
     })
