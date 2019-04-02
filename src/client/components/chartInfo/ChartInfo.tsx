@@ -5,7 +5,9 @@
  */
 
 import * as React from 'react';
+
 import './ChartInfo.scss';
+import { numberWithCommas } from '../../utils';
 
 const ChartInfo = (props: any) => {
   const { finalBalance, fromDate, toDate, companiesCount } = props;
@@ -27,10 +29,10 @@ const ChartInfo = (props: any) => {
       <div className="chart-visualizer-info__block">
         <div className="chart-visualizer-info__el">Final Balance</div>
         <div className="chart-visualizer-info__el blue">
-          {`$${finalBalance && finalBalance.portfolio1}`}
+          {`$${finalBalance && numberWithCommas(finalBalance.portfolio1)}`}
         </div>
         <div className="chart-visualizer-info__el red">
-          {`$${finalBalance && finalBalance.sp500}`}
+          {`$${finalBalance && numberWithCommas(finalBalance.sp500)}`}
         </div>
       </div>
       <div className="chart-visualizer-info__block">

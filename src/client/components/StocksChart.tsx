@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as moment from 'moment';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label, ResponsiveContainer } from 'recharts';
 
+import { numberWithCommas } from '../utils';
+
 // const data = [
 //   {
 //     name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
@@ -53,7 +55,9 @@ export default class Chart extends React.PureComponent<any> {
             dataKey="name"
             tickFormatter={(tickItem) => moment(new Date(tickItem)).format('YYYY')}
           />
-          <YAxis tick={{fontSize: '12px', fill: "#fff"}}>
+          <YAxis
+            tickFormatter={(el: any) => numberWithCommas(el)}
+            tick={{fontSize: '12px', fill: "#fff"}}>
             <Label
               style={{fontSize: '8px'}}
               dx={-30}
@@ -61,7 +65,7 @@ export default class Chart extends React.PureComponent<any> {
               fill="#fff"
             >Pages of my website ($)</Label>
           </YAxis>
-          <Tooltip formatter={(value) => '$ ' + value} />
+          <Tooltip formatter={(value: any) => '$ ' + numberWithCommas(value)} />
           <Line type="monotone" dataKey="sp500" stroke="red" activeDot={{ r: 8 }} />
           <Line type="monotone" dataKey="portfolio1" stroke="#399bf0" activeDot={{ r: 8 }} />
           {/* <Line type="monotone" dataKey="uv" stroke="#399bf0" activeDot={{ r: 8 }} /> */}
