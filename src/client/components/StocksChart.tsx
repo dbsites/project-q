@@ -46,7 +46,7 @@ export default class Chart extends React.PureComponent<any> {
         height: '100%'
       }}>
       <ResponsiveContainer width="99%">
-        <LineChart data={data} margin={{top: 10, right: 20}}>
+        <LineChart data={data} margin={{top: 10, right: 20, left: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             interval={12}
@@ -58,8 +58,8 @@ export default class Chart extends React.PureComponent<any> {
             tickFormatter={(el: any) => numberWithCommas(el)}
             tick={{fontSize: '12px', fill: "#fff"}}>
             <Label
-              style={{fontSize: '8px'}}
-              dx={-30}
+              style={{fontSize: '10px'}}
+              dx={-40}
               angle={-90}
               fill="#fff"
             >Pages of my website ($)</Label>

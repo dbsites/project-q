@@ -6,13 +6,16 @@
   display: flex;
   justify-content: space-between;
   text-transform: unset;
-  font-size: 10px;
+  // font-size: 10px;
+  font-size: 12px;
   margin-bottom: 10px;
   .blue{color: #399bf0;}
   .red{color: red;}
   &__text{
     max-width: 200px;
-    font-size: 8px;
+    // font-size: 8px;
+    font-size: 10px;
+    line-height: 10px;
     margin-right: 20px;
   }
 }
@@ -64,7 +67,8 @@
     border: 1px solid #888;
     width: 80%;
     color: #fff;
-    max-width: 300px;
+    // max-width: 300px;
+    max-width: 350px;
 
     position: absolute;
     top: 50%;
@@ -75,9 +79,10 @@
       text-transform: unset;
       text-align: justify;
       line-height: 16px;
-      font-size: 9px;
+      // font-size: 9px;
+      font-size: 14px;
     }
-    div {text-align: center; cursor: pointer;}
+    div {text-align: center; cursor: pointer; font-size: 20px;}
   }
 }
 
