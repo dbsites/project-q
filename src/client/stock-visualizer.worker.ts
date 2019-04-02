@@ -3,13 +3,14 @@ import * as moment from 'moment';
 
 const sendMessage: any = self.postMessage;
 // const XLSX_FILE_URL = './HistoricalDataTest.xlsx';
-const XLSX_FILE_URL = './HistoricalDataFull.xlsx';
+// const XLSX_FILE_URL = './HistoricalDataFull.xlsx';
+const XLSX_FILE_URL = './UpdatedHistoricalDataFull4.xlsx';
 
 onmessage = (e) => {
 
   const _getStartDateCompany = (filteredRaw: any) => {
     return filteredRaw
-      .map((el: any) => ({n: el.name, date: new Date(el.lol[1].date)}))
+      .map((el: any) => ({n: el.name, fullName: el.fullName, date: new Date(el.lol[1].date)}))
       .sort((a: any, b: any) => b.date - a.date)[0];
   }
 
@@ -37,6 +38,7 @@ onmessage = (e) => {
         const raw = XLSX.utils.sheet_to_json(workbook.Sheets.Sheet1);
         // console.log(raw, 'raw');
         const raw2 = raw.map((ugly: any) => ({
+          fullName: ugly['Company Names'],
           name: ugly.__EMPTY,
           lol: Object
             .keys(ugly)
@@ -83,7 +85,9 @@ onmessage = (e) => {
           event: 'SUCCESS',
           data: sp500,
           companiesCount: rawLengthWithoutSp500,
-          startDateCompanyName: startDateCompany && startDateCompany.n
+          // startDateCompanyName: startDateCompany && startDateCompany.n
+          startDateCompanyName: startDateCompany
+            && `${startDateCompany.fullName} (${startDateCompany.n})`
         });
       }
       req.send();
