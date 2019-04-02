@@ -24,7 +24,9 @@ import { numberWithCommas } from '../utils';
 
 export default class Chart extends React.PureComponent<any> {
   render() {
-    if(this.props.loading) return <div style={{
+    const { data, loading, companiesCount } = this.props;
+
+    if(loading) return <div style={{
       color: '#fff',
       display: 'flex',
       alignItems: 'center',
@@ -36,6 +38,7 @@ export default class Chart extends React.PureComponent<any> {
       </div>
     </div>;
 
+
     return (
       <div style={{
         width: '100%',
@@ -43,11 +46,7 @@ export default class Chart extends React.PureComponent<any> {
         height: '100%'
       }}>
       <ResponsiveContainer width="99%">
-        <LineChart
-          data={this.props.data}
-          // data={data}
-          margin={{top: 10, right: 20}}
-        >
+        <LineChart data={data} margin={{top: 10, right: 20}}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
             interval={12}
@@ -67,7 +66,13 @@ export default class Chart extends React.PureComponent<any> {
           </YAxis>
           <Tooltip formatter={(value: any) => '$ ' + numberWithCommas(value)} />
           <Line type="monotone" dataKey="sp500" stroke="red" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="portfolio1" stroke="#399bf0" activeDot={{ r: 8 }} />
+          <Line
+            name={`Top ${companiesCount}`}
+            type="monotone"
+            dataKey="portfolio1"
+            stroke="#399bf0"
+            activeDot={{ r: 8 }}
+          />
           {/* <Line type="monotone" dataKey="uv" stroke="#399bf0" activeDot={{ r: 8 }} /> */}
           {/* <Line type="monotone" dataKey="pv" stroke="red" activeDot={{ r: 8 }} /> */}
         </LineChart>

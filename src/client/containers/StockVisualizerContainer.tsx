@@ -167,6 +167,7 @@ class StockVisualizerContainer extends React.Component<any> {
     return (
       <div className="stock-container stock-container--visualizer chart-visualizer">
         <StocksChart
+          companiesCount={this.props.companiesCount}
           loading={stocksVisualizationLoading}
           data={stocksVisualizerData}
         />
