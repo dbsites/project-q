@@ -62,7 +62,7 @@ export default class Chart extends React.PureComponent<any> {
               dx={-40}
               angle={-90}
               fill="#fff"
-            >Pages of my website ($)</Label>
+            >Portfolio balance ($)</Label>
           </YAxis>
           <Tooltip formatter={(value: any) => '$ ' + numberWithCommas(value)} />
           <Line type="monotone" dataKey="sp500" stroke="red" activeDot={{ r: 8 }} />
