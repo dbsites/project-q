@@ -304,7 +304,9 @@ const CompanyList = (props: any) => {
               className="selected active"
               onClick={toggleStocksVisualizer}
             >
-              {isStocksVisualizerActive ? 'Stockdio' : 'StocksChart'}
+              {isStocksVisualizerActive
+                ? 'Real Time'
+                : 'Backtest'}
             </button>
           }
         </div>
