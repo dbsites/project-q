@@ -3,7 +3,6 @@ services:
 script:
 - docker-compose -f docker-comp-test.yml up --abort-on-container-exit
 before_deploy:
-- npm install
 - pip install --user awscli
 - pip install --user awsebcli
 - export PATH=$PATH:$HOME/.local/bin
