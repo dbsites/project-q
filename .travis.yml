@@ -1,7 +1,9 @@
 services:
 - docker
 before_script:
+- ls
 - npm install
+- npm rebuild node-sass --force
 - ls
 script:
 - docker-compose -f docker-comp-test.yml up --abort-on-container-exit
