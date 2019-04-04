@@ -1,7 +1,8 @@
 services:
 - docker
 before_script:
-- npm install node-sass -g
+- node -v
+- nvm list
 - npm install
 - ls
 script:
