@@ -4,6 +4,7 @@ before_script:
 - ls
 - npm -v
 - npm install
+- ls
 script:
 - docker-compose -f docker-comp-test.yml up --abort-on-container-exit
 before_deploy:
