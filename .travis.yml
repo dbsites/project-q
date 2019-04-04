@@ -1,5 +1,7 @@
 services:
 - docker
+before_script:
+- npm install
 script:
 - docker-compose -f docker-comp-test.yml up --abort-on-container-exit
 before_deploy:
