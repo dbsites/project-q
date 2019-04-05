@@ -8,12 +8,18 @@ const path = require('path');
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.tsx'),
   output: {
+    globalObject: 'this',                                 // for web worker support
     path: path.resolve(__dirname, '../dist'),             // Output bundle file to root/dist
     filename: 'bundle.js',                                // Bundle file name
     publicPath: '/',                                      // Specify base path for all assets as root
   },
   module: {
     rules: [
+      // add web worker support
+      {
+        test: /\.worker\.ts$/,
+        loader: 'worker-loader'
+      },
       {
         test: /\.(ts|tsx)?$/,
         exclude: /node_modules/,

@@ -35,9 +35,15 @@ interface Props {
   hoverOn: any;
   hoverOff: any;
   displayDetails: boolean;
+  isStocksVisualizerActive: boolean;
+  isBacktestModal: boolean;
   hoverOverviewInfo: any;
   togglePortfolio: any;
   filterSector: any;
+  toggleStocksVisualizer: any;
+  topStocksFilter: number;
+  setTopStocksFilter: any;
+  toggleBacktestPortfolioModal: any;
 }
 
 // TODO when store structure finalized
@@ -81,7 +87,12 @@ class QuadsContainer extends React.Component<Props> {
       selectedCompanyData,
       sortCompanyList,
       togglePortfolio,
-      userIssues
+      userIssues,
+      toggleStocksVisualizer,
+      isStocksVisualizerActive,
+      topStocksFilter,
+      setTopStocksFilter,
+      toggleBacktestPortfolioModal,
     } = this.props;
 
     return (
@@ -107,8 +118,23 @@ class QuadsContainer extends React.Component<Props> {
             hoverOverviewInfo={hoverOverviewInfo}
             togglePortfolio={togglePortfolio}
             filterSector={filterSector}
+            toggleStocksVisualizer={toggleStocksVisualizer}
+            isStocksVisualizerActive={isStocksVisualizerActive}
+            topStocksFilter={topStocksFilter}
+            setTopStocksFilter={setTopStocksFilter}
+            toggleBacktestPortfolioModal={toggleBacktestPortfolioModal}
           />
         </div>
+
+        {this.props.isBacktestModal &&
+          <div onClick={this.props.toggleBacktestPortfolioModal} className='backtest-modal'>
+            <div className="backtest-modal__content">
+              <p>
+                Clicking on "Backtest Portfolio" allows you to run a historical backtest on Ethiq's recommended securities. You may select to backtest a portfolio consisting on the top 10, 25, 50 or 100 recommended securities. Securities will be equally weighted, using an "adjusted close" price factoring in dividents and splits. All securities are benchmarked against historical S&P 500 data, assuming an initial investment amount of $10,000.
+              </p>
+              <div>OK</div>
+            </div>
+          </div>}
       </div>
     );
   }
@@ -122,7 +148,10 @@ const mapStateToProps = (state: any): any => ({
   userIssues: state.company.userIssues,
   issueAbbrvs: state.company.issueAbbrvs,
   displayDetails: state.company.displayDetails,
-  hoverOverviewInfo: state.company.hoverOverviewInfo
+  hoverOverviewInfo: state.company.hoverOverviewInfo,
+  isStocksVisualizerActive: state.company.isStocksVisualizerActive,
+  topStocksFilter: state.company.topStocksFilter,
+  isBacktestModal: state.company.isBacktestModal,
 });
 
 const mapDispatchToProps = (dispatch: any): any => ({
@@ -154,9 +183,11 @@ const mapDispatchToProps = (dispatch: any): any => ({
     dispatch(actions.hoverOn({ blurb, name, alignedScore }));
   },
   hoverOff: () => dispatch(actions.hoverOff()),
-  togglePortfolio: (e: any) =>
-    dispatch(actions.togglePortfolio(e.target.value)),
-  filterSector: (e: any) => dispatch(actions.filterSector(e.target.value))
+  togglePortfolio: (e: any) => dispatch(actions.togglePortfolio(e.target.value)),
+  filterSector: (e: any) => dispatch(actions.filterSector(e.target.value)),
+  toggleStocksVisualizer: () => dispatch(actions.toggleStocksVisualizer()),
+  setTopStocksFilter: (payload: number) => dispatch(actions.setTopStocksFilter(payload)),
+  toggleBacktestPortfolioModal: () => dispatch(actions.toggleBacktestPortfolioModal()),
 });
 
 export default connect(

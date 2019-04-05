@@ -274,7 +274,10 @@ class IssuePie extends Component<Props> {
       <div
         className="issue-box"
         key={ name }
-        onMouseEnter={ () => handleMouseEnter(blurb, name, alignedScore) }
+        // prevent handleMouseEnter is not a func error
+        onMouseEnter={ () => handleMouseEnter
+          ? handleMouseEnter(blurb, name, alignedScore)
+          : null }
         onMouseLeave={ handleMouseLeave }
       >
         <div className="issue-pie" key={ name } id={ name.split(" ").join("-") }>

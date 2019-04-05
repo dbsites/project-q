@@ -4,6 +4,8 @@
   eval $(aws ecr get-login --no-include-email --region us-west-2)
   docker --version
 
+  npm install
+
   # Build docker image based on dockerfile-prod
   # NO SPACES between scopes e.g. scopes-1,scopes-2,scopes-3
   docker build -t dbsites/ethiq -f Dockerfile-prod --build-arg DATABASE_MIGRATIONS=0 --build-arg DATABASE_SCOPES= .

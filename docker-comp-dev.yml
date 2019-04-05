@@ -7,6 +7,11 @@
 version: "3"
 services:
 
+  redis:
+    image: redis:latest
+    container_name: "redis"
+    ports:
+      - "6379:6379"
   dev:
     image: dbsites/ethiq-dependencies
     container_name: "ethiq-dev"
@@ -14,7 +19,7 @@ services:
       - "3000:3000"
     volumes:
       - ./:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
+      - ./node_modules:/usr/src/app/node_modules
     depends_on:
       - postgres-db
       - postgres-data
@@ -32,6 +37,8 @@ services:
       - ./scripts/postgres-db:/postgres-db
     depends_on:
       - postgres-data
+    ports:
+      - "5432:5432"
 
   postgres-data:
     image: busybox

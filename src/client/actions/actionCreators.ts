@@ -356,6 +356,37 @@ export const filterSector = (sec: string) => ({
   payload: sec
 })
 
+export const toggleStocksVisualizer = () => ({
+  type: types.TOGGLE_STOCKS_VISUALIZER,
+});
+
+export const setStocksVisualizerData = (payload: any) => ({
+  type: types.SET_STOCKS_VISUALIZER_DATA,
+  payload,
+});
+
+export const setTopStocksFilter = (payload: number) => ({
+  type: types.SET_TOP_STOCKS_COUNT,
+  payload,
+});
+
+export const calcStocksVisualizerPending = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_PENDING,
+});
+export const calcStocksVisualizerSuccess = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_SUCCESS,
+});
+export const calcStocksVisualizerError = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_ERROR,
+});
+export const calcStocksVisualizerStop = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_STOP,
+});
+
+export const toggleBacktestPortfolioModal = () => ({
+  type: types.TOGGLE_BACKTEST_PORTFOLIO_MODAL,
+});
+
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
   fetch('/api/companyList')

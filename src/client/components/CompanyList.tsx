@@ -21,8 +21,11 @@ const CompanyList = (props: any) => {
     userIssues,
     issueAbbrvs,
     selectedCompany,
+    toggleStocksVisualizer,
+    filterSector,
+    isStocksVisualizerActive,
+    setTopStocksFilter,
     // togglePortfolio,
-    filterSector
   } = props;
   const { issueMatcher } = issueMatch;
   const issueNamesArray: any[] = [];
@@ -278,7 +281,34 @@ const CompanyList = (props: any) => {
                 Utilities
               </option>
             </select>
+            <select
+              placeholder='backtest portfolio'
+              title='backtest portfolio'
+              style={{marginRight: 0, width: 'auto'}}
+              value={props.topStocksFilter}
+              onChange={e => setTopStocksFilter(+e.target.value)}>
+              {[10, 25, 50, 100].map((el: number) => (
+                <option
+                  className="sector-option"
+                  key={el}
+                  value={el}
+                >{`Backtest Top ${el}`}</option>
+              ))}
+            </select>
           </div>
+          <button
+            onClick={props.toggleBacktestPortfolioModal}
+            className='question-mark'>?</button>
+          {companyList.length &&
+            <button
+              className="selected active"
+              onClick={toggleStocksVisualizer}
+            >
+              {isStocksVisualizerActive
+                ? 'Real Time'
+                : 'Backtest'}
+            </button>
+          }
         </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">
