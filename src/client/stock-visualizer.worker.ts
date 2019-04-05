@@ -28,11 +28,19 @@ onmessage = (e) => {
       req.open("GET", XLSX_FILE_URL, true);
       req.responseType = "arraybuffer";
 
+      req.onerror = (e: any) => {
+        console.log('ERROR', e);
+        return sendMessage({
+          event: 'ERROR',
+          data: `Error. ${e.statusText || 'Something went wrong.'}`
+        });
+      }
+
       req.onload = () => {
         if(req.status !== 200) {
           return sendMessage({
             event: 'ERROR',
-            data: `Error. ${req && req.statusText}`
+            data: `Error. ${req.statusText || 'Something went wrong.'}`
           });
         }
 
