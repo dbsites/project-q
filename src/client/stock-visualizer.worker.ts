@@ -2,7 +2,8 @@ import * as XLSX from 'xlsx';
 import * as moment from 'moment';
 
 const sendMessage: any = self.postMessage;
-const XLSX_FILE_URL = '/UpdatedHistoricalDataFull4.xlsx';
+// const XLSX_FILE_URL = '/UpdatedHistoricalDataFull4.xlsx';
+const XLSX_FILE_URL = 'https://s3-us-west-2.amazonaws.com/elasticbeanstalk-us-west-2-295078398723/UpdatedHistoricalDataFull4.xlsx';
 
 onmessage = (e) => {
 
@@ -48,24 +49,10 @@ onmessage = (e) => {
         }));
 
         const filteredRaw = raw2.filter((el: any) => ~(stocksList.indexOf(el.name)));
-        // console.log(filteredRaw.map(el => el.name), 'filteredRaw');
 
         const rawLengthWithoutSp500 = (filteredRaw.length - 1);
 
-        // console.log(stocksList, 'need');
-        // console.log(filteredRaw.map((el: any) => el.name), 'found');
-
-        // if we have no in XLSX_FILE_URL such stock NAME
-        // if((+topStocksFilter) !== (+rawLengthWithoutSp500)) {
-        //   // throw new Error('test');
-        //   return sendMessage({
-        //     event: 'ERROR',
-        //     data: `Error. There is some companies that not represented in HistoricalData workbook. Finded ${rawLengthWithoutSp500} companies instead of ${topStocksFilter}`
-        //   });
-        // }
-
         if(!rawLengthWithoutSp500) {
-          // throw new Error('test');
           return sendMessage({
             event: 'ERROR',
             data: `Error. Companies with such names not found.`
