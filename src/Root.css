@@ -542,3 +542,42 @@ body {
   font-style: italic;
   justify-content: center;
 }
+
+.button-container{
+  background: grey;
+  border-radius: 4px;
+  display: inline-block;
+  padding: 2px;
+  width: 165px;
+  font-size: 13px;
+  height: 28px;
+  margin-left: 20px;
+
+}
+
+.inline{
+  display: inline-block;
+}
+
+.button{
+  border-radius: 5px;
+  text-align: center;
+  width: 71px;
+  background: darkgray;
+  transition: background.2s;
+  height: 19px;
+}
+
+.button:hover{
+  background: #4CAF50;
+  color: white;
+}
+
+.realtest{
+  margin-left: 3px;
+}
+
+.button-active {
+  background: #4CAF50;
+  color: white;
+}
