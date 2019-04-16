@@ -235,14 +235,16 @@ const CompanyList = (props: any) => {
             S&P 500
           </button> */}
           <div id="filter-sectors">
-            <select
+            {/* filter all dropdown menu */}
+            <select 
+              className='dropdown-filters'
               id="filter-input"
               name="filter"
               placeholder="Filter by sector"
               onChange={e => filterSector(e)}
             >
-              <option className="sector-option" value="Filter All">
-                Filter All
+              <option className="sector-option" value="Filter by Sector">
+                Filter by Sector
               </option>
               <option className="sector-option" value="Consumer Discretionary">
                 Consumer Discretionary
@@ -281,7 +283,9 @@ const CompanyList = (props: any) => {
                 Utilities
               </option>
             </select>
+            {/* top25 dropdown menu */}
             <select
+              className='dropdown-filters'
               placeholder='backtest portfolio'
               title='backtest portfolio'
               style={{marginRight: 0, width: 'auto'}}
