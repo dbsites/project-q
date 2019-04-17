@@ -1,5 +1,11 @@
 services:
 - docker
+before_script:
+- nvm install 10.15.3
+- nvm use 10.15.3
+- node -v
+- npm install
+- ls
 script:
 - docker-compose -f docker-comp-test.yml up --abort-on-container-exit
 before_deploy:

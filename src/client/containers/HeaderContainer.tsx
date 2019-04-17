@@ -23,13 +23,13 @@ let Header = (props: any) => {
   // Header Links depend on user auth status
   const headerRight = [];
   if (isAuth) {
-    headerRight.push(<HeaderLink className={logout.className} linkKey={logout.linkKey} linkRoute={logout.linkRoute as string}>{logout.linkText}</HeaderLink>);
-    headerRight.push(<HeaderModal className={restart.className} linkKey={restart.linkKey} onClick={() => setModal('reset')}>{restart.linkText}</HeaderModal>);
-    headerRight.push(<HeaderLink className={home.className} linkKey={home.linkKey} linkRoute={home.linkRoute as string}>{home.linkText}</HeaderLink>);
-    headerRight.push(<HeaderModal className={screen.className} linkKey={screen.linkKey} onClick={() => setModal('screen')}>{screen.linkText}</HeaderModal>);
+    headerRight.push(<HeaderLink key={1} className={logout.className} linkKey={logout.linkKey} linkRoute={logout.linkRoute as string}>{logout.linkText}</HeaderLink>);
+    headerRight.push(<HeaderModal key={2} className={restart.className} linkKey={restart.linkKey} onClick={() => setModal('reset')}>{restart.linkText}</HeaderModal>);
+    headerRight.push(<HeaderLink key={3} className={home.className} linkKey={home.linkKey} linkRoute={home.linkRoute as string}>{home.linkText}</HeaderLink>);
+    headerRight.push(<HeaderModal key={4} className={screen.className} linkKey={screen.linkKey} onClick={() => setModal('screen')}>{screen.linkText}</HeaderModal>);
   } else {
-    headerRight.push(<HeaderLink className={register.className} linkKey={register.linkKey} linkRoute={register.linkRoute as string}>{register.linkText}</HeaderLink>);
-    headerRight.push(<HeaderLink className={login.className} linkKey={login.linkKey} linkRoute={login.linkRoute as string}>{login.linkText}</HeaderLink>);
+    headerRight.push(<HeaderLink key={1} className={register.className} linkKey={register.linkKey} linkRoute={register.linkRoute as string}>{register.linkText}</HeaderLink>);
+    headerRight.push(<HeaderLink key={2} className={login.className} linkKey={login.linkKey} linkRoute={login.linkRoute as string}>{login.linkText}</HeaderLink>);
   }
 
   // set modal if modal active
