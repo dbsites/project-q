@@ -464,7 +464,7 @@
 }
 
 .no-upload {
-  background-color: #B0B0B0;
+  background-color: #b0b0b0;
   border-radius: 3px;
   color: #ffffff;
   padding: 1% 1.5%;
@@ -474,7 +474,7 @@
 }
 
 #cl-select .active {
-  background-color: #25B73F;
+  background-color: #25b73f;
   border-radius: 3px;
   color: #ffffff;
   padding: 1% 1.5%;
@@ -503,9 +503,9 @@
 }
 
 .question-mark {
-  color:white;
-  background-color: grey;
-  border-color: whitesmoke 
+  color: white;
+  background-color: darkgrey;
+  border-color: whitesmoke;
 }
 
 #cl-nav {
