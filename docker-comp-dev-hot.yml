@@ -14,7 +14,7 @@ services:
       - "8080:8080"
     volumes:
       - ./:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
+      # - node_modules:/usr/src/app/node_modules
     command: ["npm", "run", "dev-client"]
   server:
     image: dbsites/ethiq-dependencies
@@ -24,7 +24,7 @@ services:
     volumes:
       - ./:/usr/src/app
       - dist:/usr/src/app/dist
-      - node_modules:/usr/src/app/node_modules
+      # - node_modules:/usr/src/app/node_modules
     depends_on:
       - postgres-db
       - postgres-data

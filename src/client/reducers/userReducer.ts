@@ -84,10 +84,8 @@ const userReducer = (state: UserState = initialUserState, action: any): UserStat
 
     case actions.FETCH_AUTH_SUCCESS:
     case actions.FETCH_FORM_SUCCESS:
-      console.log(response, "RESPOSE");
       if (response.issuesSelected) {
         Object.keys(response.issuesSelected).forEach((issue) => {
-          console.log('ISSSUE', issue)
           response.issuesSelected[issue] = {
             position: response.issuesSelected[issue].position,
             weight: response.issuesSelected[issue].weight
