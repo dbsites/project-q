@@ -105,7 +105,7 @@ class StockVisualizerContainer extends React.Component<any> {
 
     // const STOCKS_COUNT = portfolioStocks.length; // top 50
     // console.log(portfolioStocks.length, 'portfolioStocks.length');
-    console.log(companiesCount, 'companiesCount');
+    // console.log(companiesCount, 'companiesCount');
 
     const STOCKS_COUNT = companiesCount; // top 50
     // each share is fair, so

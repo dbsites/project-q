@@ -215,6 +215,17 @@ const CompanyList = (props: any) => {
       return companyScorePerIssueArray;
     };
 
+    let realtimeStyle;
+    let backtestStyle;
+    if (isStocksVisualizerActive) {
+      realtimeStyle = 'realtest inline button';
+      backtestStyle = 'backtime inline button button-active'
+    } else {
+      realtimeStyle = 'realtest inline button button-active';
+      backtestStyle = 'backtime inline button'
+    }
+
+
     return (
       <div className="cl-quad" id="quad-company-list">
         <div id="cl-select">
@@ -243,7 +254,11 @@ const CompanyList = (props: any) => {
               placeholder="Filter by sector"
               onChange={e => filterSector(e)}
             >
+<<<<<<< HEAD
               <option className="sector-option" value="Filter by Sector">
+=======
+              <option className="sector-option" value="Filter All">
+>>>>>>> 81a6855136d0af5de16e053ef1221b580b193359
                 Filter by Sector
               </option>
               <option className="sector-option" value="Consumer Discretionary">
@@ -300,19 +315,27 @@ const CompanyList = (props: any) => {
               ))}
             </select>
           </div>
+
+          {companyList.length &&
+            
+            // <button
+            //   className="selected active"
+            //   onClick={toggleStocksVisualizer}
+            // >
+            //   {isStocksVisualizerActive
+            //     ? 'Real Time'
+            //     : 'Backtest'}
+            // </button>
+            <div className='button-container'>
+              <div className={backtestStyle} onClick={toggleStocksVisualizer}> Backtest</div>
+              <div className={realtimeStyle} onClick={toggleStocksVisualizer}> Real Time</div>
+            </div>
+          }
           <button
             onClick={props.toggleBacktestPortfolioModal}
-            className='question-mark'>?</button>
-          {companyList.length &&
-            <button
-              className="selected active"
-              onClick={toggleStocksVisualizer}
-            >
-              {isStocksVisualizerActive
-                ? 'Real Time'
-                : 'Backtest'}
-            </button>
-          }
+            className='question-mark'>?
+          </button>
+
         </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">
