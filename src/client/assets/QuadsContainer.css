@@ -17,7 +17,8 @@
 #quads-container {
   display: grid;
   height: 80vh;
-  grid-template-columns: minmax(80vh, 85vh) minmax(80vh, 85vh);
+  /* grid-template-columns: minmax(80vh, 85vh) minmax(80vh, 85vh); */
+  grid-template-columns: minmax(80vh, 100%) minmax(80vh, 100%);
   grid-template-rows: minmax(15vw, 20vw) minmax(20vw, 25vw);
   width: 100%;
   margin: 0 auto;
@@ -158,6 +159,13 @@
   margin: auto;
   width: 100%;
   height: 99%;
+}
+.stock-container--visualizer {
+  /* height: auto; */
+  height: 100%;
+  flex-direction: column;
+  display: grid;
+  position: relative;
 }
 
 .stock-container p {

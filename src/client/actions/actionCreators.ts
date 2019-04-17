@@ -95,7 +95,6 @@ export const fetchForm = (
     body: JSON.stringify(formFields)
   })
     .then((response: Response) => {
-      console.log(response, 'FETCH_REQUEST_RESPONSE')
       // If successful(200), return parsed response, otherwise dispatch failure and throw error
       if (response.status === 200) return response.json();
       if (response.status === 401)
@@ -210,7 +209,6 @@ export const fetchAuth = () => (dispatch: Dispatch) => {
   })
     .then((response: Response) => response.json())
     .then((response: IFormFetchSuccessResponseObject | INoAuthObject) => {
-      console.log(response, 'FETCH_AUTH')
       if (!response.isAuth) dispatch(fetchAuthFailure());
       else
         dispatch(fetchAuthSuccess(response as IFormFetchSuccessResponseObject));
@@ -355,6 +353,37 @@ export const filterSector = (sec: string) => ({
   type: types.FILTER_SECTOR,
   payload: sec
 })
+
+export const toggleStocksVisualizer = () => ({
+  type: types.TOGGLE_STOCKS_VISUALIZER,
+});
+
+export const setStocksVisualizerData = (payload: any) => ({
+  type: types.SET_STOCKS_VISUALIZER_DATA,
+  payload,
+});
+
+export const setTopStocksFilter = (payload: number) => ({
+  type: types.SET_TOP_STOCKS_COUNT,
+  payload,
+});
+
+export const calcStocksVisualizerPending = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_PENDING,
+});
+export const calcStocksVisualizerSuccess = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_SUCCESS,
+});
+export const calcStocksVisualizerError = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_ERROR,
+});
+export const calcStocksVisualizerStop = () => ({
+  type: types.CALC_STOCKS_VISUALIZER_STOP,
+});
+
+export const toggleBacktestPortfolioModal = () => ({
+  type: types.TOGGLE_BACKTEST_PORTFOLIO_MODAL,
+});
 
 // --- ASYNC --- //
 export const fetchCompanyList = () => (dispatch: any, getState: any) => {
