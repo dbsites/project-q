@@ -3,22 +3,22 @@
  * @description Stock API Presentational Component
  */
 
-import * as React from 'react';
+import * as React from "react";
 
 // Garron's brilliant multi-line implementation for adding commas to price value
 const commafy = (value: number) => {
   const dollars = value
     .toString()
-    .split('.')[0]
-    .split('')
+    .split(".")[0]
+    .split("")
     .reverse()
     .reduce((numString: string, next: string, i: number) => {
       if (i % 3 === 0 && i !== 0) numString = `${next},` + numString;
       else numString = next + numString;
       return numString;
-    }, '');
+    }, "");
 
-  const cents = value.toString().split('.')[1] || '00';
+  const cents = value.toString().split(".")[1] || "00";
 
   return `${dollars}.${cents}`;
 };
@@ -48,7 +48,9 @@ const StockGraph = (props: any) => {
       volume = commafy(props.stockData.volume);
     }
     // StockDIO API
-    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=693547058288464CAF34150B9A3F77D4&symbol=${ticker.split('.')[0]}&indices=SPX&includeCompetitors=false&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
+    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=2B1593840F1B4446A9537D12E212FFFD&symbol=${
+      ticker.split(".")[0]
+    }&indices=SPX&includeCompetitors=false&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
     display = (
       <React.Fragment>
         <iframe frameBorder="0" scrolling="no" src={URI} />
