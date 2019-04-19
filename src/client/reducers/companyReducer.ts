@@ -282,9 +282,9 @@ const companyReducer = (state: any = initialCompanyState, action: any): any => {
 
         if (
           topListCompany[categoryName].alignedScore !==
-            highestScoreCompany[categoryName].alignedScore &&
+          highestScoreCompany[categoryName].alignedScore &&
           topListCompany[categoryName].alignedScore !==
-            lowestScoreCompany[categoryName].alignedScore
+          lowestScoreCompany[categoryName].alignedScore
         ) {
           sortedList = companyArray.slice(0).sort(
             (a: any, b: any): any => {
