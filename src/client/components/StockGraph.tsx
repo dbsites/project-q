@@ -48,7 +48,9 @@ const StockGraph = (props: any) => {
       volume = commafy(props.stockData.volume);
     }
     // StockDIO API
-    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=693547058288464CAF34150B9A3F77D4&symbol=${ticker.split('.')[0]}&indices=SPX&includeCompetitors=false&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
+    const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=693547058288464CAF34150B9A3F77D4&symbol=${
+      ticker.split(".")[0]
+      }&indices=SPX&includeCompetitors=false&tooltipsStyle=None&motif=Topbar&palette=Relief&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000`;
     display = (
       <React.Fragment>
         <iframe frameBorder="0" scrolling="no" src={URI} />
