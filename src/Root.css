@@ -10,21 +10,21 @@ html {
 
 body {
   background: #000000;
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   margin: 0;
 }
 
 /* Wrapper for Body/Footer - 92vh + 8vh = 100vh */
 .screen {
   display: grid;
-  grid-template-rows: 92vh 8vh; 
+  grid-template-rows: 92vh 8vh;
   height: 100vh;
   width: 100vw;
 }
 
 /* Form Header */
 .form-header {
-  color: #FFFFFF;
+  color: #ffffff;
   letter-spacing: 5px;
   margin-top: 1.5vh;
 
@@ -44,8 +44,8 @@ body {
 }
 
 .form-header-hr hr {
-  background-color: #FFFFFF;
-  color: #FFFFFF;
+  background-color: #ffffff;
+  color: #ffffff;
   border: none;
   height: 1px;
 }
@@ -57,7 +57,6 @@ body {
 .form-header-tagline {
   font-size: 1.1rem;
 }
-
 
 /* Header */
 .header {
@@ -74,7 +73,7 @@ body {
 }
 
 .header-left {
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   float: left;
   padding: 2vh 20px;
@@ -85,8 +84,8 @@ body {
   float: right;
 }
 
-.header-right:hover{
-  color: #FFFFFF;
+.header-right:hover {
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -94,18 +93,18 @@ body {
 
 .header-right-screen {
   display: none;
-  background: #25B73F;
+  background: #25b73f;
   border-radius: 3px;
-  color: #FFFFFF;
+  color: #ffffff;
   margin: 3vh 10px;
   padding: 0.5vh 10px;
   float: right;
 }
 
-.header-right-screen:hover{
+.header-right-screen:hover {
   display: none;
   background: none;
-  color: #25B73F;
+  color: #25b73f;
   cursor: pointer;
 }
 
@@ -131,11 +130,11 @@ body {
   padding: 0 2.5vw;
 
   display: grid;
-  grid-template-rows: 28vh 62vh 
+  grid-template-rows: 28vh 62vh;
 }
 
 .dashboard-header {
-  color: #FFFFFF;
+  color: #ffffff;
 
   display: inherit;
   justify-content: center;
@@ -169,7 +168,7 @@ body {
   margin: 1vh auto;
   width: 100%;
 
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   display: flex;
   justify-content: center;
@@ -178,7 +177,7 @@ body {
 
 .dashboard-side-button:hover {
   cursor: pointer;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .dashboard-side > .invalid {
@@ -208,7 +207,7 @@ body {
   margin: 0 auto 6vh auto;
   width: 50%;
 
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   display: flex;
   justify-content: center;
@@ -216,7 +215,7 @@ body {
 }
 
 .dashboard-footer-button:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -246,7 +245,7 @@ body {
 /* Login/Register Style - Input Form Fields */
 .input-form .input-div {
   background: #000000;
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: 1px solid #ffffff;
   font-size: 1.2rem;
   margin: 0.3vh 0;
 
@@ -254,21 +253,21 @@ body {
 }
 
 .input-form .input-form-header {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.8rem;
   margin-bottom: 3vh;
   text-align: center;
 }
 
 .input-form .input-form-text {
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 1.2rem;
   margin-bottom: 3vh;
   text-align: center;
 }
 
 .input-form .input-field-label {
-  color: #FFFFFF;
+  color: #ffffff;
   display: inline-block;
   margin: 0 4px;
   padding: 1vh 0.1vw;
@@ -279,8 +278,8 @@ body {
   background: #000000;
   border: none;
   box-sizing: border-box;
-  color: #FFFFFF;
-  font-family: 'Cinzel', serif;
+  color: #ffffff;
+  font-family: "Cinzel", serif;
   font-size: 1.2rem;
   font-weight: bold;
   outline: none;
@@ -307,7 +306,7 @@ body {
 }
 
 .input-form .input-check-label {
-  color: #FFFFFF;
+  color: #ffffff;
   display: inline-block;
   position: relative;
   padding: 0 0 0 1.8vw;
@@ -337,8 +336,8 @@ body {
 }
 
 .input-form .input-check-label input:checked ~ .checkmark {
-  background-color: #FFFFFF;
-  border: 1px solid #FFFFFF;
+  background-color: #ffffff;
+  border: 1px solid #ffffff;
 }
 
 /* Create checkmark - hidden when not checked */
@@ -374,14 +373,14 @@ body {
 
 .input-form .submit-button {
   color: #666666;
-  font-size: 2.0rem;
+  font-size: 2rem;
   font-weight: bold;
   outline: none;
   padding: 10px 24px;
 }
 
 .input-form .submit-button:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -398,7 +397,7 @@ body {
 }
 
 .input-form .change-form-link a:hover {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 /* Form Error Styling */
@@ -431,19 +430,19 @@ body {
   display: block;
   justify-content: center;
   align-items: center;
-  
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .issue-card:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   /* border: 3px solid #FFFFFF; */
 }
 
 .issue-card-selected {
   /* border: 3px solid #FFFFFF; */
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .issue-card-unavailable {
@@ -474,11 +473,11 @@ body {
 .terms-dashboard-container a {
   color: inherit;
   text-decoration: underline;
-  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .terms-dashboard-container a:hover {
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .terms-header {
@@ -502,7 +501,7 @@ body {
 }
 
 .forgot-password a:hover {
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -512,8 +511,8 @@ body {
   height: 4px;
   background: #528161;
   outline: none;
-  -webkit-transition: .2s;
-  transition: opacity .2s;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 
 .slider-font {
@@ -543,7 +542,7 @@ body {
   justify-content: center;
 }
 
-.button-container{
+.button-container {
   background: grey;
   border-radius: 4px;
   display: inline-block;
@@ -551,33 +550,33 @@ body {
   width: 165px;
   font-size: 13px;
   height: 28px;
-  margin-left: 20px;
-
+  /* margin-left: 20px; */
 }
 
-.inline{
+.inline {
   display: inline-block;
 }
 
-.button{
+.button {
   border-radius: 5px;
   text-align: center;
   width: 71px;
-  background: darkgray;
-  transition: background.2s;
+  background: black;
+  color: white;
   height: 19px;
 }
 
-.button:hover{
-  background: #4CAF50;
+.button:hover {
+  background: #4caf50;
   color: white;
+  transition: background.3s;
 }
 
-.realtest{
+.realtest {
   margin-left: 3px;
 }
 
 .button-active {
-  background: #4CAF50;
+  background: #4caf50;
   color: white;
 }
