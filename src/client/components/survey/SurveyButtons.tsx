@@ -14,12 +14,16 @@ interface SurveyButtonProps {
   questionId: string,
 }
 
+const AGREE = true;
+const DISAGREE = false;
+const UNSURE = null;
+
 const SurveyButtons = (props: SurveyButtonProps) => {
   // Destructure Props
   const {answerQuestion, issueId, questionAgree, questionId } = props;
 
   // Helper question that generates payload object
-  const callAnswerQuestion = (agreeVal: boolean): any => {
+  const callAnswerQuestion = (agreeVal: any): any => {
     const payload: AnswerPayload = {
       agree: agreeVal,
       issueId: issueId,
@@ -29,22 +33,27 @@ const SurveyButtons = (props: SurveyButtonProps) => {
   }
 
   let agreeButton: JSX.Element;
+  let unsureButton: JSX.Element;
   let disagreeButton: JSX.Element;
 
   if (questionAgree === null) {
-    agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(true)}>Agree</div>;
-    disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
+    agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(AGREE)}>Agree</div>;
+    unsureButton = <div className="survey-button survey-selected" >Unsure</div>;
+    disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(DISAGREE)} >Disagree</div>;
   } else if (questionAgree) {
     agreeButton = <div className="survey-button survey-selected" >Agree</div>;
-    disagreeButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(false)} >Disagree</div>;
+    unsureButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(UNSURE)} >Unsure</div>;
+    disagreeButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(DISAGREE)} >Disagree</div>;
   } else {
-    agreeButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(true)} >Agree</div>;
+    agreeButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(AGREE)} >Agree</div>;
+    unsureButton = <div className="survey-button survey-deselected" onClick={() => callAnswerQuestion(UNSURE)} >Unsure</div>;
     disagreeButton = <div className="survey-button survey-selected" >Disagree</div>;
   }
 
   return (
     <div className="survey-question-buttons">
       {disagreeButton}
+      {unsureButton}
       {agreeButton}
     </div>
   )

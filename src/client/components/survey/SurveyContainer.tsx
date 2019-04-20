@@ -23,6 +23,8 @@ import SurveyQuestion from './SurveyQuestion';
 import { IssueQuestionsState, SurveyState } from '../../reducers/types';
 import ProgressBar from './ProgressBar';
 
+const ANSWERS_COUNT = 3;
+
 const SurveyContainer = (props: any): any => {
   const {
     answerQuestion, submitSurvey, updateIssuePosition, updateIssuesSelected, prevPage,  // Actions
@@ -86,7 +88,52 @@ const SurveyContainer = (props: any): any => {
 
   // Helper function to update Issues if user clicks "Next Issue"
   const callUpdateIssue = () => {
-    const position = getPosition(survey, currentIssueId);
+    // deep copy of object
+    const newSurvey = JSON.parse(JSON.stringify(survey));
+    const unsureAnswersCount = getOutstandingQuestionsCount(newSurvey, currentIssueId);
+
+    // if all 3 answers are 'unsure' - STOP and show alert
+    if(unsureAnswersCount === ANSWERS_COUNT) {
+      alert('you must answer "Agree" or "Disagree" to at least one of the 3 questions');
+      return;
+    }
+
+    // if has at least 1 'unsure' answer
+    if(unsureAnswersCount !== 0){
+      const agreeAnswersCount = Object
+        .keys(newSurvey[currentIssueId])
+        .filter(key => newSurvey[currentIssueId][key].agree === true)
+        .length;
+      const disagreeAnswersCount = Object
+        .keys(newSurvey[currentIssueId])
+        .filter(key => newSurvey[currentIssueId][key].agree === false)
+        .length;
+
+      if(agreeAnswersCount > disagreeAnswersCount){
+        Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
+          if(newSurvey[currentIssueId][key].agree === null){
+            newSurvey[currentIssueId][key].agree = true;
+          }
+        });
+      }else if(agreeAnswersCount === disagreeAnswersCount){
+        Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
+          if(newSurvey[currentIssueId][key].agree === null){
+            newSurvey[currentIssueId][key].agree = Math.random() >= 0.5;
+          }
+        });
+      }else if(agreeAnswersCount < disagreeAnswersCount){
+        Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
+          if(newSurvey[currentIssueId][key].agree === null){
+            newSurvey[currentIssueId][key].agree = false;
+          }
+        });
+      }
+    }
+    // console.log(Object
+    //   .keys(newSurvey[currentIssueId])
+    //   .map((el: any) => newSurvey[currentIssueId][el].agree), 'test');
+
+    const position = getPosition(newSurvey, currentIssueId);
     return updateIssuePosition(currentIssueId, position)
   }
 
@@ -109,26 +156,20 @@ const SurveyContainer = (props: any): any => {
   }
 
   // Helper function that generates left buttons
-  const generateRightButton = (issueId: string) => {
-    // If there are outstanding questions, return invalid button
-    if (getOutstandingQuestionsCount(survey, issueId)) {
-      // If 1 or 2 questions answered, return clear button only
-      return (
-        <div className="dashboard-side-button invalid" >
-          {"Next >"}
-        </div>
-      )
-    }
+  const generateRightButton = () => {
     return (
       // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
-      <div className="dashboard-side-button" onClick={() => callUpdateIssue()}>
+      <div
+        className="dashboard-side-button"
+        onClick={() => callUpdateIssue()}
+      >
         {"Next >"}
       </div>
     )
   }
 
   const leftButton = generateLeftButton();
-  const rightButton = generateRightButton(currentIssueId);
+  const rightButton = generateRightButton();
 
   return (
     <SurveyPage
