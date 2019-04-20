@@ -109,19 +109,27 @@ const SurveyContainer = (props: any): any => {
         .filter(key => newSurvey[currentIssueId][key].agree === false)
         .length;
 
+      // if agree answers more than disagree
+      // set 'agree' value to all 'unsure'
       if(agreeAnswersCount > disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
           if(newSurvey[currentIssueId][key].agree === null){
             newSurvey[currentIssueId][key].agree = true;
           }
         });
-      }else if(agreeAnswersCount === disagreeAnswersCount){
+      }
+      // if agree answers equals disagree
+      // set RANDOM value to all 'unsure'
+      else if(agreeAnswersCount === disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
           if(newSurvey[currentIssueId][key].agree === null){
             newSurvey[currentIssueId][key].agree = Math.random() >= 0.5;
           }
         });
-      }else if(agreeAnswersCount < disagreeAnswersCount){
+      }
+      // if agree answers less than disagree
+      // set 'disagree' value to all 'unsure'
+      else if(agreeAnswersCount < disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
           if(newSurvey[currentIssueId][key].agree === null){
             newSurvey[currentIssueId][key].agree = false;
@@ -129,9 +137,6 @@ const SurveyContainer = (props: any): any => {
         });
       }
     }
-    // console.log(Object
-    //   .keys(newSurvey[currentIssueId])
-    //   .map((el: any) => newSurvey[currentIssueId][el].agree), 'test');
 
     const position = getPosition(newSurvey, currentIssueId);
     return updateIssuePosition(currentIssueId, position)
@@ -155,10 +160,9 @@ const SurveyContainer = (props: any): any => {
     )
   }
 
-  // Helper function that generates left buttons
+  // Helper function that generates right buttons
   const generateRightButton = () => {
     return (
-      // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
       <div
         className="dashboard-side-button"
         onClick={() => callUpdateIssue()}
