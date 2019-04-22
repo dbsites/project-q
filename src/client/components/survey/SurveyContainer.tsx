@@ -115,6 +115,12 @@ const SurveyContainer = (props: any): any => {
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
           if(newSurvey[currentIssueId][key].agree === null){
             newSurvey[currentIssueId][key].agree = true;
+            // emit users choise
+            answerQuestion({
+              agree: true,
+              issueId: currentIssueId,
+              questionId: key,
+            });
           }
         });
       }
@@ -123,7 +129,14 @@ const SurveyContainer = (props: any): any => {
       else if(agreeAnswersCount === disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
           if(newSurvey[currentIssueId][key].agree === null){
-            newSurvey[currentIssueId][key].agree = Math.random() >= 0.5;
+            const trueOrFalse = Math.random() >= 0.5;
+            newSurvey[currentIssueId][key].agree = trueOrFalse;
+            // emit users choise
+            answerQuestion({
+              agree: trueOrFalse,
+              issueId: currentIssueId,
+              questionId: key,
+            });
           }
         });
       }
@@ -133,6 +146,12 @@ const SurveyContainer = (props: any): any => {
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
           if(newSurvey[currentIssueId][key].agree === null){
             newSurvey[currentIssueId][key].agree = false;
+            // emit users choise
+            answerQuestion({
+              agree: false,
+              issueId: currentIssueId,
+              questionId: key,
+            });
           }
         });
       }
