@@ -95,7 +95,7 @@ const SurveyContainer = (props: any): any => {
 
     // if all 3 answers are 'unsure' - STOP and show alert
     if(unsureAnswersCount === ANSWERS_COUNT) {
-      alert('you must answer "Agree" or "Disagree" to at least one of the 3 questions');
+      alert('You must answer "Agree" or "Disagree" to at least one of the 3 questions');
       return;
     }
 
