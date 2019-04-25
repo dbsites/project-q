@@ -1,6 +1,6 @@
 /**
  * @module SurveyButtons.tsx
- * @description Survey Question Agree/Disagree Buttons
+ * @description Survey Question Agree/Unsure/Disagree Buttons
  */
 
 import * as React from 'react';
@@ -14,9 +14,10 @@ interface SurveyButtonProps {
   questionId: string,
 }
 
-const AGREE = true;
-const DISAGREE = false;
-const UNSURE = null;
+export const AGREE = true;
+export const DISAGREE = false;
+export const UNSURE = undefined;
+export const UNCLIKED = null;
 
 const SurveyButtons = (props: SurveyButtonProps) => {
   // Destructure Props
@@ -36,15 +37,20 @@ const SurveyButtons = (props: SurveyButtonProps) => {
   let unsureButton: JSX.Element;
   let disagreeButton: JSX.Element;
 
-  if (questionAgree === null) {
+  if (questionAgree === UNCLIKED) {
+    agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(AGREE)}>Agree</div>;
+    unsureButton = <div className="survey-button" onClick={() => callAnswerQuestion(UNSURE)}>Unsure</div>;
+    disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(DISAGREE)} >Disagree</div>;
+  } else if (questionAgree === UNSURE) {
     agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(AGREE)}>Agree</div>;
     unsureButton = <div className="survey-button survey-selected" >Unsure</div>;
     disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(DISAGREE)} >Disagree</div>;
-  } else if (questionAgree) {
+  } else if (questionAgree === AGREE) {
     agreeButton = <div className="survey-button survey-selected" >Agree</div>;
     unsureButton = <div className="survey-button" onClick={() => callAnswerQuestion(UNSURE)} >Unsure</div>;
     disagreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(DISAGREE)} >Disagree</div>;
   } else {
+    // if DISAGREE
     agreeButton = <div className="survey-button" onClick={() => callAnswerQuestion(AGREE)} >Agree</div>;
     unsureButton = <div className="survey-button" onClick={() => callAnswerQuestion(UNSURE)} >Unsure</div>;
     disagreeButton = <div className="survey-button survey-selected" >Disagree</div>;

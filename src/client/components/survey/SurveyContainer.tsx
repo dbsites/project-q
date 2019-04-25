@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/actionCreators';
 
 // Import Selector Functions
-import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition, getQuestionsList } from '../../reducers/surveyReducer';
+import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getUnclickedQuestionsCount, getPosition, getQuestionsList } from '../../reducers/surveyReducer';
 import { getIssueName } from '../../reducers/issuesReducer';
 
 // Import Componenets
@@ -22,6 +22,7 @@ import SurveyQuestion from './SurveyQuestion';
 // Import Types
 import { IssueQuestionsState, SurveyState } from '../../reducers/types';
 import ProgressBar from './ProgressBar';
+import { AGREE, DISAGREE, /* UNCLIKED, */ UNSURE } from '../survey/SurveyButtons';
 
 const ANSWERS_COUNT = 3;
 
@@ -102,22 +103,22 @@ const SurveyContainer = (props: any): any => {
     if(unsureAnswersCount !== 0){
       const agreeAnswersCount = Object
         .keys(newSurvey[currentIssueId])
-        .filter(key => newSurvey[currentIssueId][key].agree === true)
+        .filter(key => newSurvey[currentIssueId][key].agree === AGREE)
         .length;
       const disagreeAnswersCount = Object
         .keys(newSurvey[currentIssueId])
-        .filter(key => newSurvey[currentIssueId][key].agree === false)
+        .filter(key => newSurvey[currentIssueId][key].agree === DISAGREE)
         .length;
 
       // if agree answers more than disagree
       // set 'agree' value to all 'unsure'
       if(agreeAnswersCount > disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
-          if(newSurvey[currentIssueId][key].agree === null){
-            newSurvey[currentIssueId][key].agree = true;
+          if(newSurvey[currentIssueId][key].agree === UNSURE){
+            newSurvey[currentIssueId][key].agree = AGREE;
             // emit users choise
             answerQuestion({
-              agree: true,
+              agree: AGREE,
               issueId: currentIssueId,
               questionId: key,
             });
@@ -128,7 +129,7 @@ const SurveyContainer = (props: any): any => {
       // set RANDOM value to all 'unsure'
       else if(agreeAnswersCount === disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
-          if(newSurvey[currentIssueId][key].agree === null){
+          if(newSurvey[currentIssueId][key].agree === UNSURE){
             const trueOrFalse = Math.random() >= 0.5;
             newSurvey[currentIssueId][key].agree = trueOrFalse;
             // emit users choise
@@ -144,11 +145,11 @@ const SurveyContainer = (props: any): any => {
       // set 'disagree' value to all 'unsure'
       else if(agreeAnswersCount < disagreeAnswersCount){
         Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
-          if(newSurvey[currentIssueId][key].agree === null){
-            newSurvey[currentIssueId][key].agree = false;
+          if(newSurvey[currentIssueId][key].agree === UNSURE){
+            newSurvey[currentIssueId][key].agree = DISAGREE;
             // emit users choise
             answerQuestion({
-              agree: false,
+              agree: DISAGREE,
               issueId: currentIssueId,
               questionId: key,
             });
@@ -181,6 +182,10 @@ const SurveyContainer = (props: any): any => {
 
   // Helper function that generates right buttons
   const generateRightButton = () => {
+    // if at least 1 button not clicked show nothing
+    if(getUnclickedQuestionsCount(survey, currentIssueId)){
+      return null;
+    }
     return (
       <div
         className="dashboard-side-button"
