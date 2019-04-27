@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions/actionCreators';
 
 // Import Selector Functions
-import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getUnclickedQuestionsCount, getPosition, getQuestionsList } from '../../reducers/surveyReducer';
+import { getQuestionIdList, getQuestionsObject, getOutstandingQuestionsCount, getPosition, getQuestionsList } from '../../reducers/surveyReducer';
 import { getIssueName } from '../../reducers/issuesReducer';
 
 // Import Componenets
@@ -22,9 +22,6 @@ import SurveyQuestion from './SurveyQuestion';
 // Import Types
 import { IssueQuestionsState, SurveyState } from '../../reducers/types';
 import ProgressBar from './ProgressBar';
-import { AGREE, DISAGREE, /* UNCLIKED, */ UNSURE } from '../survey/SurveyButtons';
-
-const ANSWERS_COUNT = 3;
 
 const SurveyContainer = (props: any): any => {
   const {
@@ -89,76 +86,7 @@ const SurveyContainer = (props: any): any => {
 
   // Helper function to update Issues if user clicks "Next Issue"
   const callUpdateIssue = () => {
-    // deep copy of object
-    const newSurvey = JSON.parse(JSON.stringify(survey));
-    const unsureAnswersCount = getOutstandingQuestionsCount(newSurvey, currentIssueId);
-
-    // if all 3 answers are 'unsure' - STOP and show alert
-    if(unsureAnswersCount === ANSWERS_COUNT) {
-      alert('You must answer "Agree" or "Disagree" to at least one of the 3 questions');
-      return;
-    }
-
-    // if has at least 1 'unsure' answer
-    if(unsureAnswersCount !== 0){
-      const agreeAnswersCount = Object
-        .keys(newSurvey[currentIssueId])
-        .filter(key => newSurvey[currentIssueId][key].agree === AGREE)
-        .length;
-      const disagreeAnswersCount = Object
-        .keys(newSurvey[currentIssueId])
-        .filter(key => newSurvey[currentIssueId][key].agree === DISAGREE)
-        .length;
-
-      // if agree answers more than disagree
-      // set 'agree' value to all 'unsure'
-      if(agreeAnswersCount > disagreeAnswersCount){
-        Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
-          if(newSurvey[currentIssueId][key].agree === UNSURE){
-            newSurvey[currentIssueId][key].agree = AGREE;
-            // emit users choise
-            answerQuestion({
-              agree: AGREE,
-              issueId: currentIssueId,
-              questionId: key,
-            });
-          }
-        });
-      }
-      // if agree answers equals disagree
-      // set RANDOM value to all 'unsure'
-      else if(agreeAnswersCount === disagreeAnswersCount){
-        Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
-          if(newSurvey[currentIssueId][key].agree === UNSURE){
-            const trueOrFalse = Math.random() >= 0.5;
-            newSurvey[currentIssueId][key].agree = trueOrFalse;
-            // emit users choise
-            answerQuestion({
-              agree: trueOrFalse,
-              issueId: currentIssueId,
-              questionId: key,
-            });
-          }
-        });
-      }
-      // if agree answers less than disagree
-      // set 'disagree' value to all 'unsure'
-      else if(agreeAnswersCount < disagreeAnswersCount){
-        Object.keys(newSurvey[currentIssueId]).forEach((key: any) => {
-          if(newSurvey[currentIssueId][key].agree === UNSURE){
-            newSurvey[currentIssueId][key].agree = DISAGREE;
-            // emit users choise
-            answerQuestion({
-              agree: DISAGREE,
-              issueId: currentIssueId,
-              questionId: key,
-            });
-          }
-        });
-      }
-    }
-
-    const position = getPosition(newSurvey, currentIssueId);
+    const position = getPosition(survey, currentIssueId);
     return updateIssuePosition(currentIssueId, position)
   }
 
@@ -180,24 +108,27 @@ const SurveyContainer = (props: any): any => {
     )
   }
 
-  // Helper function that generates right buttons
-  const generateRightButton = () => {
-    // if at least 1 button not clicked show nothing
-    if(getUnclickedQuestionsCount(survey, currentIssueId)){
-      return null;
+  // Helper function that generates left buttons
+  const generateRightButton = (issueId: string) => {
+    // If there are outstanding questions, return invalid button
+    if (getOutstandingQuestionsCount(survey, issueId)) {
+      // If 1 or 2 questions answered, return clear button only
+      return (
+        <div className="dashboard-side-button invalid" >
+          {"Next >"}
+        </div>
+      )
     }
     return (
-      <div
-        className="dashboard-side-button"
-        onClick={() => callUpdateIssue()}
-      >
+      // If all 3 questions answered (0 outstanding questions) return active clear and submit buttons
+      <div className="dashboard-side-button" onClick={() => callUpdateIssue()}>
         {"Next >"}
       </div>
     )
   }
 
   const leftButton = generateLeftButton();
-  const rightButton = generateRightButton();
+  const rightButton = generateRightButton(currentIssueId);
 
   return (
     <SurveyPage
