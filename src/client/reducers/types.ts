@@ -66,7 +66,7 @@ export interface SurveyState {
 };
 
 export interface AnswerPayload {
-  agree: any,
+  agree: boolean,
   issueId: string,
   questionId: string,
 }

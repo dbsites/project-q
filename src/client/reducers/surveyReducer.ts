@@ -6,7 +6,6 @@
 
 import actions from '../actions/actionTypes';
 import { SurveyState, QuestionState, IssueQuestionsState } from './types';
-import { UNSURE, UNCLIKED } from '../components/survey/SurveyButtons';
 
 // Define initial state
 const initialSurveyState: SurveyState = {};
@@ -124,21 +123,10 @@ export const getQuestionsList = (state: SurveyState): any => {
 export const getQuestionIdList = (state: SurveyState, issueId: string): string[] => Object.keys(state[issueId]);
 // Return survey questions object
 export const getQuestionsObject = (state: SurveyState, issueId: string): IssueQuestionsState => state[issueId];
-// Return count of questions whose answers are UNSURE
+// Return count of questions whose answers are still null
 export const getOutstandingQuestionsCount = (state: SurveyState, issueId: string): number => {
     const questionsObject = getQuestionsObject(state, issueId);
-    // let outstandingQuestions = Object.keys(questionsObject).filter(q => questionsObject[q].agree === null);
-    let outstandingQuestions = Object
-      .keys(questionsObject)
-      .filter(q => questionsObject[q].agree === UNSURE);
-    return outstandingQuestions.length;
-  };
-// Return count of questions whose answers are UNCLIKED
-export const getUnclickedQuestionsCount = (state: SurveyState, issueId: string): number => {
-    const questionsObject = getQuestionsObject(state, issueId);
-    let outstandingQuestions = Object
-      .keys(questionsObject)
-      .filter(q => questionsObject[q].agree === UNCLIKED);
+    let outstandingQuestions = Object.keys(questionsObject).filter(q => questionsObject[q].agree === null);
     return outstandingQuestions.length;
   };
 // Return overall issue position once user has answered three survey questions
