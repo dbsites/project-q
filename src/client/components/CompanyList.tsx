@@ -3,16 +3,16 @@
  * @description Company list quad displaying various categories
  */
 
-import * as React from 'react';
+import * as React from "react";
 
 // Import IssueID -> IssueName table for conversion
-import * as issueMatch from '../issueMatcher';
+import * as issueMatch from "../issueMatcher";
 
 // Import navigational links for company names
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 // Import loading GIF
-const loadingMovie = require('../assets/loading-movie.gif');
+const loadingMovie = require("../assets/loading-movie.gif");
 
 const CompanyList = (props: any) => {
   const {
@@ -24,7 +24,7 @@ const CompanyList = (props: any) => {
     toggleStocksVisualizer,
     filterSector,
     isStocksVisualizerActive,
-    setTopStocksFilter,
+    setTopStocksFilter
     // togglePortfolio,
   } = props;
   const { issueMatcher } = issueMatch;
@@ -42,11 +42,11 @@ const CompanyList = (props: any) => {
   } else {
     // Company names list
     const companyNames: any = companyList.map((company: any, index: any) => {
-      const bgColor = index % 2 === 0 ? 'black' : 'grey';
+      const bgColor = index % 2 === 0 ? "black" : "grey";
       return (
         <Link
           id={index}
-          className={'company-names-list ' + bgColor}
+          className={"company-names-list " + bgColor}
           to="#"
           key={index}
           onClick={e => props.selectCompany(e, company.ticker)}
@@ -58,14 +58,14 @@ const CompanyList = (props: any) => {
 
     // Company stock ticker names
     const companyTickers: any = companyList.map((company: any, index: any) => {
-      const bgColor = index % 2 === 0 ? 'black' : 'grey';
+      const bgColor = index % 2 === 0 ? "black" : "grey";
       return (
         <p
           id={index.toString()}
           key={index}
-          className={'company-list ' + bgColor}
+          className={"company-list " + bgColor}
         >
-          {company.ticker.split('.')[0]}
+          {company.ticker.split(".")[0]}
         </p>
       );
     });
@@ -74,7 +74,7 @@ const CompanyList = (props: any) => {
     const companyOverallScores = () => {
       const companyOverallScoresArray = [];
       let score: number = 0;
-      
+
       // Create array of user issue objects with converted name
       // const userIssuesArray = Object.keys(userIssues).map((issueID: any) => {
       //   return {
@@ -95,13 +95,13 @@ const CompanyList = (props: any) => {
           score = companyList[i].overallScore;
 
           let color = {
-            color: score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
+            color: score >= 70 ? "#16C33F" : score >= 40 ? "#FAEB00" : "#FA2929"
           };
 
-          const bgColor = i % 2 === 0 ? 'black' : 'grey';
+          const bgColor = i % 2 === 0 ? "black" : "grey";
           // Add each score to company scores array
           companyOverallScoresArray.push(
-            <p className={'company-list ' + bgColor} key={i} style={color}>
+            <p className={"company-list " + bgColor} key={i} style={color}>
               {score}
             </p>
           );
@@ -126,37 +126,37 @@ const CompanyList = (props: any) => {
       });
 
       while (userIssuesArray.length !== 6) {
-        userIssuesArray.push({ name: 'NONE', leaning: '' });
+        userIssuesArray.push({ name: "NONE", leaning: "" });
       }
 
       // Calculate issue score and color coordinate
       if (companyList.length > 0) {
         for (let a = 0; a < Object.keys(userIssuesArray).length; a += 1) {
           for (let i = 0; i < companyList.length; i += 1) {
-            const bgColor = i % 2 === 0 ? 'black' : 'grey';
+            const bgColor = i % 2 === 0 ? "black" : "grey";
 
-            if (userIssuesArray[a].name !== 'NONE') {
-              if (userIssuesArray[a].leaning.includes('con'))
+            if (userIssuesArray[a].name !== "NONE") {
+              if (userIssuesArray[a].leaning.includes("con"))
                 score = companyList[i][userIssuesArray[a].name].disagreeScore;
               else score = companyList[i][userIssuesArray[a].name].agreeScore;
 
               let color = {
                 color:
-                  score >= 70 ? '#16C33F' : score >= 40 ? '#FAEB00' : '#FA2929'
+                  score >= 70 ? "#16C33F" : score >= 40 ? "#FAEB00" : "#FA2929"
               };
 
               // Push company's issue score into array
               issueScoresArray.push(
-                <p className={'company-list ' + bgColor} key={i} style={color}>
+                <p className={"company-list " + bgColor} key={i} style={color}>
                   {score}
                 </p>
               );
             } else {
               issueScoresArray.push(
                 <p
-                  className={'company-list none ' + bgColor}
+                  className={"company-list none " + bgColor}
                   key={i}
-                  style={{ color: '#A5A8A6' }}
+                  style={{ color: "#A5A8A6" }}
                 >
                   ---
                 </p>
@@ -166,7 +166,7 @@ const CompanyList = (props: any) => {
           }
 
           // Find name of specific issue...
-          const name = userIssuesArray[a].name.split(' ').join('=');
+          const name = userIssuesArray[a].name.split(" ").join("=");
 
           const abbrvSearchWord = name.slice(0, 2);
 
@@ -178,13 +178,13 @@ const CompanyList = (props: any) => {
           // Add onClick sorting functionality
           // Spread all scores to issue list
 
-          if (name !== 'NONE') {
+          if (name !== "NONE") {
             issueNamesArray.push(
-              <div className="cl-cat-name" id={'cl-nav-' + name}>
+              <div className="cl-cat-name" id={"cl-nav-" + name}>
                 <Link
                   to="#"
                   className="cl-header"
-                  id={'cl-header-' + name}
+                  id={"cl-header-" + name}
                   onClick={props.sortListBy}
                 >
                   {issueAbbrvs[issueWord[0]]}
@@ -193,8 +193,8 @@ const CompanyList = (props: any) => {
             );
           } else {
             issueNamesArray.push(
-              <div className="cl-cat-name" id={'cl-nav-' + name}>
-                <Link to="#" className="cl-header" id={'cl-header-' + name}>
+              <div className="cl-cat-name" id={"cl-nav-" + name}>
+                <Link to="#" className="cl-header" id={"cl-header-" + name}>
                   NONE
                 </Link>
               </div>
@@ -218,17 +218,42 @@ const CompanyList = (props: any) => {
     let realtimeStyle;
     let backtestStyle;
     if (isStocksVisualizerActive) {
-      realtimeStyle = 'realtest inline button';
-      backtestStyle = 'backtime inline button button-active'
+      realtimeStyle = "realtest inline button";
+      backtestStyle = "backtime inline button button-active";
     } else {
-      realtimeStyle = 'realtest inline button button-active';
-      backtestStyle = 'backtime inline button'
+      realtimeStyle = "realtest inline button button-active";
+      backtestStyle = "backtime inline button";
     }
-
 
     return (
       <div className="cl-quad" id="quad-company-list">
         <div id="cl-select">
+          {companyList.length && (
+            // <button
+            //   className="selected active"
+            //   onClick={toggleStocksVisualizer}
+            // >
+            //   {isStocksVisualizerActive
+            //     ? 'Real Time'
+            //     : 'Backtest'}
+            // </button>
+            <div className="button-container">
+              <div className={backtestStyle} onClick={toggleStocksVisualizer}>
+                {" "}
+                Backtest
+              </div>
+              <div className={realtimeStyle} onClick={toggleStocksVisualizer}>
+                {" "}
+                Real Time
+              </div>
+            </div>
+          )}
+          <button
+            onClick={props.toggleBacktestPortfolioModal}
+            className="question-mark"
+          >
+            ?
+          </button>
           {/* <button
             id="portfolio"
             className="no-upload"
@@ -246,13 +271,15 @@ const CompanyList = (props: any) => {
             S&P 500
           </button> */}
           <div id="filter-sectors">
+            {/* filter all dropdown menu */}
             <select
+              className="dropdown-filters"
               id="filter-input"
               name="filter"
               placeholder="Filter by sector"
               onChange={e => filterSector(e)}
             >
-              <option className="sector-option" value="Filter All">
+              <option className="sector-option" value="Filter by Sector">
                 Filter by Sector
               </option>
               <option className="sector-option" value="Consumer Discretionary">
@@ -292,12 +319,15 @@ const CompanyList = (props: any) => {
                 Utilities
               </option>
             </select>
+            {/* top25 dropdown menu */}
             <select
-              placeholder='backtest portfolio'
-              title='backtest portfolio'
-              style={{marginRight: 0, width: 'auto'}}
+              className="dropdown-filters"
+              placeholder="backtest portfolio"
+              title="backtest portfolio"
+              style={{ marginRight: 0, width: "auto" }}
               value={props.topStocksFilter}
-              onChange={e => setTopStocksFilter(+e.target.value)}>
+              onChange={e => setTopStocksFilter(+e.target.value)}
+            >
               {[10, 25, 50, 100].map((el: number) => (
                 <option
                   className="sector-option"
@@ -307,27 +337,6 @@ const CompanyList = (props: any) => {
               ))}
             </select>
           </div>
-
-          {companyList.length &&
-            
-            // <button
-            //   className="selected active"
-            //   onClick={toggleStocksVisualizer}
-            // >
-            //   {isStocksVisualizerActive
-            //     ? 'Real Time'
-            //     : 'Backtest'}
-            // </button>
-            <div className='button-container'>
-              <div className={backtestStyle} onClick={toggleStocksVisualizer}> Backtest</div>
-              <div className={realtimeStyle} onClick={toggleStocksVisualizer}> Real Time</div>
-            </div>
-          }
-          <button
-            onClick={props.toggleBacktestPortfolioModal}
-            className='question-mark'>?
-          </button>
-
         </div>
         <div id="cl-nav">
           <div id="cl-nav-bar">
