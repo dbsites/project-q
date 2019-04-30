@@ -60,7 +60,7 @@ class QuadsContainer extends React.Component<Props> {
     } = this.props;
 
     getUserIssues();
-    fetchCompanyList();
+    setTimeout(() => fetchCompanyList(), 7500);
     // getAllCompanyInfo();
   }
 
@@ -159,8 +159,8 @@ const mapDispatchToProps = (dispatch: any): any => ({
   selectCompany: (event: any, ticker: any) => {
     event.preventDefault();
     dispatch(actions.selectCompany({ field: event.target.id }));
-    setTimeout(() => dispatch(actions.getStockData(ticker)), 1500);
-    setTimeout(() => dispatch(actions.getSelectedCompanyInfo(ticker)), 1500);
+    setTimeout(() => dispatch(actions.getStockData(ticker)), 0);
+    setTimeout(() => dispatch(actions.getSelectedCompanyInfo(ticker)), 0);
   },
   sortCompanyList: (event: any) => {
     event.preventDefault();
