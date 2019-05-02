@@ -221,7 +221,7 @@ class IssuePie extends Component<Props> {
         "#3A3A3A",
         alignedScore >= 70
           // ? "#16C33F"
-          ? "#4ece98"
+          ? "#43b188"
           : alignedScore >= 40
             // ? "#FAEB00"
             // : "#FA2929"

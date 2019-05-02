@@ -23,7 +23,7 @@ class OverviewPie extends Component<Props> {
     const diff = 100 - overall;
 
     const COLORS: string[] = ['#3A3A3A', (
-      overall >= 70 ? '#4ece98' : overall >= 40 ? '#e5e436' : '#ec566c'
+      overall >= 70 ? '#43b188' : overall >= 40 ? '#e5e436' : '#ec566c'
     )];
 
     const DATA: any = [

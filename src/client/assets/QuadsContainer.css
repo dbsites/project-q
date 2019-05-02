@@ -37,7 +37,7 @@
 }
 
 .overview-container p {
-  color: #a5a8a6;
+  color: grey;
   margin: auto;
 }
 
@@ -82,7 +82,7 @@
 
 #overview-right p {
   font-family: "Lato", serif;
-  color: #a5a8a6;
+  color: grey;
 }
 
 #overview-logo {
@@ -147,7 +147,7 @@
 
 #company-url-pre a,
 #company-url-pre a:visited {
-  color: #a5a8a6;
+  color: grey;
   text-decoration: none;
 }
 
@@ -173,7 +173,7 @@
 .stock-container p {
   margin: auto;
   text-align: center;
-  color: #a5a8a6;
+  color: grey;
 }
 
 .stock-container iframe {
@@ -193,7 +193,7 @@
 }
 
 .stock-container-info li {
-  color: #a5a8a6;
+  color: grey;
   display: inline-block;
   font-size: 0.65em;
   margin: 15%;
@@ -227,7 +227,7 @@
 
 #issues-header {
   margin: -0.75% 0px 21px;
-  color: #a5a8a6;
+  color: grey;
   font-size: 0.7rem;
 }
 
@@ -347,7 +347,7 @@
   margin-top: -2.5%;
   text-align: left;
   font-family: "Lato";
-  color: #a5a8a6;
+  color: grey;
   width: 100%;
   line-height: 155%;
 }
@@ -376,24 +376,24 @@
 }
 
 .polit-recip {
-  font-size: 0.9em;
+  font-size: 0.75em;
   padding-top: 2.5%;
   margin: 0px 0px 10px 0px;
   text-align: center;
-  color: #ffffff;
+  color: rgb(151, 151, 151);
   letter-spacing: .03em;
 }
 
 .polit-info-name {
   color: #ffffff;
-  font-size: 0.6em;
+  font-size: 0.65em;
   text-align: center;
   margin: 0;
 }
 
 .polit-info {
-  color: #a5a8a6;
-  font-size: 0.6em;
+  color: grey;
+  font-size: 0.68em;
   text-align: center;
   margin: 0;
 }
@@ -519,7 +519,7 @@
 }
 
 #cl-table {
-  height: 90%;
+  height: 92%;
   /* margin-top: 3.75%; */
   width: 99.5%;
   padding-bottom: 1%;
@@ -608,10 +608,10 @@
 }
 
 .cl-list a {
-  color: #a5a8a6;
+  color: grey;
 }
 .cl-list p {
-  color: #a5a8a6;
+  color: grey;
 }
 
 .cl-list a:hover {
@@ -646,10 +646,8 @@
   white-space: nowrap;
   margin: 0;
   text-align: center;
-  color: #a5a8a6 !important;
 }
 
 #cl-category-overall p {
-  color: #4ec5c1 !important;
   font-weight: lighter;
 }

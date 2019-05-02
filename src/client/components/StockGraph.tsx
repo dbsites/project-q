@@ -50,7 +50,7 @@ const StockGraph = (props: any) => {
     // StockDIO API
     const URI = `https://api.stockdio.com/visualization/financial/charts/v1/ComparePrices?app-key=2B1593840F1B4446A9537D12E212FFFD&symbol=${
       ticker.split(".")[0]
-    }&indices=SPX&includeCompetitors=false&tooltipsStyle=None&motif=Topbar&palette=Aurora&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000&height=300px`;
+    }&indices=SPX&includeCompetitors=false&tooltipsStyle=None&motif=Topbar&palette=Aurora&showBorderAndTitle=false&showLogo=No&animate=true&googleFont=true&backgroundColor=000000&height=350px`;
     display = (
       <React.Fragment>
         <iframe frameBorder="0" scrolling="no" src={URI} />

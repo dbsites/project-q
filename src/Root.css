@@ -56,6 +56,7 @@ body {
 
 .form-header-tagline {
   font-size: 1.1rem;
+  text-transform: uppercase;
 }
 
 /* Header */
@@ -244,8 +245,8 @@ body {
 /* Login/Register Style - Input Form Fields */
 .input-form .input-div {
   background: #000000;
-  border-bottom: 1px solid #ffffff;
-  font-size: 1.2rem;
+  border-bottom: 1px solid rgb(102, 102, 102);
+  font-size: 1.1rem;
   margin: 0.3vh 0;
 
   display: flex;
@@ -565,7 +566,7 @@ body {
 }
 
 .button:hover {
-  background: #4ece98;
+  background: #43b188;
   color: white;
   transition: background.3s;
 }
@@ -576,6 +577,6 @@ body {
 
 .button-active {
   /* background: #4caf50; */
-  background: #4ece98;
+  background: #43b188;
   color: white;
 }

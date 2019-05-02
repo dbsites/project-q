@@ -6,8 +6,8 @@ const IssueDetail: any = (props: any) => {
 
   if (props.polit) {
     const COLORS = [
-      "#A5A8A6",
-      props.score >= 70 ? "#4ec5c1" : props.score >= 40 ? "#e5e436" : "#ec566c"
+      "grey",
+      props.score >= 70 ? "#43B188" : props.score >= 40 ? "#e5e436" : "#ec566c"
     ];
 
     const DATA: any = [

@@ -12,10 +12,10 @@
   // margin-top: -15px;
 
   .blue {
-    color: #4ec5c1;
+    color: #43B188;
   }
   .red {
-    color: #e5e436;
+    color: #e5e536e7;
   }
   &__text {
     max-width: 200px;
@@ -32,7 +32,7 @@
 
 .chart-visualizer {
   .btn {
-    background: linear-gradient(to bottom, #4ece98, #4ac692, #46be8b, #42b685, #3eae7f);
+    background: #43b188;
     border-radius: 3px;
     padding: 1% 1.5%;
     margin-bottom: 1%;
@@ -48,12 +48,13 @@
     right: 0;
   }
   &:hover{
-    .btn{color: white;}
+    .btn{color: white;
+      transition: width .3s ease-in;
+    }
   }
 }
 .question-mark {
   margin: 10px;
-  background: blue;
   border: none;
   color: #fff;
   border-radius: 50%;
@@ -62,7 +63,7 @@
   font-size: 14px;
 }
 .question-mark:hover {
-  background: #4ece98;
+  background: #43b188;
 }
 .backtest-modal {
   position: fixed;
@@ -106,5 +107,5 @@
 }
 .recharts-responsive-container {
   width: 99% !important;
-  height: 92% !important;
+  height: 95% !important;
 }
