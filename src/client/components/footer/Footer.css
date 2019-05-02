@@ -3,6 +3,7 @@
   color: #666666;
   display: grid;
   grid-template-rows: 1fr 1fr;
+  margin-top: -4rem;
 }
 
 /* Footer Links */

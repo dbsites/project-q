@@ -7,7 +7,7 @@ const IssueDetail: any = (props: any) => {
   if (props.polit) {
     const COLORS = [
       "#A5A8A6",
-      props.score >= 70 ? "#16C33F" : props.score >= 40 ? "#FAEB00" : "#FA2929"
+      props.score >= 70 ? "#4ec5c1" : props.score >= 40 ? "#e5e436" : "#ec566c"
     ];
 
     const DATA: any = [
@@ -26,7 +26,7 @@ const IssueDetail: any = (props: any) => {
         <PieChart width={200} height={200}>
           <Pie
             data={DATA}
-            outerRadius="100%"
+            outerRadius="70%"
             innerRadius="70%"
             fill="#808080"
             dataKey="value"

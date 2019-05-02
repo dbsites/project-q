@@ -220,10 +220,13 @@ class IssuePie extends Component<Props> {
       const COLORS: string[] = [
         "#3A3A3A",
         alignedScore >= 70
-          ? "#16C33F"
+          // ? "#16C33F"
+          ? "#4ece98"
           : alignedScore >= 40
-            ? "#FAEB00"
-            : "#FA2929"
+            // ? "#FAEB00"
+            // : "#FA2929"
+            ? "#e5e436"
+            : "#ec566c"
       ];
 
       const DATA: any = [

@@ -10,16 +10,16 @@ html {
 
 body {
   background: #000000;
-  font-family: "Cinzel", serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
 }
 
 /* Wrapper for Body/Footer - 92vh + 8vh = 100vh */
 .screen {
   display: grid;
-  grid-template-rows: 92vh 8vh;
+  grid-template-rows: 100vh 0vh;
   height: 100vh;
-  width: 100vw;
+  width: 98vw;
 }
 
 /* Form Header */
@@ -63,8 +63,8 @@ body {
   color: #666666;
   font-size: 1.4rem;
   list-style-type: none;
-  margin: 0;
-  overflow: hidden;
+  margin-bottom: -.5em;
+  /* overflow: hidden; */
   padding: 0;
 }
 
@@ -119,9 +119,8 @@ body {
 .main-dashboard {
   margin: 0 2.5vw;
   padding: 0 2.5vw;
-
   display: grid;
-  grid-template-rows: 12vh 14vh 52vh 14vh;
+  grid-template-rows: 10vh 14vh 52vh 14vh;
 }
 
 /* Form Dashboard 2vh + 28vh + 60vh + 2vh = 92vh*/
@@ -558,7 +557,6 @@ body {
 }
 
 .button {
-  border-radius: 5px;
   text-align: center;
   width: 71px;
   background: black;
@@ -567,7 +565,7 @@ body {
 }
 
 .button:hover {
-  background: #4caf50;
+  background: #4ece98;
   color: white;
   transition: background.3s;
 }
@@ -577,6 +575,7 @@ body {
 }
 
 .button-active {
-  background: #4caf50;
+  /* background: #4caf50; */
+  background: #4ece98;
   color: white;
 }
