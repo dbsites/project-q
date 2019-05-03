@@ -248,8 +248,10 @@ body {
   border-bottom: 1px solid rgb(102, 102, 102);
   font-size: 1.1rem;
   margin: 0.3vh 0;
-
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
   display: flex;
+  
 }
 
 .input-form .input-form-header {
@@ -257,6 +259,7 @@ body {
   font-size: 1.8rem;
   margin-bottom: 3vh;
   text-align: center;
+  font-weight: lighter;
 }
 
 .input-form .input-form-text {
@@ -285,6 +288,8 @@ body {
   outline: none;
   padding: 1vh 0.1vw;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
 }
 
 .input-form .input-field-name-wrapper {
@@ -405,6 +410,7 @@ body {
 .form-error {
   font-size: 1.2rem;
   color: #dc3545;
+  
 }
 
 /* Issue Dashboard - 84vh => 8vh/68vh/8vh */
