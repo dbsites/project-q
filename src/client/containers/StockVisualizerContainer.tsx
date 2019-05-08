@@ -185,7 +185,7 @@ class StockVisualizerContainer extends React.Component<any> {
           <div
             className='btn'
             onClick={this.refreshChart}>
-            Refresh
+            Refresh Chart
           </div>}
       </div>
     );

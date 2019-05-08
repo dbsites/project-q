@@ -108,10 +108,11 @@
   display: block;
   text-align: left;
   line-height: 150%;
-  margin: 1% auto;
+  /* margin: 1% auto; */
   padding-left: 2%;
   font-size: 1vw;
   width: 98%;
+  margin-bottom: 1rem;
 }
 
 #company-info-more p {
