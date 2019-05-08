@@ -66,7 +66,7 @@ export interface SurveyState {
 };
 
 export interface AnswerPayload {
-  agree: boolean,
+  agree: any,
   issueId: string,
   questionId: string,
 }
@@ -196,4 +196,3 @@ export interface ApplicationState {
   readonly survey: SurveyState,
   readonly user: UserState,
 };
-

@@ -88,14 +88,14 @@ export default class Chart extends React.PureComponent<any> {
             <Line
               type="monotone"
               dataKey="sp500"
-              stroke="red"
+              stroke="#b5ba25"
               activeDot={{ r: 8 }}
             />
             <Line
               name={`Top ${companiesCount}`}
               type="monotone"
               dataKey="portfolio1"
-              stroke="#399bf0"
+              stroke="#43B188"
               activeDot={{ r: 8 }}
             />
             {/* <Line type="monotone" dataKey="uv" stroke="#399bf0" activeDot={{ r: 8 }} /> */}
