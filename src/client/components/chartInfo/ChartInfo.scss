@@ -6,16 +6,16 @@
   display: flex;
   justify-content: space-between;
   text-transform: unset;
-  // font-size: 10px;
-  font-size: 12px;
-  margin-bottom: 10px;
-  margin-top: -15px;
+  font-size: 11.5px;
+  margin: -0.5em 0px;
+  // margin-bottom: 10px;
+  // margin-top: -15px;
 
   .blue {
-    color: #399bf0;
+    color: #43B188;
   }
   .red {
-    color: red;
+    color: #e5e536e7;
   }
   &__text {
     max-width: 200px;
@@ -32,7 +32,7 @@
 
 .chart-visualizer {
   .btn {
-    background-color: #fff;
+    background: #43b188;
     border-radius: 3px;
     padding: 1% 1.5%;
     margin-bottom: 1%;
@@ -47,13 +47,15 @@
     font-size: 12px;
     right: 0;
   }
-  // &:hover{
-  //   .btn{display: block;}
-  // }
+  &:hover{
+    .btn{color: white;
+      // transition: width .3s ease-in;
+      transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+    }
+  }
 }
 .question-mark {
   margin: 10px;
-  background: blue;
   border: none;
   color: #fff;
   border-radius: 50%;
@@ -62,7 +64,7 @@
   font-size: 14px;
 }
 .question-mark:hover {
-  background: #4caf50;
+  background: #43b188;
 }
 .backtest-modal {
   position: fixed;
@@ -103,4 +105,8 @@
       font-size: 20px;
     }
   }
+}
+.recharts-responsive-container {
+  width: 99% !important;
+  height: 95% !important;
 }

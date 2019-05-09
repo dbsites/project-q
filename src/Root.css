@@ -10,16 +10,16 @@ html {
 
 body {
   background: #000000;
-  font-family: "Cinzel", serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
 }
 
 /* Wrapper for Body/Footer - 92vh + 8vh = 100vh */
 .screen {
   display: grid;
-  grid-template-rows: 92vh 8vh;
+  grid-template-rows: 100vh 0vh;
   height: 100vh;
-  width: 100vw;
+  width: 98vw;
 }
 
 /* Form Header */
@@ -56,6 +56,7 @@ body {
 
 .form-header-tagline {
   font-size: 1.1rem;
+  text-transform: uppercase;
 }
 
 /* Header */
@@ -63,8 +64,8 @@ body {
   color: #666666;
   font-size: 1.4rem;
   list-style-type: none;
-  margin: 0;
-  overflow: hidden;
+  margin-bottom: -.5em;
+  /* overflow: hidden; */
   padding: 0;
 }
 
@@ -119,9 +120,8 @@ body {
 .main-dashboard {
   margin: 0 2.5vw;
   padding: 0 2.5vw;
-
   display: grid;
-  grid-template-rows: 12vh 14vh 52vh 14vh;
+  grid-template-rows: 10vh 14vh 52vh 14vh;
 }
 
 /* Form Dashboard 2vh + 28vh + 60vh + 2vh = 92vh*/
@@ -245,11 +245,13 @@ body {
 /* Login/Register Style - Input Form Fields */
 .input-form .input-div {
   background: #000000;
-  border-bottom: 1px solid #ffffff;
-  font-size: 1.2rem;
+  border-bottom: 1px solid rgb(102, 102, 102);
+  font-size: 1.1rem;
   margin: 0.3vh 0;
-
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
   display: flex;
+  
 }
 
 .input-form .input-form-header {
@@ -257,6 +259,7 @@ body {
   font-size: 1.8rem;
   margin-bottom: 3vh;
   text-align: center;
+  font-weight: lighter;
 }
 
 .input-form .input-form-text {
@@ -285,6 +288,8 @@ body {
   outline: none;
   padding: 1vh 0.1vw;
   width: 100%;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
 }
 
 .input-form .input-field-name-wrapper {
@@ -405,6 +410,7 @@ body {
 .form-error {
   font-size: 1.2rem;
   color: #dc3545;
+  
 }
 
 /* Issue Dashboard - 84vh => 8vh/68vh/8vh */
@@ -558,7 +564,6 @@ body {
 }
 
 .button {
-  border-radius: 5px;
   text-align: center;
   width: 71px;
   background: black;
@@ -567,7 +572,7 @@ body {
 }
 
 .button:hover {
-  background: #4caf50;
+  background: #43b188;
   color: white;
   transition: background.3s;
 }
@@ -577,6 +582,7 @@ body {
 }
 
 .button-active {
-  background: #4caf50;
+  /* background: #4caf50; */
+  background: #43b188;
   color: white;
 }

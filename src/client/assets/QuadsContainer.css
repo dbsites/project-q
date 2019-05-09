@@ -19,7 +19,7 @@
   height: 80vh;
   /* grid-template-columns: minmax(80vh, 85vh) minmax(80vh, 85vh); */
   grid-template-columns: minmax(80vh, 100%) minmax(80vh, 100%);
-  grid-template-rows: minmax(15vw, 20vw) minmax(20vw, 25vw);
+  grid-template-rows: minmax(21vw, 21vw) minmax(20vw, 25vw);
   width: 100%;
   margin: 0 auto;
 }
@@ -37,7 +37,7 @@
 }
 
 .overview-container p {
-  color: #a5a8a6;
+  color: grey;
   margin: auto;
 }
 
@@ -49,6 +49,7 @@
   margin: 0;
   color: #ffffff;
   text-align: center;
+  letter-spacing: .03em;
 }
 
 #overall-score-chart {
@@ -63,6 +64,7 @@
 
 #overall-score-chart text {
   fill: white;
+  letter-spacing: 0.07em;
 }
 
 #overall-score-chart tspan {
@@ -80,13 +82,13 @@
 
 #overview-right p {
   font-family: "Lato", serif;
-  color: #a5a8a6;
+  color: grey;
 }
 
 #overview-logo {
   position: relative;
   text-align: center;
-  margin-top: 1.5%;
+  margin-bottom: 8%;
 }
 
 #overview-logo img {
@@ -106,10 +108,11 @@
   display: block;
   text-align: left;
   line-height: 150%;
-  margin: 1% auto;
+  /* margin: 1% auto; */
   padding-left: 2%;
-  font-size: 1.075vw;
+  font-size: 1vw;
   width: 98%;
+  margin-bottom: 1rem;
 }
 
 #company-info-more p {
@@ -145,7 +148,7 @@
 
 #company-url-pre a,
 #company-url-pre a:visited {
-  color: #a5a8a6;
+  color: grey;
   text-decoration: none;
 }
 
@@ -171,7 +174,7 @@
 .stock-container p {
   margin: auto;
   text-align: center;
-  color: #a5a8a6;
+  color: grey;
 }
 
 .stock-container iframe {
@@ -191,7 +194,7 @@
 }
 
 .stock-container-info li {
-  color: #a5a8a6;
+  color: grey;
   display: inline-block;
   font-size: 0.65em;
   margin: 15%;
@@ -224,8 +227,9 @@
 }
 
 #issues-header {
-  margin: 0.25% 0 0;
-  color: #a5a8a6;
+  margin: -0.75% 0px 21px;
+  color: grey;
+  font-size: 0.7rem;
 }
 
 .issues-container {
@@ -344,7 +348,7 @@
   margin-top: -2.5%;
   text-align: left;
   font-family: "Lato";
-  color: #a5a8a6;
+  color: grey;
   width: 100%;
   line-height: 155%;
 }
@@ -373,23 +377,24 @@
 }
 
 .polit-recip {
-  font-size: 0.8em;
+  font-size: 0.75em;
   padding-top: 2.5%;
-  margin: 0;
+  margin: 0px 0px 10px 0px;
   text-align: center;
-  color: #ffffff;
+  color: rgb(151, 151, 151);
+  letter-spacing: .03em;
 }
 
 .polit-info-name {
   color: #ffffff;
-  font-size: 0.6em;
+  font-size: 0.65em;
   text-align: center;
   margin: 0;
 }
 
 .polit-info {
-  color: #a5a8a6;
-  font-size: 0.6em;
+  color: grey;
+  font-size: 0.68em;
   text-align: center;
   margin: 0;
 }
@@ -511,10 +516,11 @@
 #cl-nav {
   background: #000000;
   width: 97.5%;
+  /* margin-bottom: 0.3em; */
 }
 
 #cl-table {
-  height: 90%;
+  height: 92%;
   /* margin-top: 3.75%; */
   width: 99.5%;
   padding-bottom: 1%;
@@ -592,17 +598,21 @@
 
 .cl-header {
   background-color: black;
-  color: #ffffff;
+  color: grey;
   font-size: 0.8em;
 }
-
+#cl-category-issue {
+  color: red !important;
+}
 .divTableRow {
   display: flex;
 }
 
-.cl-list a,
+.cl-list a {
+  color: grey;
+}
 .cl-list p {
-  color: #a5a8a6;
+  color: grey;
 }
 
 .cl-list a:hover {
@@ -611,10 +621,12 @@
 
 .cl-list .black {
   background-color: #000000;
+  padding: 2px 0px;
 }
 
 .cl-list .grey {
-  background-color: #383838;
+  background-color: #383838b4;
+  padding: 2px 0px;
 }
 
 .company-names-list {
@@ -638,5 +650,5 @@
 }
 
 #cl-category-overall p {
-  font-weight: bolder;
+  font-weight: lighter;
 }

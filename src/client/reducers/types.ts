@@ -196,4 +196,3 @@ export interface ApplicationState {
   readonly survey: SurveyState,
   readonly user: UserState,
 };
-

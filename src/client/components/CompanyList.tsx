@@ -95,7 +95,7 @@ const CompanyList = (props: any) => {
           score = companyList[i].overallScore;
 
           let color = {
-            color: score >= 70 ? "#16C33F" : score >= 40 ? "#FAEB00" : "#FA2929"
+            color: score >= 70 ? "#43B188" : score >= 40 ? "#e5e536e7" : "#ec566c"
           };
 
           const bgColor = i % 2 === 0 ? "black" : "grey";
@@ -142,7 +142,7 @@ const CompanyList = (props: any) => {
 
               let color = {
                 color:
-                  score >= 70 ? "#16C33F" : score >= 40 ? "#FAEB00" : "#FA2929"
+                  score >= 70 ? "#43B188" : score >= 40 ? "#e5e536e7" : "#ec566c"
               };
 
               // Push company's issue score into array
@@ -156,7 +156,7 @@ const CompanyList = (props: any) => {
                 <p
                   className={"company-list none " + bgColor}
                   key={i}
-                  style={{ color: "#A5A8A6" }}
+                  style={{ color: "grey" }}
                 >
                   ---
                 </p>
